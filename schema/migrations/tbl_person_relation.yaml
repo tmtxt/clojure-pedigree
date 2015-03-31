@@ -16,3 +16,10 @@ sql: |
         relation_type PERSON_RELATION_TYPE_ENUM NOT NULL,
         created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
         );
+
+---
+table: tbl_person_relation
+from: txt_1
+to: txt_2
+sql: |
+  ALTER TABLE tbl_person_relation ADD CONSTRAINT un_person_relation_compound UNIQUE (first_person_id, second_person_id, relation_type);
