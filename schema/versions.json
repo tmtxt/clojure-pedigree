@@ -1,5 +1,7 @@
 {
   "tbl_user": "txt_1",
   "tbl_person": "txt_2",
-  "tbl_person_relation": "txt_2"
+  "tbl_person_relation": "txt_2",
+
+  "view_pedigree_info": "txt_1"
 }

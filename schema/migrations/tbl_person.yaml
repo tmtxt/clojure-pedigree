@@ -26,5 +26,5 @@ table: tbl_person
 from: txt_1
 to: txt_2
 sql: |
-  ALTER TABLE person ALTER COLUMN birth_date DROP DEFAULT;
-  ALTER TABLE person ALTER COLUMN death_date DROP DEFAULT;
+  ALTER TABLE tbl_person ALTER COLUMN birth_date DROP DEFAULT;
+  ALTER TABLE tbl_person ALTER COLUMN death_date DROP DEFAULT;

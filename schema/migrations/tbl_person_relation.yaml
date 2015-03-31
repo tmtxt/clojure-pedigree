@@ -2,6 +2,8 @@
 table: tbl_person_relation
 from: null
 to: txt_1
+depends:
+  - ["tbl_person", txt_1]
 sql: |
   CREATE TYPE PERSON_RELATION_TYPE_ENUM AS ENUM (
         'father-child',

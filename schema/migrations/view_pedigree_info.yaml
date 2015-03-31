@@ -1,0 +1,21 @@
+---
+table: view_pedigree_info
+from: null
+to: txt_1
+depends:
+  - ["tbl_person_relation", txt_2]
+sql: |
+  CREATE VIEW view_pedigree_info AS
+  SELECT
+      r.first_person_id AS parent_id,
+      r.second_person_id AS child_id
+  FROM tbl_person_relation AS r
+  WHERE r.relation_type = 'father-child'
+
+  UNION
+
+  SELECT
+      r.first_person_id,
+      r.second_person_id
+  FROM tbl_person_relation AS r
+  WHERE r.relation_type = 'mother-child';
