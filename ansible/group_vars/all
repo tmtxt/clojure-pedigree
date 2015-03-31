@@ -1,6 +1,6 @@
 ---
 # general information
-project_name: skeleton
+project_name: pedigree
 project_user: "{{project_name}}"
 service_prefix: "{{project_name}}"
 
@@ -16,7 +16,7 @@ out_dirs:
 db_name: "{{project_name}}"
 db_user: "{{project_user}}"
 db_host: localhost
-db_password: somepassword
+db_password: password
 
 # virtualenv
 virtualenv_user: "{{project_user}}"
