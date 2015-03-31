@@ -7,6 +7,7 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [app.controllers.home :refer [home-routes]]
+            [app.controllers.person :refer [person-routes]]
             [noir.session :as session]
             [noir.validation :as validation]))
 
@@ -22,6 +23,7 @@
 
 (def app
   (-> (routes home-routes
+              person-routes
               app-routes)
       (handler/site)
       (wrap-base-url)
