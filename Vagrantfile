@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   # config
-  project_name = "skeleton"
+  project_name = "pedigree"
   project_user = "vagrant"
 
   # port forwarding
@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       project_dir: "/vagrant",
 
       # db
-      db_name: project_user,
+      db_name: project_name,
       db_user: project_user,
       db_password: "vagrant",
 
