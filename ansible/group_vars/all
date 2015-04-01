@@ -1,3 +1,4 @@
+# -*- mode: yaml -*-
 ---
 # general information
 project_name: pedigree
@@ -33,3 +34,7 @@ nvm_node_version: 0.11.14
 # folders
 script_dir: "{{project_dir}}/scripts"
 log_dir: "{{project_dir}}/logs"
+
+# web server
+ring_port: 3000
+nrepl_port: 7888
