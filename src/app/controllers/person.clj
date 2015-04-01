@@ -3,12 +3,12 @@
             [app.views.layout :as layout]
             [selmer.parser :refer [render-file render]]
             [noir.session :as session]
-            [app.db])
-  (:use [app.models.person]
-        [korma.core]))
+            [app.db]
+            [app.models.person :refer [person]]
+            [korma.core :as kc]))
 
 (defn list-person []
-  (str (select person)))
+  (str (kc/select person)))
 
 (defroutes person-routes
   (GET "/person/list" [] (list-person)))
