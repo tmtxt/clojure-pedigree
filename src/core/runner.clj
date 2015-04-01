@@ -4,5 +4,4 @@
 (defn -main
   [& args]
   (server/start-server)
-  (server/start-repl)
-  (println (str "nRepl server running on port " nrepl-port)))
+  (server/start-repl))
