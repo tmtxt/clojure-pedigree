@@ -25,6 +25,11 @@
       sudo_user: "{{project_user}}"
       template: src=templates/db_config.clj dest={{project_dir}}/src/config/db.clj
 
+    - name: generate system.clj config
+      sudo: yes
+      sudo_user: "{{project_user}}"
+      template: src=templates/system_config.clj dest={{project_dir}}/src/config/system.clj
+
     - name: install leiningen dependencies
       sudo: yes
       sudo_user: "{{project_user}}"
