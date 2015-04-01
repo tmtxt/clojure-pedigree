@@ -2,10 +2,11 @@
   (:require [compojure.core :refer :all]
             [app.views.layout :as layout]
             [selmer.parser :refer [render-file render]]
-            [noir.session :as session]))
+            [noir.session :as session]
+            [config.main :refer [config]]))
 
 (defn home []
-  (layout/render "home/index.html" {:name "Truong"}))
+  (layout/render "home/index.html" {:name (config :site-name)}))
 
 (defroutes home-routes
   (GET "/" [] (home))
