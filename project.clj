@@ -58,7 +58,9 @@
     {:someconfig "production"}}
 
    :dev
-   {:dependencies [[ring-mock "0.1.5"] [ring/ring-devel "1.3.2"]]
+   {:dependencies [[ring-mock "0.1.5"]
+                   [ring/ring-devel "1.3.2"]
+                   [com.cemerick/austin "0.1.6"]]
     :ring
     {:open-browser? false}
     :env
