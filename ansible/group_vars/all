@@ -38,3 +38,6 @@ log_dir: "{{project_dir}}/logs"
 # web server
 ring_port: 3000
 nrepl_port: 7888
+
+# neo4j
+neo4j_user: "{{project_user}}"
