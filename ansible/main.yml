@@ -1,4 +1,14 @@
 ---
+- hosts: vps.truongtx.me
+  roles:
+    - git
+    - user
+  tasks:
+    - name: clone the repo
+      sudo: yes
+      sudo_user: "{{project_user}}"
+      git: repo=https://github.com/tmtxt/clojure-pedigree.git dest={{project_dir}}
+
 - hosts: all
   roles:
     - apt
