@@ -1,6 +1,6 @@
-# Clojure Web skeleton
+# Clojure Pedigree Website
 
-Skeleton for Clojure web project with Vagrant
+Pedigree Management website in Clojure
 
 # not finished yet...
 
@@ -22,6 +22,13 @@ Documentation is located under docs folder, you should read them in this order
 - [Static Files](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/static.md)
 - [Logging](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/logging.md)
 - [Environment Variables](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/environment.md)
+
+# Provision
+
+- Add host to ansible/hosts
+- Add a file name **extra_vars.yml**, which defines the `project_dir` variable
+(and other variable if you need)
+- Execute `run.sh` in ansible folder
 
 # Note
 
