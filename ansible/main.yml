@@ -21,6 +21,7 @@
     - schemup
     - oraclejdk
     - clojure
+    - neo4j
 
   tasks:
     # create necessary directory
