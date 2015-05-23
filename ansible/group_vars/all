@@ -41,3 +41,5 @@ nrepl_port: 7888
 
 # neo4j
 neo4j_user: "{{project_user}}"
+neo4j_port: 7474
+neo4j_password: password
