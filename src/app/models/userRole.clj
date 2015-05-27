@@ -9,6 +9,18 @@
   {:user "user"
    :admin "admin"})
 
+(defn str->pgobject
+  [type value]
+  (doto (PGobject.)
+    (.setType type)
+    (.setValue value)))
+
+(defn prepare-data
+  [{role_name :role_name :as name}]
+  (if role_name
+    (assoc name :role_name (str->pgobject "user_role_name" role_name))
+    name))
+
 (defentity user-role
   ;; Basic configuration
 
@@ -19,6 +31,7 @@
   ;; This line is unnecessary, it's used for relationships joins.
   (pk :id)
 
+  (prepare prepare-data)
   ;; Default fields for selects
   ;; (entity-fields :column1 :column2)
 
@@ -42,14 +55,10 @@
   ;; (many-to-many posts :users_posts)
   )
 
-(defn str->pgobject
-  [type value]
-  (doto (PGobject.)
-    (.setType type)
-    (.setValue value)))
-
 (defn create-user-role [user role]
-  (println "hello")
   (insert user-role
           (values {:user_id (user :id)
-                   :role_name (str->pgobject "user_role_name" "admin")})))
+                   :role_name "admin"})))
+
+
+
