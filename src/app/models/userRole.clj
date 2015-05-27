@@ -1,15 +1,19 @@
-(ns app.models.user
+(ns app.models.userRole
   (:use [korma.core])
-  (:require [app.models.userRole :refer [create-user-role]]))
+  (:import [org.postgresql.util PGobject]))
 
 ;;; Basic Korma model structure
 ;;; see more at http://sqlkorma.com/docs
 
-(defentity user
+(def USER_ROLE_NAMES
+  {:user "user"
+   :admin "admin"})
+
+(defentity user-role
   ;; Basic configuration
 
   ;; Table, by default the name of the entity
-  (table :tbl_user)
+  (table :tbl_user_role)
 
   ;; Primary key, by default "id"
   ;; This line is unnecessary, it's used for relationships joins.
@@ -38,14 +42,14 @@
   ;; (many-to-many posts :users_posts)
   )
 
-(defn create-init-users []
-  (let [count-list (select user (aggregate (count :*) :cnt))
-        count (:cnt (first count-list))]
-    ;; create new admin account when no user exists in the system
-    (when (zero? count)
-      (let [admin (insert user
-                          (values {:full_name "Admin"
-                                   :email "admin@example.com"
-                                   :password "hello"}))]
-        (create-user-role admin :admin)
-        ))))
+(defn str->pgobject
+  [type value]
+  (doto (PGobject.)
+    (.setType type)
+    (.setValue value)))
+
+(defn create-user-role [user role]
+  (println "hello")
+  (insert user-role
+          (values {:user_id (user :id)
+                   :role_name (str->pgobject "user_role_name" "admin")})))
