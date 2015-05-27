@@ -31,34 +31,10 @@
   ;; This line is unnecessary, it's used for relationships joins.
   (pk :id)
 
-  (prepare prepare-data)
-  ;; Default fields for selects
-  ;; (entity-fields :column1 :column2)
-
-  ;; Relationships, uncomment or add more as necessary
-
-  ;; assumes users.id = address.users_id
-  ;; (has-one address)
-
-  ;; assumes users.id = email.users_id
-  ;; but gets the results in a second query
-  ;; for each element
-  ;; (has-many email)
-
-  ;; assumes users.account_id = account.id
-  ;; (belongs-to account)
-
-  ;; assumes a table users_posts with columns users_id
-  ;; and posts_id
-  ;; like has-many, also gets the results in a second
-  ;; query for each element
-  ;; (many-to-many posts :users_posts)
-  )
+  ;; transform data before inserting into the database
+  (prepare prepare-data))
 
 (defn create-user-role [user role]
   (insert user-role
           (values {:user_id (user :id)
-                   :role_name "admin"})))
-
-
-
+                   :role_name (get USER_ROLE_NAMES role "user")})))
