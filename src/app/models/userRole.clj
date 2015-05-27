@@ -1,6 +1,7 @@
 (ns app.models.userRole
   (:use [korma.core])
-  (:import [org.postgresql.util PGobject]))
+  (:import [org.postgresql.util PGobject])
+  (:require [app.util :as util]))
 
 ;;; Basic Korma model structure
 ;;; see more at http://sqlkorma.com/docs
@@ -9,16 +10,10 @@
   {:user "user"
    :admin "admin"})
 
-(defn str->pgobject
-  [type value]
-  (doto (PGobject.)
-    (.setType type)
-    (.setValue value)))
-
 (defn prepare-data
   [{role_name :role_name :as name}]
   (if role_name
-    (assoc name :role_name (str->pgobject "user_role_name" role_name))
+    (assoc name :role_name (util/str->pgobject "user_role_name" role_name))
     name))
 
 (defentity user-role
