@@ -3,12 +3,11 @@
   (:import [org.postgresql.util PGobject])
   (:require [app.util :as util]))
 
-;;; Basic Korma model structure
-;;; see more at http://sqlkorma.com/docs
-
+(def USER_ROLE_NAME_USER "user")
+(def USER_ROLE_NAME_ADMIN "admin")
 (def USER_ROLE_NAMES
-  {:user "user"
-   :admin "admin"})
+  {:user USER_ROLE_NAME_USER
+   :admin USER_ROLE_NAME_ADMIN})
 
 (defn prepare-data
   [{role_name :role_name :as name}]
@@ -32,4 +31,4 @@
 (defn create-user-role [user role]
   (insert user-role
           (values {:user_id (user :id)
-                   :role_name (get USER_ROLE_NAMES role "user")})))
+                   :role_name (get USER_ROLE_NAMES role USER_ROLE_NAME_USER)})))
