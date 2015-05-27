@@ -1,5 +1,6 @@
 (ns app.models.user
-    (:use [korma.core]))
+  (:use [korma.core])
+  (:require [app.models.userRole :refer [create-user-role]]))
 
 ;;; Basic Korma model structure
 ;;; see more at http://sqlkorma.com/docs
@@ -36,3 +37,15 @@
   ;; query for each element
   ;; (many-to-many posts :users_posts)
   )
+
+(defn create-init-users []
+  (let [count-list (select user (aggregate (count :*) :cnt))
+        count (:cnt (first count-list))]
+    ;; create new admin account when no user exists in the system
+    (when (zero? count)
+      (let [admin (insert user
+                          (values {:full_name "Admin"
+                                   :email "admin@example.com"
+                                   :password "hello"}))]
+        ;; (create-user-role admin :admin)
+        ))))

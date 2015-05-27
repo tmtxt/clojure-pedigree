@@ -3,7 +3,8 @@
         ring.server.standalone
         [ring.middleware file-info file])
   (:require [clojure.tools.nrepl.server :as repl-server]
-            [config.main :refer [config]]))
+            [config.main :refer [config]]
+            [app.models.user :as user-model]))
 
 (defonce server (atom nil))
 
@@ -39,3 +40,6 @@
 (defn start-repl []
   (repl-server/start-server :port (config :nrepl-port))
   (println (str "nRepl server running on port " (config :nrepl-port))))
+
+(defn create-init-db []
+  (user-model/create-init-users))
