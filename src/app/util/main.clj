@@ -1,4 +1,4 @@
-(ns app.util
+(ns app.util.main
   (:import [org.postgresql.util PGobject]))
 
 (defn str->pgobject
