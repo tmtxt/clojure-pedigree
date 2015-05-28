@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config
   project_name = "pedigree"
   project_user = "vagrant"
+  project_dir = "/vagrant"
 
   # port forwarding
   config.vm.network :forwarded_port, guest: 8080, host: 9250
@@ -26,13 +27,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # general
       project_name: project_name,
       project_user: project_user,
-      project_dir: "/vagrant",
+      project_dir: project_dir,
 
       # db
       db_name: project_name,
       db_user: project_user,
       db_password: "vagrant",
       neo4j_password: "vagrant",
+      neo4j_password_file: project_dir + "/neo4j_password",
 
       # vagrant specific
       vagrant_env: true
