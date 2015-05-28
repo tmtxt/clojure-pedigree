@@ -1,6 +1,7 @@
 (ns app.models.user
   (:use [korma.core])
-  (:require [app.models.userRole :refer [create-user-role]]))
+  (:require [app.models.userRole :refer [create-user-role]]
+            [crypto.password.bcrypt :as crypto]))
 
 ;;; Basic Korma model structure
 ;;; see more at http://sqlkorma.com/docs
@@ -46,6 +47,5 @@
       (let [admin (insert user
                           (values {:full_name "Admin"
                                    :email "admin@example.com"
-                                   :password "hello"}))]
-        (create-user-role admin :admin)
-        ))))
+                                   :password (crypto/encrypt "admin")}))]
+        (create-user-role admin :admin)))))
