@@ -1,7 +1,7 @@
 (ns app.models.userRole
   (:use [korma.core])
   (:import [org.postgresql.util PGobject])
-  (:require [app.util.main :as util]))
+  (:require [app.util.dbUtil :as db-util]))
 
 (def USER_ROLE_NAME_USER "user")
 (def USER_ROLE_NAME_ADMIN "admin")
@@ -12,7 +12,7 @@
 (defn prepare-data
   [{role_name :role_name :as name}]
   (if role_name
-    (assoc name :role_name (util/str->pgobject "user_role_name" role_name))
+    (assoc name :role_name (db-util/str->pgobject "user_role_name" role_name))
     name))
 
 (defentity user-role
