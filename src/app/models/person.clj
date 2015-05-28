@@ -6,3 +6,8 @@
   (table :tbl_person)
 
   (pk :id))
+
+(defn create-init-person []
+  (let [count-list (select person (aggregate (count :*) :cnt))
+        count (->> count-list (first) (:cnt))]
+    (println count)))

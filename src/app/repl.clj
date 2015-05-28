@@ -4,7 +4,8 @@
         [ring.middleware file-info file])
   (:require [clojure.tools.nrepl.server :as repl-server]
             [config.main :refer [config]]
-            [app.models.user :as user-model]))
+            [app.models.user :as user-model]
+            [app.models.person :as person-model]))
 
 (defonce server (atom nil))
 
