@@ -10,7 +10,7 @@
     (.setValue value)))
 
 (defn table-empty?
-  "Check if a table is empty"
+  "Check if a table is empty, contains no row"
   [entity]
   (let [count-list (kc/select entity (kc/aggregate (count :*) :cnt))
         count (->> count-list (first) (:cnt))]

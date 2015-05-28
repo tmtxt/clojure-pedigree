@@ -1,5 +1,6 @@
 (ns app.models.person
-    (:use [korma.core]))
+  (:require [korma.core :refer :all]
+            [app.util.dbUtil :as db-util]))
 
 (defentity person
   ;; Table, by default the name of the entity
@@ -8,6 +9,7 @@
   (pk :id))
 
 (defn create-init-person []
-  (let [count-list (select person (aggregate (count :*) :cnt))
-        count (->> count-list (first) (:cnt))]
-    (println count)))
+  (when (db-util/table-empty? person)
+    (let [root (insert person
+                       (values {:full_name "Root Person"}))]
+      root)))
