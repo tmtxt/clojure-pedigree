@@ -1,4 +1,5 @@
 {
   "tbl_user": "txt_1",
-  "tbl_person": "txt_2"
+  "tbl_person": "txt_2",
+  "tbl_user_role": "txt_1"
 }
