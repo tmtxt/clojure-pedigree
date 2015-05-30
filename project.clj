@@ -17,7 +17,7 @@
                  [clojurewerkz/neocons "3.1.0-beta3"]
                  [crypto-password "0.1.3"]
                  [weasel "0.6.0"]
-                 [com.cemerick/piggieback "0.1.6"]
+                 [com.cemerick/piggieback "0.1.5"]
                  ;; [com.cemerick/austin "0.1.6"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
                                               javax.jms/jms
