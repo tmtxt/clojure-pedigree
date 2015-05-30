@@ -17,7 +17,8 @@
                  [clojurewerkz/neocons "3.1.0-beta3"]
                  [crypto-password "0.1.3"]
                  [weasel "0.6.0"]
-                 [com.cemerick/austin "0.1.6"]
+                 [com.cemerick/piggieback "0.1.6"]
+                 ;; [com.cemerick/austin "0.1.6"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools
@@ -61,8 +62,7 @@
 
    :dev
    {:dependencies [[ring-mock "0.1.5"]
-                   [ring/ring-devel "1.3.2"]
-                   [com.cemerick/piggieback "0.1.4"]]
+                   [ring/ring-devel "1.3.2"]]
     :ring {:open-browser? false}
     :env {:someconfig "dev"}
     :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}})
