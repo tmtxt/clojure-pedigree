@@ -1,6 +1,7 @@
 (ns site
-  (:require [clojure.browser.repl :as repl]))
+  (:require [weasel.repl :as repl]))
 
 (defn ^:export init []
   (.log js/console "hello world")
-  (repl/connect "http://localhost:9253/repl"))
+  (when-not (repl/alive?)
+    (repl/connect "ws://localhost:9253")))
