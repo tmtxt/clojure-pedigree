@@ -3,7 +3,7 @@
   :url "http://example.com/FIXME"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/tools.nrepl "0.2.6"]
+                 [org.clojure/tools.nrepl "0.2.10"]
                  [compojure "1.3.1"]
                  [ring-server "0.3.1"]
                  [selmer "0.7.9"]
@@ -13,7 +13,7 @@
                  [org.postgresql/postgresql "9.3-1100-jdbc41"]
                  [org.clojure/tools.cli "0.3.1"]
                  [org.clojure/tools.logging "0.3.1"]
-                 [org.clojure/clojurescript "0.0-2665"]
+                 [org.clojure/clojurescript "0.0-3165"]
                  [clojurewerkz/neocons "3.1.0-beta3"]
                  [crypto-password "0.1.3"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
@@ -54,14 +54,13 @@
   {:uberjar {:aot :all}
 
    :production
-   {:ring
-    {:open-browser? false, :stacktraces? false, :auto-reload? false}
-    :env
-    {:someconfig "production"}}
+   {:ring {:open-browser? false, :stacktraces? false, :auto-reload? false}
+    :env {:someconfig "production"}}
 
    :dev
-   {:dependencies [[ring-mock "0.1.5"] [ring/ring-devel "1.3.2"]]
-    :ring
-    {:open-browser? false}
-    :env
-    {:someconfig "dev"}}})
+   {:dependencies [[ring-mock "0.1.5"]
+                   [ring/ring-devel "1.3.2"]
+                   [com.cemerick/piggieback "0.2.1"]]
+    :ring {:open-browser? false}
+    :env {:someconfig "dev"}
+    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}})
