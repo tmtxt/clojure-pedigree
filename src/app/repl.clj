@@ -6,6 +6,7 @@
             [config.main :refer [config]]
             [app.models.user :as user-model]
             [app.models.person :as person-model]
+            [cider.nrepl :refer [cider-nrepl-handler]]
             [cemerick.piggieback :refer [wrap-cljs-repl]]))
 
 (defonce server (atom nil))
@@ -40,8 +41,12 @@
   (reset! server nil))
 
 (defn start-repl []
+  ;; enable when using with cljs repl
+  ;; (repl-server/start-server :port (config :nrepl-port)
+  ;;                           :handler (repl-server/default-handler
+  ;;                           #'wrap-cljs-repl))
   (repl-server/start-server :port (config :nrepl-port)
-                            :handler (repl-server/default-handler #'wrap-cljs-repl))
+                            :handler cider-nrepl-handler)
   (println (str "nRepl server running on port " (config :nrepl-port))))
 
 (defn create-init-db []

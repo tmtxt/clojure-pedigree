@@ -17,6 +17,7 @@
                  [clojurewerkz/neocons "3.1.0-beta3"]
                  [crypto-password "0.1.3"]
                  [weasel "0.6.0"]
+                 [cider/cider-nrepl "0.9.0-SNAPSHOT"]
                  [com.cemerick/piggieback "0.1.5"]
                  ;; [com.cemerick/austin "0.1.6"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
@@ -65,4 +66,21 @@
                    [ring/ring-devel "1.3.2"]]
     :ring {:open-browser? false}
     :env {:someconfig "dev"}
-    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}})
+    :repl-options {:nrepl-middleware
+                   [cemerick.piggieback/wrap-cljs-repl
+                    cider.nrepl.middleware.apropos/wrap-apropos
+                    cider.nrepl.middleware.classpath/wrap-classpath
+                    cider.nrepl.middleware.complete/wrap-complete
+                    cider.nrepl.middleware.debug/wrap-debug
+                    cider.nrepl.middleware.format/wrap-format
+                    cider.nrepl.middleware.info/wrap-info
+                    cider.nrepl.middleware.inspect/wrap-inspect
+                    cider.nrepl.middleware.macroexpand/wrap-macroexpand
+                    cider.nrepl.middleware.ns/wrap-ns
+                    cider.nrepl.middleware.pprint/wrap-pprint
+                    cider.nrepl.middleware.refresh/wrap-refresh
+                    cider.nrepl.middleware.resource/wrap-resource
+                    cider.nrepl.middleware.stacktrace/wrap-stacktrace
+                    cider.nrepl.middleware.test/wrap-test
+                    cider.nrepl.middleware.trace/wrap-trace
+                    cider.nrepl.middleware.undef/wrap-undef]}}})
