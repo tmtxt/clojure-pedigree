@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/tmtxt/clojure-pedigree/issues"
   },
-  "homepage": "https://github.com/tmtxt/clojure-pedigree"
+  "homepage": "https://github.com/tmtxt/clojure-pedigree",
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
 }
