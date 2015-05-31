@@ -18,3 +18,4 @@
 /.repl/*
 /node_modules/*
 /.tern-port
+/resources/public/bower/*
