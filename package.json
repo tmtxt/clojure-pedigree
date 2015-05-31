@@ -1,0 +1,23 @@
+{
+  "name": "clojure-pedigree",
+  "version": "1.0.0",
+  "description": "Pedigree Management website in Clojure",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tmtxt/clojure-pedigree.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmtxt/clojure-pedigree/issues"
+  },
+  "homepage": "https://github.com/tmtxt/clojure-pedigree"
+}
