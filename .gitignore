@@ -17,3 +17,4 @@
 /a.sql
 /.repl/*
 /node_modules/*
+/.tern-port
