@@ -30,6 +30,7 @@ schemup_path: "{{project_dir}}/schema"
 # nvm
 nvm_user: "{{project_user}}"
 nvm_node_version: 0.11.14
+nvm_install_node_apps: true
 
 # folders
 script_dir: "{{project_dir}}/scripts"
