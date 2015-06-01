@@ -31,8 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # db
       db_name: project_name,
       db_user: project_user,
-      db_password: "vagrant",
-      neo4j_password: "vagrant",
 
       # vagrant specific
       vagrant_env: true
