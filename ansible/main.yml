@@ -10,6 +10,14 @@
       git: repo=https://github.com/tmtxt/clojure-pedigree.git dest={{project_dir}}
 
 - hosts: all
+  tasks:
+    - name: create necessary directories
+      sudo: yes
+      sudo_user: "{{project_user}}"
+      file: path={{item}} state=directory
+      with_items: out_dirs
+
+- hosts: all
   roles:
     - apt
     - user
@@ -25,13 +33,6 @@
     - neo4j
 
   tasks:
-    # create necessary directory
-    - name: create out dirs
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      file: path={{item}} state=directory
-      with_items: out_dirs
-
     - name: generate db.clj config
       sudo: yes
       sudo_user: "{{project_user}}"
