@@ -1,0 +1,25 @@
+{
+  "name": "clojure-pedigree",
+  "version": "0.0.0",
+  "homepage": "https://github.com/tmtxt/clojure-pedigree",
+  "authors": [
+    "Truong <me@truongtx.me>"
+  ],
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./resources/public/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4"
+  }
+}
