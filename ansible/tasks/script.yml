@@ -1,0 +1,18 @@
+---
+- name: create server script template
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/ring-server.sh
+    dest={{script_dir}}/ring-server.sh
+    mode=755
+    owner={{project_user}}
+
+- name: create set env script
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/set_env.sh
+    dest={{script_dir}}/set_env.sh
+    mode=755
+    owner={{project_user}}

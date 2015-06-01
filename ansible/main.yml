@@ -38,58 +38,11 @@
     - neo4j
 
   tasks:
-    - name: generate db.clj config
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      template: src=templates/db_config.clj dest={{project_dir}}/src/config/db.clj
-
-    - name: generate neo4j.clj config
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      template: src=templates/neo4j.clj dest={{project_dir}}/src/config/neo4j.clj
-
-    - name: generate system.clj config
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      template: src=templates/system_config.clj dest={{project_dir}}/src/config/system.clj
-
     - name: install leiningen dependencies
       sudo: yes
       sudo_user: "{{project_user}}"
       command: lein deps chdir={{project_dir}}
       changed_when: False
-
-    - name: create server script template
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      template: >-
-        src=templates/ring-server.sh
-        dest={{script_dir}}/ring-server.sh
-        mode=755
-        owner={{project_user}}
-
-    - name: create set env script
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      template: >-
-        src=templates/set_env.sh
-        dest={{script_dir}}/set_env.sh
-        mode=755
-        owner={{project_user}}
-
-    - name: create server service
-      sudo: yes
-      notify:
-        - restart ring server
-      template: >-
-        src=templates/ring-server.conf
-        dest=/etc/init/{{service_prefix}}-ring-server.conf
-
-    - name: create logrotate config
-      sudo: yes
-      template: >-
-        src=templates/logrotate
-        dest=/etc/logrotate.d/{{service_prefix}}
 
     - name: compile cljs
       sudo: yes
@@ -99,6 +52,9 @@
         chdir: "{{project_dir}}"
       register: cljs_compile_result
       changed_when: cljs_compile_result.stdout.find('Successfully compiled') != -1
+
+    - include: tasks/config.yml
+    - include: tasks/script.yml
 
   handlers:
     - name: restart ring server
