@@ -12,6 +12,7 @@ out_dirs:
   - "{{project_dir}}/target"                # clj build dir
   - "{{project_dir}}/scripts"               # script dir
   - "{{project_dir}}/src/config"            # clj config
+  - "{{project_dir}}/password"
 
 # database
 db_name: "{{project_name}}"
@@ -35,6 +36,7 @@ nvm_install_node_apps: true
 # folders
 script_dir: "{{project_dir}}/scripts"
 log_dir: "{{project_dir}}/logs"
+password_dir: "{{project_dir}}/password"
 
 # web server
 ring_port: 3000
@@ -43,4 +45,5 @@ nrepl_port: 7888
 # neo4j
 neo4j_user: "{{project_user}}"
 neo4j_port: 7474
-neo4j_password: password
+neo4j_random_password: true
+neo4j_password_file: "{{password_dir}}/neo4j"
