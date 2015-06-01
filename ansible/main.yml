@@ -1,4 +1,5 @@
 ---
+# Initialize for remote hosts
 - hosts: vps.truongtx.me
   roles:
     - git
@@ -9,6 +10,7 @@
       sudo_user: "{{project_user}}"
       git: repo=https://github.com/tmtxt/clojure-pedigree.git dest={{project_dir}}
 
+# Initialize tasks
 - hosts: all
   tasks:
     - name: create necessary directories
@@ -17,6 +19,7 @@
       file: path={{item}} state=directory
       with_items: out_dirs
 
+# Main tasks
 - hosts: all
   roles:
     - apt
