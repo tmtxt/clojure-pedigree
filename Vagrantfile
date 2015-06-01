@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   project_user = "vagrant"
 
   # port forwarding
-  config.vm.network :forwarded_port, guest: 8080, host: 9250
+  config.vm.network :forwarded_port, guest: 80, host: 9250
   config.vm.network :forwarded_port, guest: 3000, host: 9251
   config.vm.network :forwarded_port, guest: 7888, host: 9252
   config.vm.network :forwarded_port, guest: 9000, host: 9253
@@ -33,7 +33,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       db_user: project_user,
 
       # vagrant specific
-      vagrant_env: true
+      vagrant_env: true,
+      ssl_enable: false,
+      server_name: 'localhost'
     }
   end
 end
