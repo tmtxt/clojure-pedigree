@@ -36,6 +36,7 @@
     - clojure
     - curl
     - neo4j
+    - nginx
 
   tasks:
     - name: install leiningen dependencies
