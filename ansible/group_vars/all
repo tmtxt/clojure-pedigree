@@ -14,11 +14,17 @@ out_dirs:
   - "{{project_dir}}/src/config"            # clj config
   - "{{project_dir}}/password"
 
+# folders
+script_dir: "{{project_dir}}/scripts"
+log_dir: "{{project_dir}}/logs"
+password_dir: "{{project_dir}}/password"
+
 # database
 db_name: "{{project_name}}"
 db_user: "{{project_user}}"
 db_host: localhost
-db_password: password
+pg_random_password: true
+pg_password_file: "{{password_dir}}/postgres"
 
 # virtualenv
 virtualenv_user: "{{project_user}}"
@@ -32,11 +38,6 @@ schemup_path: "{{project_dir}}/schema"
 nvm_user: "{{project_user}}"
 nvm_node_version: 0.11.14
 nvm_install_node_apps: true
-
-# folders
-script_dir: "{{project_dir}}/scripts"
-log_dir: "{{project_dir}}/logs"
-password_dir: "{{project_dir}}/password"
 
 # web server
 ring_port: 3000
