@@ -36,6 +36,8 @@
     - clojure
     - curl
     - neo4j
+    - nginx
+    - iptables
 
   tasks:
     - name: install leiningen dependencies
@@ -55,8 +57,13 @@
 
     - include: tasks/config.yml
     - include: tasks/script.yml
+    - include: tasks/nginx.yml
 
   handlers:
     - name: restart ring server
       sudo: yes
       service: name={{service_prefix}}-ring-server state=restarted
+
+    - name: restart nginx
+      sudo: yes
+      service: name=nginx state=restarted

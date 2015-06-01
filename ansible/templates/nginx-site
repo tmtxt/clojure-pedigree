@@ -1,0 +1,9 @@
+# -*- mode: conf -*-
+server {
+       server_name        {{ server_name }};
+       listen             80;
+
+       location / {
+                proxy_pass http://localhost:{{ ring_port }};
+       }
+}
