@@ -94,6 +94,8 @@
       register: cljs_compile_result
       changed_when: cljs_compile_result.stdout.find('Successfully compiled') != -1
 
+    - include: tasks/frontend.yml
+
   handlers:
     - name: restart ring server
       sudo: yes

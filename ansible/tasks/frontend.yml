@@ -1,0 +1,7 @@
+---
+- name: install bower components
+  command: bash -c '. ~/.nvm/nvm.sh; bower install'
+  args:
+    chdir: "{{project_dir}}"
+  register: bower_install_result
+  changed_when: bower_install_result.stdout == ""
