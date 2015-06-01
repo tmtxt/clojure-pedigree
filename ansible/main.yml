@@ -9,6 +9,8 @@
       sudo: yes
       sudo_user: "{{project_user}}"
       git: repo=https://github.com/tmtxt/clojure-pedigree.git dest={{project_dir}}
+      notify:
+        - restart ring server
 
 # Initialize tasks
 - hosts: all
