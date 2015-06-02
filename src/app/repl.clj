@@ -50,4 +50,5 @@
   (println (str "nRepl server running on port " (config :nrepl-port))))
 
 (defn create-init-db []
-  (user-model/create-init-users))
+  (user-model/create-init-users)
+  (person-model/create-init-person))
