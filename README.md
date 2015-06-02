@@ -4,11 +4,6 @@ Pedigree Management website in Clojure
 
 # not finished yet...
 
-**TODO**:
-
-- Clojure Script repl
-- nginx configuration
-
 # Documentation
 
 Documentation is located under docs folder, you should read them in this order
