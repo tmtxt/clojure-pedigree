@@ -15,3 +15,30 @@
   (let [count-list (kc/select entity (kc/aggregate (count :*) :cnt))
         count (->> count-list (first) (:cnt))]
     (zero? count)))
+
+(defn find-by-id
+  "Find entity by id"
+  [entity id]
+  (->> (kc/where {:id id})
+       (kc/select entity)
+       (first)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
