@@ -26,11 +26,16 @@
                                  :password (crypto/encrypt "admin")}))]
       (create-user-role admin :admin))))
 
-(defn add-user [user-map]
+(defn add-user
+  "Add user with their role. Default role is :user"
+  [user-map & role]
   (when (vl/valid? validation user-map)
     (let [password-hash (crypto/encrypt (:password user-map))
-          new-user-map (assoc user-map :password password-hash)]
-      (insert user (values new-user-map))
+          new-user-map (assoc user-map :password password-hash)
+          new-user (insert user (values new-user-map))
+          user-role (if role role :user)]
+      (create-user-role new-user user-role)
+      new-user
       )))
 
 
