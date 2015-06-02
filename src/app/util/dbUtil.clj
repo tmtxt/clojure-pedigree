@@ -16,29 +16,17 @@
         count (->> count-list (first) (:cnt))]
     (zero? count)))
 
+(defn exists?
+  "Check if the entity is exist"
+  [entity where]
+  (let [count-list (kc/select entity (kc/aggregate (count :*) :cnt) (kc/where where))
+        count (->> count-list (first) (:cnt))]
+    (not (zero? count)))
+  )
+
 (defn find-by-id
   "Find entity by id"
   [entity id]
   (->> (kc/where {:id id})
        (kc/select entity)
        (first)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
