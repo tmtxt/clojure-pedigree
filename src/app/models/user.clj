@@ -20,23 +20,22 @@
 
 (defn create-init-users []
   (when (db-util/table-empty? user)
-    (let [admin (insert user
-                        (values {:full_name "Admin"
-                                 :email "admin@example.com"
-                                 :password (crypto/encrypt "admin")}))]
-      (create-user-role admin :admin))))
+    (add-user {:username "admin"
+               :full_name "Admin"
+               :email "admin@example.com"
+               :password "admin"}
+              :admin)))
 
 (defn add-user
   "Add user with their role. Default role is :user"
-  [user-map & role]
+  [user-map & [role]]
   (when (vl/valid? validation user-map)
     (let [password-hash (crypto/encrypt (:password user-map))
           new-user-map (assoc user-map :password password-hash)
           new-user (insert user (values new-user-map))
           user-role (if role role :user)]
       (create-user-role new-user user-role)
-      new-user
-      )))
+      new-user)))
 
 
 
