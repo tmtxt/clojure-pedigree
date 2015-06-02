@@ -1,6 +1,6 @@
 (ns app.models.user
   (:use [korma.core])
-  (:require [app.models.userRole :refer [create-user-role]]
+  (:require [app.models.userRole :refer [add-user-role]]
             [crypto.password.bcrypt :as crypto]
             [app.util.dbUtil :as db-util]
             [validateur.validation :as vl]))
@@ -37,7 +37,7 @@
             new-user-map (assoc user-map :password password-hash)
             new-user (insert user (values new-user-map))
             user-role (if role role :user)]
-        (create-user-role new-user user-role)
+        (add-user-role new-user user-role)
         {:success true
          :user new-user})
       {:success false

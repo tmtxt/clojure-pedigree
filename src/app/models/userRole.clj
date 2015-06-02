@@ -28,7 +28,18 @@
   ;; transform data before inserting into the database
   (prepare prepare-data))
 
-(defn create-user-role [user role]
-  (insert user-role
+(defn add-user-role [user & [role]]
+  (let [role-name (if role role :user)]
+    (insert user-role
           (values {:user_id (user :id)
-                   :role_name (get USER_ROLE_NAMES role USER_ROLE_NAME_USER)})))
+                   :role_name (get USER_ROLE_NAMES role-name USER_ROLE_NAME_USER)}))))
+
+
+
+
+
+
+
+
+
+
