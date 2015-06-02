@@ -33,13 +33,3 @@
     (insert user-role
           (values {:user_id (user :id)
                    :role_name (get USER_ROLE_NAMES role-name USER_ROLE_NAME_USER)}))))
-
-
-
-
-
-
-
-
-
-
