@@ -17,7 +17,7 @@
    (vl/presence-of :full_name)
    (vl/presence-of :email)
    (vl/presence-of :password)
-   (vl/validate-by :email #(not (db-util/exists? user {:email %})))))
+   (vl/validate-by :email #(not (db-util/exists? user {:email %})) :message "Email already exist")))
 
 (defn create-init-users []
   (when (db-util/table-empty? user)
@@ -30,11 +30,14 @@
 (defn add-user
   "Add user with their role. Default role is :user"
   [user-map & [role]]
-  (when (vl/valid? validation user-map)
-    (let [password-hash (crypto/encrypt (:password user-map))
-          new-user-map (assoc user-map :password password-hash)
-          new-user (insert user (values new-user-map))
-          user-role (if role role :user)]
-      (create-user-role new-user user-role)
-      new-user)))
-
+  (let [errors (validation user-map)]
+    (if (empty? errors)
+      (let [password-hash (crypto/encrypt (:password user-map))
+            new-user-map (assoc user-map :password password-hash)
+            new-user (insert user (values new-user-map))
+            user-role (if role role :user)]
+        (create-user-role new-user user-role)
+        {:success true
+         :user new-user})
+      {:success false
+       :errors errors})))
