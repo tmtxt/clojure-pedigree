@@ -16,7 +16,8 @@
    (vl/presence-of :username)
    (vl/presence-of :full_name)
    (vl/presence-of :email)
-   (vl/presence-of :password)))
+   (vl/presence-of :password)
+   (vl/validate-by :email #(not (db-util/exists? user {:email %})))))
 
 (defn create-init-users []
   (when (db-util/table-empty? user)
@@ -36,3 +37,4 @@
           user-role (if role role :user)]
       (create-user-role new-user user-role)
       new-user)))
+
