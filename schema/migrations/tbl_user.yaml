@@ -11,3 +11,10 @@ sql: |
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     UNIQUE(email)
   );
+
+---
+table: tbl_user
+from: txt_1
+to: txt_2
+sql: |
+  ALTER TABLE tbl_user ADD COLUMN username TEXT UNIQUE NOT NULL;
