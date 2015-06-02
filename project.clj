@@ -8,6 +8,7 @@
                  [ring-server "0.3.1"]
                  [selmer "0.7.9"]
                  [lib-noir "0.9.5"]
+                 [com.novemberain/validateur "2.4.2"]
                  [korma "0.4.0"]
                  [environ "1.0.0"]
                  [org.postgresql/postgresql "9.3-1100-jdbc41"]
