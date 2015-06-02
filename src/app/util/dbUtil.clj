@@ -17,12 +17,16 @@
     (zero? count)))
 
 (defn exists?
-  "Check if the entity is exist"
+  "Check if the entity is exist by where map"
   [entity where]
-  (let [count-list (kc/select entity (kc/aggregate (count :*) :cnt) (kc/where where))
-        count (->> count-list (first) (:cnt))]
-    (not (zero? count)))
-  )
+  (->> (kc/select
+        entity
+        (kc/aggregate (count :*) :cnt)
+        (kc/where where))
+       (first)
+       (:cnt)
+       (zero?)
+       (not)))
 
 (defn find-by-id
   "Find entity by id"
