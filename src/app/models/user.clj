@@ -17,6 +17,7 @@
    (vl/presence-of :full_name)
    (vl/presence-of :email)
    (vl/presence-of :password)
+   (vl/validate-by :username #(not (db-util/exists? user {:username %})) :message "Username already exist")
    (vl/validate-by :email #(not (db-util/exists? user {:email %})) :message "Email already exist")))
 
 (defn create-init-users []
