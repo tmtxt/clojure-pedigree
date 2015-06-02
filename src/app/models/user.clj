@@ -36,21 +36,3 @@
           user-role (if role role :user)]
       (create-user-role new-user user-role)
       new-user)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
