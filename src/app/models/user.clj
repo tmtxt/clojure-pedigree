@@ -8,8 +8,7 @@
 (defentity user
   (table :tbl_user)
 
-  (pk :id)
-  )
+  (pk :id))
 
 (def validation
   (vl/validation-set
