@@ -46,20 +46,4 @@
 
 (defn create-init-person []
   (when (db-util/table-empty? person)
-    (let [root (insert person
-                       (values {:full_name "Root Person"}))
-          root-node (nn/create conn {:user_id (root :id)
-                                     :is_root true})]
-      (nl/add conn root-node "person")
-      root)))
-
-
-
-
-
-
-
-
-
-
-
+    (add-person {:full_name "Root Person"} :is-root true)))
