@@ -20,6 +20,17 @@
    (vl/presence-of :user_id)
    (vl/validate-by :user_id #(db-util/exists? person {:id %}) :message "User Id not exist")))
 
+(defn add-person-node
+  "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
+  [person-entity & {:keys [is-root]
+                    :or {is-root false}}]
+  (let [person-node (nn/create conn {:user_id (person-entity :id)
+                                     :is_root is-root})]
+    (nl/add conn person-node "person")
+    {:success true
+     :person person-entity
+     :node person-node}))
+
 (defn add-person
   "Add new person into postgres and neo4j"
   [person-map & {:keys [is-root]
@@ -31,18 +42,6 @@
       {:success false
        :errors errors})
     ))
-
-(defn add-person-node
-  "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
-  [person-entity & {:keys [is-root]
-                    :or {is-root false}}]
-  (let [person-node (nn/create conn {:user_id (person-entity :id)
-                                     :is_root is-root})]
-    (nl/add conn person-node "person")
-    {:success true
-     :person person-entity
-     :node person-node})
-  )
 
 (defn create-init-person []
   (when (db-util/table-empty? person)
