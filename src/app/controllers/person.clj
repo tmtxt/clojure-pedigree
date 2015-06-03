@@ -10,5 +10,6 @@
 (defn list-person []
   (str (kc/select person)))
 
-(defroutes person-routes
-  (GET "/person/list" [] (list-person)))
+(def person-routes
+  (context "/person" []
+           (GET "/list" [] (list-person))))
