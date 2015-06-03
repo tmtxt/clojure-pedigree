@@ -11,9 +11,6 @@
   "Add new relation between two node in the system"
   [parent-node child-node & {:keys [type]
                              :or [type :father-child]}]
-  (println parent-node)
-  (println child-node)
-  (println type)
   (nrl/create conn parent-node child-node type))
 
 (defn test []

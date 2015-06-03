@@ -46,13 +46,8 @@
 
 (defn create-init-person []
   (when (db-util/table-empty? person)
-    (let [root (add-person {:full_name "Root Person"} :is-root true)
-          first-child (add-person {:full_name "Child 1"})
-          second-child (add-person {:full_name "Child 2"})
-          root-node (:node root)
-          first-child-node (:node first-child)
-          second-child-node (:node second-child)]
-      (prl/add-relation-from-node root-node first-child-node :type :father-child)
-      (prl/add-relation-from-node root-node second-child-node :type :father-child)
-      )
-    ))
+    (let [root (-> {:full_name "Root Person"} (add-person :is-root true) (:node))
+          first-child (-> {:full_name "Child 1"} (add-person) (:node))
+          second-child (-> {:full_name "Child 2"} (add-person) (:node))]
+      (prl/add-relation-from-node root first-child :type :father-child)
+      (prl/add-relation-from-node root second-child :type :father-child))))
