@@ -12,11 +12,3 @@
   [parent-node child-node & {:keys [type]
                              :or [type :father-child]}]
   (nrl/create conn parent-node child-node type))
-
-(defn test []
-  (let [p1 (person-model/add-person {:full_name "P1"})
-        p2 (person-model/add-person {:full_name "P2"})
-        n1 (p1 :node)
-        n2 (p2 :node)]
-    (add-relation-from-node n1 n2)
-    ))
