@@ -20,14 +20,6 @@
    (vl/validate-by :username #(not (db-util/exists? user {:username %})) :message "Username already exist")
    (vl/validate-by :email #(not (db-util/exists? user {:email %})) :message "Email already exist")))
 
-(defn create-init-users []
-  (when (db-util/table-empty? user)
-    (add-user {:username "admin"
-               :full_name "Admin"
-               :email "admin@example.com"
-               :password "admin"}
-              :admin)))
-
 (defn add-user
   "Add user with their role. Default role is :user"
   [user-map & [role]]
@@ -42,3 +34,11 @@
          :user new-user})
       {:success false
        :errors errors})))
+
+(defn create-init-users []
+  (when (db-util/table-empty? user)
+    (add-user {:username "admin"
+               :full_name "Admin"
+               :email "admin@example.com"
+               :password "admin"}
+              :admin)))
