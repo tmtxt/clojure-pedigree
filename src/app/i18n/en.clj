@@ -1,4 +1,4 @@
 (ns app.i18n.en)
 
-(def translation
+(def dict
   {:en {:user "User"}})

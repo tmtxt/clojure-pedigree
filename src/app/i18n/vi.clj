@@ -1,4 +1,4 @@
 (ns app.i18n.vi)
 
-(def translation
+(def dict
   {:vi {:user "Người dùng"}})
