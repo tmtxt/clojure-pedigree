@@ -4,7 +4,8 @@
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [config.neo4j :refer [conn]]
-            [validateur.validation :as vl]))
+            [validateur.validation :as vl]
+            [app.models.pedigreeRelation :as prl]))
 
 (defentity person
   (table :tbl_person)
@@ -45,4 +46,13 @@
 
 (defn create-init-person []
   (when (db-util/table-empty? person)
-    (add-person {:full_name "Root Person"} :is-root true)))
+    (let [root (add-person {:full_name "Root Person"} :is-root true)
+          first-child (add-person {:full_name "Child 1"})
+          second-child (add-person {:full_name "Child 2"})
+          root-node (:node root)
+          first-child-node (:node first-child)
+          second-child-node (:node second-child)]
+      (prl/add-relation-from-node root-node first-child-node :type :father-child)
+      (prl/add-relation-from-node root-node second-child-node :type :father-child)
+      )
+    ))
