@@ -4,8 +4,7 @@
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.relationships :as nrl]
             [config.neo4j :refer [conn]]
-            [validateur.validation :as vl]
-            [app.models.person :as person-model]))
+            [validateur.validation :as vl]))
 
 (defn add-relation-from-node
   "Add new relation between two node in the system"
