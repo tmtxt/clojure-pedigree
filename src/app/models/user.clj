@@ -1,49 +1,43 @@
 (ns app.models.user
   (:use [korma.core])
-  (:require [app.models.userRole :refer [create-user-role]]
+  (:require [app.models.userRole :refer [add-user-role]]
             [crypto.password.bcrypt :as crypto]
-            [app.util.dbUtil :as db-util]))
-
-;;; Basic Korma model structure
-;;; see more at http://sqlkorma.com/docs
+            [app.util.dbUtil :as db-util]
+            [validateur.validation :as vl]))
 
 (defentity user
-  ;; Basic configuration
-
-  ;; Table, by default the name of the entity
   (table :tbl_user)
 
-  ;; Primary key, by default "id"
-  ;; This line is unnecessary, it's used for relationships joins.
-  (pk :id)
+  (pk :id))
 
-  ;; Default fields for selects
-  ;; (entity-fields :column1 :column2)
+(def validation
+  (vl/validation-set
+   (vl/presence-of :username)
+   (vl/presence-of :full_name)
+   (vl/presence-of :email)
+   (vl/presence-of :password)
+   (vl/validate-by :username #(not (db-util/exists? user {:username %})) :message "Username already exist")
+   (vl/validate-by :email #(not (db-util/exists? user {:email %})) :message "Email already exist")))
 
-  ;; Relationships, uncomment or add more as necessary
-
-  ;; assumes users.id = address.users_id
-  ;; (has-one address)
-
-  ;; assumes users.id = email.users_id
-  ;; but gets the results in a second query
-  ;; for each element
-  ;; (has-many email)
-
-  ;; assumes users.account_id = account.id
-  ;; (belongs-to account)
-
-  ;; assumes a table users_posts with columns users_id
-  ;; and posts_id
-  ;; like has-many, also gets the results in a second
-  ;; query for each element
-  ;; (many-to-many posts :users_posts)
-  )
+(defn add-user
+  "Add user with their role. Default role is :user"
+  [user-map & [role]]
+  (let [errors (validation user-map)]
+    (if (empty? errors)
+      (let [password-hash (crypto/encrypt (:password user-map))
+            new-user-map (assoc user-map :password password-hash)
+            new-user (insert user (values new-user-map))
+            user-role (if role role :user)]
+        (add-user-role new-user user-role)
+        {:success true
+         :user new-user})
+      {:success false
+       :errors errors})))
 
 (defn create-init-users []
   (when (db-util/table-empty? user)
-    (let [admin (insert user
-                          (values {:full_name "Admin"
-                                   :email "admin@example.com"
-                                   :password (crypto/encrypt "admin")}))]
-        (create-user-role admin :admin))))
+    (add-user {:username "admin"
+               :full_name "Admin"
+               :email "admin@example.com"
+               :password "admin"}
+              :admin)))
