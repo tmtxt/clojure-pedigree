@@ -34,3 +34,36 @@
   (->> (kc/where {:id id})
        (kc/select entity)
        (first)))
+
+(defn find-all-by-attrs
+  "Find all entities by attrs map"
+  [entity where]
+  (->> (kc/select
+        entity
+        (kc/where where))))
+
+(defn find-by-attrs
+  "Find the first matched entity by attrs map"
+  [entity where]
+  (-> (find-all-by-attrs entity where)
+      (first)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
