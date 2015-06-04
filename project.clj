@@ -21,6 +21,7 @@
                  [cider/cider-nrepl "0.9.0-SNAPSHOT"]
                  [com.cemerick/piggieback "0.1.5"]
                  ;; [com.cemerick/austin "0.1.6"]
+                 [buddy "0.5.4"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools
