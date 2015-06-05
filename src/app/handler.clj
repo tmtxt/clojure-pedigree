@@ -31,11 +31,5 @@
               person-routes
               app-routes)
       (wrap-authentication backend)
-      ;; (handler/site)
-      ;; (wrap-base-url)
-
-      ;; (validation/wrap-noir-validation)
-
-      ;; (session/wrap-noir-session {:store (memory-store)})
       (wrap-session)
       ))
