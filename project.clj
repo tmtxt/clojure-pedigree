@@ -6,7 +6,7 @@
                  [org.clojure/tools.nrepl "0.2.10"]
                  [compojure "1.3.1"]
                  [ring-server "0.3.1"]
-                 [selmer "0.7.9"]
+                 [selmer "0.8.2"]
                  [lib-noir "0.9.5"]
                  [com.novemberain/validateur "2.4.2"]
                  [korma "0.4.0"]
