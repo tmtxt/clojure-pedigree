@@ -7,42 +7,29 @@
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]))
 
-(defn home []
+(defn home [request]
   (layout/render "home/index.html" {:name (config :site-name)}))
 
-;; (defn login-authenticate [request]
-;;   (let [session (:session request)
-;;         updated-session (assoc session :identity "abc")]
-;;     (println updated-session)
-;;     (-> (redirect "/show") (assoc :session updated-session)))
-;;   )
-
-;; (defn show [request]
-;;   (println "show")
-;;   (println (:session request))
-;;   (println (authenticated? request))
-;;   )
-
-;; (defn testr [request]
-;;   (println "authen")
-;;   (let [session (:session request)
-;;         updated-session (assoc session :identity "abc")]
-;;     (println updated-session)
-;;     (let [temp (-> (redirect "/show") (assoc :session updated-session))]
-;;       (println temp)
-;;       temp)
-;;     )
-;;   )
-
 (defn login-render [request]
-  )
+  (println "login")
+  (println (:session request))
+  (if (authenticated? request)
+    (redirect "/welcome")
+    (layout/render "home/login.html")))
 
 (defn login-authenticate [request]
-  )
+  (println "post")
+  (let [session (:session request)
+        updated-session (assoc session :identity "abc")]
+    (-> (redirect "/welcome") (assoc :session updated-session))))
+
+(defn welcome [request]
+  (layout/render "home/welcome.html"))
 
 (defroutes home-routes
-  (GET "/" [] (home))
+  (GET "/" [] home)
   (GET "/login" [] login-render)
+  (GET "/welcome" [] welcome)
   (POST "/login" [] login-authenticate))
 
 
