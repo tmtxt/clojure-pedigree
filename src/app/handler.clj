@@ -5,6 +5,7 @@
             [ring.middleware.session.memory :refer [memory-store]]
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
+            [ring.middleware.params :refer [wrap-params]]
             [compojure.route :as route]
             [app.controllers.home :refer [home-routes]]
             [app.controllers.person :refer [person-routes]]
@@ -31,5 +32,5 @@
               person-routes
               app-routes)
       (wrap-authentication backend)
-      (wrap-session)
-      ))
+      (wrap-params)
+      (wrap-session)))
