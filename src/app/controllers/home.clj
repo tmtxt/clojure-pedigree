@@ -2,7 +2,8 @@
   (:require [compojure.core :refer :all]
             [app.views.layout :as layout]
             [selmer.parser :refer [render-file render]]
-            ;; [noir.session :as session]
+            [app.util.main :as util]
+            [app.util.security :as security]
             [ring.util.response :refer [response redirect content-type]]
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]))
@@ -11,17 +12,18 @@
   (layout/render "home/index.html" {:name (config :site-name)}))
 
 (defn login-render [request]
-  (println "login")
-  (println (:session request))
   (if (authenticated? request)
     (redirect "/welcome")
     (layout/render "home/login.html")))
 
 (defn login-authenticate [request]
-  (println "post")
-  (let [session (:session request)
+  (let [username (util/param request "username")
+        password (util/param request "password")]
+    (if (security/authen-user username password)
+      (let [session (:session request)
         updated-session (assoc session :identity "abc")]
-    (-> (redirect "/welcome") (assoc :session updated-session))))
+        (-> (redirect "/welcome") (assoc :session updated-session)))
+      (layout/render "home/login.html" {:message "error"}))))
 
 (defn welcome [request]
   (layout/render "home/welcome.html"))
