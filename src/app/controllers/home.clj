@@ -21,7 +21,7 @@
         password (util/param request "password")]
     (if (security/authen-user username password)
       (let [session (:session request)
-        updated-session (assoc session :identity "abc")]
+        updated-session (assoc session :identity username)]
         (-> (redirect "/welcome") (assoc :session updated-session)))
       (layout/render "home/login.html" {:message "error"}))))
 
