@@ -6,7 +6,7 @@
                  [org.clojure/tools.nrepl "0.2.10"]
                  [compojure "1.3.1"]
                  [ring-server "0.3.1"]
-                 [selmer "0.7.9"]
+                 [selmer "0.8.2"]
                  [lib-noir "0.9.5"]
                  [com.novemberain/validateur "2.4.2"]
                  [korma "0.4.0"]
@@ -21,6 +21,7 @@
                  [cider/cider-nrepl "0.9.0-SNAPSHOT"]
                  [com.cemerick/piggieback "0.1.5"]
                  ;; [com.cemerick/austin "0.1.6"]
+                 [buddy "0.5.4"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools

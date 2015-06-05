@@ -5,10 +5,14 @@
             [ring.middleware.session.memory :refer [memory-store]]
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
+            [ring.middleware.params :refer [wrap-params]]
             [compojure.route :as route]
             [app.controllers.home :refer [home-routes]]
             [app.controllers.person :refer [person-routes]]
+            [ring.middleware.session :refer [wrap-session]]
             [noir.session :as session]
+            [buddy.auth.backends.session :refer [session-backend]]
+            [buddy.auth.middleware :refer [wrap-authentication]]
             [noir.validation :as validation]))
 
 (defn init []
@@ -21,11 +25,12 @@
   (route/resources "/")
   (route/not-found "Not Found"))
 
+(def backend (session-backend))
+
 (def app
   (-> (routes home-routes
               person-routes
               app-routes)
-      (handler/site)
-      (wrap-base-url)
-      (session/wrap-noir-session {:store (memory-store)})
-      (validation/wrap-noir-validation)))
+      (wrap-authentication backend)
+      (wrap-params)
+      (wrap-session)))
