@@ -12,16 +12,17 @@
   (layout/render "home/index.html" {:name (config :site-name)}))
 
 (defn login-render [request]
-  (if (authenticated? request)
-    (redirect "/welcome")
-    (layout/render "home/login.html")))
+  (layout/render "home/login.html"))
 
 (defn login-authenticate [request]
   (let [username (util/param request "username")
-        password (util/param request "password")]
-    (if (security/authen-user username password)
+        password (util/param request "password")
+        user-info (security/authen-user username password)]
+    (if user-info
       (let [session (:session request)
-        updated-session (assoc session :identity username)]
+            updated-session (assoc session
+                                   :identity (user-info :id)
+                                   :user-info user-info)]
         (-> (redirect "/welcome") (assoc :session updated-session)))
       (layout/render "home/login.html" {:message "error"}))))
 
@@ -34,7 +35,9 @@
   (GET "/welcome" [] welcome)
   (POST "/login" [] login-authenticate))
 
-
+(def home-rules [{:uri "/login"
+                  :handler security/anonymous-access
+                  :redirect "/welcome"}])
 
 
 

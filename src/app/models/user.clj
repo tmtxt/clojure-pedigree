@@ -1,6 +1,6 @@
 (ns app.models.user
   (:use [korma.core])
-  (:require [app.models.userRole :refer [add-user-role]]
+  (:require [app.models.userRole :refer [add-user-role user-role]]
             [crypto.password.bcrypt :as crypto]
             [app.util.dbUtil :as db-util]
             [validateur.validation :as vl]))
@@ -8,7 +8,9 @@
 (defentity user
   (table :tbl_user)
 
-  (pk :id))
+  (pk :id)
+
+  (has-one user-role {:fk :user_id}))
 
 (def validation
   (vl/validation-set
@@ -33,6 +35,11 @@
          :user new-user})
       {:success false
        :errors errors})))
+
+(defn find-by-username [username]
+  (first (select user
+                 (with user-role)
+                 (where {:username username}))))
 
 (defn create-init-users []
   (when (db-util/table-empty? user)
