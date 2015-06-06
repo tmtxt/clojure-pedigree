@@ -26,6 +26,7 @@ var browserifyConfig = {
 };
 
 // create browserify transform
+var cached = {};
 function createBundler(mode) {
   var bundler = transform(function(filename){
     var b;
@@ -34,13 +35,18 @@ function createBundler(mode) {
     } else if(mode === 'prod') {
       b = browserify(filename, browserifyConfig);
     } else if(mode === 'watch') {
+      if(cached[filename]) return cached[filename].bundle();
       b = watchify(browserify(filename, _.extend(browserifyConfig, watchify.args, {debug: true})));
+      cached[filename] = b;
     }
 
     // event
     b.on('error', browserifyError);
     if(mode === 'watch') {
-      b.on('time', function(time){util.log(util.colors.green('Browserify'), filename + time + ' ms');});
+      b.on('time', function(time){util.log(util.colors.green('Browserify'), filename, util.colors.blue('in ' + time + ' ms'));});
+      b.on('update', function(){
+        bundle(filename, createBundler('watch'), 'watch');
+      });
     }
 
     // transform
@@ -67,6 +73,10 @@ gulp.task('js-dev', function(){
 
 gulp.task('js-prod', function(){
   return bundle('./js/*.js', createBundler("prod"), "prod");
+});
+
+gulp.task('js-watch', function(){
+  return bundle('./js/*.js', createBundler("watch"), 'watch');
 });
 
 // error handler
