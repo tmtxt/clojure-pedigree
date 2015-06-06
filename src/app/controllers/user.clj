@@ -2,9 +2,6 @@
   (:require [compojure.core :refer :all]
             [app.util.security :refer [user-access]]))
 
-(def user-rules [{:pattern #"^/user/.*"
-                  :handler user-access}])
-
 (defn view-profile [request]
   "Hello")
 
@@ -13,20 +10,5 @@
    "/user" []
    (GET "/profile" [] view-profile)))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(def user-rules [{:pattern #"^/user/.*"
+                  :handler user-access}])

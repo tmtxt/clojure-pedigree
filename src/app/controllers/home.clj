@@ -8,10 +8,6 @@
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]))
 
-(def home-rules [{:uri "/login"
-                  :handler security/anonymous-access
-                  :redirect "/welcome"}])
-
 (defn home [request]
   (layout/render "home/index.html" {:name (config :site-name)}))
 
@@ -36,13 +32,6 @@
   (GET "/welcome" [] welcome)
   (POST "/login" [] login-authenticate))
 
-
-
-
-
-
-
-
-
-
-
+(def home-rules [{:uri "/login"
+                  :handler security/anonymous-access
+                  :redirect "/welcome"}])
