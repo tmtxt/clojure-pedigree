@@ -8,10 +8,12 @@
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]))
 
+;;; index
 (defn home [request]
   (layout/render "home/index.html" {:name (config :site-name)
                                     :header {:text "aaaa"}}))
 
+;;; login
 (defn login-render [request]
   (layout/render "home/login.html"))
 
@@ -28,24 +30,24 @@
         (-> (redirect "/welcome") (assoc :session updated-session)))
       (layout/render "home/login.html" {:message "error"}))))
 
+;;; logout
+(defn logout [request]
+  (-> (redirect "/login")
+      (assoc :session {})))
+
 (defn welcome [request]
   (layout/render "home/welcome.html"))
 
 (defroutes home-routes
   (GET "/" [] home)
+
   (GET "/login" [] login-render)
-  (GET "/welcome" [] welcome)
-  (POST "/login" [] login-authenticate))
+  (POST "/login" [] login-authenticate)
+  (GET "/logout" [] logout)
+  (POST "/logout" [] logout)
+
+  (GET "/welcome" [] welcome))
 
 (def home-rules [{:uri "/login"
                   :handler security/anonymous-access
                   :redirect "/welcome"}])
-
-
-
-
-
-
-
-
-
