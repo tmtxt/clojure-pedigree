@@ -32,3 +32,10 @@
     locale
     locale
     (fn [key] (first (tower/with-scope scope [(t locale key)])))))
+
+(defn make-layout-tran [locale-or-request]
+  (let [t (make-t-with-scope locale-or-request :layout)
+        layout-dict (get-in vi/dict [:vi :layout])
+        layout-keys (keys layout-dict)
+        layout-tran (map (fn [k] {k (t k)}) layout-keys)]
+    (apply merge layout-tran)))
