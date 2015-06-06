@@ -6,23 +6,3 @@
 
         :layout {:homepage "Trang chủ"
                  :treepage "Cây gia phả"}}})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

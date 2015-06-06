@@ -6,12 +6,13 @@
             [app.util.security :as security]
             [ring.util.response :refer [response redirect content-type]]
             [buddy.auth :refer [authenticated?]]
-            [config.main :refer [config]]))
+            [config.main :refer [config]]
+            [app.i18n.main :refer [make-layout-tran]]))
 
 ;;; index
 (defn home [request]
   (layout/render "home/index.html" {:name (config :site-name)
-                                    :header {:text "aaaa"}}))
+                                    :layout (make-layout-tran request)}))
 
 ;;; login
 (defn login-render [request]
