@@ -55,6 +55,7 @@
     - include: tasks/config.yml
     - include: tasks/script.yml
     - include: tasks/nginx.yml
+    - include: tasks/frontend.yml
 
   handlers:
     - name: restart ring server
