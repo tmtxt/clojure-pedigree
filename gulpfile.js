@@ -6,6 +6,8 @@ var transform = require('vinyl-transform');
 var shimify = require('browserify-shim');
 var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
+var notifier = require('node-notifier');
+var util = require('gulp-util');
 
 // bower
 gulp.task('bower', function(cb){
@@ -30,15 +32,13 @@ function createBundler(mode) {
       b = browserify(filename, browserifyConfig);
     }
 
-    b.on('error', function(err){
-      console.log(err.message);
-      this.end();
-    });
-    b.on('time', function(time){
-      console.log('browserify ' + filename + ' ' + time);
-    });
+    // event
+    b.on('error', browserifyError);
+    // b.on('time', function(time){util.log(util.colors.green('Browserify'), filename + time + ' ms');});
 
+    // transform
     b.transform(shimify);
+
     return b.bundle();
   });
 
@@ -47,15 +47,26 @@ function createBundler(mode) {
 
 gulp.task('js-dev', function(){
   return gulp.src('./js/*.js')
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: browserifyError}))
     .pipe(createBundler("dev"))
     .pipe(gulp.dest('./resources/public/js'));
 });
 
 gulp.task('js-prod', function(){
   return gulp.src('./js/*.js')
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: browserifyError}))
     .pipe(createBundler("prod"))
     .pipe(uglify({mangle: false}))
     .pipe(gulp.dest('./resources/public/js'));
 });
+
+// error handler
+function error(err) {
+  notifier.notify({message: 'Error: ' + err.message});
+  util.log(util.colors.red('Error: ' + err.message));
+}
+
+function browserifyError(err) {
+  error(err);
+  this.end();
+}
