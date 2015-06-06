@@ -7,9 +7,11 @@
             [compojure.handler :as handler]
             [ring.middleware.params :refer [wrap-params]]
             [compojure.route :as route]
-            [app.controllers.home :refer [home-routes]]
+
+            [app.controllers.home :refer [home-routes home-rules]]
             [app.controllers.person :refer [person-routes]]
             [app.controllers.user :refer [user-routes user-rules]]
+
             [ring.middleware.session :refer [wrap-session]]
             [noir.session :as session]
             [buddy.auth.backends.session :refer [session-backend]]
@@ -30,7 +32,9 @@
 
 (def authentication-backend (session-backend))
 
-(def authorization-rules (concat user-rules))
+(def authorization-rules (concat
+                          user-rules
+                          home-rules))
 
 (def app
   (-> (routes home-routes

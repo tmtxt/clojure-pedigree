@@ -23,7 +23,10 @@
     true
     (error "Not logged in")))
 
-
+(defn anonymous-access [request]
+  (if (authenticated? request)
+    (error "Already logged in")
+    true))
 
 
 

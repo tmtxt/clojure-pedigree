@@ -8,13 +8,15 @@
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]))
 
+(def home-rules [{:uri "/login"
+                  :handler security/anonymous-access
+                  :redirect "/welcome"}])
+
 (defn home [request]
   (layout/render "home/index.html" {:name (config :site-name)}))
 
 (defn login-render [request]
-  (if (authenticated? request)
-    (redirect "/welcome")
-    (layout/render "home/login.html")))
+  (layout/render "home/login.html"))
 
 (defn login-authenticate [request]
   (let [username (util/param request "username")
