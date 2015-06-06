@@ -6,12 +6,12 @@
             [app.util.dbUtil :as db-util]))
 
 (defn authen-user
-  "Authenticate the input username and password"
+  "Authenticate the input username and password. Return user entity if authenticated, otherwise, return nil"
   [username password]
   (let [user (db-util/find-by-attrs user-model/user {:username username})]
-    (if user
-      (crypto/check password (:password user))
-      false)))
+    (if (and user (crypto/check password (:password user)))
+      user
+      nil)))
 
 (defn unauthorized-handler [request value]
   {:status 403
