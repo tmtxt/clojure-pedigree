@@ -22,6 +22,15 @@
   "homepage": "https://github.com/tmtxt/clojure-pedigree",
   "devDependencies": {
     "bower": "^1.4.1",
-    "gulp": "^3.8.11"
+    "browserify": "=8.0.1",
+    "browserify-shim": "^3.8.8",
+    "gulp": "^3.8.11",
+    "gulp-plumber": "^1.0.1",
+    "gulp-uglify": "^1.2.0",
+    "lodash": "^3.9.3",
+    "vinyl-transform": "^1.0.0"
+  },
+  "browserify-shim": {
+    "jquery": "global:$"
   }
 }
