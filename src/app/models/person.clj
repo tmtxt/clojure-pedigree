@@ -45,7 +45,9 @@
        :errors errors})
     ))
 
-(defn create-init-person []
+(defn create-init-person
+  "Create new person when the app starts if there is no person present yet"
+  []
   (when (db-util/table-empty? person)
     (let [root (-> {:full_name "Root Person"} (add-person :is-root true) (:node))
           root-wife (-> {:full_name "Root Wife"} (add-person) (:node))

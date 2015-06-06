@@ -47,23 +47,3 @@
   [entity where]
   (-> (find-all-by-attrs entity where)
       (first)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
