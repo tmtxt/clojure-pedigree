@@ -35,7 +35,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # vagrant specific
       vagrant_env: true,
       ssl_enable: false,
-      server_name: 'localhost'
+      server_name: 'localhost',
+      env: 'dev'
     }
   end
 end

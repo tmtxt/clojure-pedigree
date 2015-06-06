@@ -6,6 +6,7 @@ project_user: "{{project_name}}"
 service_prefix: "{{project_name}}"
 ssl_enable: true
 site_name: "{{project_name}}"
+env: dev
 
 # folder for log files, build files,...
 out_dirs:
