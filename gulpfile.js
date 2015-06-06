@@ -2,12 +2,14 @@ var _ = require('lodash');
 var gulp = require('gulp');
 var bower = require('bower');
 var browserify = require('browserify');
+var watchify = require('watchify');
 var transform = require('vinyl-transform');
 var shimify = require('browserify-shim');
 var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
 var notifier = require('node-notifier');
 var util = require('gulp-util');
+var gulpif = require('gulp-if');
 
 // bower
 gulp.task('bower', function(cb){
@@ -17,12 +19,13 @@ gulp.task('bower', function(cb){
     });
 });
 
-// browserify
+// browserify config
 var browserifyConfig = {
   basedir: '.',
   paths: './js'
 };
 
+// create browserify transform
 function createBundler(mode) {
   var bundler = transform(function(filename){
     var b;
@@ -30,11 +33,15 @@ function createBundler(mode) {
       b = browserify(filename, _.extend(browserifyConfig, {debug: true}));
     } else if(mode === 'prod') {
       b = browserify(filename, browserifyConfig);
+    } else if(mode === 'watch') {
+      b = watchify(browserify(filename, _.extend(browserifyConfig, watchify.args, {debug: true})));
     }
 
     // event
     b.on('error', browserifyError);
-    // b.on('time', function(time){util.log(util.colors.green('Browserify'), filename + time + ' ms');});
+    if(mode === 'watch') {
+      b.on('time', function(time){util.log(util.colors.green('Browserify'), filename + time + ' ms');});
+    }
 
     // transform
     b.transform(shimify);
@@ -45,19 +52,21 @@ function createBundler(mode) {
   return bundler;
 }
 
-gulp.task('js-dev', function(){
-  return gulp.src('./js/*.js')
+function bundle(source, bundler, mode) {
+  return gulp.src(source)
     .pipe(plumber({errorHandler: browserifyError}))
-    .pipe(createBundler("dev"))
+    .pipe(bundler)
+    .pipe(gulpif(mode === "prod", uglify({mangle: false})))
     .pipe(gulp.dest('./resources/public/js'));
+}
+
+// browserify task
+gulp.task('js-dev', function(){
+  return bundle('./js/*.js', createBundler("dev"), "dev");
 });
 
 gulp.task('js-prod', function(){
-  return gulp.src('./js/*.js')
-    .pipe(plumber({errorHandler: browserifyError}))
-    .pipe(createBundler("prod"))
-    .pipe(uglify({mangle: false}))
-    .pipe(gulp.dest('./resources/public/js'));
+  return bundle('./js/*.js', createBundler("prod"), "prod");
 });
 
 // error handler
