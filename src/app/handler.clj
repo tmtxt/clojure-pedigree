@@ -27,7 +27,7 @@
   (route/resources "/")
   (route/not-found "Not Found"))
 
-(def backend (session-backend))
+(def authentication-backend (session-backend))
 
 (defn on-error
   [request value]
@@ -35,12 +35,14 @@
    :headers {}
    :body "Not authorized"})
 
+(def authorization-rules (concat user-rules))
+
 (def app
   (-> (routes home-routes
               person-routes
               user-routes
               app-routes)
-      (wrap-access-rules {:rules user-rules :on-error on-error})
-      (wrap-authentication backend)
+      (wrap-access-rules {:rules authorization-rules :on-error on-error})
+      (wrap-authentication authentication-backend)
       (wrap-params)
       (wrap-session)))
