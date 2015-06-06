@@ -4,6 +4,7 @@
             [compojure.response :refer [Renderable]]))
 
 (parser/set-resource-path! (clojure.java.io/resource "templates"))
+(parser/cache-off!)
 
 (defn utf-8-response [html]
   (content-type (response html) "text/html; charset=utf-8"))
