@@ -50,3 +50,5 @@ neo4j_user: "{{project_user}}"
 neo4j_port: 7474
 neo4j_random_password: true
 neo4j_password_file: "{{password_dir}}/neo4j"
+neo4j_generate_script: true
+neo4j_script_dir: "{{script_dir}}"
