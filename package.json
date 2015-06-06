@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/tmtxt/clojure-pedigree",
   "devDependencies": {
+    "bower": "^1.4.1",
     "gulp": "^3.8.11"
   }
 }
