@@ -29,24 +29,6 @@
   "Make t from the input local with a scope"
   [locale-or-request scope]
   (let [locale (get-locale locale-or-request)]
+    locale
+    locale
     (fn [key] (first (tower/with-scope scope [(t locale key)])))))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

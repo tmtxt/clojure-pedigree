@@ -20,3 +20,4 @@
 /.tern-port
 /resources/public/bower/*
 /password
+*.tern-port
