@@ -18,3 +18,14 @@ from: txt_1
 to: txt_2
 sql: |
   ALTER TABLE tbl_user ADD COLUMN username TEXT UNIQUE NOT NULL;
+
+---
+table: tbl_user
+from: txt_2
+to: txt_3
+sql: |
+  CREATE TYPE USER_LANGUAGE_ENUM AS ENUM (
+      'vi',
+      'en'
+      );
+  ALTER TABLE tbl_user ADD COLUMN language USER_LANGUAGE_ENUM NOT NULL DEFAULT 'vi';

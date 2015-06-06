@@ -4,12 +4,14 @@
 </head>
 
 <body>
+  <div class="header">
+    {{ layout.homepage|default:"Trang chủ" }}
+  </div>
+  <div class="header">
+    {{ layout.treepage|default:"Cây gia phả" }}
+  </div>
   <div id="content">
     {% block content %}{% endblock %}
   </div>
-  <script src="/cljs/main.js"></script>
-  <script>
-   site.init();
-  </script>
 </body>
 </html>

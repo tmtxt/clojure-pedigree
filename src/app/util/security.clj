@@ -13,7 +13,8 @@
     (if (and user (crypto/check password (:password user)))
       {:id (:id user)
        :username (:username user)
-       :role (:role_name user)}
+       :role (:role_name user)
+       :locale (:language user)}
       nil)))
 
 (defn unauthorized-handler [request value]

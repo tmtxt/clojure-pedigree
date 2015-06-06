@@ -6,11 +6,15 @@
             [app.util.security :as security]
             [ring.util.response :refer [response redirect content-type]]
             [buddy.auth :refer [authenticated?]]
-            [config.main :refer [config]]))
+            [config.main :refer [config]]
+            [app.i18n.main :refer [make-layout-tran]]))
 
+;;; index
 (defn home [request]
-  (layout/render "home/index.html" {:name (config :site-name)}))
+  (layout/render "home/index.html" {:name (config :site-name)
+                                    :layout (make-layout-tran request)}))
 
+;;; login
 (defn login-render [request]
   (layout/render "home/login.html"))
 
@@ -22,28 +26,29 @@
       (let [session (:session request)
             updated-session (assoc session
                                    :identity (user-info :id)
-                                   :user-info user-info)]
+                                   :user-info user-info
+                                   :locale (user-info :locale))]
         (-> (redirect "/welcome") (assoc :session updated-session)))
       (layout/render "home/login.html" {:message "error"}))))
+
+;;; logout
+(defn logout [request]
+  (-> (redirect "/login")
+      (assoc :session {})))
 
 (defn welcome [request]
   (layout/render "home/welcome.html"))
 
 (defroutes home-routes
   (GET "/" [] home)
+
   (GET "/login" [] login-render)
-  (GET "/welcome" [] welcome)
-  (POST "/login" [] login-authenticate))
+  (POST "/login" [] login-authenticate)
+  (GET "/logout" [] logout)
+  (POST "/logout" [] logout)
+
+  (GET "/welcome" [] welcome))
 
 (def home-rules [{:uri "/login"
                   :handler security/anonymous-access
                   :redirect "/welcome"}])
-
-
-
-
-
-
-
-
-
