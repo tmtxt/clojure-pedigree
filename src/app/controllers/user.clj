@@ -1,15 +1,9 @@
 (ns app.controllers.user
   (:require [compojure.core :refer :all]
-            [buddy.auth.accessrules :refer (success error)]
-            [buddy.auth :refer [authenticated?]]))
-
-(defn authenticated-user [request]
-  (if (authenticated? request)
-    true
-    (error "not authenticated")))
+            [app.util.security :refer [user-access]]))
 
 (def user-rules [{:pattern #"^/user/.*"
-                  :handler authenticated-user}])
+                  :handler user-access}])
 
 (defn view-profile [request]
   "Hello")

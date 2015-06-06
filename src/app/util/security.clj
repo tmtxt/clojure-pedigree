@@ -1,6 +1,8 @@
 (ns app.util.security
   (:require [crypto.password.bcrypt :as crypto]
             [app.models.user :as user-model]
+            [buddy.auth :refer [authenticated?]]
+            [buddy.auth.accessrules :refer (error)]
             [app.util.dbUtil :as db-util]))
 
 (defn authen-user
@@ -16,7 +18,10 @@
    :headers {}
    :body "Not authorized"})
 
-
+(defn user-access [request]
+  (if (authenticated? request)
+    true
+    (error "Not logged in")))
 
 
 
