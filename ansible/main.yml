@@ -35,7 +35,6 @@
     - curl
     - neo4j
     - nginx
-    - iptables
 
   tasks:
     - name: install leiningen dependencies
