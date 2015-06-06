@@ -11,7 +11,10 @@
       (crypto/check password (:password user))
       false)))
 
-
+(defn unauthorized-handler [request value]
+  {:status 403
+   :headers {}
+   :body "Not authorized"})
 
 
 

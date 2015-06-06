@@ -15,7 +15,8 @@
             [buddy.auth.backends.session :refer [session-backend]]
             [buddy.auth.middleware :refer [wrap-authentication]]
             [buddy.auth.accessrules :refer [wrap-access-rules]]
-            [noir.validation :as validation]))
+            [noir.validation :as validation]
+            [app.util.security :as security]))
 
 (defn init []
   (println "app is starting"))
@@ -29,12 +30,6 @@
 
 (def authentication-backend (session-backend))
 
-(defn on-error
-  [request value]
-  {:status 403
-   :headers {}
-   :body "Not authorized"})
-
 (def authorization-rules (concat user-rules))
 
 (def app
@@ -42,7 +37,7 @@
               person-routes
               user-routes
               app-routes)
-      (wrap-access-rules {:rules authorization-rules :on-error on-error})
+      (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
       (wrap-authentication authentication-backend)
       (wrap-params)
       (wrap-session)))
