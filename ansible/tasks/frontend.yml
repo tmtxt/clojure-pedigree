@@ -1,0 +1,7 @@
+---
+- name: install gulp dependencies
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  npm: >-
+    executable=~/.nvm/v{{nvm_node_version}}/bin/npm
+    path={{project_dir}}

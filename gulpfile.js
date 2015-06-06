@@ -58,6 +58,7 @@ function createBundler(mode) {
   return bundler;
 }
 
+// bundle
 function bundle(source, bundler, mode) {
   return gulp.src(source)
     .pipe(plumber({errorHandler: browserifyError}))
