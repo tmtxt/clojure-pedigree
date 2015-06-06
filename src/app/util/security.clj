@@ -8,9 +8,11 @@
 (defn authen-user
   "Authenticate the input username and password. Return user entity if authenticated, otherwise, return nil"
   [username password]
-  (let [user (db-util/find-by-attrs user-model/user {:username username})]
+  (let [user (user-model/find-by-username username)]
     (if (and user (crypto/check password (:password user)))
-      user
+      {:id (:id user)
+       :username (:username user)
+       :role (:role_name user)}
       nil)))
 
 (defn unauthorized-handler [request value]
