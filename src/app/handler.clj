@@ -11,6 +11,7 @@
             [app.controllers.home :refer [home-routes home-rules]]
             [app.controllers.person :refer [person-routes]]
             [app.controllers.user :refer [user-routes user-rules]]
+            [app.controllers.admin :refer [admin-routes admin-rules]]
 
             [ring.middleware.session :refer [wrap-session]]
             [noir.session :as session]
@@ -34,12 +35,14 @@
 
 (def authorization-rules (concat
                           user-rules
+                          admin-rules
                           home-rules))
 
 (def app
   (-> (routes home-routes
               person-routes
               user-routes
+              admin-routes
               app-routes)
       (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
       (wrap-authentication authentication-backend)

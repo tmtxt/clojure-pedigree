@@ -1,6 +1,7 @@
 (ns app.util.security
   (:require [crypto.password.bcrypt :as crypto]
             [app.models.user :as user-model]
+            [app.models.userRole :as user-role-model]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.accessrules :refer (error)]
             [app.util.dbUtil :as db-util]))
@@ -30,15 +31,7 @@
     (error "Already logged in")
     true))
 
-
-
-
-
-
-
-
-
-
-
-
-
+(defn admin-access [request]
+  (if (= (get-in request [:session :user-info :role] nil) user-role-model/USER_ROLE_NAME_ADMIN)
+    true
+    (error "For admin only")))

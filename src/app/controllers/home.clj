@@ -27,7 +27,6 @@
       (layout/render "home/login.html" {:message "error"}))))
 
 (defn welcome [request]
-  (println (:session request))
   (layout/render "home/welcome.html"))
 
 (defroutes home-routes
