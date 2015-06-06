@@ -9,7 +9,8 @@
             [config.main :refer [config]]))
 
 (defn home [request]
-  (layout/render "home/index.html" {:name (config :site-name)}))
+  (layout/render "home/index.html" {:name (config :site-name)
+                                    :header {:text "aaaa"}}))
 
 (defn login-render [request]
   (layout/render "home/login.html"))
@@ -22,7 +23,8 @@
       (let [session (:session request)
             updated-session (assoc session
                                    :identity (user-info :id)
-                                   :user-info user-info)]
+                                   :user-info user-info
+                                   :locale (user-info :locale))]
         (-> (redirect "/welcome") (assoc :session updated-session)))
       (layout/render "home/login.html" {:message "error"}))))
 
