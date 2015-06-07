@@ -35,6 +35,7 @@
     - curl
     - neo4j
     - nginx
+    - ferm
 
   tasks:
     - name: install leiningen dependencies

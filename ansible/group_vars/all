@@ -7,6 +7,7 @@ service_prefix: "{{project_name}}"
 ssl_enable: true
 site_name: "{{project_name}}"
 env: dev
+vagrant_env: false
 
 # folder for log files, build files,...
 out_dirs:
