@@ -65,3 +65,7 @@
     - name: restart nginx
       sudo: yes
       service: name=nginx state=restarted
+
+    - name: reload ferm
+      sudo: yes
+      command: ferm /etc/ferm/ferm.conf

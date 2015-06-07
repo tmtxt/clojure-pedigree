@@ -33,3 +33,5 @@
   template: >-
     src=templates/ferm-input.conf
     dest=/etc/ferm/input/{{project_name}}.conf
+  notify:
+    - reload ferm
