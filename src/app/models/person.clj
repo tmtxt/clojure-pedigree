@@ -53,6 +53,6 @@
           root-wife (-> {:full_name "Root Wife"} (add-person) (:node))
           first-child (-> {:full_name "Child 1"} (add-person) (:node))
           second-child (-> {:full_name "Child 2"} (add-person) (:node))]
-      (mrl/add-relation-from-node root root-wife :type :husband-wife)
-      (prl/add-relation-from-node root first-child :type :father-child)
-      (prl/add-relation-from-node root second-child :type :father-child))))
+      (mrl/add-relation-from-node root root-wife :type :husband_wife)
+      (prl/add-relation-from-node root first-child :type :father_child)
+      (prl/add-relation-from-node root second-child :type :father_child))))
