@@ -27,3 +27,11 @@
   template: >-
     src=templates/ring-server.conf
     dest=/etc/init/{{service_prefix}}-ring-server.conf
+
+- name: generate ferm config file for project
+  sudo: yes
+  template: >-
+    src=templates/ferm-input.conf
+    dest=/etc/ferm/input/{{project_name}}.conf
+  notify:
+    - reload ferm
