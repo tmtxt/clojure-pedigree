@@ -16,3 +16,12 @@
     dest={{script_dir}}/set_env.sh
     mode=755
     owner={{project_user}}
+
+- name: create start server script
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/start.sh
+    dest={{script_dir}}/start.sh
+    mode=755
+    owner={{project_user}}
