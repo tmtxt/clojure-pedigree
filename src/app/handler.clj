@@ -12,6 +12,7 @@
             [app.controllers.person :refer [person-routes]]
             [app.controllers.user :refer [user-routes user-rules]]
             [app.controllers.admin :refer [admin-routes admin-rules]]
+            [app.controllers.tree :refer [tree-routes]]
 
             [ring.middleware.session :refer [wrap-session]]
             [noir.session :as session]
@@ -43,6 +44,7 @@
               person-routes
               user-routes
               admin-routes
+              tree-routes
               app-routes)
       (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
       (wrap-authentication authentication-backend)
