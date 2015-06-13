@@ -5,6 +5,7 @@
   (:require [clojure.tools.nrepl.server :as repl-server]
             [config.main :refer [config]]
             [app.models.user :as user-model]
+            [config.db]
             [app.models.person :as person-model]
             [cider.nrepl :refer [cider-nrepl-handler]]
             [cemerick.piggieback :refer [wrap-cljs-repl]]))

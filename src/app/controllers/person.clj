@@ -3,7 +3,6 @@
             [app.views.layout :as layout]
             [selmer.parser :refer [render-file render]]
             [noir.session :as session]
-            [app.db]
             [app.models.person :refer [person]]
             [korma.core :as kc]))
 
