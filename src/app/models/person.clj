@@ -61,3 +61,11 @@
       (mrl/add-relation-from-node root root-wife :type :husband_wife)
       (prl/add-relation-from-node root first-child :type :father_child)
       (prl/add-relation-from-node root second-child :type :father_child))))
+
+(defn find-node-by-user-id
+  "Find the node from neo4j using the input user id"
+  [user-id]
+  (nn/find-one conn
+               (:user-id neo-util/INDEX_NAMES)
+               (:user-id neo-util/INDEX_NAMES)
+               user-id))
