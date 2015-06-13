@@ -1,6 +1,7 @@
 (ns app.models.person
   (:require [korma.core :refer :all]
             [app.util.dbUtil :as db-util]
+            [app.util.neo4j :as neo-util]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [config.neo4j :refer [conn]]
@@ -29,6 +30,10 @@
   (let [person-node (nn/create conn {:user_id (person-entity :id)
                                      :is_root is-root})]
     (nl/add conn person-node "person")
+    (nn/add-to-index conn (:id person-node)
+                     (:user-id neo-util/INDEX_NAMES)
+                     (:user-id neo-util/INDEX_NAMES)
+                     (:id person-entity))
     {:success true
      :person person-entity
      :node person-node}))
