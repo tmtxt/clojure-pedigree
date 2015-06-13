@@ -4,6 +4,7 @@
             [app.util.neo4j :as neo-util]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
+            [clojurewerkz.neocons.rest.cypher :as cy]
             [config.neo4j :refer [conn]]
             [validateur.validation :as vl]
             [app.models.pedigreeRelation :as prl]
@@ -54,13 +55,13 @@
   "Create new person when the app starts if there is no person present yet"
   []
   (when (db-util/table-empty? person)
-    (let [root (-> {:full_name "Root Person"} (add-person :is-root true) (:node))
-          root-wife (-> {:full_name "Root Wife"} (add-person) (:node))
-          first-child (-> {:full_name "Child 1"} (add-person) (:node))
-          second-child (-> {:full_name "Child 2"} (add-person) (:node))]
-      (mrl/add-relation-from-node root root-wife :type :husband_wife)
-      (prl/add-relation-from-node root first-child :type :father_child)
-      (prl/add-relation-from-node root second-child :type :father_child))))
+    (let [root-husband (-> {:full_name "Root Husband"} (add-person :is-root true) (:node))
+          root-wife    (-> {:full_name "Root Wife"}    (add-person) (:node))
+          first-child  (-> {:full_name "Child 1"}      (add-person) (:node))
+          second-child (-> {:full_name "Child 2"}      (add-person) (:node))]
+      (mrl/add-marriage root-husband root-wife)
+      (prl/add-child root-husband root-wife first-child)
+      (prl/add-child root-husband root-wife second-child))))
 
 (defn find-node-by-user-id
   "Find the node from neo4j using the input user id"
@@ -69,3 +70,15 @@
                (:user-id neo-util/INDEX_NAMES)
                (:user-id neo-util/INDEX_NAMES)
                user-id))
+
+
+
+
+
+
+
+
+
+
+
+
