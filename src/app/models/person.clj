@@ -56,18 +56,42 @@
     ))
 
 (defn create-init-person
-  "Create new person when the app starts if there is no person present yet"
+  "Create new persons when the app starts if there is no person presented yet"
   []
   (when (db-util/table-empty? person)
     (kd/transaction
      (try+
       (let [root-husband (-> {:full_name "Root Husband"} (add-person :is-root true) (:node))
             root-wife    (-> {:full_name "Root Wife"}    (add-person) (:node))
-            first-child  (-> {:full_name "Child 1"}      (add-person) (:node))
-            second-child (-> {:full_name "Child 2"}      (add-person) (:node))]
+
+            f2-1-husband (-> {:full_name "F2-1-Husband"} (add-person) (:node))
+            f2-1-wife-1  (-> {:full_name "F2-1-Wife-1"}  (add-person) (:node))
+            f2-1-wife-2  (-> {:full_name "F2-1-Wife-2"}  (add-person) (:node))
+            f2-2-husband (-> {:full_name "F2-2-husband"} (add-person) (:node))
+            f2-3-husband (-> {:full_name "F2-3-husband"} (add-person) (:node))
+            f2-3-wife    (-> {:full_name "F2-3-wife"}    (add-person) (:node))
+
+            f3-1-wife    (-> {:full_name "F3-1-wife"}    (add-person) (:node))
+            f3-1-husband (-> {:full_name "F3-1-husband"} (add-person) (:node))
+            f3-2-husband (-> {:full_name "F3-2-Husband"} (add-person) (:node))
+            f3-3-husband (-> {:full_name "F3-3-Husband"} (add-person) (:node))
+            f3-3-wife    (-> {:full_name "F3-3-Wife"}    (add-person) (:node))]
+
+        ;; marriages
         (mrl/add-marriage root-husband root-wife)
-        (prl/add-child root-husband root-wife first-child)
-        (prl/add-child root-husband root-wife second-child))
+        (mrl/add-marriage f2-1-husband f2-1-wife-1)
+        (mrl/add-marriage f2-1-husband f2-1-wife-2)
+        (mrl/add-marriage f2-2-husband f2-3-wife)
+        (mrl/add-marriage f3-1-husband f3-1-wife)
+        (mrl/add-marriage f3-3-husband f3-3-wife)
+
+        ;; pedigree
+        (prl/add-child root-husband root-wife f2-1-husband)
+        (prl/add-child root-husband root-wife f2-2-husband)
+        (prl/add-child root-husband root-wife f2-3-husband)
+        (prl/add-child f2-1-husband f2-1-wife-1 f3-1-wife)
+        (prl/add-child f2-1-husband f2-1-wife-2 f3-2-husband)
+        (prl/add-child f2-2-husband f2-3-wife f3-3-husband))
       (catch Exception ex
         (log/error (.getMessage ex))
         (kd/rollback))
