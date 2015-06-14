@@ -5,8 +5,10 @@
   (:require [clojure.tools.nrepl.server :as repl-server]
             [config.main :refer [config]]
             [app.models.user :as user-model]
+            [config.db]
             [app.models.person :as person-model]
             [cider.nrepl :refer [cider-nrepl-handler]]
+            [app.util.neo4j :as neo4j]
             [cemerick.piggieback :refer [wrap-cljs-repl]]))
 
 (defonce server (atom nil))
@@ -50,5 +52,6 @@
   (println (str "nRepl server running on port " (config :nrepl-port))))
 
 (defn create-init-db []
+  (neo4j/create-indexes)
   (user-model/create-init-users)
   (person-model/create-init-person))

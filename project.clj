@@ -17,6 +17,7 @@
                  [org.clojure/tools.logging "0.3.1"]
                  [org.clojure/clojurescript "0.0-3165"]
                  [clojurewerkz/neocons "3.1.0-beta3"]
+                 [slingshot "0.12.2"]
                  [crypto-password "0.1.3"]
                  [weasel "0.6.0"]
                  [cider/cider-nrepl "0.9.0-SNAPSHOT"]

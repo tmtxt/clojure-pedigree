@@ -4,4 +4,4 @@
   (:require [clojurewerkz.neocons.rest :as nr]))
 
 ;; connects to a Neo4J Server with default username neo4j and password
-(def conn (nr/connect "http://neo4j:{{neo4j_password}}@localhost:{{neo4j_port}}/db/data/"))
+(def conn (nr/connect "http://neo4j:{{neo4j_password}}@localhost:{{neo4j_port}}/db/data"))
