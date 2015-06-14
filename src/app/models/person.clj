@@ -1,12 +1,16 @@
 (ns app.models.person
   (:require [korma.core :refer :all]
+            [korma.db :as kd]
             [app.util.dbUtil :as db-util]
             [app.util.neo4j :as neo-util]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [clojurewerkz.neocons.rest.cypher :as cy]
+            [clojurewerkz.neocons.rest.transaction :as tx]
+            [clojure.tools.logging :as log]
             [config.neo4j :refer [conn]]
             [validateur.validation :as vl]
+            [slingshot.slingshot :refer [throw+ try+]]
             [app.models.pedigreeRelation :as prl]
             [app.models.marriageRelation :as mrl]))
 
@@ -55,13 +59,24 @@
   "Create new person when the app starts if there is no person present yet"
   []
   (when (db-util/table-empty? person)
-    (let [root-husband (-> {:full_name "Root Husband"} (add-person :is-root true) (:node))
-          root-wife    (-> {:full_name "Root Wife"}    (add-person) (:node))
-          first-child  (-> {:full_name "Child 1"}      (add-person) (:node))
-          second-child (-> {:full_name "Child 2"}      (add-person) (:node))]
-      (mrl/add-marriage root-husband root-wife)
-      (prl/add-child root-husband root-wife first-child)
-      (prl/add-child root-husband root-wife second-child))))
+    (kd/transaction
+     (try+
+      (let [root-husband (-> {:full_name "Root Husband"} (add-person :is-root true) (:node))
+            root-wife    (-> {:full_name "Root Wife"}    (add-person) (:node))
+            first-child  (-> {:full_name "Child 1"}      (add-person) (:node))
+            second-child (-> {:full_name "Child 2"}      (add-person) (:node))]
+        (mrl/add-marriage root-husband root-wife)
+        (prl/add-child root-husband root-wife first-child)
+        (prl/add-child root-husband root-wife second-child))
+      (catch Exception ex
+        (log/error (.getMessage ex))
+        (kd/rollback))
+      (catch String err
+        (log/error err)
+        (kd/rollback))
+      (catch Object _
+        (log/error "Unexpected Errors")
+        (kd/rollback))))))
 
 (defn find-node-by-user-id
   "Find the node from neo4j using the input user id"
@@ -70,15 +85,3 @@
                (:user-id neo-util/INDEX_NAMES)
                (:user-id neo-util/INDEX_NAMES)
                user-id))
-
-
-
-
-
-
-
-
-
-
-
-
