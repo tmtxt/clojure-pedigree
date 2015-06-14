@@ -23,7 +23,7 @@
   (vl/validation-set
    (vl/presence-of :full_name)))
 
-(def neo4j_validation
+(def neo4j-validation
   (vl/validation-set
    (vl/presence-of :user_id)
    (vl/validate-by :user_id #(db-util/exists? person {:id %}) :message "User Id not exist")))
