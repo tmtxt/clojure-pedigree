@@ -4,6 +4,13 @@
 
 (defn get-label [label] (if (keyword? label) (name label) label))
 
+(defn map-props-to-string [props param-name]
+  (clojure.string/join
+   ", "
+   (map (fn [[key val]]
+          (str (name key) ": " "{" param-name "}." (name key)))
+        props)))
+
 ;;; (create-node :person {:name "hello" :age 18})
 (defn create-node
   "Construct the create node cypher statement.
@@ -19,9 +26,7 @@
   "Create node using Merge"
   [label props]
   (let [_label (get-label label)]
-    (tx/statement (format "MERGE (n:%s {%s}) RETURN n" _label
-                          (clojure.string/join
-                           ", "
-                           (map (fn [[key val]] (str (name key) ": " "{props}." (name key))) props))
-                          )
+    (tx/statement (format "MERGE (n:%s {%s}) RETURN n"
+                          _label
+                          (map-props-to-string props "props"))
                   {:props props})))
