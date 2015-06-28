@@ -1,6 +1,10 @@
 (ns app.util.neo4j.statement
   (:require [clojurewerkz.neocons.rest.nodes :as nn]
-            [clojurewerkz.neocons.rest.transaction :as tx]))
+            [clojurewerkz.neocons.rest.transaction :as tx]
+            [clojurewerkz.neocons.rest.cypher :as cy]))
+
+(def ^:dynamic *tran*)
+(def ^:dynamic *conn*)
 
 (defn get-label [label] (if (keyword? label) (name label) label))
 
@@ -49,7 +53,7 @@
   MERGE (n:person {user_id: {identifier}.user_id})
   RETURN n
   "
-  ([label identifier] (create-or-update-node label identifier {}))
+  ([label identifier] (create-or-update-node-statement label identifier {}))
   ([label identifier props]
    (let [_label (get-label label)
          _update_string (clojure.string/join
@@ -68,12 +72,22 @@
 (defn create-or-update-node
   "Create or update node with connection and transaction.
   See the create-or-update-node-statement function for more info"
-  ([conn transaction label identifier]
-   (create-or-update-node conn transaction label identifier {}))
-  ([conn transaction label identifier props]
+  ;; ([conn transaction label identifier]
+  ;;  (create-or-update-node conn transaction label identifier {}))
+  ([label identifier props]
    (let [statement (create-or-update-node-statement label identifier props)
-         [_ result] (tx/execute conn transaction [statement])
+         [_ result] (tx/execute *conn* *tran* [statement])
          [response] result
          row (-> response :data first :row)
          [data id] row]
      (assoc data :id id))))
+
+;;; wrap the util function inside transaction
+(defmacro with-transaction
+  [connection & body]
+  (let [transaction (gensym "transaction")]
+    `(let [~transaction (clojurewerkz.neocons.rest.transaction/begin-tx ~connection)]
+       (binding [app.util.neo4j.statement/*conn* ~connection]
+         (binding [app.util.neo4j.statement/*tran* ~transaction]
+           (clojurewerkz.neocons.rest.transaction/with-transaction ~connection ~transaction true
+             ~@body))))))
