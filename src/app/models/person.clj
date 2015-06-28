@@ -3,6 +3,7 @@
             [korma.db :as kd]
             [app.util.dbUtil :as db-util]
             [app.util.neo4j :as neo-util]
+            [app.util.neo4j.statement :as nst]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [clojurewerkz.neocons.rest.cypher :as cy]
@@ -32,16 +33,25 @@
   "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
   [person-entity & {:keys [is-root]
                     :or {is-root false}}]
-  (let [person-node (nn/create conn {:user_id (person-entity :id)
-                                     :is_root is-root})]
-    (nl/add conn person-node "person")
-    (nn/add-to-index conn (:id person-node)
-                     (:user-id neo-util/INDEX_NAMES)
-                     (:user-id neo-util/INDEX_NAMES)
-                     (:id person-entity))
+  (let [person-node (nst/create-or-update-node
+                     :person
+                     {:user_id (person-entity :id)}
+                     {:is_root is-root})]
     {:success true
      :person person-entity
-     :node person-node}))
+     :node person-node}
+    )
+  ;; (let [person-node (nn/create conn {:user_id (person-entity :id)
+  ;;                                    :is_root is-root})]
+  ;;   (nl/add conn person-node "person")
+  ;;   (nn/add-to-index conn (:id person-node)
+  ;;                    (:user-id neo-util/INDEX_NAMES)
+  ;;                    (:user-id neo-util/INDEX_NAMES)
+  ;;                    (:id person-entity))
+  ;;   {:success true
+  ;;    :person person-entity
+  ;;    :node person-node})
+  )
 
 (defn add-person
   "Add new person into postgres and neo4j"
