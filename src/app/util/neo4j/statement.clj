@@ -66,7 +66,8 @@
                     :props props}))))
 
 (defn create-or-update-node
-  ""
+  "Create or update node with connection and transaction.
+  See the create-or-update-node-statement function for more info"
   ([conn transaction label identifier]
    (create-or-update-node conn transaction label identifier {}))
   ([conn transaction label identifier props]
