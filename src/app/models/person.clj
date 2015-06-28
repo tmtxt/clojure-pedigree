@@ -85,12 +85,12 @@
          (mrl/add-marriage f3-3-husband f3-3-wife)
 
          ;; pedigree
-         (prl/add-child root-husband root-wife f2-1-husband)
-         (prl/add-child root-husband root-wife f2-2-husband)
-         (prl/add-child root-husband root-wife f2-3-husband)
-         (prl/add-child f2-1-husband f2-1-wife-1 f3-1-wife)
-         (prl/add-child f2-1-husband f2-1-wife-2 f3-2-husband)
-         (prl/add-child f2-2-husband f2-3-wife f3-3-husband)
+         (prl/add-child root-husband root-wife f2-2-husband 1)
+         (prl/add-child root-husband root-wife f2-1-husband 0)
+         (prl/add-child root-husband root-wife f2-3-husband 2)
+         (prl/add-child f2-1-husband f2-1-wife-1 f3-1-wife 0)
+         (prl/add-child f2-1-husband f2-1-wife-2 f3-2-husband 0)
+         (prl/add-child f2-2-husband f2-3-wife f3-3-husband 0)
          )))))
 
 (defn find-node-by-user-id
