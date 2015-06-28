@@ -17,8 +17,7 @@
                                    :or [type (:husband-wife RELATION_TYPES)]}]
   (ncm/create-or-update-relation :person first-node
                                  :person second-node
-                                 type {:order order})
-  )
+                                 type {:order order}))
 
 (defn add-marriage
   "Add marriage relation between husband and wife nodes"
