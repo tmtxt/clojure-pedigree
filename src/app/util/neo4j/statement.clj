@@ -12,7 +12,7 @@
         props)))
 
 ;;; (create-node :person {:name "hello" :age 18})
-(defn create-node
+(defn create-node-statement
   "Construct the create node cypher statement.
   The statement returns the inserted node.
   The function returns the statement string.
@@ -23,7 +23,7 @@
                   {:props props})))
 
 ;;; (create-merge-node :person {:user_id 5})
-(defn create-merge-node
+(defn create-merge-node-statement
   "Create node using Merge"
   [label props]
   (let [_label (get-label label)]
@@ -34,7 +34,7 @@
 
 ;;; (create-or-update-node :person {:user_id 5})
 ;;; (create-or-update-node :person {:user_id 5} {:age 18 :name "hello"})
-(defn create-or-update-node
+(defn create-or-update-node-statement
   "Create node or update.
   Search the database using the identifier map and then optionally
   update or set the props in props map if found or create.
@@ -55,7 +55,7 @@
          _update_string (clojure.string/join
                          ", "
                          (map (fn [[key val]] (str "n." (name key) " = {props}." (name key))) props))]
-     (tx/statement (format "MERGE (n:%s {%s}) %s RETURN n"
+     (tx/statement (format "MERGE (n:%s {%s}) %s RETURN n, id(n)"
                            _label
                            (map-props-to-string identifier "identifier")
                            (if (empty? props)
@@ -64,3 +64,15 @@
                                   " ON MATCH SET " _update_string)))
                    {:identifier identifier
                     :props props}))))
+
+(defn create-or-update-node
+  ""
+  ([conn transaction label identifier]
+   (create-or-update-node conn transaction label identifier {}))
+  ([conn transaction label identifier props]
+   (let [statement (create-or-update-node-statement label identifier props)
+         [_ result] (tx/execute conn transaction [statement])
+         [response] result
+         row (-> response :data first :row)
+         [data id] row]
+     (assoc data :id id))))
