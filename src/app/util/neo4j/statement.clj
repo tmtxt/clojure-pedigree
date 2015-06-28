@@ -5,12 +5,27 @@
 
 (defn get-label [label] (if (keyword? label) (name label) label))
 
-(defn map-props-to-string [props param-name]
+(defn map-props-to-string
+  "Create the props string from the input props map and param-name
+  props: {:user_id 1 :age 10} param-name: props-name
+  return
+  user_id: {props-name}.user_id, age: {props-name}.age"
+  [props param-name]
   (clojure.string/join
    ", "
    (map (fn [[key val]]
           (str (name key) ": " "{" param-name "}." (name key)))
         props)))
+
+(defn map-props-to-update-string
+  "Create the props string used for update command (SET)
+  props: {:user_id 1 :age 10} param-name: props-name
+  return
+  n.user_id = {props-name}.user_id, n.age = {props-name}.age"
+  [props param-name]
+  (clojure.string/join
+   ", "
+   (map (fn [[key val]] (str "n." (name key) " = {" param-name "}." (name key))) props)))
 
 ;;; (create-node :person {:name "hello" :age 18})
 (defn create-node
@@ -53,9 +68,7 @@
   ([label identifier] (create-or-update-node label identifier {}))
   ([label identifier props]
    (let [_label (get-label label)
-         _update_string (clojure.string/join
-                         ", "
-                         (map (fn [[key val]] (str "n." (name key) " = {props}." (name key))) props))]
+         _update_string (map-props-to-update-string props "props")]
      (tx/statement (format "MERGE (n:%s {%s}) %s RETURN n, id(n)"
                            _label
                            (map-props-to-string identifier "identifier")
@@ -83,9 +96,7 @@
   (let [_start-label (get-label start-label)
         _end-label (get-label end-label)
         _label (get-label label)
-        _update_string (clojure.string/join
-                         ", "
-                         (map (fn [[key val]] (str "n." (name key) " = {props}." (name key))) props))
+        _update_string (map-props-to-update-string props "props")
         statement (format
                    "MATCH (a:%s {%s}), (b:%s {%s}) CREATE UNIQUE a-[r:%s]->b %s RETURN r"
                    _start-label
