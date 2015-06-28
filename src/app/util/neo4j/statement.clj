@@ -65,3 +65,37 @@
                                   " ON MATCH SET " _update_string)))
                    {:identifier identifier
                     :props props}))))
+
+(defn create-or-update-relation
+  "Create or update relation between two nodes.
+  Find the relation between the start and end nodes using the identifier
+  of the two. After that, find the relationship between them with the input
+  label. If not found, create new, otherwise, update with the props.
+
+  When optional props is passed, produce the statement like this
+  MATCH (a:person {user_id: {start}.user_id}), (b:person {user_id: {end}.user_id})
+  CREATE UNIQUE a-[r:father_child]->b
+  SET r.order = {props}.order
+  RETURN r"
+  [start-label start-identifier
+   end-label end-identifier
+   label & [props]]
+  (let [_start-label (get-label start-label)
+        _end-label (get-label end-label)
+        _label (get-label label)
+        _update_string (clojure.string/join
+                         ", "
+                         (map (fn [[key val]] (str "n." (name key) " = {props}." (name key))) props))
+        statement (format
+                   "MATCH (a:%s {%s}), (b:%s {%s}) CREATE UNIQUE a-[r:%s]->b %s RETURN r"
+                   _start-label
+                   (map-props-to-string start-identifier "start")
+                   _end-label
+                   (map-props-to-string end-identifier "end")
+                   _label
+                   (if (empty? props)
+                     ""
+                     (str "SET " _update_string)))]
+    (tx/statement statement {:start start-identifier
+                             :end end-identifier
+                             :props props})))
