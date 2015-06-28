@@ -18,6 +18,17 @@
          [data id] row]
      (assoc data :id id))))
 
+(defn create-or-update-relation
+  [start-label start-identifier
+   end-label end-identifier
+   label props]
+  (let [statement (stm/create-or-update-relation start-label start-identifier
+                                                 end-label end-identifier
+                                                 label props)
+        [_ result] (tx/execute *conn* *tran* [statement])]
+    result
+    ))
+
 ;;; wrap the util function inside transaction
 (defmacro with-transaction
   [connection & body]
