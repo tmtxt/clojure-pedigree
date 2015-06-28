@@ -16,7 +16,7 @@
          [response] result
          row (-> response :data first :row)
          [data id] row]
-     (assoc data :id id))))
+     data)))
 
 (defn create-or-update-relation
   [start-label start-identifier

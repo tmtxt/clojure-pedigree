@@ -15,8 +15,8 @@
   "Add new relation between two node in the system"
   [first-node second-node & {:keys [type]
                              :or [type (:husband-wife RELATION_TYPES)]}]
-  (ncm/create-or-update-relation :person (dissoc first-node :id)
-                                 :person (dissoc second-node :id)
+  (ncm/create-or-update-relation :person first-node
+                                 :person second-node
                                  type {})
   )
 
