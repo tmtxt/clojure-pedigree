@@ -78,8 +78,8 @@
 
          ;; marriages
          (mrl/add-marriage root-husband root-wife)
-         (mrl/add-marriage f2-1-husband f2-1-wife-1)
-         (mrl/add-marriage f2-1-husband f2-1-wife-2)
+         (mrl/add-marriage f2-1-husband f2-1-wife-1 :husband-order 0)
+         (mrl/add-marriage f2-1-husband f2-1-wife-2 :husband-order 1)
          (mrl/add-marriage f2-2-husband f2-3-wife)
          (mrl/add-marriage f3-1-husband f3-1-wife)
          (mrl/add-marriage f3-3-husband f3-3-wife)
