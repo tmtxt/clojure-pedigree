@@ -40,18 +40,7 @@
     {:success true
      :person person-entity
      :node person-node}
-    )
-  ;; (let [person-node (nn/create conn {:user_id (person-entity :id)
-  ;;                                    :is_root is-root})]
-  ;;   (nl/add conn person-node "person")
-  ;;   (nn/add-to-index conn (:id person-node)
-  ;;                    (:user-id neo-util/INDEX_NAMES)
-  ;;                    (:user-id neo-util/INDEX_NAMES)
-  ;;                    (:id person-entity))
-  ;;   {:success true
-  ;;    :person person-entity
-  ;;    :node person-node})
-  )
+    ))
 
 (defn add-person
   "Add new person into postgres and neo4j"
@@ -69,48 +58,50 @@
   "Create new persons when the app starts if there is no person presented yet"
   []
   (when (db-util/table-empty? person)
-    (kd/transaction
-     (try+
-      (let [root-husband (-> {:full_name "Root Husband"} (add-person :is-root true) (:node))
-            root-wife    (-> {:full_name "Root Wife"}    (add-person) (:node))
+    (nst/with-transaction conn
+      (kd/transaction
+       (try+
+        (let [root-husband (-> {:full_name "Root Husband"} (add-person :is-root true) (:node))
+              root-wife    (-> {:full_name "Root Wife"}    (add-person) (:node))
 
-            f2-1-husband (-> {:full_name "F2-1-Husband"} (add-person) (:node))
-            f2-1-wife-1  (-> {:full_name "F2-1-Wife-1"}  (add-person) (:node))
-            f2-1-wife-2  (-> {:full_name "F2-1-Wife-2"}  (add-person) (:node))
-            f2-2-husband (-> {:full_name "F2-2-husband"} (add-person) (:node))
-            f2-3-husband (-> {:full_name "F2-3-husband"} (add-person) (:node))
-            f2-3-wife    (-> {:full_name "F2-3-wife"}    (add-person) (:node))
+              f2-1-husband (-> {:full_name "F2-1-Husband"} (add-person) (:node))
+              f2-1-wife-1  (-> {:full_name "F2-1-Wife-1"}  (add-person) (:node))
+              f2-1-wife-2  (-> {:full_name "F2-1-Wife-2"}  (add-person) (:node))
+              f2-2-husband (-> {:full_name "F2-2-husband"} (add-person) (:node))
+              f2-3-husband (-> {:full_name "F2-3-husband"} (add-person) (:node))
+              f2-3-wife    (-> {:full_name "F2-3-wife"}    (add-person) (:node))
 
-            f3-1-wife    (-> {:full_name "F3-1-wife"}    (add-person) (:node))
-            f3-1-husband (-> {:full_name "F3-1-husband"} (add-person) (:node))
-            f3-2-husband (-> {:full_name "F3-2-Husband"} (add-person) (:node))
-            f3-3-husband (-> {:full_name "F3-3-Husband"} (add-person) (:node))
-            f3-3-wife    (-> {:full_name "F3-3-Wife"}    (add-person) (:node))]
+              f3-1-wife    (-> {:full_name "F3-1-wife"}    (add-person) (:node))
+              f3-1-husband (-> {:full_name "F3-1-husband"} (add-person) (:node))
+              f3-2-husband (-> {:full_name "F3-2-Husband"} (add-person) (:node))
+              f3-3-husband (-> {:full_name "F3-3-Husband"} (add-person) (:node))
+              f3-3-wife    (-> {:full_name "F3-3-Wife"}    (add-person) (:node))]
 
-        ;; marriages
-        (mrl/add-marriage root-husband root-wife)
-        (mrl/add-marriage f2-1-husband f2-1-wife-1)
-        (mrl/add-marriage f2-1-husband f2-1-wife-2)
-        (mrl/add-marriage f2-2-husband f2-3-wife)
-        (mrl/add-marriage f3-1-husband f3-1-wife)
-        (mrl/add-marriage f3-3-husband f3-3-wife)
+          ;; marriages
+          ;; (mrl/add-marriage root-husband root-wife)
+          ;; (mrl/add-marriage f2-1-husband f2-1-wife-1)
+          ;; (mrl/add-marriage f2-1-husband f2-1-wife-2)
+          ;; (mrl/add-marriage f2-2-husband f2-3-wife)
+          ;; (mrl/add-marriage f3-1-husband f3-1-wife)
+          ;; (mrl/add-marriage f3-3-husband f3-3-wife)
 
-        ;; pedigree
-        (prl/add-child root-husband root-wife f2-1-husband)
-        (prl/add-child root-husband root-wife f2-2-husband)
-        (prl/add-child root-husband root-wife f2-3-husband)
-        (prl/add-child f2-1-husband f2-1-wife-1 f3-1-wife)
-        (prl/add-child f2-1-husband f2-1-wife-2 f3-2-husband)
-        (prl/add-child f2-2-husband f2-3-wife f3-3-husband))
-      (catch Exception ex
-        (log/error (.getMessage ex))
-        (kd/rollback))
-      (catch String err
-        (log/error err)
-        (kd/rollback))
-      (catch Object _
-        (log/error "Unexpected Errors")
-        (kd/rollback))))))
+          ;; ;; pedigree
+          ;; (prl/add-child root-husband root-wife f2-1-husband)
+          ;; (prl/add-child root-husband root-wife f2-2-husband)
+          ;; (prl/add-child root-husband root-wife f2-3-husband)
+          ;; (prl/add-child f2-1-husband f2-1-wife-1 f3-1-wife)
+          ;; (prl/add-child f2-1-husband f2-1-wife-2 f3-2-husband)
+          ;; (prl/add-child f2-2-husband f2-3-wife f3-3-husband)
+          )
+        (catch Exception ex
+          (log/error (.getMessage ex))
+          (kd/rollback))
+        (catch String err
+          (log/error err)
+          (kd/rollback))
+        (catch Object obj
+          (log/error "Unexpected Errors")
+          (kd/rollback)))))))
 
 (defn find-node-by-user-id
   "Find the node from neo4j using the input user id"
@@ -119,3 +110,8 @@
                (:user-id neo-util/INDEX_NAMES)
                (:user-id neo-util/INDEX_NAMES)
                user-id))
+
+;; (defn tt []
+;;   (nst/with-transaction conn
+;;     (nst/create-or-update-node :person {:user_id 1} {:age 100})
+;;     ))
