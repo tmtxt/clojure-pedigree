@@ -3,7 +3,7 @@
             [korma.db :as kd]
             [app.util.dbUtil :as db-util]
             [app.util.neo4j :as neo-util]
-            [app.util.neo4j.statement :as nst]
+            [app.util.neo4j.command :as ncm]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [clojurewerkz.neocons.rest.cypher :as cy]
@@ -33,7 +33,7 @@
   "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
   [person-entity & {:keys [is-root]
                     :or {is-root false}}]
-  (let [person-node (nst/create-or-update-node
+  (let [person-node (ncm/create-or-update-node
                      :person
                      {:user_id (person-entity :id)}
                      {:is_root is-root})]
@@ -58,7 +58,7 @@
   "Create new persons when the app starts if there is no person presented yet"
   []
   (when (db-util/table-empty? person)
-    (nst/with-transaction conn
+    (ncm/with-transaction conn
       (kd/transaction
        (try+
         (let [root-husband (-> {:full_name "Root Husband"} (add-person :is-root true) (:node))

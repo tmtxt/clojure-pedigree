@@ -3,9 +3,6 @@
             [clojurewerkz.neocons.rest.transaction :as tx]
             [clojurewerkz.neocons.rest.cypher :as cy]))
 
-(def ^:dynamic *tran*)
-(def ^:dynamic *conn*)
-
 (defn get-label [label] (if (keyword? label) (name label) label))
 
 (defn map-props-to-string [props param-name]
@@ -16,7 +13,7 @@
         props)))
 
 ;;; (create-node :person {:name "hello" :age 18})
-(defn create-node-statement
+(defn create-node
   "Construct the create node cypher statement.
   The statement returns the inserted node.
   The function returns the statement string.
@@ -27,7 +24,7 @@
                   {:props props})))
 
 ;;; (create-merge-node :person {:user_id 5})
-(defn create-merge-node-statement
+(defn create-merge-node
   "Create node using Merge"
   [label props]
   (let [_label (get-label label)]
@@ -38,7 +35,7 @@
 
 ;;; (create-or-update-node :person {:user_id 5})
 ;;; (create-or-update-node :person {:user_id 5} {:age 18 :name "hello"})
-(defn create-or-update-node-statement
+(defn create-or-update-node
   "Create node or update.
   Search the database using the identifier map and then optionally
   update or set the props in props map if found or create.
@@ -53,7 +50,7 @@
   MERGE (n:person {user_id: {identifier}.user_id})
   RETURN n
   "
-  ([label identifier] (create-or-update-node-statement label identifier {}))
+  ([label identifier] (create-or-update-node label identifier {}))
   ([label identifier props]
    (let [_label (get-label label)
          _update_string (clojure.string/join
@@ -68,26 +65,3 @@
                                   " ON MATCH SET " _update_string)))
                    {:identifier identifier
                     :props props}))))
-
-(defn create-or-update-node
-  "Create or update node with connection and transaction.
-  See the create-or-update-node-statement function for more info"
-  ;; ([conn transaction label identifier]
-  ;;  (create-or-update-node conn transaction label identifier {}))
-  ([label identifier props]
-   (let [statement (create-or-update-node-statement label identifier props)
-         [_ result] (tx/execute *conn* *tran* [statement])
-         [response] result
-         row (-> response :data first :row)
-         [data id] row]
-     (assoc data :id id))))
-
-;;; wrap the util function inside transaction
-(defmacro with-transaction
-  [connection & body]
-  (let [transaction (gensym "transaction")]
-    `(let [~transaction (clojurewerkz.neocons.rest.transaction/begin-tx ~connection)]
-       (binding [app.util.neo4j.statement/*conn* ~connection]
-         (binding [app.util.neo4j.statement/*tran* ~transaction]
-           (clojurewerkz.neocons.rest.transaction/with-transaction ~connection ~transaction true
-             ~@body))))))
