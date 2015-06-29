@@ -112,9 +112,9 @@
                              :end end-identifier
                              :props props})))
 
-(defn find-by-attrs [label props]
+(defn find-by-props [label props]
   (let [_label (get-label label)
-        statement (format query/find-by-attrs
+        statement (format query/find-by-props
                           _label
                           (map-props-to-string props "props"))]
     (tx/statement statement {:props props})))

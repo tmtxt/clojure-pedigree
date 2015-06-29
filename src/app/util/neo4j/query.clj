@@ -8,4 +8,4 @@
 
 (def get-tree (read-query "get_tree"))
 
-(def find-by-attrs (read-query "find_by_attrs"))
+(def find-by-props (read-query "find_by_props"))
