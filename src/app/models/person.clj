@@ -4,6 +4,7 @@
             [app.util.dbUtil :as db-util]
             [app.util.neo4j :as neo-util]
             [app.util.neo4j.command :as ncm]
+            [app.tree.main :as tree]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [clojurewerkz.neocons.rest.cypher :as cy]
@@ -101,9 +102,7 @@
                (:user-id neo-util/INDEX_NAMES)
                user-id))
 
-(defn tt []
-  (app.util.neo4j.statement/create-or-update-relation
-   :person {:user_id 1}
-   :person {:user_id 2}
-   :father_child {:order 1})
-  )
+(defn find-root-node
+  "Find the root node from neo4j"
+  []
+  (ncm/find-by-props :person {:is_root true}))
