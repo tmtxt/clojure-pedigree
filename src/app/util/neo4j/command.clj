@@ -45,5 +45,7 @@
   [label props]
   (with-transaction conn
     (let [statement (stm/find-by-props label props)
-          [_ result] (tx/execute *conn* *tran* [statement])]
-      (println result))))
+          [_ result] (tx/execute *conn* *tran* [statement])
+          response (first result)
+          data (-> response :data first :row first)]
+      data)))
