@@ -7,3 +7,5 @@
   (slurp (str query-path file ".cyp")))
 
 (def get-tree (read-query "get_tree"))
+
+(def find-by-attrs (read-query "find_by_attrs"))
