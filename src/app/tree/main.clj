@@ -7,18 +7,15 @@
 (defn- recur1 [tree rows]
   (let [row (first rows)]
     (if row
-      (do
-        (let [new-tree (assoc tree :path (first row))]
-          (recur new-tree (rest rows))))
-      tree)
-    )
-
-
-  )
+      (let [[path rel in-parent out-parent child] row
+            short-path (vec (drop-last path))
+            new-tree (assoc-in tree short-path {})]
+        (recur new-tree (rest rows)))
+      tree)))
 
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
-        init-tree {:user-id (:user_id root)}]
+        init-tree {(:user_id root) {}}]
     (recur1 init-tree rows)
     ))
 
