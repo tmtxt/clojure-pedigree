@@ -1,4 +1,4 @@
-match p=(root:person {user_id: %s})-[:father_child|mother_child *0..5]->
+match p=(root:person {user_id: %s})-[:father_child|mother_child *1..%s]->
       (child:person)<-[:father_child|mother_child]-(:person)
 with nodes(p) as all_nodes, relationships(p) as all_relationships, p as p
 return extract(n in all_nodes | n.user_id) as `path`,

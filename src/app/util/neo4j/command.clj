@@ -51,7 +51,7 @@
           data (-> response :data first :row first)]
       data)))
 
-(defn query-tree [root-id]
+(defn query-tree [root-id depth]
   (with-transaction conn
-    (let [statement (stm/raw-query query/get-tree root-id)]
+    (let [statement (stm/raw-query query/get-tree root-id depth)]
       (println statement))))

@@ -5,7 +5,7 @@
 (def ^{:private true} default-depth 5)
 
 (defn- get-tree-from-node [root & [depth]]
-  (ncm/query-tree (:user_id root)))
+  (ncm/query-tree (:user_id root) depth))
 
 (defn get-tree
   "Get tree from user id"
