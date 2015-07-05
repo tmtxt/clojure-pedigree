@@ -22,7 +22,7 @@
 # Main tasks
 - hosts: all
   roles:
-    - apt
+    # - apt
     - user
     - git
     - nvm
