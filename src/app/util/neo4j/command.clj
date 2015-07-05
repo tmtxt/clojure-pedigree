@@ -53,5 +53,9 @@
 
 (defn query-tree [root-id depth]
   (with-transaction conn
-    (let [statement (stm/raw-query query/get-tree root-id depth)]
-      (println statement))))
+    (let [statement (stm/raw-query query/get-tree root-id depth)
+          [_ result] (tx/execute *conn* *tran* [statement])
+          response (first result)
+          data (-> response :data)
+          rows (map #(:row %) data)]
+      rows)))

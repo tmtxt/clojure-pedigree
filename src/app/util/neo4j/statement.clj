@@ -121,4 +121,4 @@
 
 (defn raw-query [query & args]
   (let [statement (apply format query args)]
-    statement))
+    (tx/statement statement)))
