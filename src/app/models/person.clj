@@ -4,7 +4,6 @@
             [app.util.dbUtil :as db-util]
             [app.util.neo4j :as neo-util]
             [app.util.neo4j.command :as ncm]
-            [app.tree.main :as tree]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [clojurewerkz.neocons.rest.cypher :as cy]
@@ -55,10 +54,7 @@
 (defn find-node-by-user-id
   "Find the node from neo4j using the input user id"
   [user-id]
-  (nn/find-one conn
-               (:user-id neo-util/INDEX_NAMES)
-               (:user-id neo-util/INDEX_NAMES)
-               user-id))
+  (ncm/find-by-props :person {:user_id user-id}))
 
 (defn find-root-node
   "Find the root node from neo4j"
