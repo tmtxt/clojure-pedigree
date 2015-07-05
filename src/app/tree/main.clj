@@ -1,7 +1,7 @@
 (ns app.tree.main
   (:require [app.models.person :as person]))
 
-(def default-depth 5)
+(def ^{:private true} default-depth 5)
 
 (defn- get-tree-from-node [root & [depth]]
   (println root)
