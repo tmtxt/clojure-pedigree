@@ -20,7 +20,7 @@
                  [slingshot "0.12.2"]
                  [crypto-password "0.1.3"]
                  [weasel "0.6.0"]
-                 [cider/cider-nrepl "0.9.0-SNAPSHOT"]
+                 [cider/cider-nrepl "0.9.1"]
                  [com.cemerick/piggieback "0.1.5"]
                  ;; [com.cemerick/austin "0.1.6"]
                  [buddy "0.5.4"]
