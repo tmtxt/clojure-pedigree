@@ -4,8 +4,23 @@
 
 (def ^{:private true} default-depth 5)
 
+(defn- recur1 [tree rows]
+  (let [row (first rows)]
+    (if row
+      (do
+        (let [new-tree (assoc tree :path (first row))]
+          (recur new-tree (rest rows))))
+      tree)
+    )
+
+
+  )
+
 (defn- get-tree-from-node [root & [depth]]
-  (ncm/query-tree (:user_id root) depth))
+  (let [rows (ncm/query-tree (:user_id root) depth)
+        init-tree {:user-id (:user_id root)}]
+    (recur1 init-tree rows)
+    ))
 
 (defn get-tree
   "Get tree from user id"
