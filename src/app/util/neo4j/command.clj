@@ -1,6 +1,7 @@
 (ns app.util.neo4j.command
   (:require [clojurewerkz.neocons.rest.transaction :as tx]
             [app.util.neo4j.statement :as stm]
+            [app.util.neo4j.query :as query]
             [config.neo4j :refer [conn]]))
 
 (def ^:dynamic *tran*)
@@ -49,3 +50,8 @@
           response (first result)
           data (-> response :data first :row first)]
       data)))
+
+(defn query-tree [root-id]
+  (with-transaction conn
+    (let [statement (stm/raw-query query/get-tree root-id)]
+      (println statement))))

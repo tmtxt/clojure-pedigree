@@ -118,3 +118,7 @@
                           _label
                           (map-props-to-string props "props"))]
     (tx/statement statement {:props props})))
+
+(defn raw-query [query & args]
+  (let [statement (apply format query args)]
+    statement))

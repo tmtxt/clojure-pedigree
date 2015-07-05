@@ -1,11 +1,11 @@
 (ns app.tree.main
-  (:require [app.models.person :as person]))
+  (:require [app.models.person :as person]
+            [app.util.neo4j.command :as ncm]))
 
 (def ^{:private true} default-depth 5)
 
 (defn- get-tree-from-node [root & [depth]]
-  (println root)
-  (println depth))
+  (ncm/query-tree (:user_id root)))
 
 (defn get-tree
   "Get tree from user id"
