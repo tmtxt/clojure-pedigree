@@ -2,15 +2,15 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/tools.nrepl "0.2.10"]
-                 [compojure "1.3.1"]
-                 [ring-server "0.3.1"]
+                 [compojure "1.3.4"]
+                 [ring-server "0.4.0"]
                  [selmer "0.8.2"]
-                 [lib-noir "0.9.5"]
+                 [lib-noir "0.9.9"]
                  [com.novemberain/validateur "2.4.2"]
                  [com.taoensso/tower "3.0.2"]
-                 [korma "0.4.0"]
+                 [korma "0.4.2"]
                  [environ "1.0.0"]
                  [org.postgresql/postgresql "9.3-1100-jdbc41"]
                  [org.clojure/tools.cli "0.3.1"]
@@ -19,11 +19,12 @@
                  [clojurewerkz/neocons "3.1.0-beta3"]
                  [slingshot "0.12.2"]
                  [crypto-password "0.1.3"]
-                 [weasel "0.6.0"]
+                 [weasel "0.7.0"]
                  [cider/cider-nrepl "0.9.1"]
                  [com.cemerick/piggieback "0.1.5"]
+                 [com.rpl/specter "0.6.2"]
                  ;; [com.cemerick/austin "0.1.6"]
-                 [buddy "0.5.4"]
+                 [buddy "0.6.0"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools
@@ -31,7 +32,8 @@
 
   :plugins [[lein-ring "0.8.12"]
             [lein-environ "1.0.0"]
-            [lein-cljsbuild "1.0.4"]]
+            [lein-cljsbuild "1.0.4"]
+            [lein-ancient "0.6.7"]]
 
   :ring {:handler app.handler/app
          :init app.handler/init
@@ -67,7 +69,7 @@
 
    :dev
    {:dependencies [[ring-mock "0.1.5"]
-                   [ring/ring-devel "1.3.2"]]
+                   [ring/ring-devel "1.4.0"]]
     :ring {:open-browser? false}
     :env {:someconfig "dev"}
     :repl-options {:nrepl-middleware
