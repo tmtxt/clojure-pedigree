@@ -39,38 +39,44 @@
   (let [sub-path (rest path)
         sub-id (first path)
         children (get user-data :children [])
-        temp (first (select [ALL :user-id (fn [id] (= (second path) id))] children))
+        temp (first (transform [ALL :user-id (fn [id] (= (second path) id))] (fn [a] a) children))
         idx (.indexOf children temp)
         user-data2 (assoc user-data :children children)
         ]
 
-    ;; (if sub-id
-    ;;   (let [user-data3 (assoc user-data2 :user-id sub-id)
-    ;;         sub (recur2 sub-path user-data3)
-    ;;         ;; user-data4 (assoc-in user-data3 [:children (if (= idx -1) 0 idx)] sub)
-    ;;         user-data4 (if (= idx -1)
-    ;;                      (let [new-children (conj children sub)]
-    ;;                        (assoc user-data3 :children new-children)
-    ;;                        )
-    ;;                      (assoc-in user-data3 [:children idx] sub))
-    ;;         ]
-    ;;     user-data4)
-    ;;   sub-id)
-    user-data
-    ))
-
-(defn recur3 [path user-data]
-  (let [children-path (rest path)
-        sub-id (first path)
-        children (get user-data :children [])
-        user-data2 (assoc user-data :children children)]
     (if sub-id
       (let [user-data3 (assoc user-data2 :user-id sub-id)
-            sub (recur3 children-path user-data3)
-            user-data4 (assoc user-data3 :children sub)]
+            sub (recur2 sub-path user-data3)
+            ;; user-data4 (assoc-in user-data3 [:children (if (= idx -1) 0 idx)] sub)
+            user-data4 (if (= idx -1)
+                         (let [new-children (conj children sub)]
+                           (assoc user-data3 :children new-children)
+                           )
+                         (assoc-in user-data3 [:children idx] sub))
+            ]
+        (println user-data4)
         user-data4)
       sub-id)
+    ;; user-data
     ))
+
+(defn recur5 [path tree assoc-path]
+  (let [children-path (rest path)
+        continue (not (empty? children-path))
+        user-id (first path)
+        tree (assoc-in tree (conj assoc-path :user-id) user-id)]
+    (if continue
+      (let [children (get-in tree (conj assoc-path :children) [])
+            ;; tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)
+            child-id (second path)
+            child-set (filter (fn [child] (= (:user-id child) child-id)) children)
+            child (if (empty? child-set) {} (first child-set))
+            idx (if (empty? child-set) (count children) (.indexOf children child))
+            child-assoc-path (conj assoc-path :children idx)
+            tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)]
+        (recur5 children-path tree child-assoc-path)
+        )
+      tree)))
 
 (defn f []
   (let [path [[1 2]
@@ -87,11 +93,18 @@
               [1 2 8 12 13]
               [1 14]]
         func (fn [user-data link]
-               (println user-data)
-               (recur4 link user-data))
-        tree (reduce func {} path)
+               (recur5 link user-data))
+        ;; tree (reduce func {} path)
         ]
-    ;; (clojure.pprint/pprint tree)
+    (let [tree (recur5 [1 2 4]
+                       {:user-id 1
+                        :children [{:user-id 3
+                                    :children [{:user-id 5}]}
+                                   {:user-id 2
+                                    :children []}]}
+                       [])]
+      (clojure.pprint/pprint tree))
+
     ))
 
 ;; (defn f []
