@@ -67,14 +67,13 @@
         tree (assoc-in tree (conj assoc-path :user-id) user-id)]
     (if continue
       (let [children (get-in tree (conj assoc-path :children) [])
-            ;; tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)
             child-id (second path)
             child-set (filter (fn [child] (= (:user-id child) child-id)) children)
             child (if (empty? child-set) {} (first child-set))
             idx (if (empty? child-set) (count children) (.indexOf children child))
             child-assoc-path (conj assoc-path :children idx)
             tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)]
-        (recur5 children-path tree child-assoc-path)
+        (recur children-path tree child-assoc-path)
         )
       tree)))
 
