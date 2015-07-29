@@ -20,31 +20,19 @@
         (recur children-path tree child-assoc-path))
       tree)))
 
-(defn f []
-  (let [path [[1 2]
-              [1 2 3]
-              [1 2 3 5]
-              [1 2 3 6]
-              [1 2 4]
-              [1 2 4 7]
-              [1 2 8]
-              [1 2 8 9]
-              [1 2 8 9 10]
-              [1 2 8 9 11]
-              [1 2 8 12]
-              [1 2 8 12 13]
-              [1 14]]
-        func (fn [tree link]
+(defn f [paths]
+  (let [func (fn [tree link]
                (recur5 link tree []))
-        tree (reduce func {} path)
+        tree (reduce func {} paths)
         ]
     (clojure.pprint/pprint tree)
     ))
 
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
-        init-tree {(:user_id root) {}}]
-    ;; (recur1 init-tree rows)
+        paths (map (fn [[path]] path) rows)]
+    ;; (clojure.pprint/pprint paths)
+    (f paths)
     ))
 
 (defn get-tree
