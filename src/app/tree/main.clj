@@ -4,7 +4,8 @@
             [com.rpl.specter :refer :all]))
 
 (def ^{:private true} default-depth 5)
-(defn recur5 [path tree assoc-path]
+
+(defn- recur-fn [path tree assoc-path]
   (let [children-path (rest path)
         continue (not (empty? children-path))
         user-id (first path)
@@ -20,20 +21,17 @@
         (recur children-path tree child-assoc-path))
       tree)))
 
-(defn f [paths]
-  (let [func (fn [tree link]
-               (recur5 link tree []))
-        tree (reduce func {} paths)
-        ]
+(defn- extract-tree [paths]
+  (let [reduce-fn (fn [tree link]
+               (recur-fn link tree []))
+        tree (reduce reduce-fn {} paths)]
     (clojure.pprint/pprint tree)
     ))
 
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
         paths (map (fn [[path]] path) rows)]
-    ;; (clojure.pprint/pprint paths)
-    (f paths)
-    ))
+    (extract-tree paths)))
 
 (defn get-tree
   "Get tree from user id"
