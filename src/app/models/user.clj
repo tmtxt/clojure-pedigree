@@ -40,11 +40,3 @@
   (first (select user
                  (with user-role)
                  (where {:username username}))))
-
-(defn create-init-users []
-  (when (db-util/table-empty? user)
-    (add-user {:username "admin"
-               :full_name "Admin"
-               :email "admin@example.com"
-               :password "admin"}
-              :admin)))

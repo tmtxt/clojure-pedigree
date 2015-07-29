@@ -1,7 +1,8 @@
 (ns app.util.neo4j.statement
   (:require [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.transaction :as tx]
-            [clojurewerkz.neocons.rest.cypher :as cy]))
+            [clojurewerkz.neocons.rest.cypher :as cy]
+            [app.util.neo4j.query :as query]))
 
 (defn get-label [label] (if (keyword? label) (name label) label))
 
@@ -110,3 +111,14 @@
     (tx/statement statement {:start start-identifier
                              :end end-identifier
                              :props props})))
+
+(defn find-by-props [label props]
+  (let [_label (get-label label)
+        statement (format query/find-by-props
+                          _label
+                          (map-props-to-string props "props"))]
+    (tx/statement statement {:props props})))
+
+(defn raw-query [query & args]
+  (let [statement (apply format query args)]
+    (tx/statement statement)))

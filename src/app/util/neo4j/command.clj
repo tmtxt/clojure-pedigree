@@ -1,6 +1,8 @@
 (ns app.util.neo4j.command
   (:require [clojurewerkz.neocons.rest.transaction :as tx]
-            [app.util.neo4j.statement :as stm]))
+            [app.util.neo4j.statement :as stm]
+            [app.util.neo4j.query :as query]
+            [config.neo4j :refer [conn]]))
 
 (def ^:dynamic *tran*)
 (def ^:dynamic *conn*)
@@ -38,3 +40,22 @@
          (binding [app.util.neo4j.command/*tran* ~transaction]
            (clojurewerkz.neocons.rest.transaction/with-transaction ~connection ~transaction true
              ~@body))))))
+
+(defn find-by-props
+  "Find node by attr maps"
+  [label props]
+  (with-transaction conn
+    (let [statement (stm/find-by-props label props)
+          [_ result] (tx/execute *conn* *tran* [statement])
+          response (first result)
+          data (-> response :data first :row first)]
+      data)))
+
+(defn query-tree [root-id depth]
+  (with-transaction conn
+    (let [statement (stm/raw-query query/get-tree root-id depth)
+          [_ result] (tx/execute *conn* *tran* [statement])
+          response (first result)
+          data (-> response :data)
+          rows (map #(:row %) data)]
+      rows)))

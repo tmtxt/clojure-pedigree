@@ -1,5 +1,6 @@
 (ns app.controllers.tree
-  (:require [compojure.core :refer :all]))
+  (:require [compojure.core :refer :all]
+            [app.tree.main :as tree]))
 
 (defn get-tree [request]
   "Tree")
