@@ -5,7 +5,7 @@
 
 (def ^{:private true} default-depth 5)
 
-(defn- recur-fn [path tree assoc-path]
+(defn- recur-fn [path tree assoc-path last-marriage]
   (let [children-path (rest path)
         continue (not (empty? children-path))
         user-id (first path)
@@ -18,13 +18,13 @@
             idx (if (empty? child-set) (count children) (.indexOf children child))
             child-assoc-path (conj assoc-path :children idx)
             tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)]
-        (recur children-path tree child-assoc-path))
-      tree)))
+        (recur children-path tree child-assoc-path last-marriage))
+      (assoc-in tree (conj assoc-path :marriage) last-marriage))))
 
 (defn- extract-tree [rows]
   (let [reduce-fn (fn [tree row]
                     (let [[path marriage] row]
-                      (recur-fn path tree [])))
+                      (recur-fn path tree [] marriage)))
         tree (reduce reduce-fn {} rows)]
     (clojure.pprint/pprint tree)
     ))
