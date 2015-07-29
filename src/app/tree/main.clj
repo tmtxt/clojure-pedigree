@@ -21,16 +21,17 @@
         (recur children-path tree child-assoc-path))
       tree)))
 
-(defn- extract-tree [paths]
-  (let [reduce-fn (fn [tree link]
-               (recur-fn link tree []))
-        tree (reduce reduce-fn {} paths)]
+(defn- extract-tree [rows]
+  (let [reduce-fn (fn [tree row]
+                    (let [[path marriage] row]
+                      (recur-fn path tree [])))
+        tree (reduce reduce-fn {} rows)]
     (clojure.pprint/pprint tree)
     ))
 
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
-        paths (map (fn [[path]] path) rows)]
+        paths (map (fn [[path _ marriage]] [path marriage]) rows)]
     (extract-tree paths)))
 
 (defn get-tree
