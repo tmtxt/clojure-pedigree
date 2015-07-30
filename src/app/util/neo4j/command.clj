@@ -59,3 +59,12 @@
           data (-> response :data)
           rows (map #(:row %) data)]
       rows)))
+
+(defn find-root []
+  (with-transaction conn
+    (let [statement (stm/raw-query query/find-root)
+          [_ [result]] (tx/execute *conn* *tran* [statement])
+          data (-> result :data)
+          rows (map #(:row %) data)]
+      (if (empty? rows) nil
+          (first rows)))))

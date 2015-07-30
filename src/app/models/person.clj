@@ -59,4 +59,6 @@
 (defn find-root-node
   "Find the root node from neo4j"
   []
-  (ncm/find-by-props :person {:is_root true}))
+  (let [row (ncm/find-root)
+        [root marriage] row]
+    (assoc root :marriage marriage)))
