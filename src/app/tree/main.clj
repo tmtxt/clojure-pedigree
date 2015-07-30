@@ -21,13 +21,14 @@
         (recur children-path tree child-assoc-path last-marriage))
       (assoc-in tree (conj assoc-path :marriage) last-marriage))))
 
+;;; expect rows to be in a form of vector of vector
+;;; each child vector is the path of user id from root node to that node
 (defn- extract-tree [rows init-tree]
   (let [reduce-fn (fn [tree row]
                     (let [[path marriage] row]
                       (recur-fn path tree [] marriage)))
         tree (reduce reduce-fn init-tree rows)]
-    (clojure.pprint/pprint tree)
-    ))
+    tree))
 
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
