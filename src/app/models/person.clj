@@ -62,3 +62,8 @@
   (let [row (ncm/find-root)
         [root marriage] row]
     (assoc root :marriage marriage)))
+
+(defn find-all-by-ids
+  "Find all from postgres where id in ids list"
+  [ids]
+  (db-util/find-all-by-ids person ids))
