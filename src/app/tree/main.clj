@@ -32,12 +32,6 @@
         tree (reduce reduce-fn init-tree rows)]
     tree))
 
-(defn- reduce-fn [ids row]
-  (let [[path marriage] row
-        ids (apply conj ids path)
-        ids (apply conj ids marriage)]
-    ids))
-
 (defn- extract-ids [rows]
   (let [reduce-fn (fn [ids row]
                     (let [[path marriage] row
@@ -47,10 +41,18 @@
         ids (reduce reduce-fn #{} rows)]
     ids))
 
+(defn- extract-person-info [rows]
+  (let [reduce-fn (fn [person-info person]
+                    (assoc person-info (:id person) person))
+        person-info (reduce reduce-fn {} rows)]
+    (clojure.pprint/pprint person-info)))
+
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
         paths (map (fn [[path _ marriage]] [path marriage]) rows)
         ids (extract-ids paths)
+        person-rows (person/find-all-by-ids ids)
+        person-info (extract-person-info person-rows)
         init-tree root]
     (extract-tree paths init-tree)))
 
