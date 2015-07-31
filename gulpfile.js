@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var fs = require('fs');
 var gulp = require('gulp');
 var bower = require('bower');
 var browserify = require('browserify');
@@ -12,6 +13,7 @@ var util = require('gulp-util');
 var gulpif = require('gulp-if');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
+var path = require('path');
 
 // bower
 gulp.task('bower', function(cb){
@@ -114,7 +116,23 @@ gulp.task('sass-watch', function(){
   gulp.watch('./sass/**/*.scss', ['sass-dev']);
 });
 
+gulp.task('symlink', ['bower'], function(){
+  var source = path.normalize(process.cwd() + '/./resources/public/bower');
+  var dest = path.normalize('./sass/bower');
+
+  // check if the destination is already exist
+  var stat;
+  try{
+    stat = fs.lstatSync(dest);
+    // exist, remove it
+    fs.unlinkSync(dest);
+  } catch(e){
+    // Not exist, just don't care
+  }
+  fs.symlinkSync(source, dest);
+});
+
 // combine
-gulp.task('dev', ['bower', 'js-dev', 'sass-dev']);
-gulp.task('prod', ['bower', 'js-prod', 'sass-prod']);
+gulp.task('dev', ['bower', 'js-dev', 'sass-dev', 'symlink']);
+gulp.task('prod', ['bower', 'js-prod', 'sass-prod', 'symlink']);
 gulp.task('watch', ['js-watch', 'sass-watch']);
