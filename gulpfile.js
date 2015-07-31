@@ -10,6 +10,7 @@ var uglify = require('gulp-uglify');
 var notifier = require('node-notifier');
 var util = require('gulp-util');
 var gulpif = require('gulp-if');
+var sass = require('gulp-sass');
 
 // bower
 gulp.task('bower', function(cb){
@@ -90,6 +91,14 @@ function browserifyError(err) {
   error(err);
   this.end();
 }
+
+// sass
+gulp.task('sass-dev', function(){
+  return gulp.src('./sass/main.scss')
+    .pipe(plumber({errorHandler: error}))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./resources/public/css'));
+});
 
 // combine
 gulp.task('dev', ['bower', 'js-dev']);
