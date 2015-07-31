@@ -1,7 +1,6 @@
 (ns app.controllers.home
   (:require [compojure.core :refer :all]
             [app.views.layout :as layout]
-            [selmer.parser :refer [render-file render]]
             [app.util.main :as util]
             [app.util.security :as security]
             [ring.util.response :refer [response redirect content-type]]
@@ -11,12 +10,11 @@
 
 ;;; index
 (defn home [request]
-  (layout/render "home/index.html" {:name (config :site-name)
-                                    :layout (make-layout-tran request)}))
+  (layout/render request "home/index.html" {:name (config :site-name)}))
 
 ;;; login
 (defn login-render [request]
-  (layout/render "home/login.html"))
+  (layout/render request "home/login.html"))
 
 (defn login-authenticate [request]
   (let [username (util/param request "username")
@@ -29,7 +27,7 @@
                                    :user-info user-info
                                    :locale (user-info :locale))]
         (-> (redirect "/welcome") (assoc :session updated-session)))
-      (layout/render "home/login.html" {:message "error"}))))
+      (layout/render request "home/login.html" {:message "error"}))))
 
 ;;; logout
 (defn logout [request]
@@ -37,7 +35,7 @@
       (assoc :session {})))
 
 (defn welcome [request]
-  (layout/render "home/welcome.html"))
+  (layout/render request "home/welcome.html"))
 
 (defroutes home-routes
   (GET "/" [] home)
