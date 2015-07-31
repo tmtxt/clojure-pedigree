@@ -35,6 +35,12 @@
        (kc/select entity)
        (first)))
 
+(defn find-all-by-ids
+  "Find entity by a list of ids"
+  [entity ids]
+  (->> (kc/where {:id [in ids]})
+       (kc/select entity)))
+
 (defn find-all-by-attrs
   "Find all entities by attrs map"
   [entity where]
