@@ -115,6 +115,6 @@ gulp.task('sass-watch', function(){
 });
 
 // combine
-gulp.task('dev', ['bower', 'js-dev']);
-gulp.task('prod', ['bower', 'js-prod']);
-gulp.task('watch', ['js-watch']);
+gulp.task('dev', ['bower', 'js-dev', 'sass-dev']);
+gulp.task('prod', ['bower', 'js-prod', 'sass-prod']);
+gulp.task('watch', ['js-watch', 'sass-watch']);
