@@ -22,3 +22,4 @@
 /password
 *.tern-port
 /resources/public/js/*
+/resources/public/css/*
