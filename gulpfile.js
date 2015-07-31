@@ -11,6 +11,7 @@ var notifier = require('node-notifier');
 var util = require('gulp-util');
 var gulpif = require('gulp-if');
 var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 
 // bower
 gulp.task('bower', function(cb){
@@ -96,8 +97,21 @@ function browserifyError(err) {
 gulp.task('sass-dev', function(){
   return gulp.src('./sass/main.scss')
     .pipe(plumber({errorHandler: error}))
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./resources/public/css'));
+});
+
+gulp.task('sass-prod', function(){
+  return gulp.src('./sass/main.scss')
+    .pipe(plumber({errorHandler: error}))
+    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(gulp.dest('./resources/public/css'));
+});
+
+gulp.task('sass-watch', function(){
+  gulp.watch('./sass/**/*.scss', ['sass-dev']);
 });
 
 // combine
