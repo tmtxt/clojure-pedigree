@@ -5,6 +5,8 @@
 
 (def ^{:private true} default-depth 5)
 
+;;; expect the path to be a vector of ids from the root to that node
+;;; eg [1 2 3]
 (defn- recur-fn [path tree assoc-path last-marriage]
   (let [children-path (rest path)
         continue (not (empty? children-path))
@@ -30,9 +32,25 @@
         tree (reduce reduce-fn init-tree rows)]
     tree))
 
+(defn- reduce-fn [ids row]
+  (let [[path marriage] row
+        ids (apply conj ids path)
+        ids (apply conj ids marriage)]
+    ids))
+
+(defn- extract-ids [rows]
+  (let [reduce-fn (fn [ids row]
+                    (let [[path marriage] row
+                          ids (apply conj ids path)
+                          ids (apply conj ids marriage)]
+                      ids))
+        ids (reduce reduce-fn #{} rows)]
+    ids))
+
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
         paths (map (fn [[path _ marriage]] [path marriage]) rows)
+        ids (extract-ids paths)
         init-tree root]
     (extract-tree paths init-tree)))
 
