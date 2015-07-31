@@ -1,17 +1,93 @@
 <!DOCTYPE html>
-<head>
-  <title>{% block title %}Default Website Title{% endblock %}</title>
-</head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Aftermarket</title>
+    <link href="css/commons/csslayout1.css" rel="stylesheet">
+    <link href="css/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/slick/slick.css" rel="stylesheet">
+    <link href="css/slick/slick-theme.css" rel="stylesheet">
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <div class="container-fluid header-banner">
+        <div class="container text-center">
+          <h1>Gia Pha<br/>
+            <small>Phát triển tào lao</small>
+          </h1>
+        </div>
+      </div>
 
-<body>
-  <div class="header">
-    {{ layout.homepage|default:"Trang chủ" }}
-  </div>
-  <div class="header">
-    {{ layout.treepage|default:"Cây gia phả" }}
-  </div>
-  <div id="content">
-    {% block content %}{% endblock %}
-  </div>
-</body>
+      <div class="container-fluid header-nav">
+
+        <div class="container">
+          <nav class="header-content" role="banner">
+            <ul class="header-content--left header-menu">
+              <li><a href="#">Trang chủ</a></li>
+              <li><a href="#">Thành viên</a></li>
+              <li><a href="#">Cây gia phả</a></li>
+              <li><a href="#">Lịch sử dòng họ</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
+            <ul class="header-content--right header-menu">
+              <li><a href="#">Đăng nhập</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <!-- header end -->
+    <main class="site-content">
+      <div class="container site-container">
+        <div class="site-container-row">
+          <div class="post-left">
+            Left
+          </div>
+          <div class="post-right">
+            Right
+          </div>
+        </div>
+        <div class="site-container-row">
+          <div class="post-left">
+            Left
+          </div>
+          <div class="post-right">
+            Right
+          </div>
+        </div>
+        <div class="site-container-row">
+          <div class="post-left">
+            Left
+          </div>
+          <div class="post-right">
+            Right
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- main content end  -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- footer end -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="css/commons/bootstrap/assets/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="css/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="css/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="css/slick/slick.js"></script>
+  </body>
 </html>
