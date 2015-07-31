@@ -45,7 +45,7 @@ schemup_path: "{{project_dir}}/schema"
 
 # nvm
 nvm_user: "{{project_user}}"
-nvm_node_version: 0.11.14
+nvm_node_version: 0.10.40
 nvm_install_node_apps: true
 
 # web server
