@@ -7,7 +7,7 @@
 
 ;;; expect the path to be a vector of ids from the root to that node
 ;;; eg [1 2 3]
-(defn- recur-fn [path tree assoc-path last-marriage]
+(defn- recur-fn [path tree assoc-path last-marriage person-info]
   (let [children-path (rest path)
         continue (not (empty? children-path))
         user-id (first path)
@@ -20,15 +20,18 @@
             idx (if (empty? child-set) (count children) (.indexOf children child))
             child-assoc-path (conj assoc-path :children idx)
             tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)]
-        (recur children-path tree child-assoc-path last-marriage))
-      (assoc-in tree (conj assoc-path :marriage) last-marriage))))
+        (recur children-path tree child-assoc-path last-marriage person-info))
+      (let [tree (assoc-in tree (conj assoc-path :marriage) last-marriage)
+            person-detail (get person-info user-id)
+            tree (assoc-in tree (conj assoc-path :info) person-detail)]
+        tree))))
 
 ;;; expect rows to be in a form of vector of vector
 ;;; each child vector is the path of user id from root node to that node
-(defn- extract-tree [rows init-tree]
+(defn- extract-tree [rows init-tree person-info]
   (let [reduce-fn (fn [tree row]
                     (let [[path marriage] row]
-                      (recur-fn path tree [] marriage)))
+                      (recur-fn path tree [] marriage person-info)))
         tree (reduce reduce-fn init-tree rows)]
     tree))
 
@@ -45,7 +48,7 @@
   (let [reduce-fn (fn [person-info person]
                     (assoc person-info (:id person) person))
         person-info (reduce reduce-fn {} rows)]
-    (clojure.pprint/pprint person-info)))
+    person-info))
 
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
@@ -54,7 +57,7 @@
         person-rows (person/find-all-by-ids ids)
         person-info (extract-person-info person-rows)
         init-tree root]
-    (extract-tree paths init-tree)))
+    (extract-tree paths init-tree person-info)))
 
 (defn get-tree
   "Get tree from user id"
