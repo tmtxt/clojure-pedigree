@@ -10,3 +10,6 @@
 [submodule "ansible/roles/schemup"]
 	path = ansible/roles/schemup
 	url = https://github.com/tmtxt/schemup-ansible.git
+[submodule "ansible/roles/oraclejdk"]
+	path = ansible/roles/oraclejdk
+	url = https://github.com/tmtxt/oraclejdk-ubuntu-ansible.git
