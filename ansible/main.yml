@@ -19,7 +19,7 @@
     - oraclejdk
     - leiningen
     - neo4j
-    # - ferm
+    - ferm
 
   tasks:
     - name: install packages
