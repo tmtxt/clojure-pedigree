@@ -36,3 +36,30 @@
   sudo: yes
   sudo_user: postgres
   postgresql_user: name={{db_user}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+
+- name: create pg env script
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  template: >-
+    src=templates/pg_env.sh
+    dest={{script_dir}}/pg_env.sh
+    mode=755
+    owner={{db_user}}
+
+- name: allow pg to listen on all addresses
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/postgresql/{{postgres_version}}/main/postgresql.conf
+    line="listen_addresses = '*'"
+  when: vagrant_env is defined and vagrant_env == true
+  notify:
+    - restart postgres
+
+- name: allow pg to trust connection from outside vagrant
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/postgresql/{{postgres_version}}/main/pg_hba.conf
+    line="host all all 10.0.2.2/24 trust"
+  when: vagrant_env is defined and vagrant_env == true
+  notify:
+    - restart postgres
