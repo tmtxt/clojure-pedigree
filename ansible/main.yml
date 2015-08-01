@@ -17,6 +17,7 @@
     - virtualenv
     - schemup
     - oraclejdk
+    - leiningen
     # - clojure
     # - curl
     # - neo4j
