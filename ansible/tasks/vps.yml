@@ -1,0 +1,17 @@
+---
+- name: update apt-get
+  sudo: yes
+  apt: update_cache=yes cache_valid_time=43200 # update after 12 hours
+
+- name: install git
+  sudo: yes
+  apt: name=git
+
+- name: create project user
+  user: name={{project_user}}
+  sudo: yes
+
+- name: clone the repo
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  git: repo=https://github.com/tmtxt/clojure-pedigree.git dest={{project_dir}}
