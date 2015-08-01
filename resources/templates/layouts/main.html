@@ -7,7 +7,9 @@
     {% include "layouts/_header.html" %}
 
     <main class="site-content">
-      {% block content %}{% endblock %}
+      <div class="container site-container">
+        {% block content %}{% endblock %}
+      </div>
     </main>
 
     {% include "layouts/_footer.html" %}
