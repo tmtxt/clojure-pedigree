@@ -18,6 +18,11 @@ out_dirs:
   - "{{project_dir}}/src/config"            # clj config
   - "{{project_dir}}/password"
 
+node_apps:
+  - bower
+  - gulp
+  - browserify
+
 # folders
 script_dir: "{{project_dir}}/scripts"
 log_dir: "{{project_dir}}/logs"
@@ -31,11 +36,11 @@ pg_random_password: true
 pg_password_file: "{{password_dir}}/postgres"
 
 # virtualenv
-virtualenv_user: "{{project_user}}"
 virtualenv_path: "~"
 
 # schemup
 schemup_user: "{{project_user}}"
+schemup_virtualenv_path: "{{virtualenv_path}}"
 schemup_path: "{{project_dir}}/schema"
 
 # nvm

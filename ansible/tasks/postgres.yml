@@ -1,0 +1,65 @@
+---
+- name: create project database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{db_name}}
+
+- name: check if pg password is generated already
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  stat: path={{pg_password_file}}
+  register: pg_password_stat
+  changed_when: False
+
+- name: generate pg password
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  when: not pg_password_stat.stat.exists
+  shell: date | md5sum | head -c 32 > {{pg_password_file}}
+
+- name: register pg password
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  command: cat {{pg_password_file}}
+  register: pg_password_data
+  changed_when: False
+
+- set_fact:
+    db_password: "{{pg_password_data.stdout}}"
+
+- name: grant access to database for project user
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: db={{db_name}} name={{db_user}} password={{db_password}}
+
+- name: ensure project user does not have unnecessary privilege
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: name={{db_user}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+
+- name: create pg env script
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  template: >-
+    src=templates/pg_env.sh
+    dest={{script_dir}}/pg_env.sh
+    mode=755
+    owner={{db_user}}
+
+- name: allow pg to listen on all addresses
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/postgresql/{{postgres_version}}/main/postgresql.conf
+    line="listen_addresses = '*'"
+  when: vagrant_env is defined and vagrant_env == true
+  notify:
+    - restart postgres
+
+- name: allow pg to trust connection from outside vagrant
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/postgresql/{{postgres_version}}/main/pg_hba.conf
+    line="host all all 10.0.2.2/24 trust"
+  when: vagrant_env is defined and vagrant_env == true
+  notify:
+    - restart postgres

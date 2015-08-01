@@ -1,3 +1,24 @@
-[submodule "ansible/roles"]
-	path = ansible/roles
-	url = https://github.com/tmtxt/ansible-roles.git
+[submodule "ansible/roles/nvm"]
+	path = ansible/roles/nvm
+	url = https://github.com/tmtxt/nvm-ansible.git
+[submodule "ansible/roles/postgres"]
+	path = ansible/roles/postgres
+	url = https://github.com/tmtxt/postgres-ubuntu-ansible.git
+[submodule "ansible/roles/virtualenv"]
+	path = ansible/roles/virtualenv
+	url = https://github.com/tmtxt/virtualenv-ubuntu-ansible.git
+[submodule "ansible/roles/schemup"]
+	path = ansible/roles/schemup
+	url = https://github.com/tmtxt/schemup-ansible.git
+[submodule "ansible/roles/oraclejdk"]
+	path = ansible/roles/oraclejdk
+	url = https://github.com/tmtxt/oraclejdk-ubuntu-ansible.git
+[submodule "ansible/roles/leiningen"]
+	path = ansible/roles/leiningen
+	url = https://github.com/tmtxt/leiningen-ansible.git
+[submodule "ansible/roles/neo4j"]
+	path = ansible/roles/neo4j
+	url = https://github.com/tmtxt/ansible-neo4j.git
+[submodule "ansible/roles/ferm"]
+	path = ansible/roles/ferm
+	url = https://github.com/tmtxt/ferm-ubuntu-ansible.git

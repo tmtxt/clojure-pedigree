@@ -1,58 +1,39 @@
 ---
 # Initialize for remote hosts
 - hosts: vps.truongtx.me
-  roles:
-    - git
-    - user
   tasks:
-    - name: clone the repo
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      git: repo=https://github.com/tmtxt/clojure-pedigree.git dest={{project_dir}}
+    - include: tasks/vps.yml
 
 # Initialize tasks
 - hosts: all
   tasks:
-    - name: create necessary directories
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      file: path={{item}} state=directory
-      with_items: out_dirs
+    - include: tasks/init.yml
 
 # Main tasks
 - hosts: all
   roles:
-    # - apt
-    - user
-    - git
     - nvm
     - postgres
-    - wget
     - virtualenv
     - schemup
     - oraclejdk
-    - clojure
-    - curl
+    - leiningen
     - neo4j
-    - nginx
     - ferm
 
   tasks:
-    - name: install leiningen dependencies
+    - name: install packages
       sudo: yes
-      sudo_user: "{{project_user}}"
-      command: lein deps chdir={{project_dir}}
-      changed_when: False
+      apt: name={{item}}
+      with_items:
+        - git
+        - wget
+        - curl
+        - nginx
 
-    - name: compile cljs
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      command: lein cljsbuild once production
-      args:
-        chdir: "{{project_dir}}"
-      register: cljs_compile_result
-      changed_when: cljs_compile_result.stdout.find('Successfully compiled') != -1
-
+    - include: tasks/postgres.yml
+    - include: tasks/schemup.yml
+    - include: tasks/clj.yml
     - include: tasks/config.yml
     - include: tasks/script.yml
     - include: tasks/nginx.yml
@@ -70,3 +51,7 @@
     - name: reload ferm
       sudo: yes
       command: ferm /etc/ferm/ferm.conf
+
+    - name: restart postgres
+      sudo: yes
+      service: name=postgresql state=restarted
