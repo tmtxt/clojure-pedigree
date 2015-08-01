@@ -33,6 +33,7 @@
         - nginx
 
     - include: tasks/postgres.yml
+    - include: tasks/schemup.yml
     - include: tasks/clj.yml
     - include: tasks/config.yml
     - include: tasks/script.yml
