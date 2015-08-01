@@ -7,3 +7,6 @@
 [submodule "ansible/roles/virtualenv"]
 	path = ansible/roles/virtualenv
 	url = https://github.com/tmtxt/virtualenv-ubuntu-ansible.git
+[submodule "ansible/roles/schemup"]
+	path = ansible/roles/schemup
+	url = https://github.com/tmtxt/schemup-ansible.git
