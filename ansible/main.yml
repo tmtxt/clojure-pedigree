@@ -32,6 +32,7 @@
         - curl
         - nginx
 
+    - include: tasks/postgres.yml
     - include: tasks/clj.yml
     - include: tasks/config.yml
     - include: tasks/script.yml
