@@ -12,7 +12,7 @@
 # Main tasks
 - hosts: all
   roles:
-    # - nvm
+    - nvm
     - postgres
     # - virtualenv
     # - schemup
