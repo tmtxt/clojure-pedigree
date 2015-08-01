@@ -1,62 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Aftermarket</title>
-    <link href="css/main.css" rel="stylesheet">
+    {% include "layouts/_meta.html" %}
   </head>
   <body class="site">
-    <header class="site-header">
-      <div class="container-fluid header-banner">
-        <div class="container text-center">
-          <h1>Gia Pha<br/>
-            <small>Phát triển tào lao</small>
-          </h1>
-        </div>
-      </div>
-
-      <div class="container-fluid header-nav">
-
-        <div class="container">
-          <nav class="header-content" role="banner">
-            <ul class="header-content--left header-menu">
-              <li><a href="#">Trang chủ</a></li>
-              <li><a href="#">Thành viên</a></li>
-              <li><a href="#">Cây gia phả</a></li>
-              <li><a href="#">Lịch sử dòng họ</a></li>
-              <li><a href="#">Liên hệ</a></li>
-            </ul>
-            <ul class="header-content--right header-menu">
-              <li><a href="#">Đăng nhập</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
-    <!-- header end -->
+    {% include "layouts/_header.html" %}
 
     <main class="site-content">
       {% block content %}{% endblock %}
     </main>
 
-    <!-- main content end  -->
-    <footer class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            ABC
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- footer end -->
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    {% include "layouts/_footer.html" %}
   </body>
 </html>

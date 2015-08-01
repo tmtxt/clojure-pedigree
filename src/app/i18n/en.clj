@@ -5,4 +5,5 @@
         :error {:not-login "Not Login"}
 
         :layout {:homepage "Homepage"
-                 :treepage "Pedigree Tree"}}})
+                 :treepage "Pedigree Tree"
+                 :title "Tran Van Pedigree"}}})
