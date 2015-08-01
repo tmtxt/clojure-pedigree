@@ -18,9 +18,7 @@
     - schemup
     - oraclejdk
     - leiningen
-    # - clojure
-    # - curl
-    # - neo4j
+    - neo4j
     # - ferm
 
   tasks:
