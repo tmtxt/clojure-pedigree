@@ -13,3 +13,6 @@
 [submodule "ansible/roles/oraclejdk"]
 	path = ansible/roles/oraclejdk
 	url = https://github.com/tmtxt/oraclejdk-ubuntu-ansible.git
+[submodule "ansible/roles/leiningen"]
+	path = ansible/roles/leiningen
+	url = https://github.com/tmtxt/leiningen-ansible.git
