@@ -14,7 +14,7 @@
   roles:
     - nvm
     - postgres
-    # - virtualenv
+    - virtualenv
     # - schemup
     # - oraclejdk
     # - clojure
