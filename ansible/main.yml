@@ -13,16 +13,11 @@
 # Initialize tasks
 - hosts: all
   tasks:
-    - name: create necessary directories
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      file: path={{item}} state=directory
-      with_items: out_dirs
+    - include: tasks/init.yml
 
 # Main tasks
 - hosts: all
   roles:
-    # - apt
     - user
     - git
     - nvm
