@@ -5,4 +5,5 @@
         :error {:not-login "Chưa đăng nhập"}
 
         :layout {:homepage "Trang chủ"
-                 :treepage "Cây gia phả"}}})
+                 :treepage "Cây gia phả"
+                 :title "Trần Văn Gia Phả"}}})

@@ -1,0 +1,20 @@
+.page-index {
+  .site-container-row {
+    @include flex-display;
+    @include flex-flow-mixin(row nowrap);
+    flex-flow: flex-start;
+  }
+
+  .site-container-row {
+    .post-left {
+      /* @include flex-mixin(2 0 auto); */
+      width: 70%;
+    }
+
+    .post-right {
+      /* @include flex-mixin(1 0 auto); */
+       width: 30%;
+    }
+  }
+
+}

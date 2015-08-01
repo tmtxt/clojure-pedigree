@@ -1,0 +1,20 @@
+$white: #fff;
+
+/* MINXIN ---------------------------------------------------------------------- */
+@mixin flex-mixin($value) {
+    -webkit-flex: $value;
+    flex: $value;
+}
+
+@mixin flex-flow-mixin($value) {
+    -webkit-flex-flow: $value;
+    flex-flow: $value;
+}
+
+@mixin flex-display{
+    display:        -webkit-box;
+    display:        -moz-box;
+    display:        -ms-flexbox;
+    display:        -webkit-flex;
+    display:        flex;
+}
