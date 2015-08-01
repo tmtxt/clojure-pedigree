@@ -32,21 +32,7 @@
         - curl
         - nginx
 
-    - name: install leiningen dependencies
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      command: lein deps chdir={{project_dir}}
-      changed_when: False
-
-    - name: compile cljs
-      sudo: yes
-      sudo_user: "{{project_user}}"
-      command: lein cljsbuild once production
-      args:
-        chdir: "{{project_dir}}"
-      register: cljs_compile_result
-      changed_when: cljs_compile_result.stdout.find('Successfully compiled') != -1
-
+    - include: tasks/clj.yml
     - include: tasks/config.yml
     - include: tasks/script.yml
     - include: tasks/nginx.yml
