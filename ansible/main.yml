@@ -12,7 +12,7 @@
 # Main tasks
 - hosts: all
   roles:
-    - nvm
+    # - nvm
     - postgres
     # - virtualenv
     # - schemup
@@ -51,3 +51,7 @@
     - name: reload ferm
       sudo: yes
       command: ferm /etc/ferm/ferm.conf
+
+    - name: restart postgres
+      sudo: yes
+      service: name=postgresql state=restarted
