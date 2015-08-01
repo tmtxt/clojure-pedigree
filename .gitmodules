@@ -19,3 +19,6 @@
 [submodule "ansible/roles/neo4j"]
 	path = ansible/roles/neo4j
 	url = https://github.com/tmtxt/ansible-neo4j.git
+[submodule "ansible/roles/ferm"]
+	path = ansible/roles/ferm
+	url = https://github.com/tmtxt/ferm-ubuntu-ansible.git
