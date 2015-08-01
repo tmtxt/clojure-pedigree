@@ -1,4 +1,14 @@
 ---
+- name: install node tools
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  npm: >-
+    name={{item}}
+    executable=~/.nvm/v{{nvm_node_version}}/bin/npm
+    global=yes
+  with_items:
+    - "{{node_apps}}"
+
 - name: install gulp dependencies
   sudo: yes
   sudo_user: "{{project_user}}"
