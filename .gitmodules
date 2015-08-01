@@ -1,3 +1,6 @@
 [submodule "ansible/roles/nvm"]
 	path = ansible/roles/nvm
 	url = https://github.com/tmtxt/nvm-ansible.git
+[submodule "ansible/roles/postgres"]
+	path = ansible/roles/postgres
+	url = https://github.com/tmtxt/postgres-ubuntu-ansible.git
