@@ -13,7 +13,7 @@
 - hosts: all
   roles:
     - nvm
-    # - postgres
+    - postgres
     # - virtualenv
     # - schemup
     # - oraclejdk
