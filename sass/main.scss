@@ -1,4 +1,5 @@
 @import "./_common.scss";
+@import "./page-index.scss";
 
 /* HTML in general ---------------------------------------------------------------------- */
 html,
@@ -224,19 +225,4 @@ body {
   @include flex-display;
   @include flex-flow-mixin(column nowrap);
   padding: 15px 0;
-  }
-
-.site-container-row {
-  @include flex-display;
-  @include flex-flow-mixin(row nowrap);
-  }
-
-.site-container-row {
-  .post-left {
-    @include flex-mixin(2 0 auto);
-    }
-
-  .post-right {
-    @include flex-mixin(1 0 auto);
-    }
   }
