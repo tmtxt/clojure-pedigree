@@ -15,7 +15,7 @@
     - nvm
     - postgres
     - virtualenv
-    # - schemup
+    - schemup
     # - oraclejdk
     # - clojure
     # - curl
