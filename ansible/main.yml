@@ -12,20 +12,26 @@
 # Main tasks
 - hosts: all
   roles:
-    - git
-    - nvm
-    - postgres
-    - wget
-    - virtualenv
-    - schemup
-    - oraclejdk
-    - clojure
-    - curl
-    - neo4j
-    - nginx
-    - ferm
+    # - nvm
+    # - postgres
+    # - virtualenv
+    # - schemup
+    # - oraclejdk
+    # - clojure
+    # - curl
+    # - neo4j
+    # - ferm
 
   tasks:
+    - name: install packages
+      sudo: yes
+      apt: name={{item}}
+      with_items:
+        - git
+        - wget
+        - curl
+        - nginx
+
     - name: install leiningen dependencies
       sudo: yes
       sudo_user: "{{project_user}}"
