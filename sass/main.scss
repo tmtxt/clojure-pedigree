@@ -8,70 +8,7 @@
 /* others */
 @import "./_common.scss";
 @import "./_menu.scss";
+@import "./_content.scss";
 
 /* pages */
 @import "./page-index.scss";
-
-/* Site content - centerd content ---------------------------------------------------------------------- */
-.aligner {
-    @include flex-display;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    justify-content: center;
-    height: auto;
-    /* 2 */
-    min-height: 20em;
-    /* 2 */
-}
-
-.aligner-item {
-    @include flex-mixin(1 auto);
-}
-
-.aligner-item--top {
-    align-self: flex-start;
-}
-
-.aligner-item--bottom {
-    align-self: flex-end;
-}
-
-.aligner-item--fixed {
-    @include flex-mixin(none);
-}
-
-// layout decoration
-.aligner {
-    margin: 0 -15px 20px;
-    background-color: aliceblue;
-    border: 1px solid cadetblue;
-}
-
-.aligner-item--fixed {
-    width: auto;
-    max-width: 75%;
-}
-
-.aligner-item {
-  padding: 15px;
-  background-color: cornflowerblue;
-  color: white;
-}
-
-/* header */
-.header-banner {
-  height: 250px;
-  background-color: yellow;
-  padding: 0;
-  }
-
-.header-nav {
-  background-color: blue;
-  }
-
-.site-container {
-  /* @include flex-display; */
-  /* @include flex-flow-mixin(column nowrap); */
-  padding: 15px 0;
-  }

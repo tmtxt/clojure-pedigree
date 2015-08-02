@@ -1,0 +1,57 @@
+/* Site content - centerd content ---------------------------------------------------------------------- */
+.aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 20em;
+}
+
+.aligner-item {
+  flex: 1 auto;
+}
+
+.aligner-item--top {
+  align-self: flex-start;
+}
+
+.aligner-item--bottom {
+  align-self: flex-end;
+}
+
+.aligner-item--fixed {
+  flex: none;
+}
+
+// layout decoration
+.aligner {
+  margin: 0 -15px 20px;
+  background-color: aliceblue;
+  border: 1px solid cadetblue;
+}
+
+.aligner-item--fixed {
+  width: auto;
+  max-width: 75%;
+}
+
+.aligner-item {
+  padding: 15px;
+  background-color: cornflowerblue;
+  color: white;
+}
+
+/* header */
+.header-banner {
+  height: 250px;
+  background-color: yellow;
+  padding: 0;
+}
+
+.header-nav {
+  background-color: blue;
+}
+
+.site-container {
+  padding: 15px 0;
+}
