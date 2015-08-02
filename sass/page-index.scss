@@ -12,6 +12,7 @@
   .site-container-row {
     .post-left {
       flex: 2 2 0;
+      padding-right: 10px;
     }
 
     .post-right {
@@ -27,7 +28,19 @@
   .post {
     .post-header {
       width: 100%;
+      background-image: url('/assets/img/post-header-bg.png');
+      background-position: 100% 22px;
+      background-repeat: no-repeat;
     }
   }
 
+  .post {
+    .post-header {
+      h3 {
+        background-color: white;
+        display: inline-block;
+        padding-right: 7px;
+      }
+    }
+  }
 }
