@@ -1,19 +1,21 @@
 .page-index {
+  display: flex;
+  flex-flow: column;
+}
+
+.page-index {
   .site-container-row {
-    @include flex-display;
-    @include flex-flow-mixin(row nowrap);
-    flex-flow: flex-start;
+    display: flex;
+    flex-flow: row;
   }
 
   .site-container-row {
     .post-left {
-      /* @include flex-mixin(2 0 auto); */
-      width: 70%;
+      flex: 2 2 0;
     }
 
     .post-right {
-      /* @include flex-mixin(1 0 auto); */
-       width: 30%;
+      flex: 1 1 0;
     }
   }
 

@@ -222,7 +222,7 @@ body {
   }
 
 .site-container {
-  @include flex-display;
-  @include flex-flow-mixin(column nowrap);
+  /* @include flex-display; */
+  /* @include flex-flow-mixin(column nowrap); */
   padding: 15px 0;
   }
