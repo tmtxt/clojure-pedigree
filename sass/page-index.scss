@@ -19,4 +19,15 @@
     }
   }
 
+  .post {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .post {
+    .post-header {
+      width: 100%;
+    }
+  }
+
 }
