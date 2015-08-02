@@ -11,7 +11,7 @@
 
 .header-content--left,
 .header-content--right {
-  @include flex();
+  display: flex;
   align-items: baseline;
 }
 

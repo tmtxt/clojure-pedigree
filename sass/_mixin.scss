@@ -1,0 +1,4 @@
+@mixin flex($value) {
+  display: flex;
+  @if $value { flex-flow: $value; }
+}
