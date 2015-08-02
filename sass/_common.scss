@@ -1,2 +1,8 @@
-@import "./_variable.scss";
-@import "./bower/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+html,
+body {
+  height: 100%;
+}
+
+body {
+  position: relative;
+}

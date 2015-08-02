@@ -1,15 +1,14 @@
+/* lib */
+@import "./bower/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+/* var */
+@import "./_variable.scss";
+
+/* others */
 @import "./_common.scss";
+
+/* pages */
 @import "./page-index.scss";
-
-/* HTML in general ---------------------------------------------------------------------- */
-html,
-body {
-    height: 100%;
-}
-
-body {
-    position: relative;
-}
 
 /* Site layout - fixed footer ---------------------------------------------------------------------- */
 .site {
