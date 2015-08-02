@@ -1,12 +1,10 @@
 .page-index {
-  display: flex;
-  flex-flow: column;
+  @include flex(column);
 }
 
 .page-index {
   .site-container-row {
-    display: flex;
-    flex-flow: row;
+    @include flex(row);
   }
 
   .site-container-row {
@@ -21,8 +19,7 @@
   }
 
   .post {
-    display: flex;
-    flex-flow: row wrap;
+    @include flex(row wrap);
   }
 
   .post {

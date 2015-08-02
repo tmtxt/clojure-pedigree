@@ -18,3 +18,8 @@ $white: #fff;
     display:        -webkit-flex;
     display:        flex;
 }
+
+@mixin flex($value) {
+  display: flex;
+  flex-flow: $value;
+}
