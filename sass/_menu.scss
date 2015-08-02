@@ -74,7 +74,9 @@
     > li {
       flex: 0 0 auto;
       padding: 15px 25px 13px 0;
-      > a {}
+      > a {
+        color: #4D3B0E;
+      }
       &:last-child {
         padding-right: 0;
       }
@@ -88,6 +90,7 @@
       padding: 15px 0 13px 25px;
       > a {
         font-size: $font-size-h5;
+        color: #4D3B0E;
       }
     }
   }
