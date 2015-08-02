@@ -10,53 +10,6 @@
 /* pages */
 @import "./page-index.scss";
 
-/* Site layout - fixed footer ---------------------------------------------------------------------- */
-.site {
-    @include flex-display;
-    @include flex-flow-mixin(column nowrap);
-    height: 100%;
-}
-
-.site-header,
-.site-footer {
-    flex: none;
-    width: 100%;
-}
-
-.site-content {
-    @include flex-mixin(1 0 auto);
-    // flex: 1 0 auto; /* 2
-    // padding: var(--space) var(--space) 0;
-    width: 100%;
-    &:after {
-        content: '\00a0';
-        /* &nbsp; */
-        display: block;
-        // margin-top: var(--space);
-        height: 0px;
-        visibility: hidden;
-    }
-}
-
-.Site-content--full {
-    padding: 0;
-    &:after {
-        content: none;
-    }
-}
-
-// layout decoration
-.site-header,
-.site-content,
-.site-footer {
-    padding: 0;
-}
-
-.site-header,
-.site-footer {
-    background-color: darkorchid;
-}
-
 /* Menu Bar ----------------------------------------------------------------------*/
 .header-content {
     @include flex-display;
