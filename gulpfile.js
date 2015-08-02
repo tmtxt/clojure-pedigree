@@ -96,7 +96,7 @@ function browserifyError(err) {
 }
 
 // sass
-gulp.task('sass-dev', function(){
+gulp.task('sass-dev', ['bower'], function(){
   return gulp.src('./sass/main.scss')
     .pipe(plumber({errorHandler: error}))
     .pipe(sourcemaps.init())
@@ -105,7 +105,7 @@ gulp.task('sass-dev', function(){
     .pipe(gulp.dest('./resources/public/css'));
 });
 
-gulp.task('sass-prod', function(){
+gulp.task('sass-prod', ['bower'], function(){
   return gulp.src('./sass/main.scss')
     .pipe(plumber({errorHandler: error}))
     .pipe(sass({outputStyle: 'compressed'}))
