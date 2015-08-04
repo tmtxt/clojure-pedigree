@@ -14,6 +14,7 @@
       {:id (:id user)
        :username (:username user)
        :role (:role_name user)
+       :authenticated true
        :locale (:language user)}
       nil)))
 
