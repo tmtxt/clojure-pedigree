@@ -40,7 +40,10 @@
       }
     }
   }
+}
 
+/* post preface block */
+.page-index {
   .post-preface {
     .post-body {
       @include flex(row nowrap);
