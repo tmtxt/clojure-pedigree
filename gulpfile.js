@@ -14,6 +14,8 @@ var gulpif = require('gulp-if');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var path = require('path');
+var prefixer = require('gulp-autoprefixer');
+var minify = require('gulp-minify-css');
 
 // bower
 gulp.task('bower', function(cb){
@@ -96,19 +98,22 @@ function browserifyError(err) {
 }
 
 // sass
-gulp.task('sass-dev', function(){
+gulp.task('sass-dev', ['bower'], function(){
   return gulp.src('./sass/main.scss')
     .pipe(plumber({errorHandler: error}))
     .pipe(sourcemaps.init())
     .pipe(sass())
+    .pipe(prefixer())
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./resources/public/css'));
 });
 
-gulp.task('sass-prod', function(){
+gulp.task('sass-prod', ['bower'], function(){
   return gulp.src('./sass/main.scss')
     .pipe(plumber({errorHandler: error}))
-    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(sass())
+    .pipe(prefixer())
+    .pipe(minify())
     .pipe(gulp.dest('./resources/public/css'));
 });
 
