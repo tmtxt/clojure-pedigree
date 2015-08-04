@@ -19,7 +19,13 @@
           <li><a href="#">Liên hệ</a></li>
         </ul>
         <ul class="header-content--right header-menu">
-          <li><a href="#">Đăng nhập</a></li>
+          {% if user.authenticated %}
+            <li>Hello
+              <strong>{{ user.username }}</strong>
+            </li>
+          {% else if %}
+            <li><a href="/login">Đăng nhập</a></li>
+          {% endif %}
         </ul>
       </nav>
     </div>
