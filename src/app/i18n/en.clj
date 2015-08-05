@@ -13,4 +13,7 @@
                  :hello "Hello"
                  :login "Login"
                  :title "Tran Van Pedigree"
-                 :head-line "Keep the value for the children"}}})
+                 :head-line "Keep the value for the children"}
+
+        :login {:invalid-error "Username or Password incorrect"}
+        }})

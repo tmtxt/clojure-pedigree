@@ -6,7 +6,7 @@
             [ring.util.response :refer [response redirect content-type]]
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]
-            [app.i18n.main :refer [make-layout-tran]]))
+            [app.i18n.main :refer [make-t]]))
 
 ;;; index
 (defn home [request]
@@ -19,7 +19,8 @@
 (defn login-authenticate [request]
   (let [username (util/param request "username")
         password (util/param request "password")
-        user-info (security/authen-user username password)]
+        user-info (security/authen-user username password)
+        t (make-t request)]
     (if user-info
       (let [session (:session request)
             updated-session (assoc session
@@ -27,7 +28,7 @@
                                    :user-info user-info
                                    :locale (user-info :locale))]
         (-> (redirect "/welcome") (assoc :session updated-session)))
-      (layout/render request "home/login.html" {:message "error"}))))
+      (layout/render request "home/login.html" {:message (t :login/invalid-error)}))))
 
 ;;; logout
 (defn logout [request]

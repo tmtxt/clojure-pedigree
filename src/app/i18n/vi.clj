@@ -13,4 +13,7 @@
                  :hello "Xin chào"
                  :login "Đăng nhập"
                  :title "Trần Văn Gia Phả"
-                 :head-line "Gìn giữ cho muôn đời sau"}}})
+                 :head-line "Gìn giữ cho muôn đời sau"}
+
+        :login {:invalid-error "Tên đăng nhập hoặc mật khẩu không đúng"}
+        }})
