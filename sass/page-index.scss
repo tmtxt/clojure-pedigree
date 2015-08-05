@@ -34,10 +34,11 @@
 
   .post {
     .post-header {
-      h3 {
+      .post-header-content {
         background-color: white;
         display: inline-block;
         padding-right: 7px;
+        color: $brown;
       }
     }
   }
