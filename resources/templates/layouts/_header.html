@@ -1,9 +1,12 @@
 <header class="site-header">
   <div class="container-fluid header-banner">
-    <div class="container text-center">
-      <h1>Gia Pha<br/>
-        <small>Phát triển tào lao</small>
-      </h1>
+    <div class="container">
+      <div class="header-site-name">
+        trần văn gia phả
+      </div>
+      <div class="header-site-headline">
+        Phát triển tào lao
+      </div>
     </div>
   </div>
 
@@ -12,7 +15,7 @@
     <div class="container">
       <nav class="header-content" role="banner">
         <ul class="header-content--left header-menu">
-          <li><a href="#">Trang chủ</a></li>
+          <li><a href="/">Trang chủ</a></li>
           <li><a href="#">Thành viên</a></li>
           <li><a href="#">Cây gia phả</a></li>
           <li><a href="#">Lịch sử dòng họ</a></li>
@@ -20,8 +23,8 @@
         </ul>
         <ul class="header-content--right header-menu">
           {% if user.authenticated %}
-            <li>Hello
-              <strong>{{ user.username }}</strong>
+            <li class="header-user">Hello
+              <span class="header-user-name">{{ user.username }}</span> <a class="header-user-logout" href="/logout"><i class="fa fa-sign-out fa-lg"></i></a>
             </li>
           {% else if %}
             <li><a href="/login">Đăng nhập</a></li>

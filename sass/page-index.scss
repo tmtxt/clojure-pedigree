@@ -29,15 +29,17 @@
       background-image: url('/assets/img/post-header-bg.png');
       background-position: 100% 22px;
       background-repeat: no-repeat;
+      margin-bottom: 20px;
     }
   }
 
   .post {
     .post-header {
-      h3 {
+      .post-header-content {
         background-color: white;
         display: inline-block;
         padding-right: 7px;
+        color: $brown;
       }
     }
   }
