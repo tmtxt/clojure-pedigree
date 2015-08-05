@@ -1,8 +1,10 @@
+@import "./_variable.scss";
+
 /* lib */
 @import "./bower/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "./bower/fontawesome/scss/font-awesome.scss";
 
 /* var */
-@import "./_variable.scss";
 @import "./_mixin.scss";
 
 /* others */
