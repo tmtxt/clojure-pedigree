@@ -1,3 +1,4 @@
+/* global */
 html,
 body {
   height: 100%;
@@ -8,47 +9,42 @@ body {
   font-family: 'Lato';
 }
 
-/* Site layout - fixed footer ---------------------------------------------------------------------- */
+/* site layout, fixed footer */
 .site {
   @include flex(column nowrap);
   height: 100%;
-}
 
-.site-header,
-.site-footer {
-  flex: none;
-  width: 100%;
-}
+  .site-header,
+  .site-footer {
+    flex: none;
+    width: 100%;
+  }
 
-.site-content {
-  flex: 1 0 auto;
-  width: 100%;
-  &:after {
-    content: '\00a0';
-    display: block;
-    height: 0px;
-    visibility: hidden;
+  .site-content {
+    flex: 1 0 auto;
+    width: 100%;
+    &:after {
+      content: '\00a0';
+      display: block;
+      height: 0px;
+      visibility: hidden;
+    }
+  }
+
+  .site-header,
+  .site-content,
+  .site-footer {
+    padding: 0;
   }
 }
 
-.Site-content--full {
-  padding: 0;
-  &:after {
-    content: none;
-  }
-}
-
-// layout decoration
-.site-header,
-.site-content,
-.site-footer {
-  padding: 0;
-}
-
-.site-header,
-.site-footer {
-  background-color: darkorchid;
-}
+/* not use now */
+/* .Site-content--full { */
+/*   padding: 0; */
+/*   &:after { */
+/*     content: none; */
+/*   } */
+/* } */
 
 /* Menu Bar ----------------------------------------------------------------------*/
 .header-content {
