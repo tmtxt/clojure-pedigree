@@ -21,7 +21,7 @@
         <ul class="header-content--right header-menu">
           {% if user.authenticated %}
             <li class="header-user">Hello
-              <strong>{{ user.username }}</strong> / <a href="/logout">Logout</a>
+              <span class="header-user-name">{{ user.username }}</span> <a class="header-user-logout" href="/logout"><i class="fa fa-sign-out fa-lg"></i></a>
             </li>
           {% else if %}
             <li><a href="/login">Đăng nhập</a></li>
