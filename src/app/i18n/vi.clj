@@ -6,4 +6,11 @@
 
         :layout {:homepage "Trang chủ"
                  :treepage "Cây gia phả"
-                 :title "Trần Văn Gia Phả"}}})
+                 :members "Thành viên"
+                 :pedigree-tree "Cây gia phả"
+                 :pedigree-history "Lịch sử dòng họ"
+                 :contact "Liên hệ"
+                 :hello "Xin chào"
+                 :login "Đăng nhập"
+                 :title "Trần Văn Gia Phả"
+                 :head-line "Gìn giữ cho muôn đời sau"}}})

@@ -2,10 +2,10 @@
   <div class="container-fluid header-banner">
     <div class="container">
       <div class="header-site-name">
-        trần văn gia phả
+        {{ title }}
       </div>
       <div class="header-site-headline">
-        Phát triển tào lao
+        {{ head-line }}
       </div>
     </div>
   </div>
@@ -15,19 +15,19 @@
     <div class="container">
       <nav class="header-content" role="banner">
         <ul class="header-content--left header-menu">
-          <li><a href="/">Trang chủ</a></li>
-          <li><a href="#">Thành viên</a></li>
-          <li><a href="#">Cây gia phả</a></li>
-          <li><a href="#">Lịch sử dòng họ</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a href="/">{{ homepage }}</a></li>
+          <li><a href="#">{{ members }}</a></li>
+          <li><a href="#">{{ pedigree-tree }}</a></li>
+          <li><a href="#">{{ pedigree-history }}</a></li>
+          <li><a href="#">{{ contact }}</a></li>
         </ul>
         <ul class="header-content--right header-menu">
           {% if user.authenticated %}
-            <li class="header-user">Hello
+            <li class="header-user">{{ hello }}
               <span class="header-user-name">{{ user.username }}</span> <a class="header-user-logout" href="/logout"><i class="fa fa-sign-out fa-lg"></i></a>
             </li>
           {% else if %}
-            <li><a href="/login">Đăng nhập</a></li>
+            <li><a href="/login">{{ login }}</a></li>
           {% endif %}
         </ul>
       </nav>

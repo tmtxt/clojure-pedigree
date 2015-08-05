@@ -6,4 +6,11 @@
 
         :layout {:homepage "Homepage"
                  :treepage "Pedigree Tree"
-                 :title "Tran Van Pedigree"}}})
+                 :members "Members"
+                 :pedigree-tree "Pedigree tree"
+                 :pedigree-history "Pedigree History"
+                 :contact "Contact"
+                 :hello "Hello"
+                 :login "Login"
+                 :title "Tran Van Pedigree"
+                 :head-line "Keep the value for the children"}}})
