@@ -148,6 +148,14 @@ body {
   margin: 0 -15px;
 }
 
+.header-content {
+  .header-user {
+    a {
+      display: inline;
+    }
+  }
+}
+
 /* Site content - centerd content ---------------------------------------------------------------------- */
 .aligner {
   display: flex;
