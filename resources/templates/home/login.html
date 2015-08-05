@@ -1,25 +1,32 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
-{{ message }}
+<div class="page-login">
+  {% if message %}
+    <div class="alert alert-danger login-message" role="alert">
+      {{ message }}
+    </div>
+  {% endif %}
 
-<div>
-  <form action="/login" method="POST">
-    <div>
-      Username
+  <div class="panel panel-warning login-panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">Please Login</h3>
     </div>
-    <div>
-      <input name="username" type="text" value=""/>
+    <div class="panel-body">
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control"
+                 name="username" id="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control"
+                 name="password" id="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
     </div>
-    <div>
-      Password
-    </div>
-    <div>
-      <input name="password" type="text" value=""/>
-    </div>
-    <div>
-      <input name="" type="Submit" value="Login"/>
-    </div>
-  </form>
+  </div>
 </div>
 {% endblock %}
