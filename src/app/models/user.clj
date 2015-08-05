@@ -3,6 +3,7 @@
   (:require [app.models.userRole :refer [add-user-role user-role]]
             [crypto.password.bcrypt :as crypto]
             [app.util.dbUtil :as db-util]
+            [buddy.auth :refer [authenticated?]]
             [validateur.validation :as vl]))
 
 (defentity user
@@ -40,3 +41,8 @@
   (first (select user
                  (with user-role)
                  (where {:username username}))))
+
+(defn get-user-from-request "Create a user map from the request" [request]
+  (if (authenticated? request)
+    (get-in request [:session :user-info])
+    {:authenticated false}))

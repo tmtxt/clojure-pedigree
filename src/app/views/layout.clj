@@ -2,7 +2,8 @@
   (:require [selmer.parser :as parser]
             [ring.util.response :refer [content-type response]]
             [compojure.response :refer [Renderable]]
-            [app.i18n.main :refer [make-layout-tran]]))
+            [app.i18n.main :refer [make-layout-tran]]
+            [app.models.user :refer [get-user-from-request]]))
 
 (parser/set-resource-path! (clojure.java.io/resource "templates"))
 (parser/cache-off!)
@@ -13,5 +14,6 @@
 (defn render [request template & [params]]
   (let [args (if params params {})
         layout-tran (make-layout-tran request)
-        template-params (merge args layout-tran)]
+        template-params (merge args layout-tran)
+        template-params (assoc template-params :user (get-user-from-request request))]
     (utf-8-response (parser/render-file template template-params))))
