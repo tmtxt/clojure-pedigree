@@ -81,3 +81,12 @@
     }
   }
 }
+
+/* post news block */
+.page-index {
+  .post-news {
+    .post-body {
+      @include flex(row nowrap);
+    }
+  }
+}
