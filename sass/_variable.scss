@@ -1,9 +1,29 @@
+////////////////////////////////////////////////////////////////////////////////
 /* colors */
 $white: #fff;
 $brown: #4D3B0F;
 $brownred: #662F0A;
 $grey: #A7A9AC;
 
+////////////////////////////////////////////////////////////////////////////////
+/* container size */
+$grid-gutter-width:         30px;
+// Small screen / tablet
+$container-tablet:             (720px + $grid-gutter-width) !default;
+//** For `$screen-sm-min` and up.
+$container-sm:                 $container-tablet !default;
+
+// Medium screen / desktop
+$container-desktop:            (910px + $grid-gutter-width) !default;
+//** For `$screen-md-min` and up.
+$container-md:                 $container-desktop !default;
+
+// Large screen / wide desktop
+$container-large-desktop:      (994px + $grid-gutter-width) !default;
+//** For `$screen-lg-min` and up.
+$container-lg:                 $container-large-desktop !default;
+
+////////////////////////////////////////////////////////////////////////////////
 /* assets */
 $fa-font-path: "/bower/fontawesome/fonts";
 $lato-font-path: "/bower/lato/font";
