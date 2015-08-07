@@ -10,7 +10,11 @@
 
 ;;; index
 (defn home [request]
-  (layout/render request "home/index.html" {:name (config :site-name)}))
+  (layout/render request
+                 "home/index.html"
+                 {:name (config :site-name)
+                  :preface-image (get-in config [:homepage :preface-image])
+                  }))
 
 ;;; login
 (defn login-render [request]
