@@ -6,7 +6,7 @@
 (def tconfig
   {:dictionary (merge en/dict vi/dict)
    :dev-mode? false
-   :fallback-locale :en})
+   :fallback-locale :vi})
 
 (def t (tower/make-t tconfig))
 
@@ -14,10 +14,10 @@
   "Get locale from locale or request"
   [locale-or-request]
   (cond
-    (map? locale-or-request) (get-in locale-or-request [:session :locale] :en)
+    (map? locale-or-request) (get-in locale-or-request [:session :locale] :vi)
     (string? locale-or-request) (keyword locale-or-request)
     (keyword? locale-or-request) locale-or-request
-    :else :en))
+    :else :vi))
 
 (defn make-t
   "Make t from the input local"
