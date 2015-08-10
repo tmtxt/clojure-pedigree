@@ -144,7 +144,8 @@
   }
 
   .header-nav {
-    background-color: #FFDE66;
+    background-color: $yellow;
+    @include border-vertical;
   }
 
   .header-menu {
