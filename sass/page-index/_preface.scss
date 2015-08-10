@@ -1,0 +1,35 @@
+/* post preface block */
+.page-index {
+  .post-preface {
+    .post-body {
+      @include flex(row nowrap);
+    }
+  }
+
+  .post-preface {
+    .post-image {
+      flex: 1 1 0;
+      padding-right: 30px;
+    }
+
+    .post-content {
+      flex: 3 3 0;
+    }
+  }
+
+  .post-preface {
+    @media (max-width: $screen-sm-max) {
+      .post-body {
+        @include flex(column nowrap);
+      }
+
+      .post-image {
+        flex: 1 1 auto;
+      }
+
+      .post-content {
+        flex: 1 1 auto;
+      }
+    }
+  }
+}
