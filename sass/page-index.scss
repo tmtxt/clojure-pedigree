@@ -227,6 +227,8 @@
   .post-members {
     ul.post-members-list {
       list-style: none;
+      margin-bottom: 0;
+      padding-left: 0;
 
       > li {
         padding-bottom: 6px;
