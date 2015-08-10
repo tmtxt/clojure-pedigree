@@ -2,6 +2,7 @@
 .site-footer {
   .footer-nav {
     background-color: $yellow;
+    @include border-vertical;
   }
 
   .footer-text {

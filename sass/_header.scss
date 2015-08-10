@@ -145,6 +145,7 @@
 
   .header-nav {
     background-color: $yellow;
+    @include border-vertical;
   }
 
   .header-menu {
