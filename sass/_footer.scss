@@ -23,16 +23,13 @@
         a {
           color: $brown;
         }
-
-        a::after {
-          content: " |\00a0";
-        }
+      }
+      > li::after {
+        content: "\00a0|\00a0";
       }
 
-      > li:last-child {
-        a::after {
-          content: "";
-        }
+      > li:last-child::after {
+        content: "";
       }
     }
   }
