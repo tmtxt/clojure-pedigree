@@ -149,6 +149,7 @@
           .post-news-title {
             > a {
               color: $brown;
+              font-weight: bold;
             }
           }
 
@@ -163,6 +164,7 @@
 
           > a {
             color: $brown;
+            font-weight: bold;
           }
         }
       }
@@ -214,6 +216,42 @@
 
         img {
           width: 100%;
+        }
+      }
+    }
+  }
+}
+
+/* post members block */
+.page-index {
+  .post-members {
+    ul.post-members-list {
+      list-style: none;
+      margin-bottom: 0;
+      padding-left: 0;
+
+      > li {
+        padding-bottom: 6px;
+
+        div.post-members-item {
+          @include flex(row nowrap);
+          height: 40px;
+          align-items: center;
+
+          img {
+            width: 40px;
+            height: 40px;
+          }
+
+          div.post-members-content {
+            padding-left: 8px;
+            padding-bottom: 3px;
+
+            > a {
+              color: $brown;
+              font-weight: bold;
+            }
+          }
         }
       }
     }
