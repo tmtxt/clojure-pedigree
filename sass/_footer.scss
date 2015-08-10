@@ -44,4 +44,13 @@
     background-image: url('/assets/img/banner.png');
     padding: 0;
   }
+
+  .footer-banner {
+    .container {
+      height: 50px;
+      padding-left: 0;
+      display: flex;
+      align-items: center;
+    }
+  }
 }
