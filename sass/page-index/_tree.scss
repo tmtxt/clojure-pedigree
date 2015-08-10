@@ -1,1 +1,19 @@
 /* post pedigree tree block */
+.page-index {
+  .post-tree {
+    div.post-tree-graph {
+      padding-bottom: 20px;
+    }
+
+    div.post-tree-text {
+      padding-bottom: 12px;
+    }
+
+    div.post-tre-link {
+      > a {
+        color: $brown;
+        font-weight: bold;
+      }
+    }
+  }
+}
