@@ -1,6 +1,29 @@
+/* nav */
+.site-footer {
+  .footer-content {
+    ul.footer-menu {
+      @include flex(row nowrap);
+      list-style: none;
+
+      > li {
+        a::after {
+          content: " |\00a0";
+        }
+      }
+
+      > li:last-child {
+        a::after {
+          content: "";
+        }
+      }
+    }
+  }
+}
+
+/* banner */
 .site-footer {
   .footer-banner {
-    height: 50px;
+    height: 40px;
     background-image: url('/assets/img/banner.png');
     padding: 0;
   }
