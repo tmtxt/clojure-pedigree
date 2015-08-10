@@ -1,0 +1,54 @@
+@import "./_preface.scss";
+@import "./_members.scss";
+@import "./_news.scss";
+@import "./_images.scss";
+@import "./_links.scss";
+
+/* index general */
+.page-index {
+  @include flex(column);
+}
+
+.page-index {
+  .site-container-row {
+    @include flex(row);
+  }
+
+  .site-container-row {
+    .post-left {
+      flex: 2 2 0;
+      padding-right: 20px;
+    }
+
+    .post-right {
+      flex: 1 1 0;
+    }
+  }
+
+  .post {
+    @include flex(column nowrap);
+    padding-top: 20px;
+  }
+
+  .post {
+    .post-header {
+      flex: 1 1 width;
+      background-image: url('/assets/img/post-header-bg.png');
+      background-position: 100% 22px;
+      background-repeat: no-repeat;
+      text-transform: uppercase;
+      padding-bottom: 20px;
+    }
+  }
+
+  .post {
+    .post-header {
+      .post-header-content {
+        background-color: white;
+        display: inline-block;
+        padding-right: 7px;
+        color: $brown;
+      }
+    }
+  }
+}
