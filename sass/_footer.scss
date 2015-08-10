@@ -1,11 +1,28 @@
 /* nav */
 .site-footer {
+  .footer-nav {
+    background-color: $yellow;
+  }
+
+  .footer-text {
+    padding-left: 0;
+  }
+
   .footer-content {
     ul.footer-menu {
       @include flex(row nowrap);
       list-style: none;
+      margin-bottom: 0;
+      padding-left: 0;
 
       > li {
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        a {
+          color: $brown;
+        }
+
         a::after {
           content: " |\00a0";
         }
@@ -23,7 +40,7 @@
 /* banner */
 .site-footer {
   .footer-banner {
-    height: 40px;
+    height: 50px;
     background-image: url('/assets/img/banner.png');
     padding: 0;
   }
