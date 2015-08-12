@@ -4,16 +4,29 @@
   .post-news {
     .post-body {
       @include flex(row nowrap);
+
+      @media (max-width: $screen-sm-max) {
+        @include flex(column nowrap);
+      }
     }
   }
 
   .post-news {
     .post-news-left {
       flex: 3 3 0;
+
+      @media (max-width: $screen-sm-max) {
+        flex: 3 3 auto;
+      }
     }
 
     .post-news-right {
       flex: 2 2 0;
+
+      @media (max-width: $screen-sm-max) {
+        /* flex: 2 2 auto; */
+        display: none;
+      }
     }
   }
 
@@ -21,6 +34,10 @@
   .post-news {
     .post-news-left {
       padding-right: 20px;
+
+      @media (max-width: $screen-sm-max) {
+        padding-right: 0;
+      }
     }
 
     .post-news-left {
