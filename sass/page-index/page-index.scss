@@ -48,6 +48,13 @@
     padding-top: 20px;
   }
 
+  @media (max-width: $screen-sm-max) {
+    .post {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+
   .post {
     .post-header {
       flex: 1 1 width;

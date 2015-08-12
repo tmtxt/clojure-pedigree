@@ -25,10 +25,12 @@
 
       .post-image {
         flex: 1 1 auto;
+        padding-right: 0;
       }
 
       .post-content {
         flex: 1 1 auto;
+        padding-top: 15px;
       }
     }
   }
