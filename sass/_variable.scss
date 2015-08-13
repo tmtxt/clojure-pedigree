@@ -10,7 +10,7 @@ $yellow: #FFDE66;
 /* container size */
 $grid-gutter-width:         30px;
 // Small screen / tablet
-$container-tablet:             (720px + $grid-gutter-width) !default;
+$container-tablet:             (720px) !default;
 //** For `$screen-sm-min` and up.
 $container-sm:                 $container-tablet !default;
 
