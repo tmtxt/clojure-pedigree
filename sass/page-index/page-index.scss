@@ -9,7 +9,7 @@
 .page-index {
   @include flex(column);
 
-  @media (max-width: $screen-sm-max) {
+  @media (max-width: $screen-xs-max) {
     @include flex(column nowrap);
   }
 }
@@ -18,7 +18,7 @@
   .site-container-row {
     @include flex(row);
 
-    @media (max-width: $screen-sm-max) {
+    @media (max-width: $screen-xs-max) {
       @include flex(column nowrap);
       flex: 1 0 auto;
     }
@@ -29,7 +29,7 @@
       flex: 2 2 0;
       padding-right: 20px;
 
-      @media (max-width: $screen-sm-max) {
+      @media (max-width: $screen-xs-max) {
         flex: 1 0 auto;
       }
     }
@@ -37,7 +37,7 @@
     .post-right {
       flex: 1 1 0;
 
-      @media (max-width: $screen-sm-max) {
+      @media (max-width: $screen-xs-max) {
         flex: 1 0 auto;
       }
     }
@@ -48,7 +48,7 @@
     padding-top: 20px;
   }
 
-  @media (max-width: $screen-sm-max) {
+  @media (max-width: $screen-xs-max) {
     .post {
       padding-left: 30px;
       padding-right: 30px;

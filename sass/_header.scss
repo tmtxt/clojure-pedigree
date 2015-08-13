@@ -37,9 +37,9 @@
     align-items: center;
     justify-content: space-between;
 
-    /* @media (max-width: $screen-sm-max) { */
-    /*   @include flex(column nowrap); */
-    /* } */
+    @media (max-width: $screen-xs-max) {
+      @include flex(column nowrap);
+    }
   }
 
   .header-content--left,
@@ -62,14 +62,14 @@
     @include flex(row nowrap);
   }
 
-  /* @media (max-width: $screen-sm-max) { */
-  /*   .header-content--left, */
-  /*   .header-content--right { */
-  /*     flex: 1 0 auto; */
-  /*     align-self: center; */
-  /*     @include flex(column nowrap); */
-  /*   } */
-  /* } */
+  @media (max-width: $screen-xs-max) {
+    .header-content--left,
+    .header-content--right {
+      flex: 1 0 auto;
+      align-self: center;
+      @include flex(column nowrap);
+    }
+  }
 
   // disable list style
   .header-menu {
@@ -91,15 +91,15 @@
     }
   }
 
-  /* @media (max-width: $screen-sm-max) { */
-  /*   .header-menu { */
-  /*     > li { */
-  /*       > a { */
-  /*         text-align: center; */
-  /*       } */
-  /*     } */
-  /*   } */
-  /* } */
+  @media (max-width: $screen-xs-max) {
+    .header-menu {
+      > li {
+        > a {
+          text-align: center;
+        }
+      }
+    }
+  }
 
   // provie colorful style
   .header-content--left {
