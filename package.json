@@ -37,7 +37,8 @@
     "lodash": "^3.9.3",
     "node-notifier": "^4.2.1",
     "vinyl-transform": "^1.0.0",
-    "watchify": "^3.2.1"
+    "watchify": "^3.2.1",
+    "webpack": "^1.11.0"
   },
   "browserify-shim": {
     "jquery": "global:$"
