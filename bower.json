@@ -23,6 +23,7 @@
     "bootstrap": "~3.3.5",
     "bootstrap-sass": "~3.3.5",
     "fontawesome": "~4.4.0",
-    "lato": "~0.3.0"
+    "lato": "~0.3.0",
+    "d3": "~3.5.6"
   }
 }
