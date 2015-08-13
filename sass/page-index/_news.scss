@@ -4,16 +4,28 @@
   .post-news {
     .post-body {
       @include flex(row nowrap);
+
+      @media (max-width: $screen-xs-max) {
+        @include flex(column nowrap);
+      }
     }
   }
 
   .post-news {
     .post-news-left {
       flex: 3 3 0;
+
+      @media (max-width: $screen-xs-max) {
+        flex: 1 1 auto;
+      }
     }
 
     .post-news-right {
       flex: 2 2 0;
+
+      @media (max-width: $screen-xs-max) {
+        flex: 1 1 auto;
+      }
     }
   }
 
@@ -21,6 +33,10 @@
   .post-news {
     .post-news-left {
       padding-right: 20px;
+
+      @media (max-width: $screen-xs-max) {
+        padding-right: 0;
+      }
     }
 
     .post-news-left {
@@ -56,8 +72,16 @@
   /* post news right */
   .post-news {
     .post-news-right {
+      @media (max-width: $screen-xs-max) {
+        padding-top: 20px;
+      }
+
       .post-news-list {
         margin-bottom: 0;
+
+        @media (max-width: $screen-xs-max) {
+          margin-left: 0;
+        }
 
         > li {
           padding-bottom: 11px;

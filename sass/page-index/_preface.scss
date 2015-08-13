@@ -18,17 +18,19 @@
   }
 
   .post-preface {
-    @media (max-width: $screen-sm-max) {
+    @media (max-width: $screen-xs-max) {
       .post-body {
         @include flex(column nowrap);
       }
 
       .post-image {
         flex: 1 1 auto;
+        padding-right: 0;
       }
 
       .post-content {
         flex: 1 1 auto;
+        padding-top: 15px;
       }
     }
   }

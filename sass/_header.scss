@@ -37,7 +37,7 @@
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: $screen-sm-max) {
+    @media (max-width: $screen-xs-max) {
       @include flex(column nowrap);
     }
   }
@@ -62,7 +62,7 @@
     @include flex(row nowrap);
   }
 
-  @media (max-width: $screen-sm-max) {
+  @media (max-width: $screen-xs-max) {
     .header-content--left,
     .header-content--right {
       flex: 1 0 auto;
@@ -91,7 +91,7 @@
     }
   }
 
-  @media (max-width: $screen-sm-max) {
+  @media (max-width: $screen-xs-max) {
     .header-menu {
       > li {
         > a {
