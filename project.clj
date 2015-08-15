@@ -6,6 +6,7 @@
                  [org.clojure/tools.nrepl "0.2.10"]
                  [compojure "1.3.4"]
                  [ring-server "0.4.0"]
+                 [ring/ring-json "0.4.0"]
                  [selmer "0.8.2"]
                  [lib-noir "0.9.9"]
                  [com.novemberain/validateur "2.4.2"]

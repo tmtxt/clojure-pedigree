@@ -3,6 +3,7 @@
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.file-info :refer [wrap-file-info]]
             [ring.middleware.session.memory :refer [memory-store]]
+            [ring.middleware.json :refer [wrap-json-response]]
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
             [ring.middleware.params :refer [wrap-params]]
@@ -49,4 +50,5 @@
       (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
       (wrap-authentication authentication-backend)
       (wrap-params)
-      (wrap-session)))
+      (wrap-session)
+      (wrap-json-response)))
