@@ -62,7 +62,12 @@
                               (person-model/add-person) (:node))
              f3-3-wife    (-> {:full_name "F3-3-Wife"
                                :picture "/assets/img/n.jpg"}
-                              (person-model/add-person) (:node))]
+                              (person-model/add-person) (:node))
+
+             f4-1-husband (-> {:full_name "F4-1-Wife"
+                               :picture "/assets/img/o.jpg"}
+                              (person-model/add-person) (:node))
+             ]
 
          ;; marriages
          (mrl/add-marriage root-husband root-wife)
@@ -78,7 +83,8 @@
          (prl/add-child root-husband root-wife f2-3-husband 2)
          (prl/add-child f2-1-husband f2-1-wife-1 f3-1-wife 0)
          (prl/add-child f2-1-husband f2-1-wife-2 f3-2-husband 0)
-         (prl/add-child f2-2-husband f2-3-wife f3-3-husband 0))))))
+         (prl/add-child f2-2-husband f2-3-wife f3-3-husband 0)
+         (prl/add-child f3-1-husband f3-1-wife f4-1-husband 0))))))
 
 (defn create-init-data []
   (create-init-user)
