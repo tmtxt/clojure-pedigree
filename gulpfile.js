@@ -16,6 +16,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var path = require('path');
 var prefixer = require('gulp-autoprefixer');
 var minify = require('gulp-minify-css');
+var babelify = require("babelify");
 
 // bower
 gulp.task('bower', function(cb){
@@ -56,6 +57,7 @@ function createBundler(mode) {
     }
 
     // transform
+    // b.transform(babelify);
     b.transform(shimify);
 
     return b.bundle();

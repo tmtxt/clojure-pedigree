@@ -60,8 +60,11 @@
   "Find the root node from neo4j"
   []
   (let [row (ncm/find-root)
-        [root marriage] row]
-    (assoc root :marriage marriage)))
+        [root marriage] row
+        info (db-util/find-by-id person (:user_id root))
+        root-person (assoc root :marriage marriage)
+        root-person (assoc root :info info)]
+    root-person))
 
 (defn find-all-by-ids
   "Find all from postgres where id in ids list"

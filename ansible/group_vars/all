@@ -22,6 +22,7 @@ node_apps:
   - bower
   - gulp
   - browserify
+  - webpack
 
 # folders
 script_dir: "{{project_dir}}/scripts"
