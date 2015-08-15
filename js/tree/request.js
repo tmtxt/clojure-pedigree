@@ -1,13 +1,17 @@
 var jquery = require('jquery');
+var q = require('q');
 
-// get tree data
+// Get tree data
+// Returns a promise
 function getTreeData() {
-  jquery.ajax({
-    type: 'GET',
-    url: '/tree/get',
-    success: function(data) {
-      console.log(data);
-    }
+  return q.Promise(function(resolve, reject){
+    jquery.ajax({
+      type: 'GET',
+      url: '/tree/get',
+      success: function(data) {
+        resolve(data);
+      }
+    });
   });
 }
 exports.getTreeData = getTreeData;

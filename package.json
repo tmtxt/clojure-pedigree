@@ -42,7 +42,8 @@
   },
   "browserify-shim": {
     "jquery": "global:$",
-    "q": "global:Q"
+    "q": "global:Q",
+    "d3": "global:d3"
   },
   "dependencies": {
     "gulp-sourcemaps": "^1.5.2"
