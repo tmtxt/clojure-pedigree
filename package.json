@@ -43,7 +43,8 @@
   "browserify-shim": {
     "jquery": "global:$",
     "q": "global:Q",
-    "d3": "global:d3"
+    "d3": "global:d3",
+    "_": "global:_"
   },
   "dependencies": {
     "gulp-sourcemaps": "^1.5.2"
