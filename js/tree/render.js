@@ -1,21 +1,4 @@
-// Toggle show hide
-function toggleAll(d) {
-  if (d.children) {
-    d.children.forEach(toggleAll);
-    toggle(d);
-  }
-}
-
-function toggle(d) {
-  if (d.children) {
-    d._children = d.children;
-    d.children = null;
-  } else {
-    d.children = d._children;
-    d._children = null;
-  }
-}
-
+// Main function for rendering
 function render(page) {
   var config = page.config;
   var root = page.root;
@@ -33,39 +16,60 @@ function render(page) {
 }
 exports.render = render;
 
-var i = 0;
+// Toggle children
+function toggleAll(d) {
+  if (d.children) {
+    d.children.forEach(toggleAll);
+    toggle(d);
+  }
+}
+function toggle(d) {
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+}
+
+var id = 0;
 function update(page, source) {
   var config = page.config;
   var duration = config.getTransitionDuration();
   var linkHeight = config.getLinkHeight();
+  var treeLayout = page.treeLayout;
+  var treeData = page.root;
 
-  page.nodesList = page.treeLayout.nodes(page.root).reverse();
-  page.nodesList.forEach(function(d) { d.y = d.depth * linkHeight; });
-  page.nodesList.forEach(function(d) {
-    // move the diagram down 80px
+  // Calculate Node list position
+  page.nodesList = treeLayout.nodes(treeData).reverse();
+  page.nodesList.forEach(function(d){
+    d.y = d.depth * linkHeight;
     d.y += 80;
-	});
+  });
 
-  // select the groups of node, each group represent a person, bind the data
-  // from page.root to those groups
+  // Bind data to the svg nodes (not actual nodes now)
   var nodeGroups = page.rootGroup.selectAll("g.node")
-      .data(page.nodesList, function(d) { return d.id || (d.id = ++i); });
+      .data(page.nodesList, function(d) { return d.id || (d.id = ++id); });
 
   // ENTER
-  // create new node group if not exist
+  // Now actually create new node group if not exist
   var nodeEnter = nodeGroups.enter().append("svg:g")
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + source.x0 + "," + source.y0 + ")"; });
-  // create the elements inside that node group
+  // Create the elements inside that node group
+  // The circle to click for expanding
   nodeEnter.append("svg:circle")
 		.on("click", function(d) {
-      toggle(d); // toggle the node
-      update(page, d); // render the children
+      toggle(d);
+      update(page, d); // Update the tree again
     });
+  // Person name
   nodeEnter.append("svg:text");
+  // Person image
   nodeEnter.append("svg:image")
     .attr("xlink:href", function(d){
-      return d["user-id"];
+      return d.info.picture;
     })
     .attr("x", -20)
     .attr("y", -68)

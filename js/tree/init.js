@@ -6,13 +6,15 @@ var d3 = require('d3');
 // Returns a promise, resolve when finish initializing
 function init(page) {
   return q.Promise(function(resolve){
-    initLayout(page);
-    initSvg(page);
-    resolve();
+    initLayout(page);           // Init the d3 tree layout
+    initSvg(page);              // Init the root svg tag for holding other
+                                // elements
+    resolve();                  // Finish the promise
   });
 }
 exports.init = init;
 
+// Init the d3 tree layout
 function initLayout(page) {
   var config = page.config;
   var treeWidth = config.getTreeWidth();
@@ -29,12 +31,12 @@ function initSvg(page) {
   var treeWidth = config.getTreeWidth();
   var treeHeight = config.getTreeHeight();
 
-  // SVG root
+  // SVG root, for holding all the tree elements
   page.rootSvg = d3.select(containerId).append("svg:svg")
     .attr("width", treeWidth)
     .attr("height", treeHeight);
 
-  // group
+  // Svg root group
   page.rootGroup = page.rootSvg.append("svg:g")
     .attr("transform", "translate(" + 0 + "," + 0 + ")");
 }
