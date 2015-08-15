@@ -2,8 +2,10 @@
 var Render = require('./render.js');
 var Util = require('./util.js');
 
+// Variables
 var id = 0;
 
+////////////////////////////////////////////////////////////////////////////////
 // Functions for processing the tree nodes
 function updateNodes(page, source) {
   var treeLayout = page.treeLayout;
@@ -24,20 +26,31 @@ function updateNodes(page, source) {
 }
 exports.updateNodes = updateNodes;
 
+////////////////////////////////////////////////////////////////////////////////
 // Enter
 function enter(page, source, nodeGroups) {
-  // ENTER
   // Now actually create new node group if not exist
   var nodeEnter = nodeGroups.enter().append("svg:g")
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + source.x0 + "," + source.y0 + ")"; });
   // Create the elements inside that node group
+  appendCircles(page, nodeEnter);
+  appendNames(page, nodeEnter);
+  appendImages(page, nodeEnter);
+
+  // NodeMarriage.appendMarriage(page, nodeEnter);
+}
+
+function appendCircles(page, nodeEnter) {
   // The circle to click for expanding
   nodeEnter.append("svg:circle")
 		.on("click", function(d) {
       Util.toggle(d);
       Render.update(page, d); // Update the tree again
     });
+}
+
+function appendNames(page, nodeEnter) {
   // Person name
   nodeEnter.append("svg:text")
     .text(function(d) { return d.info.full_name; })
@@ -45,6 +58,9 @@ function enter(page, source, nodeGroups) {
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
     .style("fill-opacity", 1);
+}
+
+function appendImages(page, nodeEnter) {
   // Person image
   nodeEnter.append("svg:image")
     .attr("xlink:href", function(d){
@@ -57,15 +73,14 @@ function enter(page, source, nodeGroups) {
     .on('click', function(d){
       // Util.showInfoModal(d.id);
     });
-  // NodeMarriage.appendMarriage(page, nodeEnter);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 // Update
 function update(page, source, nodeGroups) {
   var config = page.config;
   var duration = config.getTransitionDuration();
 
-  // UPDATE
   // Update the data and transition nodes to their new position.
   var nodeUpdate = nodeGroups.transition()
       .duration(duration)
@@ -77,12 +92,12 @@ function update(page, source, nodeGroups) {
     .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 }
 
+////////////////////////////////////////////////////////////////////////////////
 // Exit
 function exit(page, source, nodeGroups) {
   var config = page.config;
   var duration = config.getTransitionDuration();
 
-  // EXIT
   // Transition exiting nodes to the parent's new position.
   var nodeExit = nodeGroups.exit().transition()
       .duration(duration)
@@ -90,6 +105,7 @@ function exit(page, source, nodeGroups) {
       .remove();
 }
 
+////////////////////////////////////////////////////////////////////////////////
 // Function for calculating nodes list position using d3 api
 function calculateNodesList(page) {
   var config = page.config;
