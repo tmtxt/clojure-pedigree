@@ -6,9 +6,6 @@ var id = 0;
 
 // Functions for processing the tree nodes
 function updateNodes(page, source) {
-  var config = page.config;
-  var duration = config.getTransitionDuration();
-  var linkHeight = config.getLinkHeight();
   var treeLayout = page.treeLayout;
   var treeData = page.root;
 
@@ -19,6 +16,16 @@ function updateNodes(page, source) {
   var nodeGroups = page.rootGroup.selectAll("g.node")
       .data(nodesList, function(d) { return d.id || (d.id = ++id); });
 
+  enter(page, source, nodeGroups);
+  update(page, source, nodeGroups);
+  exit(page, source, nodeGroups);
+
+  return nodesList;
+}
+exports.updateNodes = updateNodes;
+
+// Enter
+function enter(page, source, nodeGroups) {
   // ENTER
   // Now actually create new node group if not exist
   var nodeEnter = nodeGroups.enter().append("svg:g")
@@ -51,8 +58,14 @@ function updateNodes(page, source) {
       // Util.showInfoModal(d.id);
     });
   // NodeMarriage.appendMarriage(page, nodeEnter);
+}
 
-	// UPDATE
+// Update
+function update(page, source, nodeGroups) {
+  var config = page.config;
+  var duration = config.getTransitionDuration();
+
+  // UPDATE
   // Update the data and transition nodes to their new position.
   var nodeUpdate = nodeGroups.transition()
       .duration(duration)
@@ -62,6 +75,12 @@ function updateNodes(page, source) {
   nodeUpdate.select("circle")
     .attr("r", 10)
     .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+}
+
+// Exit
+function exit(page, source, nodeGroups) {
+  var config = page.config;
+  var duration = config.getTransitionDuration();
 
   // EXIT
   // Transition exiting nodes to the parent's new position.
@@ -69,10 +88,7 @@ function updateNodes(page, source) {
       .duration(duration)
       .attr("transform", function(d) { return "translate(" + source.x + "," + source.y + ")"; })
       .remove();
-
-  return nodesList;
 }
-exports.updateNodes = updateNodes;
 
 // Function for calculating nodes list position using d3 api
 function calculateNodesList(page) {

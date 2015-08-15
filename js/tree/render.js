@@ -22,12 +22,7 @@ function render(page) {
 exports.render = render;
 
 ////////////////////////////////////////////////////////////////////////////////
-// Functions for processing nodes list
-
-////////////////////////////////////////////////////////////////////////////////
 // Functions for processing links list
-
-var id = 0;
 function update(page, source) {
   var config = page.config;
   var duration = config.getTransitionDuration();
