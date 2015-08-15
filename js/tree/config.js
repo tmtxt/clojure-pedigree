@@ -1,5 +1,6 @@
 // Libs
 var jquery = require('jquery');
+var d3 = require('d3');
 
 // Configuration
 var config = {};
@@ -48,6 +49,11 @@ config.getTreeHeight = function() {
 config.setTreeHeight = function(val) {
   this.treeHeight = val;
   return this;
+};
+
+// Transition duration
+config.getTransitionDuration = function() {
+  return d3.event && d3.event.altKey ? 5000 : 500;
 };
 
 module.exports = config;

@@ -9,7 +9,7 @@ function getTreeData(page) {
       type: 'GET',
       url: '/tree/get',
       success: function(data) {
-        page.treeData = data;
+        page.root = data;
         resolve(data);
       }
     });

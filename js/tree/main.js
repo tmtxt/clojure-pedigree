@@ -19,4 +19,6 @@ Init.init(page)
   })
   .then(function(){
     return Render.render(page);
+  }, function(e){
+    console.log(e);
   });
