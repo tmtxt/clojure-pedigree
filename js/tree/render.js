@@ -1,3 +1,6 @@
+// Modules
+var Util = require('./util.js');
+
 ////////////////////////////////////////////////////////////////////////////////
 // Main function for rendering
 function render(page) {
@@ -9,31 +12,13 @@ function render(page) {
 	root.y0 = 0;
 
   if(root.children) {
-    root.children.forEach(toggleAll);
+    root.children.forEach(Util.toggleAll);
   }
 
   // console.log(root);
   update(page, root);
 }
 exports.render = render;
-
-////////////////////////////////////////////////////////////////////////////////
-// Toggle children
-function toggleAll(d) {
-  if (d.children) {
-    d.children.forEach(toggleAll);
-    toggle(d);
-  }
-}
-function toggle(d) {
-  if (d.children) {
-    d._children = d.children;
-    d.children = null;
-  } else {
-    d.children = d._children;
-    d._children = null;
-  }
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions for processing nodes list
@@ -61,7 +46,7 @@ function updateNodes(page, source) {
   // The circle to click for expanding
   nodeEnter.append("svg:circle")
 		.on("click", function(d) {
-      toggle(d);
+      Util.toggle(d);
       update(page, d); // Update the tree again
     });
   // Person name
