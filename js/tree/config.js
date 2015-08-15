@@ -1,3 +1,6 @@
+// Libs
+var jquery = require('jquery');
+
 // Configuration
 var config = {};
 
@@ -24,6 +27,26 @@ config.getEnableMarriage = function() {
 };
 config.setEnableMarriage = function(val) {
   this.enableMarriage = val;
+  return this;
+};
+
+// Tree width
+config.treeWidth = jquery(config.containerId).width();
+config.getTreeWidth = function() {
+  return this.treeWidth;
+};
+config.setTreeWidth = function(val) {
+  this.treeWidth = val;
+  return this;
+};
+
+// Tree height
+config.treeHeight = 1000;
+config.getTreeHeight = function() {
+  return this.treeHeight;
+};
+config.setTreeHeight = function(val) {
+  this.treeHeight = val;
   return this;
 };
 
