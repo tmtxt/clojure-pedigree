@@ -1,6 +1,7 @@
 // Modules
 var Util = require('./util.js');
 var Nodes = require('./nodes.js');
+var Links = require('./links.js');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Main function for rendering
@@ -16,7 +17,6 @@ function render(page) {
     root.children.forEach(Util.toggleAll);
   }
 
-  // console.log(root);
   update(page, root);
 }
 exports.render = render;
@@ -34,28 +34,8 @@ function update(page, source) {
   // Update nodes
   Nodes.updateNodes(page, source, nodesList);
 
-  // Update the links
-  var links = page.rootGroup.selectAll("path.link")
-      .data(page.treeLayout.links(nodesList), function(d) { return d.target.id; });
-  links.enter().insert("svg:path", "g")
-    .attr("class", "link")
-    .attr("d", function(d) {
-      var o = {x: source.x0, y: source.y0};
-      return page.diagonal({source: o, target: o});
-    })
-    .transition()
-    .duration(duration)
-    .attr("d", page.diagonal);
-  links.transition()
-    .duration(duration)
-    .attr("d", page.diagonal);
-  links.exit().transition()
-    .duration(duration)
-    .attr("d", function(d) {
-      var o = {x: source.x, y: source.y};
-      return page.diagonal({source: o, target: o});
-    })
-    .remove();
+  // Update links
+  Links.updateLinks(page, source, nodesList);
 
   // compute the new tree height
   // Util.updateTreeDiagramHeight(page);
