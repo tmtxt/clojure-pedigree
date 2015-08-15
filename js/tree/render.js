@@ -29,8 +29,10 @@ function update(page, source) {
   var linkHeight = config.getLinkHeight();
   var treeLayout = page.treeLayout;
   var treeData = page.root;
+  var nodesList = calculateNodesList(page);
 
-  var nodesList = Nodes.updateNodes(page, source);
+  // Update nodes
+  Nodes.updateNodes(page, source, nodesList);
 
   // Update the links
   var links = page.rootGroup.selectAll("path.link")
@@ -65,3 +67,21 @@ function update(page, source) {
   });
 }
 exports.update = update;
+
+////////////////////////////////////////////////////////////////////////////////
+// Function for calculating nodes list position using d3 api
+function calculateNodesList(page) {
+  var config = page.config;
+  var linkHeight = config.getLinkHeight();
+  var treeData = page.root;
+  var treeLayout = page.treeLayout;
+  var nodesList;
+
+  nodesList = treeLayout.nodes(treeData).reverse();
+  nodesList.forEach(function(d){
+    d.y = d.depth * linkHeight;
+    d.y += 80;
+  });
+
+  return nodesList;
+}

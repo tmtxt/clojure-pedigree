@@ -7,12 +7,9 @@ var id = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions for processing the tree nodes
-function updateNodes(page, source) {
+function updateNodes(page, source, nodesList) {
   var treeLayout = page.treeLayout;
   var treeData = page.root;
-
-  // Calculate Node list position
-  var nodesList = calculateNodesList(page);
 
   // Bind data to the svg nodes (not actual nodes now)
   var nodeGroups = page.rootGroup.selectAll("g.node")
@@ -21,8 +18,6 @@ function updateNodes(page, source) {
   enter(page, source, nodeGroups);
   update(page, source, nodeGroups);
   exit(page, source, nodeGroups);
-
-  return nodesList;
 }
 exports.updateNodes = updateNodes;
 
@@ -103,22 +98,4 @@ function exit(page, source, nodeGroups) {
       .duration(duration)
       .attr("transform", function(d) { return "translate(" + source.x + "," + source.y + ")"; })
       .remove();
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Function for calculating nodes list position using d3 api
-function calculateNodesList(page) {
-  var config = page.config;
-  var linkHeight = config.getLinkHeight();
-  var treeData = page.root;
-  var treeLayout = page.treeLayout;
-  var nodesList;
-
-  nodesList = treeLayout.nodes(treeData).reverse();
-  nodesList.forEach(function(d){
-    d.y = d.depth * linkHeight;
-    d.y += 80;
-  });
-
-  return nodesList;
 }
