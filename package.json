@@ -41,7 +41,8 @@
     "webpack": "^1.11.0"
   },
   "browserify-shim": {
-    "jquery": "global:$"
+    "jquery": "global:$",
+    "q": "global:Q"
   },
   "dependencies": {
     "gulp-sourcemaps": "^1.5.2"
