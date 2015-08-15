@@ -57,7 +57,7 @@ function createBundler(mode) {
     }
 
     // transform
-    b.transform(babelify);
+    // b.transform(babelify);
     b.transform(shimify);
 
     return b.bundle();
