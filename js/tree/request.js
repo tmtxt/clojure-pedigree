@@ -1,10 +1,13 @@
 var jquery = require('jquery');
-// var q = require('q');
 
-// Returns a promise, resolve if retrieving successfully, reject otherwise
-// function getTreeData(rootId) {
-//   return q.Promise(function(resolve, reject){
-
-//   });
-// }
-//
+// get tree data
+function getTreeData() {
+  jquery.ajax({
+    type: 'GET',
+    url: '/tree/get',
+    success: function(data) {
+      console.log(data);
+    }
+  });
+}
+exports.getTreeData = getTreeData;
