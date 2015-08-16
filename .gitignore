@@ -25,3 +25,4 @@
 /resources/public/css/*
 /sass/bower
 *.DS_Store*
+/src/app/views/version.clj
