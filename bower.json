@@ -26,6 +26,7 @@
     "lato": "~0.3.0",
     "d3": "~3.5.6",
     "q": "~1.0.1",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "awesome-bootstrap-checkbox": "~0.3.4"
   }
 }

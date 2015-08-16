@@ -4,7 +4,14 @@
 .tree-page {
   @include svg-tree-graph;
 
+  /* initial size */
   #js-tree-container {
     height: 1000px;
+  }
+
+  .controls-container {
+    label {
+      color: $brown;
+    }
   }
 }
