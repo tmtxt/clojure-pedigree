@@ -3,6 +3,21 @@ var jquery = require('jquery');
 var _ = require('_');
 var d3 = require('d3');
 
+// Components
+var marriageCheckbox = jquery('.js-toggle-marriage');
+
+// Init this module
+function init(page) {
+  marriageCheckbox.change(function(){
+    if(marriageCheckbox.is(':checked')) {
+      console.log('checked');
+    } else {
+      console.log('no checked');
+    }
+  });
+}
+exports.init = init;
+
 function appendMarriages(page, nodeEnter) {
   var config = page.config;
   var enableMarriage = config.getEnableMarriage();

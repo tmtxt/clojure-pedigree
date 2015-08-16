@@ -2,6 +2,7 @@ var Request = require('./request.js');
 var Config = require('./config.js');
 var Init = require('./init.js');
 var Render = require('./render.js');
+var Marriage = require('./marriage.js');
 
 // Global page object
 var page = {
@@ -35,6 +36,7 @@ function startRender(opts) {
   setConfig(opts);
 
   // start the process
+  Marriage.init(page);
   Init.init(page)
     .then(function(){
       return Request.getTreeData(page);
