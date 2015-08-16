@@ -7,7 +7,7 @@
 
 ;;; expect the path to be a vector of ids from the root to that node
 ;;; eg [1 2 3]
-(defn- recur-fn [path tree assoc-path last-marriage person-info]
+(defn- recur-fn [path tree assoc-path last-marriage person-info last-order]
   (let [children-path (rest path)
         continue (not (empty? children-path))
         user-id (first path)
@@ -20,18 +20,19 @@
             idx (if (empty? child-set) (count children) (.indexOf children child))
             child-assoc-path (conj assoc-path :children idx)
             tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)]
-        (recur children-path tree child-assoc-path last-marriage person-info))
+        (recur children-path tree child-assoc-path last-marriage person-info last-order))
       (let [tree (assoc-in tree (conj assoc-path :marriage) last-marriage)
             person-detail (get person-info user-id)
-            tree (assoc-in tree (conj assoc-path :info) person-detail)]
+            tree (assoc-in tree (conj assoc-path :info) person-detail)
+            tree (assoc-in tree (conj assoc-path :child-order) last-order)]
         tree))))
 
 ;;; expect rows to be in a form of vector of vector
 ;;; each child vector is the path of user id from root node to that node
 (defn- extract-tree [rows init-tree person-info]
   (let [reduce-fn (fn [tree row]
-                    (let [[path marriage] row]
-                      (recur-fn path tree [] marriage person-info)))
+                    (let [[path marriage last-order] row]
+                      (recur-fn path tree [] marriage person-info last-order)))
         tree (reduce reduce-fn init-tree rows)]
     tree))
 
@@ -52,7 +53,7 @@
 
 (defn- get-tree-from-node [root & [depth]]
   (let [rows (ncm/query-tree (:user_id root) depth)
-        paths (map (fn [[path _ marriage]] [path marriage]) rows)
+        paths (map (fn [[path _ marriage last_order]] [path marriage last_order]) rows)
         ids (extract-ids paths)
         person-rows (person/find-all-by-ids ids)
         person-info (extract-person-info person-rows)
