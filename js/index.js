@@ -1,4 +1,5 @@
 var Tree = require('./tree/main.js');
 Tree.startRender({
-  showDetailModal: false
+  showDetailModal: false,
+  linkHeight: 150
 });

@@ -23,6 +23,10 @@ function setConfig(opts) {
   // show detail modal
   var showDetailModal = opts.showDetailModal || false;
   config.setShowDetailModal(showDetailModal);
+
+  // link height
+  var linkHeight = opts.linkHeight || config.getLinkHeight();
+  config.setLinkHeight(linkHeight);
 }
 
 // Start the rendering
