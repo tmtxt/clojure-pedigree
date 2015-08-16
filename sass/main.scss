@@ -5,8 +5,9 @@
 @import "./bower/fontawesome/scss/font-awesome.scss";
 @import "./bower/lato/scss/lato.scss";
 
-/* var */
+/* mixin */
 @import "./_mixin.scss";
+@import "./tree/mixin.scss";
 
 /* others */
 @import "./_common.scss";
