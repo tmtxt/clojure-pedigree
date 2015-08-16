@@ -48,11 +48,15 @@ function updateTreeDiagramHeight(page) {
   var linkHeight = config.getLinkHeight();
   var maxDepth = findMaxDepth(page.root);
 	var newHeight = (maxDepth * linkHeight) + 100;
+  var duration = config.getTransitionDuration() + 100;
 
   // update the display height
   var rootSvg = page.rootSvg;
-  rootSvg.attr("height", newHeight);
-  treeContainer.height(newHeight);
+  rootSvg.transition().duration(duration)
+    .attr('height', newHeight);
+  treeContainer.animate({
+    height: newHeight
+  }, duration);
 
   // add to the config
   config.setTreeHeight(newHeight);
