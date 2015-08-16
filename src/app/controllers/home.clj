@@ -10,10 +10,9 @@
 
 ;;; index
 (defn home [request]
-  (println (make-page-tran request :index))
   (layout/render request
                    "home/index.html"
-                   (make-page-tran request :index)))
+                   (make-page-tran request :page-index)))
 
 ;;; login
 (defn login-render [request]

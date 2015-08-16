@@ -15,7 +15,14 @@
                  :title "Trần Văn Gia Phả"
                  :head-line "Gìn giữ cho muôn đời sau"}
 
-        :index {:aa "hello"}
+        :page-index {:preface "Lời tâm huyết"
+                     :members "Thành viên"
+                     :news "Tin vắn dòng họ"
+                     :more-news "Xem thêm tin tức..."
+                     :images "Hình ảnh"
+                     :pedigree-tree "Cây gia phả"
+                     :detail-tree "Xem cây gia phả chi tiết"
+                     :other-links "Liên kết khác"}
 
         :login {:invalid-error "Tên đăng nhập hoặc mật khẩu không đúng"}
         }})

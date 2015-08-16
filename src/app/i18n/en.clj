@@ -15,7 +15,14 @@
                  :title "Tran Van Pedigree"
                  :head-line "Keep the value for the children"}
 
-        :index {:aa "hello"}
+        :page-index {:preface "Preface"
+                     :members "Members"
+                     :news "News"
+                     :more-news "More news..."
+                     :images "Images"
+                     :pedigree-tree "Pedigree tree"
+                     :detail-tree "View detail pedigree tree"
+                     :other-links "Other links"}
 
         :login {:invalid-error "Username or Password incorrect"}
         }})
