@@ -14,6 +14,7 @@ function init(page) {
       enableMarriage(page);
     } else {
       console.log('no checked');
+      disableMarriage(page);
     }
   });
 }
@@ -49,6 +50,19 @@ function enableMarriage(page) {
       order = order + 1;
     });
   });
+}
+
+function disableMarriage(page) {
+  var config = page.config;
+  var duration = config.getTransitionDuration();
+  config.setEnableMarriage(false);
+
+  // remove all marriage images
+  d3.selectAll('image.marriage-image')
+    .transition()
+    .duration(duration)
+    .attr("transform", "translate(0,0)")
+    .remove();
 }
 
 function appendMarriages(page, nodeEnter) {
