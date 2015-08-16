@@ -5,6 +5,7 @@ var d3 = require('d3');
 // Modules
 var Render = require('./render.js');
 var Util = require('./util.js');
+var Marriage = require('./marriage');
 
 // Variables
 var id = 0;
@@ -36,7 +37,7 @@ function enter(page, source, nodeGroups) {
   appendCircles(page, nodeEnter);
   appendNames(page, nodeEnter);
   appendImages(page, nodeEnter);
-  appendMarriages(page, nodeEnter);
+  Marriage.appendMarriages(page, nodeEnter);
 
   // NodeMarriage.appendMarriage(page, nodeEnter);
 }
@@ -73,34 +74,6 @@ function appendImages(page, nodeEnter) {
     .on('click', function(d){
       // Util.showInfoModal(d.id);
     });
-}
-
-function appendMarriages(page, nodeEnter) {
-  var config = page.config;
-  var enableMarriage = config.getEnableMarriage();
-
-  if(enableMarriage) {
-    _.each(nodeEnter[0], function(node){
-      if(!!node) {
-        var order = 0;
-        _.each(node.__data__.marriage, function(marriage){
-          console.log(marriage);
-          d3.select(node).append("svg:image")
-            .attr("xlink:href", '/assets/img/r.jpg')
-            .attr("class", "marriage-image")
-            .attr("x", ((45 * order) + 25))
-            .attr("y", -68)
-            .attr("height", "40px")
-            .attr("width", "40px")
-            .datum(marriage)
-            .on('click', function(d){
-              // Util.showInfoModal(d.id);
-            });
-          order = order + 1;
-        });
-      }
-    });
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
