@@ -6,5 +6,6 @@ with nodes(p) as all_nodes,
 return extract(n in all_nodes | n.user_id) as `path`,
        depth as `depth`,
        marriage as `marriage`,
-       last(extract(r in all_relationships | r.`order`)) as `last_order`
-order by `depth`;
+       last(extract(r in all_relationships | r.`order`)) as `last_order`,
+       extract(n in all_nodes | n.user_id)[-2] as `last_parent`
+order by `depth`, `last_parent`, `last_order`;
