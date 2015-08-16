@@ -13,7 +13,7 @@
 
 (defn render [request template & [params]]
   (let [args (if params params {})
-        layout-tran (make-layout-tran request)
-        template-params (merge args layout-tran)
-        template-params (assoc template-params :user (get-user-from-request request))]
+        template-params {:layout (make-layout-tran request)
+                         :page params
+                         :user (get-user-from-request request)}]
     (utf-8-response (parser/render-file template template-params))))

@@ -15,5 +15,7 @@
                  :title "Tran Van Pedigree"
                  :head-line "Keep the value for the children"}
 
+        :index {:aa "hello"}
+
         :login {:invalid-error "Username or Password incorrect"}
         }})

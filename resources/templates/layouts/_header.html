@@ -2,10 +2,10 @@
   <div class="container-fluid header-banner">
     <div class="container">
       <div class="header-site-name">
-        {{ title }}
+        {{ layout.title }}
       </div>
       <div class="header-site-headline">
-        {{ head-line }}
+        {{ layout.head-line }}
       </div>
     </div>
   </div>
@@ -15,11 +15,11 @@
     <div class="container">
       <nav class="header-content" role="banner">
         <ul class="header-content--left header-menu">
-          <li><a href="/">{{ homepage }}</a></li>
-          <li><a href="#">{{ members }}</a></li>
-          <li><a href="/tree/view">{{ pedigree-tree }}</a></li>
-          <li><a href="#">{{ pedigree-history }}</a></li>
-          <li><a href="#">{{ contact }}</a></li>
+          <li><a href="/">{{ layout.homepage }}</a></li>
+          <li><a href="#">{{ layout.members }}</a></li>
+          <li><a href="/tree/view">{{ layout.pedigree-tree }}</a></li>
+          <li><a href="#">{{ layout.pedigree-history }}</a></li>
+          <li><a href="#">{{ layout.contact }}</a></li>
         </ul>
         <ul class="header-content--right header-menu">
           {% if user.authenticated %}
@@ -27,7 +27,7 @@
               <span class="header-user-name">{{ user.username }}</span> <a class="header-user-logout" href="/logout"><i class="fa fa-sign-out fa-lg"></i></a>
             </li>
           {% else if %}
-            <li><a href="/login">{{ login }}</a></li>
+            <li><a href="/login">{{ layout.login }}</a></li>
           {% endif %}
         </ul>
       </nav>

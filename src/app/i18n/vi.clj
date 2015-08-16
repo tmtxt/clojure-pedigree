@@ -15,5 +15,7 @@
                  :title "Trần Văn Gia Phả"
                  :head-line "Gìn giữ cho muôn đời sau"}
 
+        :index {:aa "hello"}
+
         :login {:invalid-error "Tên đăng nhập hoặc mật khẩu không đúng"}
         }})

@@ -6,15 +6,14 @@
             [ring.util.response :refer [response redirect content-type]]
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]
-            [app.i18n.main :refer [make-t]]))
+            [app.i18n.main :refer [make-t make-page-tran]]))
 
 ;;; index
 (defn home [request]
+  (println (make-page-tran request :index))
   (layout/render request
-                 "home/index.html"
-                 {:name (config :site-name)
-                  :preface-image (get-in config [:homepage :preface-image])
-                  }))
+                   "home/index.html"
+                   (make-page-tran request :index)))
 
 ;;; login
 (defn login-render [request]

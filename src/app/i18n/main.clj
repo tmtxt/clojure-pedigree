@@ -39,3 +39,10 @@
         layout-keys (keys layout-dict)
         layout-tran (map (fn [k] {k (t k)}) layout-keys)]
     (apply merge layout-tran)))
+
+(defn make-page-tran [locale-or-request page]
+  (let [t (make-t-with-scope locale-or-request page)
+        page-dict (get-in vi/dict [:vi page])
+        page-keys (keys page-dict)
+        page-tran (map (fn [k] {k (t k)}) page-keys)]
+    (apply merge page-tran)))
