@@ -10,15 +10,27 @@ var marriageCheckbox = jquery('.js-toggle-marriage');
 function init(page) {
   marriageCheckbox.change(function(){
     if(marriageCheckbox.is(':checked')) {
-      console.log('checked');
       enableMarriage(page);
     } else {
-      console.log('no checked');
       disableMarriage(page);
     }
   });
 }
 exports.init = init;
+
+function createMarriageNode(node, data) {
+  return d3.select(node).append("svg:image")
+    .attr("xlink:href", '/assets/img/r.jpg')
+    .attr("class", "marriage-image")
+    .attr("x", -20)
+    .attr("y", -68)
+    .attr("height", "40px")
+    .attr("width", "40px")
+    .datum(data)
+    .on('click', function(d){
+      // Util.showInfoModal(d.id);
+    });
+}
 
 function enableMarriage(page) {
   var config = page.config;
@@ -32,18 +44,8 @@ function enableMarriage(page) {
   nodes.forEach(function(node) {
     var order = 0;
     _.each(node.__data__.marriage, function(marriage) {
-      // append marriage info to the node group
-      d3.select(node).append("svg:image")
-        .attr("xlink:href", '/assets/img/r.jpg')
-        .attr("class", "marriage-image")
-        .attr("x", -20)
-        .attr("y", -68)
-        .attr("height", "40px")
-        .attr("width", "40px")
-        .datum(marriage)
-        .on('click', function(d){
-          // Util.showInfoModal(d.id);
-        })
+      var marriageNode = createMarriageNode(node, marriage);
+      marriageNode
         .transition()
         .duration(duration)
         .attr('transform', 'translate (' + ((45 * order) + 45) + ',0)');
@@ -74,17 +76,11 @@ function appendMarriages(page, nodeEnter) {
       if(!!node) {
         var order = 0;
         _.each(node.__data__.marriage, function(marriage){
-          d3.select(node).append("svg:image")
-            .attr("xlink:href", '/assets/img/r.jpg')
-            .attr("class", "marriage-image")
-            .attr("x", ((45 * order) + 25))
-            .attr("y", -68)
-            .attr("height", "40px")
-            .attr("width", "40px")
-            .datum(marriage)
-            .on('click', function(d){
-              // Util.showInfoModal(d.id);
-            });
+          var marriageNode = createMarriageNode(node, marriage);
+          marriageNode
+            .transition()
+            .duration(0)
+            .attr('transform', 'translate (' + ((45 * order) + 45) + ',0)');
           order = order + 1;
         });
       }
