@@ -13,7 +13,24 @@ var page = {
 };
 page.config = Config;
 
+// Options to Config
+function setConfig(opts) {
+  var config = page.config;
+
+  // options
+  opts = opts || {};
+
+  // show detail modal
+  var showDetailModal = opts.showDetailModal || false;
+  config.setShowDetailModal(showDetailModal);
+}
+
+// Start the rendering
 function startRender(opts) {
+  // transform options to config
+  setConfig(opts);
+
+  // start the process
   Init.init(page)
     .then(function(){
       return Request.getTreeData(page);
