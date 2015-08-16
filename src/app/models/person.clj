@@ -56,17 +56,17 @@
   [user-id]
   (ncm/find-by-props :person {:user_id user-id}))
 
+(defn find-all-by-ids
+  "Find all from postgres where id in ids list"
+  [ids]
+  (db-util/find-all-by-ids person ids))
+
 (defn find-root-node
   "Find the root node from neo4j"
   []
   (let [row (ncm/find-root)
         [root marriage] row
         info (db-util/find-by-id person (:user_id root))
-        root-person (assoc root :marriage marriage)
-        root-person (assoc root :info info)]
+        root-person (assoc root :marriage (find-all-by-ids marriage))
+        root-person (assoc root-person :info info)]
     root-person))
-
-(defn find-all-by-ids
-  "Find all from postgres where id in ids list"
-  [ids]
-  (db-util/find-all-by-ids person ids))
