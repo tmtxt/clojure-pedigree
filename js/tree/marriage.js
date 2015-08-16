@@ -20,7 +20,7 @@ exports.init = init;
 
 function createMarriageNode(node, data) {
   return d3.select(node).append("svg:image")
-    .attr("xlink:href", '/assets/img/r.jpg')
+    .attr("xlink:href", data.picture)
     .attr("class", "marriage-image")
     .attr("x", -20)
     .attr("y", -68)
