@@ -13,12 +13,15 @@ var page = {
 };
 page.config = Config;
 
-Init.init(page)
-  .then(function(){
-    return Request.getTreeData(page);
-  })
-  .then(function(){
-    return Render.render(page);
-  }, function(e){
-    console.log(e);
-  });
+function startRender(opts) {
+  Init.init(page)
+    .then(function(){
+      return Request.getTreeData(page);
+    })
+    .then(function(){
+      return Render.render(page);
+    }, function(e){
+      console.log(e);
+    });
+}
+exports.startRender = startRender;

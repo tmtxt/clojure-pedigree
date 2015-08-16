@@ -1,1 +1,2 @@
-require('./tree/main.js');
+var Tree = require('./tree/main.js');
+Tree.startRender();
