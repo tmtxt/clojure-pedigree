@@ -1,0 +1,10 @@
+/* Tree page */
+
+/* Tree graph (SVG) element */
+.tree-page {
+  @include svg-tree-graph;
+
+  #js-tree-container {
+    height: 1000px;
+  }
+}

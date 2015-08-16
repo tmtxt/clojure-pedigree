@@ -18,6 +18,7 @@ function render(page) {
   }
 
   update(page, root);
+
 }
 exports.render = render;
 
@@ -38,7 +39,8 @@ function update(page, source) {
   Links.updateLinks(page, source, nodesList);
 
   // compute the new tree height
-  // Util.updateTreeDiagramHeight(page);
+
+  Util.updateTreeDiagramHeight(page);
 
   // Stash the old positions for transition.
   nodesList.forEach(function(d) {

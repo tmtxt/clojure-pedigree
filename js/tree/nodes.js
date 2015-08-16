@@ -1,6 +1,11 @@
+// Libs
+var _ = require('_');
+var d3 = require('d3');
+
 // Modules
 var Render = require('./render.js');
 var Util = require('./util.js');
+var Marriage = require('./marriage');
 
 // Variables
 var id = 0;
@@ -32,6 +37,7 @@ function enter(page, source, nodeGroups) {
   appendCircles(page, nodeEnter);
   appendNames(page, nodeEnter);
   appendImages(page, nodeEnter);
+  Marriage.appendMarriages(page, nodeEnter);
 
   // NodeMarriage.appendMarriage(page, nodeEnter);
 }

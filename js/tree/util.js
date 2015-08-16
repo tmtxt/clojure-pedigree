@@ -1,4 +1,10 @@
-////////////////////////////////////////////////////////////////////////////////
+// Libs
+var d3 = require('d3');
+var jquery = require('jquery');
+
+// Components
+var treeContainer = jquery('#js-tree-container');
+
 // Toggle children
 function toggleAll(d) {
   if (d.children) {
@@ -18,3 +24,37 @@ function toggle(d) {
   }
 }
 exports.toggle = toggle;
+
+function findMaxDepth(root) {
+  var currentMaxDepth = 0;
+  findMaxDepthRecursive(root);
+
+  function findMaxDepthRecursive(parent) {
+    if(parent.children && parent.children.length > 0){
+			parent.children.forEach(function(d){
+				findMaxDepthRecursive(d);
+			});
+		} else if(parent.depth > currentMaxDepth){
+			currentMaxDepth = parent.depth;
+		}
+  }
+
+  return currentMaxDepth;
+}
+
+function updateTreeDiagramHeight(page) {
+  // calculate new height
+  var config = page.config;
+  var linkHeight = config.getLinkHeight();
+  var maxDepth = findMaxDepth(page.root);
+	var newHeight = (maxDepth * linkHeight) + 100;
+
+  // update the display height
+  var rootSvg = page.rootSvg;
+  rootSvg.attr("height", newHeight);
+  treeContainer.height(newHeight);
+
+  // add to the config
+  config.setTreeHeight(newHeight);
+}
+exports.updateTreeDiagramHeight = updateTreeDiagramHeight;

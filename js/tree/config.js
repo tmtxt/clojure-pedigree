@@ -56,4 +56,14 @@ config.getTransitionDuration = function() {
   return d3.event && d3.event.altKey ? 5000 : 500;
 };
 
+// Allow show modal on click
+config.showDetailModal = true;
+config.getShowDetailModal = function() {
+  return this.showDetailModal;
+};
+config.setShowDetailModal = function(val) {
+  this.showDetailModal = val;
+  return this;
+};
+
 module.exports = config;
