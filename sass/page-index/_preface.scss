@@ -10,6 +10,10 @@
     .post-image {
       flex: 1 1 0;
       padding-right: 30px;
+
+      img {
+        width: 100%;
+      }
     }
 
     .post-content {
