@@ -5,6 +5,9 @@
 
 (def ^{:private true} default-depth 5)
 
+(defn- extract-marriage-info [marriage person-info]
+  (map #(get person-info %) marriage))
+
 ;;; expect the path to be a vector of ids from the root to that node
 ;;; eg [1 2 3]
 (defn- recur-fn [path tree assoc-path last-marriage person-info last-order]
@@ -21,7 +24,8 @@
             child-assoc-path (conj assoc-path :children idx)
             tree (if (empty? children) (assoc-in tree (conj assoc-path :children) children) tree)]
         (recur children-path tree child-assoc-path last-marriage person-info last-order))
-      (let [tree (assoc-in tree (conj assoc-path :marriage) last-marriage)
+      (let [marriage-info (extract-marriage-info last-marriage person-info)
+            tree (assoc-in tree (conj assoc-path :marriage) marriage-info)
             person-detail (get person-info user-id)
             tree (assoc-in tree (conj assoc-path :info) person-detail)
             tree (assoc-in tree (conj assoc-path :child-order) last-order)]

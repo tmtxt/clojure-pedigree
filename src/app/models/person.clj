@@ -63,7 +63,7 @@
         [root marriage] row
         info (db-util/find-by-id person (:user_id root))
         root-person (assoc root :marriage marriage)
-        root-person (assoc root :info info)]
+        root-person (assoc root-person :info info)]
     root-person))
 
 (defn find-all-by-ids
