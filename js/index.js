@@ -1,1 +1,4 @@
-console.log('index');
+var Tree = require('./tree/main.js');
+Tree.startRender({
+  showDetailModal: false
+});

@@ -15,5 +15,11 @@
         font-weight: bold;
       }
     }
+
+    @include svg-tree-graph;
+
+    #js-tree-container {
+      height: 500px;
+    }
   }
 }
