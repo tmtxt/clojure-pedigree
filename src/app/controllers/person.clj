@@ -2,16 +2,25 @@
   (:require [compojure.core :refer :all]
             [app.views.layout :as layout]
             [noir.session :as session]
+            [app.util.main :as util]
             [app.models.person :refer [person]]
             [korma.core :as kc]))
 
 (defn list-person []
   (str (kc/select person)))
 
-(defn add-person [request]
-  "Hello")
+(defn add-child [request]
+  "hello")
+
+(defn add-parent [request]
+  "hello")
+
+(defn add-partner [request]
+  "hello")
 
 (def person-routes
   (context "/person" []
            (GET "/list" [] (list-person))
-           (GET "/add" [] add-person)))
+           (GET "/addChild/parentId/:parentId" [] add-child)
+           (GET "/addParent/childId/:childId" [] add-parent)
+           (GET "/addPartner/partnerId/:partnerId" [] add-partner)))
