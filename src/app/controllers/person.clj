@@ -10,7 +10,8 @@
   (str (kc/select person)))
 
 (defn add-child [request]
-  "hello")
+  (layout/render request
+                 "person/add_child.html"))
 
 (defn add-parent [request]
   "hello")
