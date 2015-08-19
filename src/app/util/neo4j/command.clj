@@ -68,3 +68,13 @@
           rows (map #(:row %) data)]
       (if (empty? rows) nil
           (first rows)))))
+
+(defn find-partners
+  "Returns list of partner ids of the input person"
+  [person-id conn]
+  (with-transaction conn
+    (let [statement (stm/raw-query query/find-partner person-id)
+          [_ [result]] (tx/execute *conn* *tran* [statement])
+          data (-> result :data)
+          rows (map #(:row %) data)]
+      rows)))
