@@ -11,8 +11,9 @@
 ;;; index
 (defn home [request]
   (layout/render request
-                   "home/index.html"
-                   (make-page-tran request :page-index)))
+                 "home/index.html"
+                 {}
+                 (make-page-tran request :page-index)))
 
 ;;; login
 (defn login-render [request]

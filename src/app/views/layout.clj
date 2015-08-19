@@ -12,10 +12,12 @@
 (defn utf-8-response [html]
   (content-type (response html) "text/html; charset=utf-8"))
 
-(defn render [request template & [params]]
-  (let [args (if params params {})
+(defn render [request template & [params tran]]
+  (let [page-tran (if tran tran {})
+        page-params (if params params {})
         template-params {:layout (make-layout-tran request)
-                         :page params
+                         :page page-tran
+                         :params page-params
                          :user (get-user-from-request request)
                          :version (str "?version=" version)}]
     (utf-8-response (parser/render-file template template-params))))
