@@ -61,6 +61,11 @@
   [ids]
   (db-util/find-all-by-ids person ids))
 
+(defn find-by-person-id
+  "Find the info of the person from postgres with the person id"
+  [id]
+  (db-util/find-by-id person id))
+
 (defn find-root-node
   "Find the root node from neo4j"
   []
