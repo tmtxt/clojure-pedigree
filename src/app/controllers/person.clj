@@ -25,7 +25,8 @@
             ]
         (layout/render request
                        "person/add_child.html"
-                       {:partners partners
+                       {:parent parent
+                        :partners partners
                         :parent-title parent-title
                         :partner-title partner-title}))
 

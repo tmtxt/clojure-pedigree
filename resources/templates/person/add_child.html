@@ -3,31 +3,32 @@
 {% block content %}
 <div class="page-addrelation page-addchild">
   <div class="addrelation-container">
-    <form>
+    <form method="POST" action="/person/addChild">
       <div class="form-group">
-        <label>Father name</label>
+        <label>{{ params.parent-title }}</label>
         <input type="text"
                disabled
-               value="họ tên bố"
+               value="{{ params.parent.full_name }}"
                class="form-control">
       </div>
       <div class="form-group">
         <label>Họ tên mẹ</label>
         <select class="form-control">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          {% for partner in params.partners %}
+          <option value="{{ partner.id }}">
+            {{ partner.full_name }}
+          </option>
+          {% endfor %}
         </select>
       </div>
       <div class="form-group">
-        <label>Child name</label>
+        <label>Child name *</label>
         <input type="text"
-               value="họ tên bố"
+               value=""
+               placeholder="họ tên con"
                class="form-control">
       </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="submit" class="btn btn-default">Add child</button>
     </form>
   </div>
 </div>
