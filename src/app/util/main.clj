@@ -13,3 +13,9 @@
       form-param form-param
       :else default
       )))
+
+(defn parse-int "Parse the input to integer"
+  [input & [default]]
+  (try
+    (Integer/parseInt input)
+    (catch Exception e default)))
