@@ -75,3 +75,23 @@
         root-person (assoc root :marriage (find-all-by-ids marriage))
         root-person (assoc root-person :info info)]
     root-person))
+
+(defn- extract-partner-ids [rows]
+  (map (fn [[id]] id) rows))
+
+(defn- extract-partner-id-order [rows]
+  (reduce (fn [id-order [id order]] (assoc id-order id order)) {} rows))
+
+(defn- combine-partner-info [id-order partners]
+  (map (fn [partner] (assoc partner :order (get id-order (:id partner)))) partners)
+  )
+
+(defn find-partners
+  "Find all partners information of the input person"
+  [person-id]
+  (let [partners-list (ncm/find-partners person-id conn)
+        ids (extract-partner-ids partners-list)
+        partners-id-order (extract-partner-id-order partners-list)
+        partners-rows (find-all-by-ids ids)
+        partners-info (combine-partner-info partners-id-order partners-rows)]
+    partners-info))
