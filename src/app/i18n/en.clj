@@ -15,6 +15,12 @@
                  :title "Tran Van Pedigree"
                  :head-line "Keep the value for the children"}
 
+        ;;
+        :person-display {:father-fullname "Father fullname"
+                         :mother-fullname "Mother fullname"}
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;; pages
         :page-index {:preface "Preface"
                      :members "Members"
                      :news "News"

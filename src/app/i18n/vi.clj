@@ -15,6 +15,12 @@
                  :title "Trần Văn Gia Phả"
                  :head-line "Gìn giữ cho muôn đời sau"}
 
+        ;;
+        :person-display {:father-fullname "Họ và tên bố"
+                         :mother-fullname "Họ và tên mẹ"}
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;; pages
         :page-index {:preface "Lời tâm huyết"
                      :members "Thành viên"
                      :news "Tin vắn dòng họ"
