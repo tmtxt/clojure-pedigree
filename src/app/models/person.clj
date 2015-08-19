@@ -15,6 +15,13 @@
             [app.models.pedigreeRelation :as prl]
             [app.models.marriageRelation :as mrl]))
 
+(def GENDERS_MAP
+  {:male "male"
+   :female "female"
+   :gay "gay"
+   :les "les"
+   :unknown "unknown"})
+
 (defentity person
   (table :tbl_person)
   (pk :id))
