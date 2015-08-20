@@ -40,6 +40,26 @@
       ;; render error page
       (error/render "parent not found"))))
 
+(defn- add-child-for-single-parent [child-node parent child-order]
+  (let [parent-role (person-util/determine-father-mother-single parent)
+        parent-node (person/find-node-by-user-id (:id parent))
+        add-func (if (= parent-role :father) prl/add-child-for-father prl/add-child-for-mother)
+        result (add-func parent-node child-node child-order)]
+    (if result
+      "success"
+      "fail"
+      )))
+
+(defn- add-child-for-parents [child-node parent partner child-order]
+  (let [{father :father mother :mother} (person-util/determine-father-mother parent partner)
+        father-node (person/find-node-by-user-id (:id father))
+        mother-node (person/find-node-by-user-id (:id mother))
+        result (prl/add-child father-node mother-node child-node child-order)]
+    (if result
+      "success"
+      "fail"
+      )))
+
 (defn add-child-process [request]
   ;; check parent exists
   (let [parent (find-parent-from-request request "parent_id")
@@ -49,19 +69,17 @@
                         (util/param "child_order" 0)
                         (util/parse-int 0))]
     (cond
-      (not parent) "parent not found"
-      (not partner) "partner not found"
+      (not parent) (error/render "parent not found")
       :else
       (ncm/with-transaction conn
         (kd/transaction
-         (let [{father :father mother :mother} (person-util/determine-father-mother parent partner)
-               child-node (-> {:full_name child-name}
+         (let [child-node (-> {:full_name child-name}
                               (person/add-person)
-                              (:node))
-               father-node (person/find-node-by-user-id (:id father))
-               mother-node (person/find-node-by-user-id (:id mother))]
-           (prl/add-child father-node mother-node child-node child-order)
-           ))))))
+                              (:node))]
+           (if partner
+             (add-child-for-parents child-node parent partner child-order)
+             (add-child-for-single-parent child-node parent child-order)))
+         )))))
 
 (defn add-parent [request]
   "hello")

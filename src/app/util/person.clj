@@ -28,3 +28,16 @@
       (= parent-gender (:les gender-map)) {:father parent :mother partner}
       :else {:father parent :mother partner}
       )))
+
+(defn determine-father-mother-single
+  "Determin whether the input parent is father or mother based on the gender"
+  [parent]
+  (let [parent-gender (:gender parent)
+        gender-map person/GENDERS_MAP]
+    (cond
+      (= parent-gender (:male gender-map)) :father
+      (= parent-gender (:female gender-map)) :mother
+      (= parent-gender (:gay gender-map)) :mother
+      (= parent-gender (:les gender-map)) :father
+      :else :father
+      )))

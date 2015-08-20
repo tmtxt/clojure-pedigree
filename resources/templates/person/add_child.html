@@ -15,10 +15,12 @@
       <div class="form-group">
         <label>Họ tên mẹ</label>
         <select name="partner_id" class="form-control">
+          <option>unknown</option>
           {% for partner in params.partners %}
-          <option value="{{ partner.id }}">
-            {{ partner.full_name }}
-          </option>
+            <option {% if forloop.first %}selected{% endif %}
+                    value="{{ partner.id }}">
+              {{ partner.full_name }}
+            </option>
           {% endfor %}
         </select>
       </div>
