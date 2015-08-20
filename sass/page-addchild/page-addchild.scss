@@ -1,23 +1,3 @@
 .page-addchild {
-  .father-display-container {
-    @include flex(row nowrap);
-    align-items: center;
-
-    .father-image {
-      width: 40px;
-      height: 40px;
-    }
-
-    .father-name {
-      /* font-weight: bold; */
-      font-size: 24px;
-      text-transform: uppercase;
-      padding-left: 10px;
-    }
-  }
-
-  label {
-    color: $brown;
-    font-size: 18px;
-  }
+  
 }
