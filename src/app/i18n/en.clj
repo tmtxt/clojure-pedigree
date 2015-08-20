@@ -15,10 +15,6 @@
                  :title "Tran Van Pedigree"
                  :head-line "Keep the value for the children"}
 
-        ;;
-        :person-display {:father-fullname "Father fullname"
-                         :mother-fullname "Mother fullname"}
-
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;; pages
         :page-index {:preface "Preface"
@@ -29,6 +25,15 @@
                      :pedigree-tree "Pedigree tree"
                      :detail-tree "View detail pedigree tree"
                      :other-links "Other links"}
+
+        :page-add-child {:father-fullname "Father full name"
+                         :mother-fullname "Mother full name"
+                         :child-fullname "Child full name"
+                         :person-unknown "Không rõ"
+                         :child-order-title "Là con thứ bao nhiêu trong gia đình?"
+                         :submit "Thêm con"
+
+                         :error-parent-not-found "Parent not found"}
 
         :login {:invalid-error "Username or Password incorrect"}
         }})

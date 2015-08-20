@@ -13,9 +13,9 @@
                class="form-control">
       </div>
       <div class="form-group">
-        <label>Họ tên mẹ</label>
+        <label>{{ params.partner-title }}</label>
         <select name="partner_id" class="form-control">
-          <option>unknown</option>
+          <option>{{ page.person-unknown }}</option>
           {% for partner in params.partners %}
             <option {% if forloop.first %}selected{% endif %}
                     value="{{ partner.id }}">
@@ -25,22 +25,22 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Child name</label>
+        <label>{{ page.child-fullname }}</label>
         <input type="text"
                name="child_name"
                value=""
-               placeholder="họ tên con"
+               placeholder="{{ page.child-fullname }}"
                class="form-control">
       </div>
       <div class="form-group">
-        <label>Child order</label>
+        <label>{{ page.child-order-title }}</label>
         <input type="text"
                name="child_order"
                value=""
-               placeholder="thứ tự con"
+               placeholder=""
                class="form-control">
       </div>
-      <button type="submit" class="btn btn-default">Add child</button>
+      <button type="submit" class="btn btn-default">{{ page.submit }}</button>
     </form>
   </div>
 </div>
