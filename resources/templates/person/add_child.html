@@ -3,7 +3,7 @@
 {% block content %}
 <div class="page-addrelation page-addchild">
   <div class="addrelation-container">
-    <form method="POST" action="/person/addChild">
+    <form method="POST" action="/person/addChild" class="js-add-child-form">
       <input name="parent_id" type="hidden" value="{{ params.parent.id }}"/>
       <div class="form-group">
         <label>{{ params.parent-title }}</label>
@@ -30,7 +30,7 @@
                name="child_name"
                value=""
                placeholder="{{ page.child-fullname }}"
-               class="form-control">
+               class="form-control js-child-name-input">
       </div>
       <div class="form-group">
         <label>{{ page.child-order-title }}</label>
@@ -62,7 +62,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">{{ page.warning-back }}</button>
-        <button type="button" class="btn btn-primary">{{ page.warning-continue }}</button>
+        <button type="button" class="btn btn-primary js-confirm-continue">{{ page.warning-continue }}</button>
       </div>
     </div>
   </div>
