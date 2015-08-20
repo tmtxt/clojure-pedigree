@@ -33,7 +33,10 @@
                          :child-order-title "Là con thứ bao nhiêu trong gia đình?"
                          :submit "Thêm con"
 
-                         :error-parent-not-found "Không tìm thấy cha mẹ"}
+                         :error-parent-not-found "Không tìm thấy cha mẹ"
+                         :error-add-child "Có lỗi trong quá trình thực hiện."
+
+                         :success-add-child "Thêm con thành công"}
 
         :login {:invalid-error "Tên đăng nhập hoặc mật khẩu không đúng"}
         }})

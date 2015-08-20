@@ -29,11 +29,14 @@
         :page-add-child {:father-fullname "Father full name"
                          :mother-fullname "Mother full name"
                          :child-fullname "Child full name"
-                         :person-unknown "Không rõ"
-                         :child-order-title "Là con thứ bao nhiêu trong gia đình?"
-                         :submit "Thêm con"
+                         :person-unknown "Unknown"
+                         :child-order-title "Child order"
+                         :submit "Add child"
 
-                         :error-parent-not-found "Parent not found"}
+                         :error-parent-not-found "Parent not found"
+                         :error-add-child "An error occured"
+
+                         :success-add-child "Add child successfully"}
 
         :login {:invalid-error "Username or Password incorrect"}
         }})
