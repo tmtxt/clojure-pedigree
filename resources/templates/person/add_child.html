@@ -4,6 +4,7 @@
 <div class="page-addrelation page-addchild">
   <div class="addrelation-container">
     <form method="POST" action="/person/addChild">
+      <input name="parent_id" type="hidden" value="{{ params.parent.id }}"/>
       <div class="form-group">
         <label>{{ params.parent-title }}</label>
         <input type="text"
@@ -13,7 +14,7 @@
       </div>
       <div class="form-group">
         <label>Họ tên mẹ</label>
-        <select class="form-control">
+        <select name="partner_id" class="form-control">
           {% for partner in params.partners %}
           <option value="{{ partner.id }}">
             {{ partner.full_name }}
@@ -24,6 +25,7 @@
       <div class="form-group">
         <label>Child name *</label>
         <input type="text"
+               name="child_name"
                value=""
                placeholder="họ tên con"
                class="form-control">
