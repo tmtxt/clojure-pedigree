@@ -33,6 +33,12 @@
                          :child-order-title "Child order"
                          :submit "Add child"
 
+                         :warning "Warning"
+                         :warning-name-empty "Child name is empty"
+                         :warning-name-confirm "Add a new child with unknown name?"
+                         :warning-back "Cancel"
+                         :warning-continue "Continue"
+
                          :error-parent-not-found "Parent not found"
                          :error-add-child "An error occured"
 

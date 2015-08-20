@@ -33,6 +33,12 @@
                          :child-order-title "Là con thứ bao nhiêu trong gia đình?"
                          :submit "Thêm con"
 
+                         :warning "Cảnh báo"
+                         :warning-name-empty "Họ tên con còn trống."
+                         :warning-name-confirm "Thêm con với tên họ không rõ?"
+                         :warning-back "Quay lại"
+                         :warning-continue "Tiếp tục"
+
                          :error-parent-not-found "Không tìm thấy cha mẹ"
                          :error-add-child "Có lỗi trong quá trình thực hiện."
 
