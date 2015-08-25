@@ -1,0 +1,74 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="page-addrelation page-addchild">
+  <div class="addrelation-container">
+    <form method="POST" action="/person/addChild" class="js-add-child-form">
+      <input name="parent_id" type="hidden" value="{{ params.parent.id }}"/>
+      <div class="form-group">
+        <label>{{ params.parent-title }}</label>
+        <input type="text"
+               disabled
+               value="{{ params.parent.full_name }}"
+               class="form-control">
+      </div>
+      <div class="form-group">
+        <label>{{ params.partner-title }}</label>
+        <select name="partner_id" class="form-control">
+          <option>{{ page.person-unknown }}</option>
+          {% for partner in params.partners %}
+          <option {% if forloop.first %}selected{% endif %}
+                  value="{{ partner.id }}">
+            {{ partner.full_name }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>{{ page.child-fullname }}</label>
+        <input type="text"
+               name="child_name"
+               value=""
+               placeholder="{{ page.child-fullname }}"
+               class="form-control js-child-name-input">
+      </div>
+      <div class="form-group">
+        <label>{{ page.child-order-title }}</label>
+        <input type="text"
+               name="child_order"
+               value=""
+               placeholder=""
+               class="form-control">
+      </div>
+      <button type="submit" class="btn btn-default js-submit-button">{{ page.submit }}</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade js-confirm-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> {{ page.warning }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          {{ page.warning-name-empty }}
+        </p>
+        <p>
+          {{ page.warning-name-confirm }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ page.warning-back }}</button>
+        <button type="button" class="btn btn-primary js-confirm-continue">{{ page.warning-continue }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script src="/js/add_child.js{{ version }}"></script>
+{% endblock %}

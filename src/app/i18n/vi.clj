@@ -15,6 +15,8 @@
                  :title "Trần Văn Gia Phả"
                  :head-line "Gìn giữ cho muôn đời sau"}
 
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;; pages
         :page-index {:preface "Lời tâm huyết"
                      :members "Thành viên"
                      :news "Tin vắn dòng họ"
@@ -23,6 +25,24 @@
                      :pedigree-tree "Cây gia phả"
                      :detail-tree "Xem cây gia phả chi tiết"
                      :other-links "Liên kết khác"}
+
+        :page-add-child {:father-fullname "Họ và tên bố"
+                         :mother-fullname "Họ và tên mẹ"
+                         :child-fullname "Họ và tên con"
+                         :person-unknown "Không rõ"
+                         :child-order-title "Là con thứ bao nhiêu trong gia đình?"
+                         :submit "Thêm con"
+
+                         :warning "Cảnh báo"
+                         :warning-name-empty "Họ tên con còn trống."
+                         :warning-name-confirm "Thêm con với tên họ không rõ?"
+                         :warning-back "Quay lại"
+                         :warning-continue "Tiếp tục"
+
+                         :error-parent-not-found "Không tìm thấy cha mẹ"
+                         :error-add-child "Có lỗi trong quá trình thực hiện."
+
+                         :success-add-child "Thêm con thành công"}
 
         :login {:invalid-error "Tên đăng nhập hoặc mật khẩu không đúng"}
         }})

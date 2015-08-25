@@ -28,3 +28,13 @@
                             :type (:father-child RELATION_TYPES))
     (add-relation-from-node mother-node child-node _order
                             :type (:mother-child RELATION_TYPES))))
+
+(defn add-child-for-mother [mother-node child-node & [order]]
+  (let [_order (if order order 0)]
+    (add-relation-from-node mother-node child-node _order
+                            :type (:mother-child RELATION_TYPES))))
+
+(defn add-child-for-father [father-node child-node & [order]]
+  (let [_order (if order order 0)]
+    (add-relation-from-node father-node child-node _order
+                            :type (:father-child RELATION_TYPES))))
