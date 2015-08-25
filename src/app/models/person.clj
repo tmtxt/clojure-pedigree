@@ -27,8 +27,7 @@
   (pk :id))
 
 (def pg-validation
-  (vl/validation-set
-   (vl/presence-of :full_name)))
+  (vl/validation-set))
 
 (def neo4j-validation
   (vl/validation-set
