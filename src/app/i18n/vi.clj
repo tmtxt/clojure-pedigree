@@ -44,5 +44,7 @@
 
                          :success-add-child "Thêm con thành công"}
 
+        :page-add-parent {:error-child-not-found "Không tìm thấy con"}
+
         :login {:invalid-error "Tên đăng nhập hoặc mật khẩu không đúng"}
         }})

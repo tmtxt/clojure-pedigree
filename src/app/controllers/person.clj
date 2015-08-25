@@ -20,6 +20,8 @@
       (util/parse-int)
       (person/find-by-person-id)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; add child
 (defn add-child [request]
   ;; check parent exists
   (let [parent (find-person-from-request request "parentId")
@@ -84,9 +86,19 @@
              (add-child-for-single-parent child-node parent child-order t)))
          )))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; add parent
 (defn add-parent [request]
-  "hello")
+  ;; check child exist
+  (let [child (find-person-from-request request "childId")
+        t (make-t-with-scope request :page-add-parent)]
+    (if child
+      "found"
+      (error/render (t :error-child-not-found))
+      )))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; add partner
 (defn add-partner [request]
   "hello")
 
