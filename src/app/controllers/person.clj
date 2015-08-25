@@ -9,6 +9,7 @@
             [app.util.neo4j.command :as ncm]
             [config.neo4j :refer [conn]]
             [app.models.pedigreeRelation :as prl]
+            [app.util.security :refer [user-access admin-access]]
             [korma.db :as kd]
             [app.i18n.main :refer [make-t-with-scope make-page-tran]]
             [korma.core :as kc]))
@@ -95,3 +96,6 @@
            (POST "/addChild" [] add-child-process)
            (GET "/addParent/childId/:childId" [] add-parent)
            (GET "/addPartner/partnerId/:partnerId" [] add-partner)))
+
+(def person-rules [{:pattern #"^/person/add.*"
+                    :handler admin-access}])

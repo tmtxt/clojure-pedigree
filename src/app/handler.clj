@@ -10,7 +10,7 @@
             [compojure.route :as route]
 
             [app.controllers.home :refer [home-routes home-rules]]
-            [app.controllers.person :refer [person-routes]]
+            [app.controllers.person :refer [person-routes person-rules]]
             [app.controllers.user :refer [user-routes user-rules]]
             [app.controllers.admin :refer [admin-routes admin-rules]]
             [app.controllers.tree :refer [tree-routes]]
@@ -38,7 +38,8 @@
 (def authorization-rules (concat
                           user-rules
                           admin-rules
-                          home-rules))
+                          home-rules
+                          person-rules))
 
 (def app
   (-> (routes home-routes
