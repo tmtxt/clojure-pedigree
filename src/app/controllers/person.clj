@@ -94,7 +94,7 @@
 
 (defn add-person-get [request]
   (layout/render request
-                 "person/add.html"
+                 "person/edit_detail.html"
                  {}))
 
 (def person-routes
