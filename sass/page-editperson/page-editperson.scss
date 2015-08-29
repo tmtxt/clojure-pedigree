@@ -27,14 +27,23 @@
 /* body */
 .page-editperson {
   .editperson-body {
+    width: 100%;
     @include flex(row nowrap);
 
-    .editperson-body-left {
-      flex: 1 1 auto;
+    .editperson-col-1 {
+      flex: 1 1 0;
+
+      .col-1-img {
+        width: 100%;
+      }
     }
 
-    .editperson-body-right {
-      flex: 1 1 auto;
+    .editperson-col-2 {
+      flex: 3 3 0;
+    }
+
+    .editperson-col-3 {
+      flex: 2 2 0;
     }
   }
 }
