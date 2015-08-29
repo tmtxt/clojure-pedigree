@@ -51,14 +51,13 @@
           data (-> response :data first :row first)]
       data)))
 
-(defn query-tree [root-id depth]
+(defn execute-statement
+  "Execute the input (formatted) statement with the arguments to replace"
+  [statement & args]
   (with-transaction conn
-    (let [statement (stm/raw-query query/get-tree root-id depth)
-          [_ result] (tx/execute *conn* *tran* [statement])
-          response (first result)
-          data (-> response :data)
-          rows (map #(:row %) data)]
-      rows)))
+    (let [query-string (apply stm/raw-query statement args)
+          [_ result] (tx/execute *conn* *tran* [query-string])]
+      result)))
 
 (defn find-root []
   (with-transaction conn

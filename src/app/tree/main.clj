@@ -1,9 +1,18 @@
 (ns app.tree.main
   (:require [app.models.person :as person]
             [app.util.neo4j.command :as ncm]
+            [app.util.neo4j.query :as query]
             [com.rpl.specter :refer :all]))
 
 (def ^{:private true} default-depth 5)
+
+(defn- query-tree
+  "Query tree using Neo4j"
+  [root-id depth]
+  (let [result (ncm/execute-statement query/get-tree root-id depth)
+        data (-> result first :data)
+        rows (map #(:row %) data)]
+    rows))
 
 (defn- extract-marriage-info [marriage person-info]
   (map #(get person-info %) marriage))
@@ -56,7 +65,7 @@
     person-info))
 
 (defn- get-tree-from-node [root & [depth]]
-  (let [rows (ncm/query-tree (:user_id root) depth)
+  (let [rows (query-tree (:user_id root) depth)
         paths (map (fn [[path _ marriage last_order]] [path marriage last_order]) rows)
         ids (extract-ids paths)
         person-rows (person/find-all-by-ids ids)
