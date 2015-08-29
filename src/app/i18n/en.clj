@@ -44,7 +44,8 @@
 
                          :success-add-child "Add child successfully"}
 
-        :page-add-parent {:error-child-not-found "Child not found"}
+        :page-add-parent {:error-child-not-found "Child not found"
+                          :error-enough-parent "This person has enough parent"}
 
         :login {:invalid-error "Username or Password incorrect"}
         }})

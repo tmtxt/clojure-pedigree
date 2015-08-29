@@ -94,9 +94,13 @@
         t (make-t-with-scope request :page-add-parent)]
     (if child
       (if (person/enough-parent? (:id child))
-        "enough!!!!"
-        "ok"
-        )
+        (error/render (t :error-enough-parent))
+        (let [page-tran (make-page-tran request :page-add-parent)]
+          (layout/render request
+                         "person/add_parent.html"
+                         {}
+                         page-tran)
+          ))
       (error/render (t :error-child-not-found))
       )))
 
