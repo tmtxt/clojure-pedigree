@@ -1,12 +1,5 @@
 (ns app.models.pedigreeRelation
-  (:require [korma.core :refer :all]
-            [app.util.dbUtil :as db-util]
-            [app.util.neo4j.command :as ncm]
-            [app.neo4j.relation :as relation]
-            [clojurewerkz.neocons.rest.nodes :as nn]
-            [clojurewerkz.neocons.rest.relationships :as nrl]
-            [config.neo4j :refer [conn]]
-            [validateur.validation :as vl]))
+  (:require [app.neo4j.relation :as relation]))
 
 (def RELATION_TYPES
   {:father-child :father_child
