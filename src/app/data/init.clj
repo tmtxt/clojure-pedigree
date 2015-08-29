@@ -2,7 +2,7 @@
   (:require [app.models.user :as user-model]
             [app.models.person :as person-model]
             [app.util.dbUtil :as db-util]
-            [app.util.neo4j.command :as ncm]
+            [app.neo4j.main :as neo4j]
             [korma.db :as kd]
             [app.models.marriageRelation :as mrl]
             [app.models.pedigreeRelation :as prl]
@@ -20,7 +20,7 @@
   "Create new persons when the app starts if there is no person presented yet"
   []
   (when (db-util/table-empty? person-model/person)
-    (ncm/with-transaction conn
+    (neo4j/with-transaction conn
       (kd/transaction
        (let [root-husband (-> {:full_name "Root Husband"
                                :picture "/assets/img/a.jpg"}

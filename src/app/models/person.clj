@@ -4,6 +4,8 @@
             [app.util.dbUtil :as db-util]
             [app.util.neo4j :as neo-util]
             [app.util.neo4j.command :as ncm]
+            [app.neo4j.node :as node]
+            [app.neo4j.relation :as relation]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.labels :as nl]
             [clojurewerkz.neocons.rest.cypher :as cy]
@@ -38,7 +40,7 @@
   "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
   [person-entity & {:keys [is-root]
                     :or {is-root false}}]
-  (let [person-node (ncm/create-or-update-node
+  (let [person-node (node/create-or-update
                      :person
                      {:user_id (person-entity :id)}
                      {:is_root is-root})]
@@ -60,7 +62,7 @@
 (defn find-node-by-user-id
   "Find the node from neo4j using the input user id"
   [user-id]
-  (ncm/find-by-props :person {:user_id user-id}))
+  (node/find-by-props :person {:user_id user-id}))
 
 (defn find-all-by-ids
   "Find all from postgres where id in ids list"

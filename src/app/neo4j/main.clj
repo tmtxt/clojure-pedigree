@@ -6,13 +6,9 @@
 (def ^:dynamic *tran*)
 (def ^:dynamic *conn*)
 
-;;; Macro for wrapping out the execute/update functions inside this namespace
-;;; The execute/update functions are required to be wrapped by this macro
-;;; The query function are freely to use (wrapped automatically)
 (defmacro with-transaction
   "Use this macro to wrap a transaction outside of the raw execute functions.
-  The execute/update functions are required to be wrapped by this macro
-  The query function are freely to use (wrapped automatically)"
+  You have to wrap all the function inside this namespace using this macro"
   [& body]
   (let [transaction (gensym "transaction")
         connection conn]

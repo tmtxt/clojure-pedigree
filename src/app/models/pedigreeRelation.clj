@@ -2,6 +2,7 @@
   (:require [korma.core :refer :all]
             [app.util.dbUtil :as db-util]
             [app.util.neo4j.command :as ncm]
+            [app.neo4j.relation :as relation]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.relationships :as nrl]
             [config.neo4j :refer [conn]]
@@ -15,7 +16,7 @@
   "Add new relation between two node in the system"
   [parent-node child-node order & {:keys [type]
                                    :or [type (:father-child RELATION_TYPES)]}]
-  (ncm/create-or-update-relation :person parent-node
+  (relation/create-or-update :person parent-node
                                  :person child-node
                                  type {:order order})
   )

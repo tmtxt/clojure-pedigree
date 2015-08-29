@@ -2,6 +2,7 @@
   (:require [korma.core :refer :all]
             [app.util.dbUtil :as db-util]
             [app.util.neo4j.command :as ncm]
+            [app.neo4j.relation :as relation]
             [clojurewerkz.neocons.rest.nodes :as nn]
             [clojurewerkz.neocons.rest.relationships :as nrl]
             [config.neo4j :refer [conn]]
@@ -15,9 +16,9 @@
   "Add new relation between two node in the system"
   [first-node second-node order & {:keys [type]
                                    :or [type (:husband-wife RELATION_TYPES)]}]
-  (ncm/create-or-update-relation :person first-node
-                                 :person second-node
-                                 type {:order order}))
+  (relation/create-or-update :person first-node
+                             :person second-node
+                             type {:order order}))
 
 (defn add-marriage
   "Add marriage relation between husband and wife nodes"
