@@ -101,3 +101,13 @@
         partners-rows (find-all-by-ids ids)
         partners-info (combine-partner-info partners-id-order partners-rows)]
     partners-info))
+
+(defn count-parent
+  "Count number of parent the input person has"
+  [person-id]
+  (ncm/count-parent person-id conn))
+
+(defn enough-parent?
+  "Is this current person has enough parent now?"
+  [person-id]
+  (= (count-parent person-id) 2))

@@ -78,3 +78,14 @@
           data (-> result :data)
           rows (map #(:row %) data)]
       rows)))
+
+(defn count-parent
+  "Returns the number of parent of the input person"
+  [person-id conn]
+  (with-transaction conn
+    (let [statement (stm/raw-query query/count-parent person-id)
+          [_ [result]] (tx/execute *conn* *tran* [statement])
+          data (:data result)
+          count (-> data first :row first)]
+      count
+      )))
