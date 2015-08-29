@@ -16,6 +16,7 @@
 
 (defn parse-int "Parse the input to integer"
   [input & [default]]
-  (try
-    (Integer/parseInt input)
-    (catch Exception e default)))
+  (if (integer? input) input
+      (try
+        (Integer/parseInt input)
+        (catch Exception e default))))

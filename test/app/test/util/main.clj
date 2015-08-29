@@ -27,11 +27,27 @@
 
 (deftest param
   (doseq [data (get-param-data)]
-    (testing "test util/param"
-      (let [{request :request
-             name :name
-             default :default
-             expected :expected} data
-             result (util/param request name default)]
-        (is (= expected result))
-        ))))
+    (let [{request :request
+           name :name
+           default :default
+           expected :expected} data
+           result (util/param request name default)]
+      (is (= expected result))
+      )))
+
+(defn get-parse-int-data []
+  [{:input 1
+    :expected 1}
+   {:input 2
+    :expected 2}
+   {:input "hello"
+    :expected nil}
+   {:input "1"
+    :expected 1}])
+
+(deftest parse-int
+  (doseq [data (get-parse-int-data)]
+    (let [{input :input expected :expected} data
+          result (util/parse-int input)]
+      (is (= expected result))
+      )))
