@@ -92,12 +92,21 @@
 (defn add-partner [request]
   "hello")
 
+(defn add-person-get [request]
+  (layout/render request
+                 "person/add.html"
+                 {}))
+
 (def person-routes
   (context "/person" []
            (GET "/addChild/parentId/:parentId" [] add-child)
            (POST "/addChild" [] add-child-process)
            (GET "/addParent/childId/:childId" [] add-parent)
-           (GET "/addPartner/partnerId/:partnerId" [] add-partner)))
+           (GET "/addPartner/partnerId/:partnerId" [] add-partner)
+           (GET "/add" [] add-person-get)))
 
-(def person-rules [{:pattern #"^/person/add.*"
+;; (def person-rules [{:pattern #"^/person/add.*"
+;;                     :handler admin-access}])
+
+(def person-rules [{:pattern #"^/person/them.*"
                     :handler admin-access}])
