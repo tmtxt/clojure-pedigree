@@ -6,7 +6,7 @@
             [app.util.main :as util]
             [app.util.person :as person-util]
             [app.models.person :as person]
-            [app.util.neo4j.command :as ncm]
+            [app.neo4j.main :as neo4j]
             [config.neo4j :refer [conn]]
             [app.models.pedigreeRelation :as prl]
             [app.util.security :refer [user-access admin-access]]
@@ -22,25 +22,26 @@
 
 (defn add-child [request]
   ;; check parent exists
-  (let [parent (find-person-from-request request "parentId")
-        t (make-t-with-scope request :page-add-child)]
-    (if parent
-      ;; get all the marriage partner of this parent
-      (let [partners (person/find-partners (:id parent))
-            page-tran (make-page-tran request :page-add-child)
-            [parent-title partner-title] (person-util/title-as-parent parent)
-            parent-title (t parent-title)
-            partner-title (t partner-title)]
-        (layout/render request
-                       "person/add_child.html"
-                       {:parent parent
-                        :partners partners
-                        :parent-title parent-title
-                        :partner-title partner-title}
-                       page-tran))
+  (neo4j/with-transaction
+    (let [parent (find-person-from-request request "parentId")
+          t (make-t-with-scope request :page-add-child)]
+      (if parent
+        ;; get all the marriage partner of this parent
+        (let [partners (person/find-partners (:id parent))
+              page-tran (make-page-tran request :page-add-child)
+              [parent-title partner-title] (person-util/title-as-parent parent)
+              parent-title (t parent-title)
+              partner-title (t partner-title)]
+          (layout/render request
+                         "person/add_child.html"
+                         {:parent parent
+                          :partners partners
+                          :parent-title parent-title
+                          :partner-title partner-title}
+                         page-tran))
 
-      ;; render error page
-      (error/render (t :error-parent-not-found)))))
+        ;; render error page
+        (error/render (t :error-parent-not-found))))))
 
 (defn- add-child-for-single-parent [child-node parent child-order t]
   (let [parent-role (person-util/determine-father-mother-single parent)
@@ -64,25 +65,26 @@
 
 (defn add-child-process [request]
   ;; check parent exists
-  (let [parent (find-person-from-request request "parent_id")
-        partner (find-person-from-request request "partner_id")
-        child-name (util/param request "child_name")
-        child-order (-> request
-                        (util/param "child_order" 0)
-                        (util/parse-int 0))
-        t (make-t-with-scope request :page-add-child)]
-    (cond
-      (not parent) (error/render (t :error-parent-not-found))
-      :else
-      (ncm/with-transaction conn
-        (kd/transaction
-         (let [child-node (-> {:full_name child-name}
-                              (person/add-person)
-                              (:node))]
-           (if partner
-             (add-child-for-parents child-node parent partner child-order t)
-             (add-child-for-single-parent child-node parent child-order t)))
-         )))))
+  (neo4j/with-transaction
+    (let [parent (find-person-from-request request "parent_id")
+          partner (find-person-from-request request "partner_id")
+          child-name (util/param request "child_name")
+          child-order (-> request
+                          (util/param "child_order" 0)
+                          (util/parse-int 0))
+          t (make-t-with-scope request :page-add-child)]
+      (cond
+        (not parent) (error/render (t :error-parent-not-found))
+        :else
+        (neo4j/with-transaction conn
+          (kd/transaction
+           (let [child-node (-> {:full_name child-name}
+                                (person/add-person)
+                                (:node))]
+             (if partner
+               (add-child-for-parents child-node parent partner child-order t)
+               (add-child-for-single-parent child-node parent child-order t)))
+           ))))))
 
 (defn add-parent [request]
   "hello")

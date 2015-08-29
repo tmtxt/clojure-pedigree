@@ -1,15 +1,10 @@
 (ns app.models.person
   (:require [korma.core :refer :all]
-            [korma.db :as kd]
             [app.util.dbUtil :as db-util]
-            [app.util.neo4j :as neo-util]
-            [app.util.neo4j.command :as ncm]
-            [clojurewerkz.neocons.rest.nodes :as nn]
-            [clojurewerkz.neocons.rest.labels :as nl]
-            [clojurewerkz.neocons.rest.cypher :as cy]
-            [clojurewerkz.neocons.rest.transaction :as tx]
-            [clojure.tools.logging :as log]
-            [config.neo4j :refer [conn]]
+            [app.neo4j.main :as neo4j]
+            [app.neo4j.node :as node]
+            [app.neo4j.query :as query]
+            [app.neo4j.relation :as relation]
             [validateur.validation :as vl]
             [slingshot.slingshot :refer [throw+ try+]]
             [app.models.pedigreeRelation :as prl]
@@ -38,7 +33,7 @@
   "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
   [person-entity & {:keys [is-root]
                     :or {is-root false}}]
-  (let [person-node (ncm/create-or-update-node
+  (let [person-node (node/create-or-update
                      :person
                      {:user_id (person-entity :id)}
                      {:is_root is-root})]
@@ -60,7 +55,7 @@
 (defn find-node-by-user-id
   "Find the node from neo4j using the input user id"
   [user-id]
-  (ncm/find-by-props :person {:user_id user-id}))
+  (node/find-by-props :person {:user_id user-id}))
 
 (defn find-all-by-ids
   "Find all from postgres where id in ids list"
@@ -75,7 +70,10 @@
 (defn find-root-node
   "Find the root node from neo4j"
   []
-  (let [row (ncm/find-root)
+  (let [[result] (neo4j/execute-statement query/find-root)
+        data (-> result :data)
+        rows (map #(:row %) data)
+        row (first rows)
         [root marriage] row
         info (db-util/find-by-id person (:user_id root))
         root-person (assoc root :marriage (find-all-by-ids marriage))
@@ -95,7 +93,9 @@
 (defn find-partners
   "Find all partners information of the input person"
   [person-id]
-  (let [partners-list (ncm/find-partners person-id conn)
+  (let [[result] (neo4j/execute-statement query/find-partner person-id)
+        data (-> result :data)
+        partners-list (map #(:row %) data)
         ids (extract-partner-ids partners-list)
         partners-id-order (extract-partner-id-order partners-list)
         partners-rows (find-all-by-ids ids)

@@ -1,9 +1,18 @@
 (ns app.tree.main
   (:require [app.models.person :as person]
-            [app.util.neo4j.command :as ncm]
+            [app.neo4j.main :as neo4j]
+            [app.neo4j.query :as query]
             [com.rpl.specter :refer :all]))
 
 (def ^{:private true} default-depth 5)
+
+(defn- query-tree
+  "Query tree using Neo4j"
+  [root-id depth]
+  (let [result (neo4j/execute-statement query/get-tree root-id depth)
+        data (-> result first :data)
+        rows (map #(:row %) data)]
+    rows))
 
 (defn- extract-marriage-info [marriage person-info]
   (map #(get person-info %) marriage))
@@ -56,7 +65,7 @@
     person-info))
 
 (defn- get-tree-from-node [root & [depth]]
-  (let [rows (ncm/query-tree (:user_id root) depth)
+  (let [rows (query-tree (:user_id root) depth)
         paths (map (fn [[path _ marriage last_order]] [path marriage last_order]) rows)
         ids (extract-ids paths)
         person-rows (person/find-all-by-ids ids)
@@ -67,14 +76,17 @@
 (defn get-tree
   "Get tree from user id"
   ([]
-   (let [root-node (person/find-root-node)]
-     (get-tree-from-node root-node default-depth)))
+   (neo4j/with-transaction
+     (let [root-node (person/find-root-node)]
+       (get-tree-from-node root-node default-depth))))
 
   ([user-id]
-   (let [root-node (person/find-node-by-user-id user-id)]
-     (get-tree-from-node root-node default-depth)))
+   (neo4j/with-transaction
+     (let [root-node (person/find-node-by-user-id user-id)]
+       (get-tree-from-node root-node default-depth))))
 
   ([user-id & {:keys [depth]
                :or [depth default-depth]}]
-   (let [root-node (person/find-node-by-user-id user-id)]
-     (get-tree-from-node root-node depth))))
+   (neo4j/with-transaction
+     (let [root-node (person/find-node-by-user-id user-id)]
+       (get-tree-from-node root-node depth)))))
