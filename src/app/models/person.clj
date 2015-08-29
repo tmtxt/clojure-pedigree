@@ -1,17 +1,10 @@
 (ns app.models.person
   (:require [korma.core :refer :all]
-            [korma.db :as kd]
             [app.util.dbUtil :as db-util]
-            [app.util.neo4j :as neo-util]
-            [app.util.neo4j.command :as ncm]
+            [app.neo4j.main :as neo4j]
             [app.neo4j.node :as node]
+            [app.neo4j.query :as query]
             [app.neo4j.relation :as relation]
-            [clojurewerkz.neocons.rest.nodes :as nn]
-            [clojurewerkz.neocons.rest.labels :as nl]
-            [clojurewerkz.neocons.rest.cypher :as cy]
-            [clojurewerkz.neocons.rest.transaction :as tx]
-            [clojure.tools.logging :as log]
-            [config.neo4j :refer [conn]]
             [validateur.validation :as vl]
             [slingshot.slingshot :refer [throw+ try+]]
             [app.models.pedigreeRelation :as prl]
@@ -77,7 +70,10 @@
 (defn find-root-node
   "Find the root node from neo4j"
   []
-  (let [row (ncm/find-root)
+  (let [[result] (neo4j/execute-statement query/find-root)
+        data (-> result :data)
+        rows (map #(:row %) data)
+        row (first rows)
         [root marriage] row
         info (db-util/find-by-id person (:user_id root))
         root-person (assoc root :marriage (find-all-by-ids marriage))
@@ -97,7 +93,9 @@
 (defn find-partners
   "Find all partners information of the input person"
   [person-id]
-  (let [partners-list (ncm/find-partners person-id conn)
+  (let [[result] (neo4j/execute-statement query/find-partner person-id)
+        data (-> result :data)
+        partners-list (map #(:row %) data)
         ids (extract-partner-ids partners-list)
         partners-id-order (extract-partner-id-order partners-list)
         partners-rows (find-all-by-ids ids)
