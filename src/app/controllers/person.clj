@@ -93,7 +93,10 @@
   (let [child (find-person-from-request request "childId")
         t (make-t-with-scope request :page-add-parent)]
     (if child
-      "found"
+      (if (person/enough-parent? (:id child))
+        "enough!!!!"
+        "ok"
+        )
       (error/render (t :error-child-not-found))
       )))
 
