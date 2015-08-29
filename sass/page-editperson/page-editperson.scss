@@ -1,0 +1,40 @@
+/* header */
+.page-editperson {
+  .editperson-header {
+    @include flex(row nowrap);
+    align-items: center;
+    width: 100%;
+    padding-bottom: 20px;
+
+    .editperson-title {
+      flex: 1 1 0;
+      color: $brown;
+      font-size: 33px;
+    }
+
+    .editperson-buttons {
+      flex: 1 1 0;
+      @include flex(row nowrap);
+      justify-content: flex-end;
+
+      button {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+/* body */
+.page-editperson {
+  .editperson-body {
+    @include flex(row nowrap);
+
+    .editperson-body-left {
+      flex: 1 1 auto;
+    }
+
+    .editperson-body-right {
+      flex: 1 1 auto;
+    }
+  }
+}
