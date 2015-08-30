@@ -100,13 +100,14 @@
   (let [opts (if opts opts default-opts)
         {parent :parent
          partner :partner} opts
-        statuses (-> request person-util/status-display json/write-str)]
-    (println statuses)
+        statuses (-> request person-util/status-display json/write-str)
+        genders (-> request person-util/gender-display json/write-str)]
     (layout/render request
                    "person/edit_detail.html"
                    {:parent parent
                     :partner partner
-                    :statuses statuses})))
+                    :statuses statuses
+                    :genders genders})))
 
 (defn add-person-get [request]
   (println "aaa")

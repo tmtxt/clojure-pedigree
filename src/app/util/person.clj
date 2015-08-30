@@ -56,11 +56,25 @@
       :else :husband
       )))
 
+(defn make-display-map [request map]
+  (let [t (make-t-with-scope request :person)
+        func #(t %)]
+    (into {} (for [[k v] map] [(name k) (func k)]))))
+
 (defn status-display
   "Make the statuses display map based on locale in the request"
   [request]
-  (let [t (make-t-with-scope request :person)
-        statuses-map person/STATUSES_MAP
-        func #(t %)]
-    (into {} (for [[k v] statuses-map] [(name k) (func k)]))
-    ))
+  (let [statuses-map person/STATUSES_MAP]
+    (make-display-map request statuses-map)))
+
+(defn status-display
+  "Make the statuses display map based on locale in the request"
+  [request]
+  (let [statuses-map person/STATUSES_MAP]
+    (make-display-map request statuses-map)))
+
+(defn gender-display
+  "Make the genders display map based on locale in the request"
+  [request]
+  (let [genders-map person/GENDERS_MAP]
+    (make-display-map request genders-map)))

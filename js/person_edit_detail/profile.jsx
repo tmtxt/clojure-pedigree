@@ -7,12 +7,37 @@ var ProfileView = React.createClass({
     datepicker.init();
   },
 
-  render: function() {
+  makeStatusOptions: function() {
     var statuses =_.map(this.props.statuses, function(v, k){
       return (
-        <option value="{k}">{v}</option>
+        <option value={k}>{v}</option>
       );
     });
+
+    return (
+      <select className="form-control">
+        {statuses}
+      </select>
+    );
+  },
+
+  makeGenderOptions: function() {
+    var genders =_.map(this.props.genders, function(v, k){
+      return (
+        <option value={k}>{v}</option>
+      );
+    });
+
+    return (
+      <select className="form-control">
+        {genders}
+      </select>
+    );
+  },
+
+  render: function() {
+    var statuses = this.makeStatusOptions();
+    var genders = this.makeGenderOptions();
 
     return (
       <div>
@@ -44,9 +69,7 @@ var ProfileView = React.createClass({
               Tình trạng
             </div>
             <div className="profile-body-right">
-              <select className="form-control">
-                {statuses}
-              </select>
+              {statuses}
             </div>
           </div>
 
@@ -64,7 +87,7 @@ var ProfileView = React.createClass({
               Giới tính
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="" type="text" value=""/>
+              {genders}
             </div>
           </div>
 

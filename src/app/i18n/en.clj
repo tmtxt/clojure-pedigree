@@ -17,7 +17,11 @@
 
         :person {:alive "ALive"
                  :dead "Dead"
-                 :unknown "Unknown"}
+                 :unknown "Unknown"
+                 :male "Male"
+                 :female "Female"
+                 :gay "Gay"
+                 :les "Les"}
 
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;; pages

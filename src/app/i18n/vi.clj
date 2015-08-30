@@ -17,7 +17,11 @@
 
         :person {:alive "Còn sống"
                  :dead "Đã mất"
-                 :unknown "Không rõ"}
+                 :unknown "Không rõ"
+                 :male "Nam"
+                 :female "Nữ"
+                 :gay "Gay"
+                 :les "Les"}
 
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;; pages
