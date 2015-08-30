@@ -4,6 +4,7 @@
             [compojure.response :refer [Renderable]]
             [app.i18n.main :refer [make-layout-tran]]
             [app.models.user :refer [get-user-from-request]]
+            [config.main :refer [config]]
             [app.views.version :refer [version]]))
 
 (parser/set-resource-path! (clojure.java.io/resource "templates"))
@@ -19,5 +20,6 @@
                          :page page-tran
                          :params page-params
                          :user (get-user-from-request request)
-                         :version (str "?version=" version)}]
+                         :version (str "?version=" version)
+                         :config config}]
     (utf-8-response (parser/render-file template template-params))))

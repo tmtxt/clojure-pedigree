@@ -6,6 +6,7 @@
             [app.neo4j.query :as query]
             [app.neo4j.relation :as relation]
             [validateur.validation :as vl]
+            [config.main :refer [config]]
             [slingshot.slingshot :refer [throw+ try+]]
             [app.models.pedigreeRelation :as prl]
             [app.models.marriageRelation :as mrl]))
@@ -19,7 +20,11 @@
 
 (defentity person
   (table :tbl_person)
-  (pk :id))
+  (pk :id)
+  (transform (fn [{picture :picture :as p}]
+               (if picture
+                 p
+                 (assoc p :picture (:default-person-image config))))))
 
 (def pg-validation
   (vl/validation-set))
