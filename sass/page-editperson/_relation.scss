@@ -48,4 +48,49 @@
       }
     }
   }
+
+  /* family select */
+  .editperson-body {
+    .editperson-col-3 {
+      /* title */
+      .family-title {
+        @include editperson-title;
+      }
+
+      /* help text */
+      .family-help {
+        padding-top: 10px;
+      }
+
+      /* body */
+      .family-body {
+        .family-list {
+          ul.partner-list {
+            list-style: none;
+            padding-left: 0;
+
+            > li {
+              @include flex(row nowrap);
+              align-items: center;
+              padding-bottom: 10px;
+
+              .partner-image {
+                flex: 1 1 0;
+                padding-right: 10px;
+              }
+
+              .partner-info {
+                flex: 4 4 0;
+                padding-bottom: 2px;
+
+                .partner-name {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
