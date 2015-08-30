@@ -1,5 +1,6 @@
 @import "./_image.scss";
 @import "./_profile.scss";
+@import "./_relation.scss";
 
 /* header */
 .page-editperson {
@@ -32,13 +33,5 @@
   .editperson-body {
     width: 100%;
     @include flex(row nowrap);
-
-    .editperson-col-2 {
-      flex: 3 3 0;
-    }
-
-    .editperson-col-3 {
-      flex: 2 2 0;
-    }
   }
 }

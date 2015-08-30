@@ -1,0 +1,51 @@
+.page-editperson {
+  /* relation column general */
+  .editperson-body {
+    .editperson-col-3 {
+      flex: 2 2 0;
+    }
+  }
+
+  /* parent select */
+  .editperson-body {
+    .editperson-col-3 {
+      /* title */
+      .parent-title {
+        @include editperson-title;
+      }
+
+      .parent-help {
+        padding-top: 10px;
+      }
+
+      /* body */
+      .parent-body {
+        ul {
+          list-style: none;
+          padding-left: 0;
+          padding-top: 10px;
+
+          > li {
+            @include flex(row nowrap);
+            align-items: center;
+            padding-bottom: 10px;
+
+            .parent-image {
+              flex: 1 1 0;
+              padding-right: 10px;
+            }
+
+            .parent-info {
+              flex: 4 4 0;
+              padding-bottom: 2px;
+
+              .parent-name {
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
