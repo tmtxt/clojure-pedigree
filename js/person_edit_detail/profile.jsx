@@ -1,5 +1,6 @@
 var React = require('react');
 var datepicker = require("./datepicker.js");
+var _ = require("lodash");
 
 var ProfileView = React.createClass({
   componentDidMount: function() {
@@ -7,6 +8,12 @@ var ProfileView = React.createClass({
   },
 
   render: function() {
+    var statuses =_.map(this.props.statuses, function(v, k){
+      return (
+        <option value="{k}">{v}</option>
+      );
+    });
+
     return (
       <div>
         <div className="profile-header">
@@ -38,7 +45,7 @@ var ProfileView = React.createClass({
             </div>
             <div className="profile-body-right">
               <select className="form-control">
-                <option value="">1</option>
+                {statuses}
               </select>
             </div>
           </div>

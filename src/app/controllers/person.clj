@@ -4,6 +4,7 @@
             [app.views.error :as error]
             [noir.session :as session]
             [app.util.main :as util]
+            [clojure.data.json :as json]
             [app.util.person :as person-util]
             [app.models.person :as person]
             [app.neo4j.main :as neo4j]
@@ -99,7 +100,7 @@
   (let [opts (if opts opts default-opts)
         {parent :parent
          partner :partner} opts
-        statuses (person-util/status-display request)]
+        statuses (-> request person-util/status-display json/write-str)]
     (println statuses)
     (layout/render request
                    "person/edit_detail.html"

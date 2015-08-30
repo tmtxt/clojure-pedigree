@@ -135,5 +135,9 @@
 {% endblock %}
 
 {% block extra_script %}
+<script>
+ // set statuses map
+ window.statuses = {{ params.statuses|safe }};
+</script>
 <script src="/js/person_edit_detail.js{{ version }}"></script>
 {% endblock %}
