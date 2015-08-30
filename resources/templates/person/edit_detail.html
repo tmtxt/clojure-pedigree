@@ -24,79 +24,8 @@
     </div>
 
     <div class="editperson-col-2">
-      <div class="profile-container">
-        <div class="profile-header">
-          Hồ sơ
-        </div>
+      <div class="profile-container js-profile-container" id="js-profile-container">
 
-        <div class="profile-body">
-          <div class="profile-body-row">
-            <div class="profile-body-left">
-              Tên
-            </div>
-            <div class="profile-body-right">
-              <input class="form-control" name="" type="text" value=""/>
-            </div>
-          </div>
-
-          <div class="profile-body-row">
-            <div class="profile-body-left">
-              Ngày sinh
-            </div>
-            <div class="profile-body-right">
-              <input class="form-control js-birthdate-input" name="" type="text" value=""/>
-            </div>
-          </div>
-
-          <div class="profile-body-row">
-            <div class="profile-body-left">
-              Tình trạng
-            </div>
-            <div class="profile-body-right">
-              <select class="form-control">
-                {% for k,v in params.statuses %}
-                <option value="{{ k }}">{{ v }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <div class="profile-body-row">
-            <div class="profile-body-left">
-              Ngày mất
-            </div>
-            <div class="profile-body-right">
-              <input class="form-control js-deathdate-input" name="" type="text" value=""/>
-            </div>
-          </div>
-
-          <div class="profile-body-row">
-            <div class="profile-body-left">
-              Giới tính
-            </div>
-            <div class="profile-body-right">
-              <input class="form-control" name="" type="text" value=""/>
-            </div>
-          </div>
-
-          <div class="profile-body-row">
-            <div class="profile-body-left">
-              Điện thoại
-            </div>
-            <div class="profile-body-right">
-              <input class="form-control" name="" type="text" value=""/>
-            </div>
-          </div>
-
-          <div class="profile-body-row">
-            <div class="profile-body-left">
-              Địa chỉ
-            </div>
-            <div class="profile-body-right">
-              <textarea class="form-control" cols="30" id="" name="" rows="3"></textarea>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="history-container">
