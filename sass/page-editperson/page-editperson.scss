@@ -1,3 +1,5 @@
+@import "./image.scss";
+
 /* header */
 .page-editperson {
   .editperson-header {
@@ -29,14 +31,6 @@
   .editperson-body {
     width: 100%;
     @include flex(row nowrap);
-
-    .editperson-col-1 {
-      flex: 1 1 0;
-
-      .col-1-img {
-        width: 100%;
-      }
-    }
 
     .editperson-col-2 {
       flex: 3 3 0;
