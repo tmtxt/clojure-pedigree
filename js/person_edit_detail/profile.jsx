@@ -1,6 +1,11 @@
 var React = require('react');
+var datepicker = require("./datepicker.js");
 
 var ProfileView = React.createClass({
+  componentDidMount: function() {
+    datepicker.init();
+  },
+
   render: function() {
     return (
       <div>
