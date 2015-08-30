@@ -15,6 +15,10 @@
                  :title "Trần Văn Gia Phả"
                  :head-line "Gìn giữ cho muôn đời sau"}
 
+        :person {:alive "Còn sống"
+                 :dead "Đã mất"
+                 :unknown "Không rõ"}
+
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;; pages
         :page-index {:preface "Lời tâm huyết"

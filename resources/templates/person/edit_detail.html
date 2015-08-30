@@ -53,7 +53,11 @@
               Tình trạng
             </div>
             <div class="profile-body-right">
-              <input class="form-control" name="" type="text" value=""/>
+              <select class="form-control">
+                {% for k,v in params.statuses %}
+                <option value="{{ k }}">{{ v }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
 
@@ -118,9 +122,9 @@
             <li>
               <div class="parent-image people-image">
                 {% if params.parent.father %}
-                  <img class="img-responsive img-rounded" alt="" src="{{ params.parent.father.picture }}"/>
+                <img class="img-responsive img-rounded" alt="" src="{{ params.parent.father.picture }}"/>
                 {% else %}
-                  <img class="img-responsive img-rounded" alt="" src="{{ config.default-person-image }}"/>
+                <img class="img-responsive img-rounded" alt="" src="{{ config.default-person-image }}"/>
                 {% endif %}
               </div>
               <div class="parent-info people-info">
@@ -135,9 +139,9 @@
             <li>
               <div class="parent-image people-image">
                 {% if params.parent.mother %}
-                  <img class="img-responsive img-rounded" alt="" src="{{ params.parent.mother.picture }}"/>
+                <img class="img-responsive img-rounded" alt="" src="{{ params.parent.mother.picture }}"/>
                 {% else %}
-                  <img class="img-responsive img-rounded" alt="" src="{{ config.default-person-image }}"/>
+                <img class="img-responsive img-rounded" alt="" src="{{ config.default-person-image }}"/>
                 {% endif %}
               </div>
               <div class="parent-info people-info">

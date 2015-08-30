@@ -98,11 +98,14 @@
 (defn add-person-render [request & [opts]]
   (let [opts (if opts opts default-opts)
         {parent :parent
-         partner :partner} opts]
+         partner :partner} opts
+        statuses (person-util/status-display request)]
+    (println statuses)
     (layout/render request
                    "person/edit_detail.html"
                    {:parent parent
-                    :partner partner})))
+                    :partner partner
+                    :statuses statuses})))
 
 (defn add-person-get [request]
   (println "aaa")

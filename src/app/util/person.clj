@@ -1,5 +1,6 @@
 (ns app.util.person
-  (:require [app.models.person :as person]))
+  (:require [app.models.person :as person]
+            [app.i18n.main :refer [make-t-with-scope]]))
 
 (defn title-as-parent
   "Display title for person and partner on add child page,
@@ -54,3 +55,12 @@
       (= person-gender (:les gender-map)) :husband
       :else :husband
       )))
+
+(defn status-display
+  "Make the statuses display map based on locale in the request"
+  [request]
+  (let [t (make-t-with-scope request :person)
+        statuses-map person/STATUSES_MAP
+        func #(t %)]
+    (into {} (for [[k v] statuses-map] [(name k) (func k)]))
+    ))

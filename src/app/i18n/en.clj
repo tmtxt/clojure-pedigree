@@ -15,6 +15,10 @@
                  :title "Tran Van Pedigree"
                  :head-line "Keep the value for the children"}
 
+        :person {:alive "ALive"
+                 :dead "Dead"
+                 :unknown "Unknown"}
+
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;; pages
         :page-index {:preface "Preface"

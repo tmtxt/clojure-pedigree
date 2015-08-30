@@ -18,6 +18,11 @@
    :les "les"
    :unknown "unknown"})
 
+(def STATUSES_MAP
+  {:alive "alive"
+   :dead "dead"
+   :unknown "unknown"})
+
 (defentity person
   (table :tbl_person)
   (pk :id)
