@@ -41,3 +41,16 @@
       (= parent-gender (:les gender-map)) :father
       :else :father
       )))
+
+(defn determine-partner-role-single
+  "Determine whether the input person should be wife or husband"
+  [person]
+  (let [gender-map person/GENDERS_MAP
+        person-gender (:gender person)]
+    (cond
+      (= person-gender (:male gender-map)) :husband
+      (= person-gender (:female gender-map)) :wife
+      (= person-gender (:gay gender-map)) :wife
+      (= person-gender (:les gender-map)) :husband
+      :else :husband
+      )))

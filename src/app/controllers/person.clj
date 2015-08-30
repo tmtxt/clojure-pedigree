@@ -92,10 +92,39 @@
 (defn add-partner [request]
   "hello")
 
+(def default-opts
+  {:parent {}})
+
+(defn add-person-render [request & [opts]]
+  (let [opts (if opts opts default-opts)
+        {parent :parent
+         partner :partner} opts]
+    (layout/render request
+                   "person/edit_detail.html"
+                   {:parent parent
+                    :partner partner})))
+
 (defn add-person-get [request]
-  (layout/render request
-                 "person/edit_detail.html"
-                 {}))
+  (println "aaa")
+  (neo4j/with-transaction
+    (add-person-render request)))
+
+(defn add-person-from-parent [request]
+  (neo4j/with-transaction
+    (let [parent (find-person-from-request request "parentId")]
+      (if parent
+        (let [parent-role (person-util/determine-father-mother-single parent)]
+          (add-person-render request {:parent {parent-role parent}}))
+        (add-person-render request)))))
+
+(defn add-person-from-partner [request]
+  (neo4j/with-transaction
+    (let [partner (find-person-from-request request "partnerId")]
+      (if partner
+        (let [partner-role (person-util/determine-partner-role-single partner)]
+          (add-person-render request {:partner {partner-role partner}}))
+        (add-person-render request))
+      )))
 
 (def person-routes
   (context "/person" []
@@ -103,7 +132,10 @@
            (POST "/addChild" [] add-child-process)
            (GET "/addParent/childId/:childId" [] add-parent)
            (GET "/addPartner/partnerId/:partnerId" [] add-partner)
-           (GET "/add" [] add-person-get)))
+           (GET "/add/parentId/:parentId" [] add-person-from-parent)
+           (GET "/add/partnerId/:partnerId" [] add-person-from-partner)
+           (GET "/addPerson" [] add-person-get)
+           ))
 
 ;; (def person-rules [{:pattern #"^/person/add.*"
 ;;                     :handler admin-access}])
