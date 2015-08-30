@@ -21,29 +21,7 @@
       /* body */
       .parent-body {
         ul {
-          list-style: none;
-          padding-left: 0;
-          padding-top: 10px;
-
-          > li {
-            @include flex(row nowrap);
-            align-items: center;
-            padding-bottom: 10px;
-
-            .parent-image {
-              flex: 1 1 0;
-              padding-right: 10px;
-            }
-
-            .parent-info {
-              flex: 4 4 0;
-              padding-bottom: 2px;
-
-              .parent-name {
-                font-weight: bold;
-              }
-            }
-          }
+          @include editperson-people-list;
         }
       }
     }
@@ -66,28 +44,7 @@
       .family-body {
         .family-list {
           ul.partner-list {
-            list-style: none;
-            padding-left: 0;
-
-            > li {
-              @include flex(row nowrap);
-              align-items: center;
-              padding-bottom: 10px;
-
-              .partner-image {
-                flex: 1 1 0;
-                padding-right: 10px;
-              }
-
-              .partner-info {
-                flex: 4 4 0;
-                padding-bottom: 2px;
-
-                .partner-name {
-                  font-weight: bold;
-                }
-              }
-            }
+            @include editperson-people-list;
           }
         }
       }

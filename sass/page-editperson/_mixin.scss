@@ -2,3 +2,29 @@
   font-size: 20px;
   color: $brown;
 }
+
+@mixin editperson-people-list {
+  list-style: none;
+  padding-left: 0;
+  padding-top: 10px;
+
+  > li {
+    @include flex(row nowrap);
+    align-items: center;
+    padding-bottom: 10px;
+
+    .people-image {
+      flex: 1 1 0;
+      padding-right: 10px;
+    }
+
+    .people-info {
+      flex: 4 4 0;
+      padding-bottom: 2px;
+
+      .people-name {
+        font-weight: bold;
+      }
+    }
+  }
+}
