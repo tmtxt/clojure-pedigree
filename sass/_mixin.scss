@@ -8,3 +8,8 @@
   border-top: 2px solid $brownred;
   border-bottom: 2px solid $brownred;
 }
+
+@mixin editperson-title {
+  font-size: 20px;
+  color: $brown;
+}

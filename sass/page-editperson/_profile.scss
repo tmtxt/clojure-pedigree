@@ -11,12 +11,12 @@
   .editperson-body {
     .editperson-col-2 {
       .profile-header {
-        font-size: 20px;
-        color: $brown;
+        @include editperson-title;
       }
     }
   }
 
+  /* profile body */
   .editperson-body {
     .editperson-col-2 {
       .profile-body {
@@ -38,6 +38,24 @@
             flex: 3 3 0;
           }
         }
+      }
+    }
+  }
+
+  /* history header */
+  .editperson-body {
+    .editperson-col-2 {
+      .history-header {
+        @include editperson-title;
+      }
+    }
+  }
+
+  /* history body */
+  .editperson-body {
+    .editperson-col-2 {
+      .history-body {
+        padding-top: 10px;
       }
     }
   }
