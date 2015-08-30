@@ -28,6 +28,7 @@
     "q": "~1.0.1",
     "lodash": "~3.10.1",
     "awesome-bootstrap-checkbox": "~0.3.4",
-    "lato-font": "~1.1.1"
+    "lato-font": "~1.1.1",
+    "bootstrap-sass-datepicker": "~1.3.7"
   }
 }
