@@ -103,7 +103,7 @@
         statuses (-> request person-util/status-display json/write-str)
         genders (-> request person-util/gender-display json/write-str)]
     (layout/render request
-                   "person/edit_detail.html"
+                   "person/edit_detail2.html"
                    {:parent parent
                     :partner partner
                     :statuses statuses

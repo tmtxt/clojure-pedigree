@@ -1,15 +1,8 @@
-// Libs
 var React = require('react');
+var MainView = require('./main_view.jsx');
 
-//
-var statuses = window.statuses;
-var genders = window.genders;
-
-// Render profile view
-var ProfileView = require('./profile.jsx');
 React.render(
-  React.createElement(ProfileView,
-                      {statuses: statuses,
-                       genders: genders}),
-  document.getElementById('js-profile-container')
+  React.createElement(MainView,
+                      {}),
+  document.getElementById('js-editperson-container')
 );

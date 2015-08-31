@@ -1,0 +1,17 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="page-editperson">
+  <div id="js-editperson-container">
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+ // set display maps
+ window.statuses = {{ params.statuses|safe }};
+ window.genders = {{ params.genders|safe }};
+</script>
+<script src="/js/person_edit_detail.js{{ version }}"></script>
+{% endblock %}
