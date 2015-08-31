@@ -3,6 +3,7 @@ var React = require("react");
 
 // Sub views
 var ProfileView = require("./profile_view.jsx");
+var HistoryView = require("./history_view.jsx");
 
 // Main view
 var Col2View = React.createClass({
@@ -13,14 +14,7 @@ var Col2View = React.createClass({
         <ProfileView statuses={this.props.statuses}
                      genders={this.props.genders} />
 
-        <div className="history-container">
-          <div className="history-header">
-            History
-          </div>
-          <div className="history-body">
-            <textarea className="form-control" cols="30" id="" name="" rows="10"></textarea>
-          </div>
-        </div>
+        <HistoryView />
       </div>
     );
   }
