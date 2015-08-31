@@ -1,8 +1,29 @@
+// Libs
 var React = require("react");
+var jquery = require("jquery");
 
-var Col1View = React.createClass({
+// Util functions
+function initDatePicker() {
+  // Find components
+  var birthDateInput = jquery('.js-birthdate-input');
+  var deathDateInput = jquery('.js-deathdate-input');
+
+  birthDateInput.datepicker({
+    language: 'vi'
+  });
+  deathDateInput.datepicker({
+    language: 'vi'
+  });
+}
+
+// Main View
+var ProfileView = React.createClass({
   getInitialState: function() {
     return {showDeadDate: false};
+  },
+
+  componentDidMount: function() {
+    initDatePicker();
   },
 
   makeStatusOptions: function() {
@@ -120,4 +141,4 @@ var Col1View = React.createClass({
     );
   }
 });
-module.exports = Col1View;
+module.exports = ProfileView;
