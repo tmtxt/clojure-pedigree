@@ -1,6 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
+<!-- Using React for rendering this -->
 <div class="page-editperson" id="js-editperson-container">
 </div>
 {% endblock %}
@@ -10,6 +11,7 @@
  // set display maps
  window.statuses = {{ params.statuses|safe }};
  window.genders = {{ params.genders|safe }};
+ window.parent = {{ params.parent|safe }};
 </script>
 <script src="/js/person_edit_detail.js{{ version }}"></script>
 {% endblock %}

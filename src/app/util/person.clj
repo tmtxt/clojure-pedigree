@@ -78,3 +78,15 @@
   [request]
   (let [genders-map person/GENDERS_MAP]
     (make-display-map request genders-map)))
+
+(defn filter-parent-keys
+  "Filter unnecessary parent keys"
+  [parent]
+  (let [{father :father
+         mother :mother} parent
+         select-fn #(select-keys % [:full_name :picture])]
+    (cond
+      father (let [father (select-fn father)]
+               (assoc parent :father father))
+      mother (let [mother (select-fn mother)]
+               (assoc parent :mother mother)))))

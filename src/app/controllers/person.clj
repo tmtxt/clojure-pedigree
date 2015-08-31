@@ -101,7 +101,8 @@
         {parent :parent
          partner :partner} opts
         statuses (-> request person-util/status-display json/write-str)
-        genders (-> request person-util/gender-display json/write-str)]
+        genders (-> request person-util/gender-display json/write-str)
+        parent (-> parent (person-util/filter-parent-keys) json/write-str)]
     (layout/render request
                    "person/edit_detail2.html"
                    {:parent parent
