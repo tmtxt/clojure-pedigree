@@ -1,6 +1,37 @@
 var React = require("react");
 var jquery = require("jquery");
+var q = require("q");
+
 var defaultLink = "/assets/img/userbasic.jpg";
+
+// open file input selection for user to select an image
+// Returns a promise, resolve with the image link if selected
+// reject otherwise
+function selectFile() {
+  return q.Promise(function(resolve, reject){
+    // find the picture input
+    var pictureInput = jquery(".js-picture-input");
+    // remove all event listeners
+    pictureInput.unbind();
+    // new event handler
+    pictureInput.change(function(){
+      var file = pictureInput[0].files[0]
+      if(!!file) {
+        if(!!window.URL.createObjectURL) {
+          var imageLink = window.URL.createObjectURL(file);
+          resolve(imageLink);
+        } else {
+          reject();
+        }
+      } else {
+        // not select
+        reject();
+      }
+    });
+    // trigger selection
+    pictureInput.trigger("click");
+  });
+}
 
 var Col1View = React.createClass({
   getInitialState: function() {
@@ -8,9 +39,11 @@ var Col1View = React.createClass({
   },
 
   handleSelectImage: function(e) {
+    var This = this;
     e.preventDefault();
-    var pictureInput = jquery(".js-picture-input");
-    pictureInput.trigger("click");
+    selectFile().then(function(url){
+      This.setState({imageLink: url});
+    });
   },
 
   render: function() {
