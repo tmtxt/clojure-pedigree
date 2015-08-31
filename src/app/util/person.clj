@@ -84,7 +84,7 @@
   [parent]
   (let [{father :father
          mother :mother} parent
-         select-fn #(select-keys % [:full_name :picture])]
+         select-fn #(select-keys % [:full_name :picture :id])]
     (cond
       father (let [father (select-fn father)]
                (assoc parent :father father))

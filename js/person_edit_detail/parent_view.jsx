@@ -1,6 +1,45 @@
 var React = require("react");
 
+function getPerson() {
+  return {
+    id: null,
+    fullName: "Not selected",
+    picture: "/assets/img/userbasic.jpg",
+    selected: false
+  };
+}
+
+function normalizePerson(person) {
+  return {
+    id: person.id,
+    fullName: person.full_name,
+    picture: person.picture,
+    selected: true
+  };
+}
+
 var ParentView = React.createClass({
+  getInitialState: function() {
+    var father = this.props.parent.father;
+    if (!!father) {
+      father = normalizePerson(father);
+    } else {
+      father = getPerson();
+    }
+
+    var mother = this.props.parent.mother;
+    if (!!mother) {
+      mother = normalizePerson(mother);
+    } else {
+      mother = getPerson();
+    }
+
+    return {
+      father: father,
+      mother: mother
+    };
+  },
+
   render: function() {
     return (
       <div className="parent-container">
@@ -14,11 +53,12 @@ var ParentView = React.createClass({
           <ul>
             <li>
               <div className="parent-image people-image">
-                <img className="img-responsive img-rounded" alt="" src="/assets/img/o.jpg"/>
+                <img className="img-responsive img-rounded" alt="" src={this.state.father.picture}/>
               </div>
               <div className="parent-info people-info">
                 <div className="parent-name people-name">
-                  Father
+                  <span>Father: </span>
+                  <span>{this.state.father.fullName}</span>
                 </div>
                 <div>
                   <a href="">Select</a>
@@ -27,11 +67,12 @@ var ParentView = React.createClass({
             </li>
             <li>
               <div className="parent-image people-image">
-                <img className="img-responsive img-rounded" alt="" src="/assets/img/o.jpg"/>
+                <img className="img-responsive img-rounded" alt="" src={this.state.mother.picture}/>
               </div>
               <div className="parent-info people-info">
                 <div className="parent-name people-name">
-                  Mother
+                  <span>Mother: </span>
+                  <span>{this.state.mother.fullName}</span>
                 </div>
                 <div>
                   <a href="">Select</a>

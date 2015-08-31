@@ -6,7 +6,7 @@ var Col3View = React.createClass({
   render: function() {
     return (
       <div className="editperson-col-3">
-        <ParentView />
+        <ParentView parent={this.props.parent} />
 
         <div className="family-container">
           <div className="family-title">

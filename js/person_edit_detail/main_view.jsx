@@ -18,7 +18,7 @@ var MainView = React.createClass({
           <Col1View />
           <Col2View statuses={this.props.statuses}
                     genders={this.props.genders} />
-          <Col3View />
+          <Col3View parent={this.props.parent} />
         </div>
       </div>
     );
