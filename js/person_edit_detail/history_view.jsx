@@ -16,7 +16,7 @@ var HistoryView = React.createClass({
           History
         </div>
         <div className="history-body">
-          <textarea className="form-control js-history-editor" cols="30" id="" name="" rows="10"></textarea>
+          <textarea className="form-control js-history-editor"></textarea>
         </div>
       </div>
     );
