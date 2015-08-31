@@ -1,6 +1,6 @@
 var React = require("react");
 
-var ImageView = React.createClass({
+var Col1View = React.createClass({
   render: function() {
     return (
       <div className="editperson-col-1">
@@ -15,4 +15,4 @@ var ImageView = React.createClass({
     );
   }
 });
-module.exports = ImageView;
+module.exports = Col1View;

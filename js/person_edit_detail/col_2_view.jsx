@@ -1,6 +1,6 @@
 var React = require("react");
 
-var ProfileView = React.createClass({
+var Col2View = React.createClass({
   getInitialState: function() {
     return {showDeadDate: false};
   },
@@ -131,4 +131,4 @@ var ProfileView = React.createClass({
     );
   }
 });
-module.exports = ProfileView;
+module.exports = Col2View;
