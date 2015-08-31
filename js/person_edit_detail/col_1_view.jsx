@@ -46,6 +46,10 @@ var Col1View = React.createClass({
     });
   },
 
+  handleDeleteImage: function(e) {
+    this.setState({imageLink: defaultLink});
+  },
+
   render: function() {
     return (
       <div className="editperson-col-1">
@@ -57,7 +61,7 @@ var Col1View = React.createClass({
         <div className="col-1-buttons">
           <button onClick={this.handleSelectImage}
                   className="btn btn-success">Select</button>
-          <button className="btn btn-danger">Delete</button>
+          <button onClick={this.handleDeleteImage} className="btn btn-danger">Delete</button>
         </div>
       </div>
     );
