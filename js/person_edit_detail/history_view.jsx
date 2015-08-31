@@ -5,7 +5,9 @@ var HistoryView = React.createClass({
   componentDidMount: function() {
     var historyEditor = jquery(".js-history-editor");
     historyEditor.markdown({
-      iconlibrary: "fa"
+      iconlibrary: "fa",
+      resize: "vertical",
+      height: 300
     });
   },
 
