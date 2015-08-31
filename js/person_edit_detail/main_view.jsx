@@ -16,7 +16,8 @@ var MainView = React.createClass({
 
         <div className="editperson-body">
           <Col1View />
-          <Col2View />
+          <Col2View statuses={this.props.statuses}
+                    genders={this.props.genders} />
           <Col3View />
         </div>
       </div>

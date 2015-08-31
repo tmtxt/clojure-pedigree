@@ -33,6 +33,7 @@ function selectFile() {
   });
 }
 
+// Main view
 var Col1View = React.createClass({
   getInitialState: function() {
     return {imageLink: defaultLink};
