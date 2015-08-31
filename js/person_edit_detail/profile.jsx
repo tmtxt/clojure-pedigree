@@ -3,6 +3,10 @@ var datepicker = require("./datepicker.js");
 var _ = require("lodash");
 
 var ProfileView = React.createClass({
+  getInitialState: function() {
+    return {showDeadDate: false};
+  },
+
   componentDidMount: function() {
     datepicker.init();
   },
@@ -15,10 +19,19 @@ var ProfileView = React.createClass({
     });
 
     return (
-      <select className="form-control">
+      <select className="form-control" ref="statuses" onChange={this.handleStatusChange}>
         {statuses}
       </select>
     );
+  },
+
+  handleStatusChange: function(e) {
+    var status = React.findDOMNode(this.refs.statuses).value.trim();
+    if (status === "dead") {
+      this.setState({showDeadDate: true});
+    } else {
+      this.setState({showDeadDate: false});
+    }
   },
 
   makeGenderOptions: function() {
@@ -73,7 +86,7 @@ var ProfileView = React.createClass({
             </div>
           </div>
 
-          <div className="profile-body-row">
+          <div className={(this.state.showDeadDate ? '' : 'hidden ') + "profile-body-row"}>
             <div className="profile-body-left">
               Ngày mất
             </div>
