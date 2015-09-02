@@ -48,10 +48,10 @@
     "q": "global:Q",
     "d3": "global:d3",
     "_": "global:_",
-    "react": "global:React"
+    "react": "global:React",
+    "flux": "global:Flux"
   },
   "dependencies": {
-    "flux": "^2.1.1",
     "gulp-sourcemaps": "^1.5.2"
   }
 }
