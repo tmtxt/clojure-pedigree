@@ -53,3 +53,6 @@
   [entity where]
   (-> (find-all-by-attrs entity where)
       (first)))
+
+(defn find-all [entity]
+  (kc/select entity))

@@ -111,3 +111,8 @@
         partners-rows (find-all-by-ids ids)
         partners-info (combine-partner-info partners-id-order partners-rows)]
     partners-info))
+
+(defn find-by-name [name]
+  (select
+   person
+   (where {:full_name [like (str "%" name "%")]})))

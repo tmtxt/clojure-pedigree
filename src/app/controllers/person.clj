@@ -144,12 +144,23 @@
   (let [{parent-id :parentId
          term :term} (util/params request)]
     (cond
-      (and parent-id term) (response [])
-      parent-id (neo4j/with-transaction
-                  (let [partners (-> parent-id person/find-partners person-util/filter-persons-keys)]
-                    (response partners)))
-      term (response [])
-      :else (response [])
+      (and parent-id term)
+      (neo4j/with-transaction
+        (let [person-list (-> term person/find-by-name person-util/filter-persons-keys)]
+          (response person-list)))
+
+      parent-id
+      (neo4j/with-transaction
+        (let [partners (-> parent-id person/find-partners person-util/filter-persons-keys)]
+          (response partners)))
+
+      term
+      (neo4j/with-transaction
+        (let [all (-> term person/find-by-name person-util/filter-persons-keys)]
+          (response all)))
+
+      :else
+      (response [])
       )))
 
 (def person-routes
