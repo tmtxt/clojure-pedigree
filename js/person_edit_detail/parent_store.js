@@ -1,4 +1,5 @@
 var global = require('./global.js');
+var dispatcher = global.dispatcher;
 
 //
 function getParent() {

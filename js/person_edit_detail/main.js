@@ -7,20 +7,21 @@ var statuses = window.statuses;
 var genders = window.genders;
 var parent = window.parent;
 
-// Flux
-var Dispatcher = new flux.Dispatcher();
-var parentStore = require('./parent_store.js');
-var parentAction = require('./parent_action.js');
-
-// Init
-parentStore.init(parent);
-parentAction.init();
-
 // Global Object
 var global = require('./global.js');
-global.dispatcher = Dispatcher;
+
+// Store and Action
+var parentStore = require('./parent_store.js');
+var parentAction = require('./parent_action.js');
+parentStore.init(parent);
+parentAction.init();
 global.stores.parent = parentStore.store;
 global.actions.parent = parentAction.action;
+
+// Dispatcher
+var dispatcher = require('./dispatcher.js');
+dispatcher.init();
+global.dispatcher = dispatcher.dispatcher;
 
 // Components
 var MainView = require('./main_view.jsx');

@@ -13,6 +13,11 @@ var ParentView = React.createClass({
     };
   },
 
+  handleRemoveFather: function(e) {
+    e.preventDefault();
+    ParentAction.removeFather();
+  },
+
   render: function() {
     return (
       <div className="parent-container">
@@ -35,6 +40,7 @@ var ParentView = React.createClass({
                 </div>
                 <div>
                   <a href="">Select</a>
+                  <a onClick={this.handleRemoveFather}>Remove</a>
                 </div>
               </div>
             </li>
