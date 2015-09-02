@@ -13,6 +13,18 @@ var ParentView = React.createClass({
     };
   },
 
+  componentDidMount: function() {
+    ParentStore.bind("change", this.parentChanged);
+  },
+
+  parentChanged: function() {
+    var parent = {
+      father: ParentStore.getFather(),
+      mother: ParentStore.getMother()
+    };
+    this.setState(parent);
+  },
+
   handleRemoveFather: function(e) {
     e.preventDefault();
     ParentAction.removeFather();
@@ -39,7 +51,7 @@ var ParentView = React.createClass({
                   <span>{this.state.father.fullName}</span>
                 </div>
                 <div>
-                  <a href="">Select</a>
+                  <a href="">Select</a>&nbsp;
                   <a onClick={this.handleRemoveFather}>Remove</a>
                 </div>
               </div>

@@ -14,11 +14,17 @@ function getMother() {
   return this.parent.mother;
 }
 
+function removeFather() {
+  var father = getPerson();
+  this.parent.father = father;
+}
+
 var store = {
   parent: null,
   getParent: getParent,
   getFather: getFather,
-  getMother: getMother
+  getMother: getMother,
+  removeFather: removeFather
 };
 exports.store = store;
 

@@ -49,7 +49,8 @@
     "d3": "global:d3",
     "_": "global:_",
     "react": "global:React",
-    "flux": "global:Flux"
+    "flux": "global:Flux",
+    "microevent": "global:MicroEvent"
   },
   "dependencies": {
     "gulp-sourcemaps": "^1.5.2"

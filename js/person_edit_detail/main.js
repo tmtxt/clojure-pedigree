@@ -10,18 +10,20 @@ var parent = window.parent;
 // Global Object
 var global = require('./global.js');
 
-// Store and Action
+// Store
 var parentStore = require('./parent_store.js');
-var parentAction = require('./parent_action.js');
 parentStore.init(parent);
-parentAction.init();
 global.stores.parent = parentStore.store;
-global.actions.parent = parentAction.action;
 
 // Dispatcher
 var dispatcher = require('./dispatcher.js');
 dispatcher.init();
 global.dispatcher = dispatcher.dispatcher;
+
+// Action
+var parentAction = require('./parent_action.js');
+parentAction.init();
+global.actions.parent = parentAction.action;
 
 // Components
 var MainView = require('./main_view.jsx');
