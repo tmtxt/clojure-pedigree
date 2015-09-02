@@ -141,8 +141,8 @@
       )))
 
 (defn find-person [request]
-  (let [parent-id (util/param request "parentId")
-        term (util/param request "term")]
+  (let [{parent-id :parentId
+         term :term} (util/params request)]
     (cond
       (and parent-id term) (response [])
       parent-id (neo4j/with-transaction

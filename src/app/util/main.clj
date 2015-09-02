@@ -14,6 +14,15 @@
       :else default
       )))
 
+(defn params "Get al the params from request as a map"
+  [request]
+  (let [path-params (get request :params {})
+        path-params (into {} (for [[k v] path-params]
+                               [(keyword k) v]))
+        query-params (get request :query-params {})
+        form-params (get request :form-params {})]
+    (merge path-params query-params form-params)))
+
 (defn parse-int "Parse the input to integer"
   [input & [default]]
   (if (integer? input) input
