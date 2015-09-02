@@ -10,6 +10,7 @@ exports.dispatcher = Dispatcher;
 function init() {
   var global = require('./global.js');
   var ParentStore = global.stores.parent;
+  var FindPersonStore = global.stores.findPerson;
   event.mixin(ParentStore);
 
   Dispatcher.register(function(payload){

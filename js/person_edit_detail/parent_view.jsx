@@ -62,8 +62,8 @@ var ParentView = React.createClass({
                   <span>{this.state.father.fullName}</span>
                 </div>
                 <div>
-                  <a href="">Select</a>&nbsp;
-                  <a onClick={this.handleRemoveFather}>Remove</a>
+                  <a href="#">Select</a>&nbsp;
+                  <a href="#" onClick={this.handleRemoveFather}>Remove</a>
                 </div>
               </div>
             </li>
@@ -77,8 +77,8 @@ var ParentView = React.createClass({
                   <span>{this.state.mother.fullName}</span>
                 </div>
                 <div>
-                  <a onClick={this.handleSelectMother}>Select</a>&nbsp;
-                  <a onClick={this.handleRemoveMother}>Remove</a>
+                  <a href="#" onClick={this.handleSelectMother}>Select</a>&nbsp;
+                  <a href="#" onClick={this.handleRemoveMother}>Remove</a>
                 </div>
               </div>
             </li>

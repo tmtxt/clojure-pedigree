@@ -8,12 +8,17 @@ function isEnable() {
   return this.enable;
 }
 
+function reset() {
+  this.personList = [];
+}
+
 var store = {
   personList: [],
   enable: false,
 
   getPersonList: getPersonList,
-  isEnable: isEnable
+  isEnable: isEnable,
+  reset: reset
 };
 exports.store = store;
 

@@ -16,11 +16,20 @@ function getMother() {
 function removeFather() {
   var father = getPerson();
   this.parent.father = father;
+
+  var FindPersonStore = global.stores.findPerson;
+  if(this.parent.mother.selected) {
+
+  } else {
+    FindPersonStore.reset();
+  }
 }
 
 function removeMother() {
   var mother = getPerson();
   this.parent.mother = mother;
+
+  var FindPersonStore = global.stores.findPerson;
 }
 
 var store = {
