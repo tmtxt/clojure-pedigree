@@ -41,6 +41,11 @@ var ParentView = React.createClass({
     FindPersonAction.selectMother();
   },
 
+  handleSelectFather: function(e) {
+    e.preventDefault();
+    FindPersonAction.selectFather();
+  },
+
   render: function() {
     return (
       <div className="parent-container">
@@ -62,7 +67,7 @@ var ParentView = React.createClass({
                   <span>{this.state.father.fullName}</span>
                 </div>
                 <div>
-                  <a href="#">Select</a>&nbsp;
+                  <a href="#" onClick={this.handleSelectFather}>Select</a>&nbsp;
                   <a href="#" onClick={this.handleRemoveFather}>Remove</a>
                 </div>
               </div>

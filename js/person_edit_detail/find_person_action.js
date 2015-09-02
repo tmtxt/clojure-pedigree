@@ -6,6 +6,12 @@ var action = {
     dispatcher.dispatch({
       eventName: 'select-mother'
     });
+  },
+
+  selectFather: function() {
+    dispatcher.dispatch({
+      eventName: 'select-father'
+    });
   }
 };
 exports.action = action;

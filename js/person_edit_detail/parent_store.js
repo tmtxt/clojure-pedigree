@@ -16,20 +16,19 @@ function getMother() {
 function removeFather() {
   var father = getPerson();
   this.parent.father = father;
-
-  var FindPersonStore = global.stores.findPerson;
-  if(this.parent.mother.selected) {
-
-  } else {
-    FindPersonStore.reset();
-  }
 }
 
 function removeMother() {
   var mother = getPerson();
   this.parent.mother = mother;
+}
 
-  var FindPersonStore = global.stores.findPerson;
+function isFatherSelected() {
+  return this.parent.father.selected;
+}
+
+function isMotherSelected() {
+  return this.parent.mother.selected;
 }
 
 var store = {
@@ -38,7 +37,9 @@ var store = {
   getFather: getFather,
   getMother: getMother,
   removeFather: removeFather,
-  removeMother: removeMother
+  removeMother: removeMother,
+  isFatherSelected: isFatherSelected,
+  isMotherSelected: isMotherSelected
 };
 exports.store = store;
 

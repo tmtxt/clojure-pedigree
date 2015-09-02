@@ -14,7 +14,43 @@ function createSelectBox() {
   return selectBox;
 }
 
-function select() {
+function selectMother() {
+  var global = require('./global.js');
+  var ParentStore = global.stores.parent;
+  var data;
+
+  if(ParentStore.isFatherSelected()) {
+    data = {
+      parentId: ParentStore.getFather().id
+    };
+  } else {
+    data = {};
+  }
+  select(data);
+}
+exports.selectMother = selectMother;
+
+function selectFather() {
+  var global = require('./global.js');
+  var ParentStore = global.stores.parent;
+  var data;
+
+  if(ParentStore.isMotherSelected()) {
+    data = {
+      parentId: ParentStore.getMother().id
+    };
+  } else {
+    data = {};
+  }
+  select(data);
+}
+exports.selectFather = selectFather;
+
+function select(data) {
+  console.log(data);
+}
+
+function select2() {
   var global = require('./global.js');
 
   var FindPersonStore = global.stores.findPerson;

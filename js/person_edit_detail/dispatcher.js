@@ -9,8 +9,8 @@ exports.dispatcher = Dispatcher;
 //
 function init() {
   var global = require('./global.js');
+  var findPersonProcess = require('./find_person_process.js');
   var ParentStore = global.stores.parent;
-  var FindPersonStore = global.stores.findPerson;
   event.mixin(ParentStore);
 
   Dispatcher.register(function(payload){
@@ -24,7 +24,11 @@ function init() {
       ParentStore.trigger('change');
       break;
     case 'select-mother':
-      require('./find_person_process.js').select();
+      findPersonProcess.selectMother();
+      break;
+    case 'select-father':
+      findPersonProcess.selectFather();
+      break;
     }
   });
 }
