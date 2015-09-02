@@ -17,6 +17,10 @@ function init() {
       ParentStore.removeFather();
       ParentStore.trigger('change');
       break;
+    case 'remove-mother':
+      ParentStore.removeMother();
+      ParentStore.trigger('change');
+      break;
     }
   });
 }

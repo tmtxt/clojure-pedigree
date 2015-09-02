@@ -6,6 +6,12 @@ var action = {
     dispatcher.dispatch({
       eventName: 'remove-father'
     });
+  },
+
+  removeMother: function() {
+    dispatcher.dispatch({
+      eventName: 'remove-mother'
+    });
   }
 };
 exports.action = action;

@@ -19,12 +19,18 @@ function removeFather() {
   this.parent.father = father;
 }
 
+function removeMother() {
+  var mother = getPerson();
+  this.parent.mother = mother;
+}
+
 var store = {
   parent: null,
   getParent: getParent,
   getFather: getFather,
   getMother: getMother,
-  removeFather: removeFather
+  removeFather: removeFather,
+  removeMother: removeMother
 };
 exports.store = store;
 
