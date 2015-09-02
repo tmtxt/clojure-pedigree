@@ -1,42 +1,15 @@
 var React = require("react");
 
-function getPerson() {
-  return {
-    id: null,
-    fullName: "Not selected",
-    picture: "/assets/img/userbasic.jpg",
-    selected: false
-  };
-}
-
-function normalizePerson(person) {
-  return {
-    id: person.id,
-    fullName: person.full_name,
-    picture: person.picture,
-    selected: true
-  };
-}
+// Global Flux
+var global = require("./global.js");
+var ParentStore = global.stores.parent;
+var ParentAction = global.actions.parent;
 
 var ParentView = React.createClass({
   getInitialState: function() {
-    var father = this.props.parent.father;
-    if (!!father) {
-      father = normalizePerson(father);
-    } else {
-      father = getPerson();
-    }
-
-    var mother = this.props.parent.mother;
-    if (!!mother) {
-      mother = normalizePerson(mother);
-    } else {
-      mother = getPerson();
-    }
-
     return {
-      father: father,
-      mother: mother
+      father: ParentStore.getFather(),
+      mother: ParentStore.getMother()
     };
   },
 

@@ -2,9 +2,6 @@
 var React = require('react');
 var flux = require("flux");
 
-// Components
-var MainView = require('./main_view.jsx');
-
 // Data
 var statuses = window.statuses;
 var genders = window.genders;
@@ -24,6 +21,9 @@ var global = require('./global.js');
 global.dispatcher = Dispatcher;
 global.stores.parent = parentStore.store;
 global.actions.parent = parentAction.action;
+
+// Components
+var MainView = require('./main_view.jsx');
 
 // Start rendering
 React.render(
