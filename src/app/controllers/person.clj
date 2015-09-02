@@ -94,21 +94,25 @@
   "hello")
 
 (def default-opts
-  {:parent {}})
+  {:parent {}
+   :partner {}})
 
 (defn add-person-render [request & [opts]]
   (let [opts (if opts opts default-opts)
         {parent :parent
-         partner :partner} opts
+         partner :partner
+         find-person-list :find-person-list} opts
         statuses (-> request person-util/status-display json/write-str)
         genders (-> request person-util/gender-display json/write-str)
-        parent (-> parent (person-util/filter-parent-keys) json/write-str)]
+        parent (-> parent (person-util/filter-parent-keys) json/write-str)
+        find-person-list (-> find-person-list (person-util/filter-persons-keys) json/write-str)]
     (layout/render request
                    "person/edit_detail2.html"
                    {:parent parent
                     :partner partner
                     :statuses statuses
-                    :genders genders})))
+                    :genders genders
+                    :find-person-list find-person-list})))
 
 (defn add-person-get [request]
   (println "aaa")
@@ -119,8 +123,10 @@
   (neo4j/with-transaction
     (let [parent (find-person-from-request request "parentId")]
       (if parent
-        (let [parent-role (person-util/determine-father-mother-single parent)]
-          (add-person-render request {:parent {parent-role parent}}))
+        (let [parent-role (person-util/determine-father-mother-single parent)
+              partners-list (person/find-partners (:id parent))]
+          (add-person-render request {:parent {parent-role parent}
+                                      :find-person-list partners-list}))
         (add-person-render request)))))
 
 (defn add-person-from-partner [request]
@@ -128,7 +134,8 @@
     (let [partner (find-person-from-request request "partnerId")]
       (if partner
         (let [partner-role (person-util/determine-partner-role-single partner)]
-          (add-person-render request {:partner {partner-role partner}}))
+          (add-person-render request {:partner {partner-role partner}
+                                      :find-person-list []}))
         (add-person-render request))
       )))
 
