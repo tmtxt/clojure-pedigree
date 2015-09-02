@@ -47,7 +47,30 @@ function selectFather() {
 exports.selectFather = selectFather;
 
 function select(data) {
-  console.log(data);
+  var selectBox = createSelectBox();
+  selectBox.select2({
+    ajax: {
+      url: '/person/find',
+      data: function(params) {
+        if(!!params.term) {
+          data.term = params.term;
+        }
+        return data;
+      },
+      dataType: 'json',
+      delay: 250,
+      processResults: function(data, page) {
+        return {
+          results: data
+        };
+      }
+    },
+    placeholder: 'Select',
+    templateResult: function(person) {
+      return person.full_name;
+    }
+  });
+  findPersonModal.modal();
 }
 
 function select2() {
