@@ -51,6 +51,7 @@
     "react": "global:React"
   },
   "dependencies": {
+    "flux": "^2.1.1",
     "gulp-sourcemaps": "^1.5.2"
   }
 }
