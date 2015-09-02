@@ -5,6 +5,7 @@
             [noir.session :as session]
             [app.util.main :as util]
             [clojure.data.json :as json]
+            [ring.util.response :refer [response]]
             [app.util.person :as person-util]
             [app.models.person :as person]
             [app.neo4j.main :as neo4j]
@@ -139,6 +140,15 @@
         (add-person-render request))
       )))
 
+(defn find-person [request]
+  (response [{:full_name "hello 1"
+              :id 12}
+             {:full_name "hello 2"
+              :id 13}
+             {:full_name "hello 3"
+              :id 14}])
+  )
+
 (def person-routes
   (context "/person" []
            (GET "/addChild/parentId/:parentId" [] add-child)
@@ -148,6 +158,7 @@
            (GET "/add/parentId/:parentId" [] add-person-from-parent)
            (GET "/add/partnerId/:partnerId" [] add-person-from-partner)
            (GET "/addPerson" [] add-person-get)
+           (GET "/find" [] find-person)
            ))
 
 ;; (def person-rules [{:pattern #"^/person/add.*"
