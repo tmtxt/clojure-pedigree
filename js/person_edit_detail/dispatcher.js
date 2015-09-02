@@ -1,5 +1,6 @@
 var event = require('microevent');
 var flux = require("flux");
+var jquery = require("jquery");
 
 //
 var Dispatcher = new flux.Dispatcher();
@@ -21,6 +22,8 @@ function init() {
       ParentStore.removeMother();
       ParentStore.trigger('change');
       break;
+    case 'select-mother':
+      require('./find_person_process.js').select();
     }
   });
 }

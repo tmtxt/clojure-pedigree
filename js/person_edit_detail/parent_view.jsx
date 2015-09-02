@@ -4,6 +4,7 @@ var React = require("react");
 var global = require("./global.js");
 var ParentStore = global.stores.parent;
 var ParentAction = global.actions.parent;
+var FindPersonAction = global.actions.findPerson;
 
 var ParentView = React.createClass({
   getInitialState: function() {
@@ -33,6 +34,11 @@ var ParentView = React.createClass({
   handleRemoveMother: function(e) {
     e.preventDefault();
     ParentAction.removeMother();
+  },
+
+  handleSelectMother: function(e) {
+    e.preventDefault();
+    FindPersonAction.selectMother();
   },
 
   render: function() {
@@ -71,7 +77,7 @@ var ParentView = React.createClass({
                   <span>{this.state.mother.fullName}</span>
                 </div>
                 <div>
-                  <a href="">Select</a>&nbsp;
+                  <a onClick={this.handleSelectMother}>Select</a>&nbsp;
                   <a onClick={this.handleRemoveMother}>Remove</a>
                 </div>
               </div>
