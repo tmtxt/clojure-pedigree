@@ -141,13 +141,16 @@
       )))
 
 (defn find-person [request]
-  (response [{:full_name "hello 1"
-              :id 12}
-             {:full_name "hello 2"
-              :id 13}
-             {:full_name "hello 3"
-              :id 14}])
-  )
+  (let [parent-id (util/param request "parentId")
+        term (util/param request "term")]
+    (cond
+      (and parent-id term) (response [])
+      parent-id (neo4j/with-transaction
+                  (let [partners (-> parent-id person/find-partners person-util/filter-persons-keys)]
+                    (response partners)))
+      term (response [])
+      :else (response [])
+      )))
 
 (def person-routes
   (context "/person" []
