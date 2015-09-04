@@ -1,27 +1,30 @@
-// some data
-var fromPerson = window.fromPerson || null;
+// Libs
+var EventEmitter = require('EventEmitter');
 
-var config = {
-  fromPerson: fromPerson,
+function init(opts) {
+  opts = opts || {};
 
-  isFromParent: function() {
-    return this.fromPerson === "parent";
-  },
+  var ee = new EventEmitter();
+  this.ee = ee;
 
-  isFromPartner: function() {
-    return this.fromPerson === "partner";
-  }
-};
+  return this;
+}
 
-// global object
-var page = {
-  dispatcher: null,
-  stores: {
-    parent: null
-  },
+var global = {
+  // event emiiter
+  ee: null,
+
+  // actions
   actions: {
-    parent: null
+    picture: null
   },
-  config: config
+
+  // stores
+  stores: {
+    picture: null
+  },
+
+  // funcs
+  init: init
 };
-module.exports = page;
+module.exports = global;

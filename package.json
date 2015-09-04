@@ -50,7 +50,8 @@
     "_": "global:_",
     "react": "global:React",
     "flux": "global:Flux",
-    "microevent": "global:MicroEvent"
+    "microevent": "global:MicroEvent",
+    "EventEmitter": "global:EventEmitter"
   },
   "dependencies": {
     "gulp-sourcemaps": "^1.5.2"

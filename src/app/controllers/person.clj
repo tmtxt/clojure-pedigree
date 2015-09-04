@@ -103,20 +103,18 @@
   (let [opts (if opts opts default-opts)
         {parent :parent
          partner :partner
-         from :from
-         find-person-list :find-person-list} opts
+         from :from} opts
         statuses (-> request person-util/status-display json/write-str)
         genders (-> request person-util/gender-display json/write-str)
-        parent (-> parent (person-util/filter-parent-keys) json/write-str)
-        find-person-list (-> find-person-list (person-util/filter-persons-keys) json/write-str)]
+        parent (-> parent person-util/filter-parent-keys json/write-str)
+        partner (-> partner person-util/filter-partner-keys json/write-str)]
     (layout/render request
                    "person/edit_detail2.html"
                    {:from from
                     :parent parent
                     :partner partner
                     :statuses statuses
-                    :genders genders
-                    :find-person-list find-person-list})))
+                    :genders genders})))
 
 (defn add-person-get [request]
   (println "aaa")
@@ -127,11 +125,9 @@
   (neo4j/with-transaction
     (let [parent (find-person-from-request request "parentId")]
       (if parent
-        (let [parent-role (person-util/determine-father-mother-single parent)
-              partners-list (person/find-partners (:id parent))]
+        (let [parent-role (person-util/determine-father-mother-single parent)]
           (add-person-render request {:from "parent"
-                                      :parent {parent-role parent}
-                                      :find-person-list partners-list}))
+                                      :parent {parent-role parent}}))
         (add-person-render request)))))
 
 (defn add-person-from-partner [request]
@@ -140,8 +136,7 @@
       (if partner
         (let [partner-role (person-util/determine-partner-role-single partner)]
           (add-person-render request {:from "partner"
-                                      :partner {partner-role partner}
-                                      :find-person-list []}))
+                                      :partner {partner-role partner}}))
         (add-person-render request))
       )))
 

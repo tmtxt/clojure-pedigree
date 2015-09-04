@@ -1,54 +1,35 @@
-var React = require("react");
-var jquery = require("jquery");
-var q = require("q");
-
-var defaultLink = "/assets/img/userbasic.jpg";
-
-// open file input selection for user to select an image
-// Returns a promise, resolve with the image link if selected
-// reject otherwise
-function selectFile() {
-  return q.Promise(function(resolve, reject){
-    // find the picture input
-    var pictureInput = jquery(".js-picture-input");
-    // remove all event listeners
-    pictureInput.unbind();
-    // new event handler
-    pictureInput.change(function(){
-      var file = pictureInput[0].files[0]
-      if(!!file) {
-        if(!!window.URL.createObjectURL) {
-          var imageLink = window.URL.createObjectURL(file);
-          resolve(imageLink);
-        } else {
-          reject();
-        }
-      } else {
-        // not select
-        reject();
-      }
-    });
-    // trigger selection
-    pictureInput.trigger("click");
-  });
-}
+var global = require("./global.js");
+var PictureStore = global.stores.picture;
+var PictureAction = global.actions.picture;
 
 // Main view
 var Col1View = React.createClass({
   getInitialState: function() {
-    return {imageLink: defaultLink};
+    return {imageLink: PictureStore.getPictureLink()};
   },
 
-  handleSelectImage: function(e) {
-    var This = this;
-    e.preventDefault();
-    selectFile().then(function(url){
-      This.setState({imageLink: url});
+  componentDidMount: function() {
+    PictureStore.bind("change", this.pictureChanged);
+  },
+
+  componentWillUnmount: function() {
+    PictureStore.unbind("change", this.pictureChanged);
+  },
+
+  pictureChanged: function() {
+    this.setState({
+      imageLink: PictureStore.getPictureLink()
     });
   },
 
+  handleSelectImage: function(e) {
+    e.preventDefault();
+    PictureAction.selectPicture();
+  },
+
   handleDeleteImage: function(e) {
-    this.setState({imageLink: defaultLink});
+    e.preventDefault();
+    PictureAction.removePicture();
   },
 
   render: function() {

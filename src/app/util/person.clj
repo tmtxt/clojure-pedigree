@@ -94,5 +94,16 @@
       mother (let [mother (filter-person-keys mother)]
                (assoc parent :mother mother)))))
 
+(defn filter-partner-keys
+  "Filter unnecessary partner keys"
+  [partner]
+  (let [{husband :husband
+         wife :wife} partner]
+    (cond
+      husband (let [husband (filter-person-keys husband)]
+                (assoc partner :husband husband))
+      wife (let [wife (filter-person-keys wife)]
+             (assoc partner :wife wife)))))
+
 (defn filter-persons-keys [persons]
   (map filter-person-keys persons))

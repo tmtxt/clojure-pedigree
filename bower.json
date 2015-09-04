@@ -38,6 +38,7 @@
     "microevents": "*",
     "flux": "~2.1.1",
     "selectize": "~0.12.1",
-    "select2": "~4.0.0"
+    "select2": "~4.0.0",
+    "eventEmitter": "~4.2.11"
   }
 }
