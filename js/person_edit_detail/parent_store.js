@@ -63,14 +63,19 @@ function normalizePerson(person) {
 }
 
 function init(parent) {
-  var father = parent.father;
+  var father;
+  var mother;
+  if(!!parent) {
+    father = parent.father;
+    mother = parent.mother;
+  }
+
   if (!!father) {
     father = normalizePerson(father);
   } else {
     father = getPerson();
   }
 
-  var mother = parent.mother;
   if (!!mother) {
     mother = normalizePerson(mother);
   } else {
