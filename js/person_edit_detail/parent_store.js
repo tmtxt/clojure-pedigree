@@ -1,47 +1,47 @@
-var global = require('./global.js');
-
-//
-function getParent() {
-  return this.parent;
-}
+var global;
+var microEvent = require('microevent');
 
 function getFather() {
-  return this.parent.father;
+  return this.father;
 }
 
 function getMother() {
-  return this.parent.mother;
+  return this.mother;
 }
 
 function removeFather() {
-  var father = getPerson();
-  this.parent.father = father;
+  if(!this.addFromFather()) {
+    var father = getPerson();
+    this.father = father;
+  }
 }
 
 function removeMother() {
-  var mother = getPerson();
-  this.parent.mother = mother;
+  if(!this.addFromMother()) {
+    var mother = getPerson();
+    this.mother = mother;
+  }
 }
 
 function isFatherSelected() {
-  return this.parent.father.selected;
+  return this.father.selected;
 }
 
 function isMotherSelected() {
-  return this.parent.mother.selected;
+  return this.mother.selected;
 }
 
-var store = {
-  parent: null,
-  getParent: getParent,
-  getFather: getFather,
-  getMother: getMother,
-  removeFather: removeFather,
-  removeMother: removeMother,
-  isFatherSelected: isFatherSelected,
-  isMotherSelected: isMotherSelected
-};
-exports.store = store;
+function addFromFather() {
+  return this.fromFather && !this.fromMother;
+}
+
+function addFromMother() {
+  return this.fromMother && !this.fromFather;
+}
+
+function addFromNone() {
+  return !this.fromFather && !this.fromMother;
+}
 
 //
 function getPerson() {
@@ -62,30 +62,55 @@ function normalizePerson(person) {
   };
 }
 
-function init(parent) {
+function init(opts) {
+  global = require('./global.js');
+
+  var parent = opts.parent;
   var father;
   var mother;
+
   if(!!parent) {
-    father = parent.father;
-    mother = parent.mother;
-  }
-
-  if (!!father) {
-    father = normalizePerson(father);
+    if(!!parent.father) {
+      // add from father
+      father = normalizePerson(parent.father);
+      mother = getPerson();
+      this.fromFather = true;
+      this.fromMother = false;
+    } else {
+      // add from mother
+      mother = normalizePerson(parent.mother);
+      father = getPerson();
+      this.fromFather = false;
+      this.fromMother = true;
+    }
+    this.father = father;
+    this.mother = mother;
   } else {
-    father = getPerson();
+    // not add from parent
   }
 
-  if (!!mother) {
-    mother = normalizePerson(mother);
-  } else {
-    mother = getPerson();
-  }
-
-  parent = {
-    father: father,
-    mother: mother
-  };
-  store.parent = parent;
+  return this;
 }
-exports.init = init;
+
+var store = {
+  // data
+  father: null,
+  mother: null,
+  fromFather: false,
+  fromMother: false,
+
+  // funcs
+  init: init,
+  getFather: getFather,
+  getMother: getMother,
+  removeFather: removeFather,
+  removeMother: removeMother,
+  isFatherSelected: isFatherSelected,
+  isMotherSelected: isMotherSelected,
+  addFromMother: addFromMother,
+  addFromFather: addFromFather,
+  addFromNone: addFromNone
+};
+module.exports = store;
+
+microEvent.mixin(store);

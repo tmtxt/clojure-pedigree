@@ -17,7 +17,11 @@ var global = require('./global.js').init({
 
 // Store
 var pictureStore = require('./picture_store.js').init({});
+var parentStore = require('./parent_store.js').init({
+  parent: parent
+});
 global.stores.picture = pictureStore;
+global.stores.parent = parentStore;
 
 // Actions
 var pictureAction = require('./picture_action.js').init({});
