@@ -13,6 +13,7 @@ function removeFather() {
   if(!this.addFromFather()) {
     var father = getPerson();
     this.father = father;
+    this.triggerChanged();
   }
 }
 
@@ -20,6 +21,7 @@ function removeMother() {
   if(!this.addFromMother()) {
     var mother = getPerson();
     this.mother = mother;
+    this.triggerChanged();
   }
 }
 
@@ -49,6 +51,18 @@ function canChangeFather() {
 
 function canChangeMother() {
   return !this.addFromMother();
+}
+
+function triggerChanged() {
+  this.trigger('change');
+}
+
+function bindChanged(func) {
+  this.bind('change', func);
+}
+
+function unbindChanged(func) {
+  this.unbind('change', func);
 }
 
 //
@@ -110,6 +124,9 @@ var store = {
 
   // funcs
   init: init,
+  triggerChanged: triggerChanged,
+  bindChanged: bindChanged,
+  unbindChanged: unbindChanged,
   getFather: getFather,
   getMother: getMother,
   removeFather: removeFather,
@@ -120,7 +137,7 @@ var store = {
   addFromFather: addFromFather,
   addFromNone: addFromNone,
   canChangeFather: canChangeFather,
-  canChangeMother: canChangeMother,
+  canChangeMother: canChangeMother
 };
 module.exports = store;
 

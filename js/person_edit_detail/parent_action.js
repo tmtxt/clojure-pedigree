@@ -1,22 +1,26 @@
-var global = require("./global.js");
-var dispatcher = global.dispatcher;
+// Modules
+var global;
+var ParentStore;
+
+//
+function init(opts) {
+  global = require('./global.js');
+  ParentStore = global.stores.parent;
+
+  return this;
+}
+
+function removeFather() {
+  ParentStore.removeFather();
+}
+
+function removeMother() {
+  ParentStore.removeMother();
+}
 
 var action = {
-  removeFather: function() {
-    dispatcher.dispatch({
-      eventName: 'remove-father'
-    });
-  },
-
-  removeMother: function() {
-    dispatcher.dispatch({
-      eventName: 'remove-mother'
-    });
-  }
+  init: init,
+  removeFather: removeFather,
+  removeMother: removeMother
 };
-exports.action = action;
-
-function init() {
-
-}
-exports.init = init;
+module.exports = action;

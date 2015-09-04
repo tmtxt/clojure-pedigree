@@ -28,6 +28,14 @@ function triggerChanged() {
   this.trigger('change');
 }
 
+function bindChanged(func) {
+  this.bind('change', func);
+}
+
+function unbindChanged(func) {
+  this.unbind('change', func);
+}
+
 var store = {
   // data
   pictureLink: defaultLink,
@@ -35,6 +43,8 @@ var store = {
   // funcs
   init: init,
   triggerChanged: triggerChanged,
+  bindChanged: bindChanged,
+  unbindChanged: unbindChanged,
   setPictureLink: setPictureLink,
   removePictureLink: removePictureLink,
   getPictureLink: getPictureLink

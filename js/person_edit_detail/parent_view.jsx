@@ -3,8 +3,8 @@ var React = require("react");
 // Global Flux
 var global = require("./global.js");
 var ParentStore = global.stores.parent;
-/* var ParentAction = global.actions.parent;
-   var FindPersonAction = global.actions.findPerson; */
+var ParentAction = global.actions.parent;
+/* var FindPersonAction = global.actions.findPerson; */
 
 var ParentView = React.createClass({
   getInitialState: function() {
@@ -15,11 +15,11 @@ var ParentView = React.createClass({
   },
 
   componentDidMount: function() {
-    ParentStore.bind("change", this.parentChanged);
+    ParentStore.bindChanged(this.parentChanged);
   },
 
   componentWillUnmount: function() {
-    ParentStore.unbind("change", this.parentChanged);
+    ParentStore.unbindChanged(this.parentChanged);
   },
 
   parentChanged: function() {

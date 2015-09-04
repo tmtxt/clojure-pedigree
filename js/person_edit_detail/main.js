@@ -25,7 +25,9 @@ global.stores.parent = parentStore;
 
 // Actions
 var pictureAction = require('./picture_action.js').init({});
+var parentAction = require('./parent_action.js').init({});
 global.actions.picture = pictureAction;
+global.actions.parent = parentAction;
 
 // // Store
 // var parentStore = require('./parent_store.js');

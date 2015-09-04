@@ -9,11 +9,11 @@ var Col1View = React.createClass({
   },
 
   componentDidMount: function() {
-    PictureStore.bind("change", this.pictureChanged);
+    PictureStore.bindChanged(this.pictureChanged);
   },
 
   componentWillUnmount: function() {
-    PictureStore.unbind("change", this.pictureChanged);
+    PictureStore.unbindChanged(this.pictureChanged);
   },
 
   pictureChanged: function() {
