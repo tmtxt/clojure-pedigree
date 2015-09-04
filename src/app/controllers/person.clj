@@ -96,12 +96,14 @@
 
 (def default-opts
   {:parent {}
-   :partner {}})
+   :partner {}
+   :from nil})
 
 (defn add-person-render [request & [opts]]
   (let [opts (if opts opts default-opts)
         {parent :parent
          partner :partner
+         from :from
          find-person-list :find-person-list} opts
         statuses (-> request person-util/status-display json/write-str)
         genders (-> request person-util/gender-display json/write-str)
@@ -109,7 +111,8 @@
         find-person-list (-> find-person-list (person-util/filter-persons-keys) json/write-str)]
     (layout/render request
                    "person/edit_detail2.html"
-                   {:parent parent
+                   {:from from
+                    :parent parent
                     :partner partner
                     :statuses statuses
                     :genders genders
@@ -126,7 +129,8 @@
       (if parent
         (let [parent-role (person-util/determine-father-mother-single parent)
               partners-list (person/find-partners (:id parent))]
-          (add-person-render request {:parent {parent-role parent}
+          (add-person-render request {:from "parent"
+                                      :parent {parent-role parent}
                                       :find-person-list partners-list}))
         (add-person-render request)))))
 
@@ -135,7 +139,8 @@
     (let [partner (find-person-from-request request "partnerId")]
       (if partner
         (let [partner-role (person-util/determine-partner-role-single partner)]
-          (add-person-render request {:partner {partner-role partner}
+          (add-person-render request {:from "partner"
+                                      :partner {partner-role partner}
                                       :find-person-list []}))
         (add-person-render request))
       )))

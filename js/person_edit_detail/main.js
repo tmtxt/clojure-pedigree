@@ -7,6 +7,7 @@ var statuses = window.statuses;
 var genders = window.genders;
 var parent = window.parent;
 var findPersonList = window.findPersonList;
+var fromPerson = window.fromPerson;
 
 // Global Object
 var global = require('./global.js');

@@ -47,8 +47,13 @@ var ParentView = React.createClass({
   },
 
   render: function() {
+    var rootClassName = "parent-container";
+    if (!global.config.isFromParent()) {
+      rootClassName += " hidden";
+    }
+
     return (
-      <div className="parent-container">
+      <div className={rootClassName}>
         <div className="parent-title">
           Parents
         </div>
