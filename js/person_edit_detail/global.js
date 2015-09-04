@@ -7,12 +7,27 @@ function init(opts) {
   var ee = new EventEmitter();
   this.ee = ee;
 
+  this.fromPerson = opts.fromPerson;
+
   return this;
+}
+
+function addFromParent() {
+  return this.fromPerson === 'parent';
+}
+
+function addFromPartner() {
+  return this.fromPerson === 'partner';
+}
+
+function addFromNone() {
+  return !this.addFromParent() && !this.addFromPartner();
 }
 
 var global = {
   // event emiiter
   ee: null,
+  fromPerson: null,
 
   // actions
   actions: {
@@ -25,6 +40,9 @@ var global = {
   },
 
   // funcs
-  init: init
+  init: init,
+  addFromParent: addFromParent,
+  addFromPartner: addFromPartner,
+  addFromNone: addFromNone
 };
 module.exports = global;

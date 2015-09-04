@@ -3,8 +3,8 @@ var React = require("react");
 // Global Flux
 var global = require("./global.js");
 var ParentStore = global.stores.parent;
-var ParentAction = global.actions.parent;
-var FindPersonAction = global.actions.findPerson;
+/* var ParentAction = global.actions.parent;
+   var FindPersonAction = global.actions.findPerson; */
 
 var ParentView = React.createClass({
   getInitialState: function() {
@@ -16,6 +16,10 @@ var ParentView = React.createClass({
 
   componentDidMount: function() {
     ParentStore.bind("change", this.parentChanged);
+  },
+
+  componentWillUnmount: function() {
+    ParentStore.unbind("change", this.parentChanged);
   },
 
   parentChanged: function() {
@@ -48,7 +52,7 @@ var ParentView = React.createClass({
 
   render: function() {
     var rootClassName = "parent-container";
-    if (!global.config.isFromParent()) {
+    if (!(global.addFromParent() || global.addFromNone())) {
       rootClassName += " hidden";
     }
 
@@ -71,7 +75,7 @@ var ParentView = React.createClass({
                   <span>Father: </span>
                   <span>{this.state.father.fullName}</span>
                 </div>
-                <div>
+                <div className={ParentStore.canChangeFather() ? "" : "hidden"}>
                   <a href="#" onClick={this.handleSelectFather}>Select</a>&nbsp;
                   <a href="#" onClick={this.handleRemoveFather}>Remove</a>
                 </div>
@@ -86,7 +90,7 @@ var ParentView = React.createClass({
                   <span>Mother: </span>
                   <span>{this.state.mother.fullName}</span>
                 </div>
-                <div>
+                <div className={ParentStore.canChangeMother() ? "" : "hidden"}>
                   <a href="#" onClick={this.handleSelectMother}>Select</a>&nbsp;
                   <a href="#" onClick={this.handleRemoveMother}>Remove</a>
                 </div>

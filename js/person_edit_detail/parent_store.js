@@ -43,6 +43,14 @@ function addFromNone() {
   return !this.fromFather && !this.fromMother;
 }
 
+function canChangeFather() {
+  return !this.addFromFather();
+}
+
+function canChangeMother() {
+  return !this.addFromMother();
+}
+
 //
 function getPerson() {
   return {
@@ -98,6 +106,7 @@ var store = {
   mother: null,
   fromFather: false,
   fromMother: false,
+  fromParent: false,
 
   // funcs
   init: init,
@@ -109,7 +118,9 @@ var store = {
   isMotherSelected: isMotherSelected,
   addFromMother: addFromMother,
   addFromFather: addFromFather,
-  addFromNone: addFromNone
+  addFromNone: addFromNone,
+  canChangeFather: canChangeFather,
+  canChangeMother: canChangeMother,
 };
 module.exports = store;
 
