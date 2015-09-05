@@ -119,11 +119,14 @@ function init(opts) {
       this.fromFather = false;
       this.fromMother = true;
     }
-    this.father = father;
-    this.mother = mother;
   } else {
-    // not add from parent
+    father = getPerson();
+    mother = getPerson();
+    this.fromFather = false;
+    this.fromMother = false;
   }
+  this.father = father;
+  this.mother = mother;
 
   return this;
 }
