@@ -17,8 +17,13 @@ function addPartner() {
   });
 }
 
+function removePartner(id) {
+  FamilyStore.removePartner(id);
+}
+
 var action = {
   init: init,
-  addPartner: addPartner
+  addPartner: addPartner,
+  removePartner: removePartner
 };
 module.exports = action;

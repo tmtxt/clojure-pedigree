@@ -1,6 +1,7 @@
 var global;
 var microEvent = require('microevent');
 var util = require('./util.js');
+var _ = require('_');
 
 function init(opts) {
   global = require('./global.js');
@@ -41,7 +42,16 @@ function addFromNone() {
 
 function addPartner(person) {
   person = util.normalizePerson(person);
+  person.canRemove = true;
   this.partners.push(person);
+  this.triggerChanged();
+}
+
+function removePartner(id) {
+  var partners = _.filter(this.partners, function(partner){
+    return partner.id !== id;
+  });
+  this.partners = partners;
   this.triggerChanged();
 }
 
@@ -70,6 +80,7 @@ var store = {
   addFromWife: addFromWife,
   addFromNone: addFromNone,
   addPartner: addPartner,
+  removePartner: removePartner,
   triggerChanged: triggerChanged,
   bindChanged: bindChanged,
   unbindChanged: unbindChanged

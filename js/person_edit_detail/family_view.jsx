@@ -5,6 +5,37 @@ var global = require("./global.js");
 var FamilyStore = global.stores.family;
 var FamilyAction = global.actions.family;
 
+var PartnerView = React.createClass({
+  getInitialState: function() {
+    return {
+      partner: this.props.partner
+    };
+  },
+
+  handleRemove: function(e){
+    e.preventDefault();
+    FamilyAction.removePartner(this.state.partner.id);
+  },
+
+  render: function() {
+    return (
+      <li>
+        <div className="partner-image people-image">
+          <img className="img-responsive img-rounded" alt="" src={this.state.partner.picture}/>
+        </div>
+        <div className="partner-info people-info">
+          <div className="partner-name people-name">
+            {this.state.partner.fullName}
+          </div>
+          <div className={this.state.partner.canRemove ? "" : "hidden"}>
+            <a href="" onClick={this.handleRemove}>Remove</a>
+          </div>
+        </div>
+      </li>
+    );
+  }
+});
+
 var FamilyView = React.createClass({
   getInitialState: function() {
     return {
@@ -30,19 +61,7 @@ var FamilyView = React.createClass({
   getPartnersList: function() {
     var partnersList = this.state.partners.map(function(partner){
       return (
-        <li key={partner.id}>
-          <div className="partner-image people-image">
-            <img className="img-responsive img-rounded" alt="" src={partner.picture}/>
-          </div>
-          <div className="partner-info people-info">
-            <div className="partner-name people-name">
-              {partner.fullName}
-            </div>
-            <div className={partner.canRemove ? "" : "hidden"}>
-              <a href="">Remove</a>
-            </div>
-          </div>
-        </li>
+        <PartnerView key={partner.id} partner={partner} />
       );
     });
 
