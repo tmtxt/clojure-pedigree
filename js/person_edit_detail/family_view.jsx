@@ -29,11 +29,18 @@ var FamilyView = React.createClass({
 
   render: function() {
     var rootClassName = "family-container";
-    if (!(global.addFromPartner() || global.addFromNone())) {
+    if (!global.addFromPartner()) {
       rootClassName += " hidden";
     }
 
     var partnersList = this.getPartnersList();
+
+    var addText;
+    if(FamilyStore.addFromHusband()) {
+      addText = "Add Husband";
+    } else {
+      addText = "Add Wife";
+    }
 
     return (
       <div className={rootClassName}>
@@ -50,7 +57,9 @@ var FamilyView = React.createClass({
             </ul>
           </div>
           <div className="family-buttons">
-            <button className="btn btn-success">Add</button>
+            <button className="btn btn-success">
+              {addText}
+            </button>
           </div>
         </div>
       </div>

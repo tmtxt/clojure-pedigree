@@ -27,6 +27,18 @@ function getPartners() {
   return this.partners;
 }
 
+function addFromHusband() {
+  return this.fromHusband;
+}
+
+function addFromWife() {
+  return this.fromWife;
+}
+
+function addFromNone() {
+  return !this.fromHusband && !this.fromWife;
+}
+
 var store = {
   // data
   partners: [],
@@ -35,7 +47,10 @@ var store = {
 
   // funcs
   init: init,
-  getPartners: getPartners
+  getPartners: getPartners,
+  addFromHusband: addFromHusband,
+  addFromWife: addFromWife,
+  addFromNone: addFromNone
 };
 module.exports = store;
 
