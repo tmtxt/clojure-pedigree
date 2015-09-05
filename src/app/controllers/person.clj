@@ -97,22 +97,26 @@
 (def default-opts
   {:parent {}
    :partner {}
+   :child {}
    :from nil})
 
 (defn add-person-render [request & [opts]]
   (let [opts (if opts opts default-opts)
         {parent :parent
          partner :partner
+         child :child
          from :from} opts
         statuses (-> request person-util/status-display json/write-str)
         genders (-> request person-util/gender-display json/write-str)
         parent (-> parent person-util/filter-parent-keys json/write-str)
+        child (-> child person-util/filter-person-keys json/write-str)
         partner (-> partner person-util/filter-partner-keys json/write-str)]
     (layout/render request
                    "person/edit_detail2.html"
                    {:from from
                     :parent parent
                     :partner partner
+                    :child child
                     :statuses statuses
                     :genders genders})))
 
@@ -136,6 +140,15 @@
         (let [partner-role (person-util/determine-partner-role-single partner)]
           (add-person-render request {:from "partner"
                                       :partner {partner-role partner}}))
+        (add-person-render request))
+      )))
+
+(defn add-person-from-child [request]
+  (neo4j/with-transaction
+    (let [child (find-person-from-request request "childId")]
+      (if child
+        (add-person-render request {:from "child"
+                                    :child child})
         (add-person-render request))
       )))
 
@@ -180,6 +193,7 @@
            (GET "/addPartner/partnerId/:partnerId" [] add-partner)
            (GET "/add/parentId/:parentId" [] add-person-from-parent)
            (GET "/add/partnerId/:partnerId" [] add-person-from-partner)
+           (GET "/add/childId/:childId" [] add-person-from-child)
            (GET "/addPerson" [] add-person-get)
            (GET "/find" [] find-person)
            ))
