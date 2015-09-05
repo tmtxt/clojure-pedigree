@@ -1,19 +1,31 @@
-var global = require('./global.js');
+var global;
+var microEvent = require('microevent');
+var util = require('./util.js');
+
+function init(opts) {
+  global = require('./global.js');
+
+  var partner = opts.partner;
+  if(!!partner) {
+    partner = util.normalizePerson(partner);
+    this.partners.push(partner);
+  }
+
+  return this;
+}
+
+function getPartners() {
+  return this.partners;
+}
 
 var store = {
-  partners: []
+  // data
+  partners: [],
+
+  // funcs
+  init: init,
+  getPartners: getPartners
 };
-exports.store = store;
+module.exports = store;
 
-function normalizePerson(person) {
-  return {
-    id: person.id,
-    fullName: person.full_name,
-    picture: person.picture,
-    selected: true
-  };
-}
-
-function init(partner) {
-}
-exports.init = init;
+microEvent.mixin(store);

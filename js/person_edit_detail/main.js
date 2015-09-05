@@ -18,12 +18,15 @@ var global = require('./global.js').init({
 // Store
 var pictureStore = require('./picture_store.js');
 var parentStore = require('./parent_store.js');
+var familyStore = require('./family_store.js');
 global.stores.picture = pictureStore;
 global.stores.parent = parentStore;
+global.stores.family = familyStore;
 
 // Actions
 var pictureAction = require('./picture_action.js');
 var parentAction = require('./parent_action.js');
+var familyAction = require('./family_action.js');
 var findPersonAction = require('./find_person_action.js');
 global.actions.picture = pictureAction;
 global.actions.parent = parentAction;
@@ -34,8 +37,13 @@ pictureStore.init();
 parentStore.init({
   parent: parent
 });
+familyStore.init({
+  partner: partner
+});
+
 pictureAction.init();
 parentAction.init();
+familyAction.init();
 findPersonAction.init();
 
 // // Store
