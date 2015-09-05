@@ -16,18 +16,27 @@ var global = require('./global.js').init({
 });
 
 // Store
-var pictureStore = require('./picture_store.js').init({});
-var parentStore = require('./parent_store.js').init({
-  parent: parent
-});
+var pictureStore = require('./picture_store.js');
+var parentStore = require('./parent_store.js');
 global.stores.picture = pictureStore;
 global.stores.parent = parentStore;
 
 // Actions
-var pictureAction = require('./picture_action.js').init({});
-var parentAction = require('./parent_action.js').init({});
+var pictureAction = require('./picture_action.js');
+var parentAction = require('./parent_action.js');
+var findPersonAction = require('./find_person_action.js');
 global.actions.picture = pictureAction;
 global.actions.parent = parentAction;
+global.actions.findPerson = findPersonAction;
+
+// Init
+pictureStore.init();
+parentStore.init({
+  parent: parent
+});
+pictureAction.init();
+parentAction.init();
+findPersonAction.init();
 
 // // Store
 // var parentStore = require('./parent_store.js');
