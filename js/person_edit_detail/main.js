@@ -30,6 +30,7 @@ var familyAction = require('./family_action.js');
 var findPersonAction = require('./find_person_action.js');
 global.actions.picture = pictureAction;
 global.actions.parent = parentAction;
+global.actions.family = familyAction;
 global.actions.findPerson = findPersonAction;
 
 // Init

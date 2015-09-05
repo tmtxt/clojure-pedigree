@@ -39,6 +39,24 @@ function addFromNone() {
   return !this.fromHusband && !this.fromWife;
 }
 
+function addPartner(person) {
+  person = util.normalizePerson(person);
+  this.partners.push(person);
+  this.triggerChanged();
+}
+
+function triggerChanged() {
+  this.trigger('change');
+}
+
+function bindChanged(func) {
+  this.bind('change', func);
+}
+
+function unbindChanged(func) {
+  this.unbind('change', func);
+}
+
 var store = {
   // data
   partners: [],
@@ -50,7 +68,11 @@ var store = {
   getPartners: getPartners,
   addFromHusband: addFromHusband,
   addFromWife: addFromWife,
-  addFromNone: addFromNone
+  addFromNone: addFromNone,
+  addPartner: addPartner,
+  triggerChanged: triggerChanged,
+  bindChanged: bindChanged,
+  unbindChanged: unbindChanged
 };
 module.exports = store;
 

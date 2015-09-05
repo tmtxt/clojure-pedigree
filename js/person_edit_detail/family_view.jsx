@@ -3,10 +3,32 @@ var React = require("react");
 // Global Flux
 var global = require("./global.js");
 var FamilyStore = global.stores.family;
+var FamilyAction = global.actions.family;
 
 var FamilyView = React.createClass({
+  getInitialState: function() {
+    return {
+      partners: FamilyStore.getPartners()
+    };
+  },
+
+  componentDidMount: function() {
+    FamilyStore.bindChanged(this.partnersChanged);
+  },
+
+  componentWillUnmount: function() {
+    FamilyStore.unbindChanged(this.partnersChanged);
+  },
+
+  partnersChanged: function() {
+    var partners = FamilyStore.getPartners();
+    this.setState({
+      partners: partners
+    });
+  },
+
   getPartnersList: function() {
-    var partnersList = FamilyStore.getPartners().map(function(partner){
+    var partnersList = this.state.partners.map(function(partner){
       return (
         <li key={partner.id}>
           <div className="partner-image people-image">
@@ -25,6 +47,11 @@ var FamilyView = React.createClass({
     });
 
     return partnersList;
+  },
+
+  handleAdd: function(e) {
+    e.preventDefault();
+    FamilyAction.addPartner();
   },
 
   render: function() {
@@ -57,7 +84,7 @@ var FamilyView = React.createClass({
             </ul>
           </div>
           <div className="family-buttons">
-            <button className="btn btn-success">
+            <button className="btn btn-success" onClick={this.handleAdd}>
               {addText}
             </button>
           </div>
