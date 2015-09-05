@@ -1,5 +1,6 @@
 var global;
 var microEvent = require('microevent');
+var util = require('./util.js');
 
 function getFather() {
   return this.father;
@@ -10,20 +11,20 @@ function getMother() {
 }
 
 function setFather(person) {
-  person = normalizePerson(person);
+  person = util.normalizePerson(person);
   this.father = person;
   this.triggerChanged();
 }
 
 function setMother(person) {
-  person = normalizePerson(person);
+  person = util.normalizePerson(person);
   this.mother = person;
   this.triggerChanged();
 }
 
 function removeFather() {
   if(!this.addFromFather()) {
-    var father = getPerson();
+    var father = util.getPerson();
     this.father = father;
     this.triggerChanged();
   }
@@ -31,7 +32,7 @@ function removeFather() {
 
 function removeMother() {
   if(!this.addFromMother()) {
-    var mother = getPerson();
+    var mother = util.getPerson();
     this.mother = mother;
     this.triggerChanged();
   }
@@ -77,27 +78,6 @@ function unbindChanged(func) {
   this.unbind('change', func);
 }
 
-//
-function getPerson() {
-  return {
-    id: null,
-    fullName: "Not selected",
-    picture: "/assets/img/userbasic.jpg",
-    selected: false
-  };
-}
-
-function normalizePerson(person) {
-  var fullName = person.fullName || person.full_name;
-
-  return {
-    id: person.id,
-    fullName: fullName,
-    picture: person.picture,
-    selected: true
-  };
-}
-
 function init(opts) {
   global = require('./global.js');
 
@@ -108,20 +88,20 @@ function init(opts) {
   if(!!parent) {
     if(!!parent.father) {
       // add from father
-      father = normalizePerson(parent.father);
-      mother = getPerson();
+      father = util.normalizePerson(parent.father);
+      mother = util.getPerson();
       this.fromFather = true;
       this.fromMother = false;
     } else {
       // add from mother
-      mother = normalizePerson(parent.mother);
-      father = getPerson();
+      mother = util.normalizePerson(parent.mother);
+      father = util.getPerson();
       this.fromFather = false;
       this.fromMother = true;
     }
   } else {
-    father = getPerson();
-    mother = getPerson();
+    father = util.getPerson();
+    mother = util.getPerson();
     this.fromFather = false;
     this.fromMother = false;
   }

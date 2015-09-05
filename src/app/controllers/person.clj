@@ -117,7 +117,6 @@
                     :genders genders})))
 
 (defn add-person-get [request]
-  (println "aaa")
   (neo4j/with-transaction
     (add-person-render request)))
 
