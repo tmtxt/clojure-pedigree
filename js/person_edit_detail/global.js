@@ -20,8 +20,12 @@ function addFromPartner() {
   return this.fromPerson === 'partner';
 }
 
+function addFromChild() {
+  return this.fromPerson === 'child';
+}
+
 function addFromNone() {
-  return !this.addFromParent() && !this.addFromPartner();
+  return !this.addFromParent() && !this.addFromPartner() && !this.addFromChild();
 }
 
 var global = {
@@ -43,6 +47,7 @@ var global = {
   init: init,
   addFromParent: addFromParent,
   addFromPartner: addFromPartner,
+  addFromChild: addFromChild,
   addFromNone: addFromNone
 };
 module.exports = global;

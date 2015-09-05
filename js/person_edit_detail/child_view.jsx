@@ -2,9 +2,23 @@ var React = require("react");
 
 // Global Flux
 var global = require("./global.js");
+var ChildStore = global.stores.child;
 
 var ChildView = React.createClass({
+  getInitialState: function() {
+    return {
+      child: ChildStore.getChild()
+    };
+  },
+
   render: function() {
+    if(!global.addFromChild()) {
+      return (
+        <div>
+        </div>
+      );
+    }
+
     return (
       <div className="family-container">
         <div className="family-title">
@@ -18,23 +32,15 @@ var ChildView = React.createClass({
             <ul className="partner-list">
               <li>
                 <div className="partner-image people-image">
-                  <img className="img-responsive img-rounded" alt="" src="/assets/img/d.jpg"/>
+                  <img className="img-responsive img-rounded" alt="" src={this.state.child.picture}/>
                 </div>
                 <div className="partner-info people-info">
                   <div className="partner-name people-name">
-                    Child name
-                  </div>
-                  <div className="">
-                    <a href="" onClick={this.handleRemove}>Remove</a>
+                    {this.state.child.fullName}
                   </div>
                 </div>
               </li>
             </ul>
-          </div>
-          <div className="family-buttons">
-            <button className="btn btn-success" onClick={this.handleAdd}>
-              Add
-            </button>
           </div>
         </div>
       </div>
