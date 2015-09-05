@@ -6,9 +6,17 @@ function init(opts) {
   global = require('./global.js');
 
   var partner = opts.partner;
+  var person;
   if(!!partner) {
-    partner = util.normalizePerson(partner);
-    this.partners.push(partner);
+    if(!!partner.husband) {
+      person = partner.husband;
+      this.fromHusband = true;
+    } else {
+      person = partner.wife;
+      this.fromWife = true;
+    }
+    person = util.normalizePerson(person);
+    this.partners.push(person);
   }
 
   return this;
@@ -21,6 +29,8 @@ function getPartners() {
 var store = {
   // data
   partners: [],
+  fromHusband: false,
+  fromWife: false,
 
   // funcs
   init: init,

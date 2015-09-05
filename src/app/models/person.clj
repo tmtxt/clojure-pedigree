@@ -27,7 +27,6 @@
 (defentity person
   (table :tbl_person)
   (pk :id)
-  (prepare prepare-data)
   (transform (fn [{picture :picture :as p}]
                (if picture
                  p
