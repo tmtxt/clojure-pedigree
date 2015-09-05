@@ -27,7 +27,9 @@ function selectFather() {
       parentId: ParentStore.getMother().id
     };
   }
-  FindPersonAction.selectPerson(data);
+  FindPersonAction.selectPerson(data).then(function(person){
+    ParentStore.setFather(person);
+  });
 }
 
 function selectMother() {
@@ -37,7 +39,9 @@ function selectMother() {
       parentId: ParentStore.getFather().id
     };
   }
-  FindPersonAction.selectPerson(data);
+  FindPersonAction.selectPerson(data).then(function(person){
+    ParentStore.setMother(person);
+  });
 }
 
 var action = {

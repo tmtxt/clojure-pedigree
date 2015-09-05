@@ -9,6 +9,18 @@ function getMother() {
   return this.mother;
 }
 
+function setFather(person) {
+  person = normalizePerson(person);
+  this.father = person;
+  this.triggerChanged();
+}
+
+function setMother(person) {
+  person = normalizePerson(person);
+  this.mother = person;
+  this.triggerChanged();
+}
+
 function removeFather() {
   if(!this.addFromFather()) {
     var father = getPerson();
@@ -76,9 +88,11 @@ function getPerson() {
 }
 
 function normalizePerson(person) {
+  var fullName = person.fullName || person.full_name;
+
   return {
     id: person.id,
-    fullName: person.full_name,
+    fullName: fullName,
     picture: person.picture,
     selected: true
   };
@@ -129,6 +143,8 @@ var store = {
   unbindChanged: unbindChanged,
   getFather: getFather,
   getMother: getMother,
+  setFather: setFather,
+  setMother: setMother,
   removeFather: removeFather,
   removeMother: removeMother,
   isFatherSelected: isFatherSelected,

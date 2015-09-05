@@ -8,6 +8,7 @@ var global;
 // Components
 var findPersonModal = jquery('.js-find-person-modal');
 var selectBoxContainer = jquery('.js-select-person-container');
+var selectPersonButton = jquery('.js-confirm-select-person-button');
 
 // Init
 function init(opts) {
@@ -29,30 +30,68 @@ function createSelectBox() {
 // Select person with modal
 // Returns a promise, resolve when finish selection, reject when not select
 function selectPerson(data) {
-  var selectBox = createSelectBox();
-  selectBox.select2({
-    ajax: {
+  return q.Promise(function(resolve, reject){
+    function makeData(params) {
+      if(!!params.term) {
+        data.term = params.term;
+      }
+      return data;
+    }
+
+    function processResults(data, page) {
+      return {
+        results: data
+      };
+    }
+
+    var ajax = {
       url: '/person/find',
-      data: function(params) {
-        if(!!params.term) {
-          data.term = params.term;
-        }
-        return data;
-      },
+      data: makeData,
       dataType: 'json',
       delay: 250,
-      processResults: function(data, page) {
-        return {
-          results: data
-        };
+      processResults: processResults
+    };
+
+    var selectedPerson;
+
+    var selectBox = createSelectBox();
+    selectBox.select2({
+      ajax: ajax,
+      placeholder: 'Select',
+      templateResult: function(person) {
+        return person.full_name;
+      },
+      templateSelection: function(person) {
+        return person.full_name;
       }
-    },
-    placeholder: 'Select',
-    templateResult: function(person) {
-      return person.full_name;
-    }
+    });
+    selectBox.on('select2:select', function(e){
+      selectedPerson = e.params.data;
+    });
+    selectBox.on('select2:unselect', function(e){
+      selectedPerson = null;
+    });
+
+    unbindModal();
+    findPersonModal.on('hide.bs.modal', function(){
+      reject();
+    });
+    selectPersonButton.click(function(){
+      unbindModal();
+      findPersonModal.modal('hide');
+      if(!!selectedPerson) {
+        resolve(selectedPerson);
+      } else {
+        reject();
+      }
+    });
+    findPersonModal.modal('show');
   });
-  findPersonModal.modal();
+}
+
+function unbindModal() {
+  findPersonModal.unbind();
+  selectPersonButton.unbind();
 }
 
 var action = {
