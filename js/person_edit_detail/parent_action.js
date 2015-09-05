@@ -26,6 +26,10 @@ function selectFather() {
     data = {
       parentId: ParentStore.getMother().id
     };
+  } else {
+    data = {
+      parentRole: 'father'
+    };
   }
   FindPersonAction.selectPerson(data).then(function(person){
     ParentStore.setFather(person);
@@ -37,6 +41,10 @@ function selectMother() {
   if(ParentStore.isFatherSelected()) {
     data = {
       parentId: ParentStore.getFather().id
+    };
+  } else {
+    data = {
+      parentRole: 'mother'
     };
   }
   FindPersonAction.selectPerson(data).then(function(person){

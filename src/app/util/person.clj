@@ -107,3 +107,13 @@
 
 (defn filter-persons-keys [persons]
   (map filter-person-keys persons))
+
+(defn parent-role-genders
+  "Get all the possible genders for this parent role"
+  [role]
+  (let [gender-map person/GENDERS_MAP]
+    (cond
+      (= role "father") [(gender-map :male) (gender-map :les) (gender-map :unknown)]
+      (= role "mother") [(gender-map :female) (gender-map :gay) (gender-map :unknown)]
+      :else [(gender-map :male) (gender-map :les) (gender-map :female) (gender-map :gay) (gender-map :unknown)]
+      )))

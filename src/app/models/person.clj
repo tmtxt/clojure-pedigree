@@ -1,4 +1,5 @@
 (ns app.models.person
+  (:import [org.postgresql.util PGobject])
   (:require [korma.core :refer :all]
             [app.util.dbUtil :as db-util]
             [app.neo4j.main :as neo4j]
@@ -26,6 +27,7 @@
 (defentity person
   (table :tbl_person)
   (pk :id)
+  (prepare prepare-data)
   (transform (fn [{picture :picture :as p}]
                (if picture
                  p
@@ -116,3 +118,14 @@
   (select
    person
    (where {:full_name [like (str "%" name "%")]})))
+
+(defn find-by-genders [genders]
+  (let [gender-pg
+        (map
+         (fn [gender]
+           (doto (PGobject.)
+             (.setType "person_gender_enum")
+             (.setValue gender)))
+         genders)]
+    (->> (where {:gender [in gender-pg]})
+       (select person))))
