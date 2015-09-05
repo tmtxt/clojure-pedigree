@@ -128,3 +128,12 @@
          genders)]
     (->> (where {:gender [in gender-pg]})
        (select person))))
+
+(defn count-parent [person-id]
+  (let [[result] (neo4j/execute-statement query/count-parent person-id)
+        data (:data result)
+        count (-> data first :row first)]
+    count))
+
+(defn enough-parent? [person-id]
+  (= (count-parent person-id) 2))

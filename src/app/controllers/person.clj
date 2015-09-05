@@ -146,7 +146,7 @@
 (defn add-person-from-child [request]
   (neo4j/with-transaction
     (let [child (find-person-from-request request "childId")]
-      (if child
+      (if (and child (-> child :id person/enough-parent? not))
         (add-person-render request {:from "child"
                                     :child child})
         (add-person-render request))
