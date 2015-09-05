@@ -47,30 +47,6 @@ parentAction.init();
 familyAction.init();
 findPersonAction.init();
 
-// // Store
-// var parentStore = require('./parent_store.js');
-// parentStore.init(parent);
-// global.stores.parent = parentStore.store;
-// var familyStore = require('./family_store.js');
-// familyStore.init(partner);
-// global.stores.family = familyStore.store;
-// var findPersonStore = require('./find_person_store.js');
-// findPersonStore.init(findPersonList);
-// global.stores.findPerson = findPersonStore.store;
-
-// // Dispatcher
-// var dispatcher = require('./dispatcher.js');
-// dispatcher.init();
-// global.dispatcher = dispatcher.dispatcher;
-
-// // Action
-// var parentAction = require('./parent_action.js');
-// parentAction.init();
-// global.actions.parent = parentAction.action;
-// var findPersonAction = require('./find_person_action.js');
-// findPersonAction.init();
-// global.actions.findPerson = findPersonAction.action;
-
 // Components
 var MainView = require('./main_view.jsx');
 
