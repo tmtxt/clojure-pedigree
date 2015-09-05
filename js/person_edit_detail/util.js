@@ -4,7 +4,8 @@ function getPerson() {
     id: null,
     fullName: "Not selected",
     picture: "/assets/img/userbasic.jpg",
-    selected: false
+    selected: false,
+    canRemove: true
   };
 }
 exports.getPerson = getPerson;
@@ -16,7 +17,8 @@ function normalizePerson(person) {
     id: person.id,
     fullName: fullName,
     picture: person.picture,
-    selected: true
+    selected: true,
+    canRemove: false
   };
 }
 exports.normalizePerson = normalizePerson;

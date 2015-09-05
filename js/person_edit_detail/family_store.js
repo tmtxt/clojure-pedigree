@@ -16,6 +16,7 @@ function init(opts) {
       this.fromWife = true;
     }
     person = util.normalizePerson(person);
+    person.canRemove = false;
     this.partners.push(person);
   }
 

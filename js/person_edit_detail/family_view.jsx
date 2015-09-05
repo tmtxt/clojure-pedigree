@@ -16,7 +16,7 @@ var FamilyView = React.createClass({
             <div className="partner-name people-name">
               {partner.fullName}
             </div>
-            <div>
+            <div className={partner.canRemove ? "" : "hidden"}>
               <a href="">Remove</a>
             </div>
           </div>
