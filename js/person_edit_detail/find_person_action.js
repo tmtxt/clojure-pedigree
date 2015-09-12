@@ -45,7 +45,7 @@ function selectPerson(data) {
     }
 
     var ajax = {
-      url: '/person/find',
+      url: '/person/find/list/simple',
       data: makeData,
       dataType: 'json',
       delay: 250,
