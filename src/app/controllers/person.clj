@@ -224,7 +224,7 @@
            (GET "/addPartner/partnerId/:partnerId" [] add-partner)
            (GET "/add/parentId/:parentId" [] add-person/add-person-from-parent)
            (GET "/add/partnerId/:partnerId" [] add-person/add-person-from-partner)
-           (GET "/add/childId/:childId" [] add-person-from-child)
+           (GET "/add/childId/:childId" [] add-person/add-person-from-child)
            (GET "/addPerson" [] add-person/add-person-from-none)
            (GET "/find" [] find-person)
            (POST "/add/process" [] add-person-process)
