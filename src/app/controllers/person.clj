@@ -191,6 +191,13 @@
         )))
   )
 
+(defn add-person-process [request]
+  (clojure.pprint/pprint (get request :params))
+  (neo4j/with-transaction
+    ;; (clojure.pprint/pprint (util/params request))
+    nil
+    ))
+
 (def person-routes
   (context "/person" []
            (GET "/addChild/parentId/:parentId" [] add-child)
@@ -202,6 +209,7 @@
            (GET "/add/childId/:childId" [] add-person-from-child)
            (GET "/addPerson" [] add-person-get)
            (GET "/find" [] find-person)
+           (POST "/add/process" [] add-person-process)
            ))
 
 ;; (def person-rules [{:pattern #"^/person/add.*"

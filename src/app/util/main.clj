@@ -16,12 +16,14 @@
 
 (defn params "Get al the params from request as a map"
   [request]
-  (let [path-params (get request :params {})
-        path-params (into {} (for [[k v] path-params]
+  (let [types [:params :query-params :form-params]
+        to-keyword #(into {} (for [[k v] %]
                                [(keyword k) v]))
-        query-params (get request :query-params {})
-        form-params (get request :form-params {})]
-    (merge path-params query-params form-params)))
+        reduce-fn #(let [params (get request %2 {})
+                         params (to-keyword params)]
+                     (merge %1 params))]
+    (reduce reduce-fn {} types)
+    ))
 
 (defn parse-int "Parse the input to integer"
   [input & [default]]
