@@ -10,6 +10,7 @@ var partner = window.partner;
 var child = window.child;
 var findPersonList = window.findPersonList;
 var fromPerson = window.fromPerson;
+var action = window.formAction;
 
 // Global Object
 var global = require('./global.js').init({
@@ -17,10 +18,12 @@ var global = require('./global.js').init({
 });
 
 // Store
+var formStore = require('./form_store.js');
 var pictureStore = require('./picture_store.js');
 var parentStore = require('./parent_store.js');
 var familyStore = require('./family_store.js');
 var childStore = require('./child_store.js');
+global.stores.form = formStore;
 global.stores.picture = pictureStore;
 global.stores.parent = parentStore;
 global.stores.family = familyStore;
@@ -37,6 +40,9 @@ global.actions.family = familyAction;
 global.actions.findPerson = findPersonAction;
 
 // Init
+formStore.init({
+  action: action
+});
 pictureStore.init();
 parentStore.init({
   parent: parent

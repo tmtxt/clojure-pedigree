@@ -10,6 +10,9 @@
 
 {% block extra_script %}
 <script>
+ // form action
+ window.formAction = "{{ params.action }}";
+
  // set display maps
  window.statuses = {{ params.statuses|safe }};
  window.genders = {{ params.genders|safe }};
