@@ -191,12 +191,29 @@
         )))
   )
 
+(defn add-from-parent-process [request]
+  "parent"
+  )
+
+(defn add-from-partner-process [request]
+  "partner")
+
+(defn add-from-child-process [request]
+  "child")
+
+(defn add-from-none-process [request]
+  "none")
+
 (defn add-person-process [request]
-  (clojure.pprint/pprint (get request :params))
   (neo4j/with-transaction
-    ;; (clojure.pprint/pprint (util/params request))
-    nil
-    ))
+    (let [params (util/params request)
+          {from-person :fromPerson} params]
+      (case from-person
+        "parent" (add-from-parent-process request)
+        "child" (add-from-child-process request)
+        "partner" (add-from-partner-process request)
+        (add-from-none-process request))
+      )))
 
 (def person-routes
   (context "/person" []

@@ -24,7 +24,7 @@ var MainView = React.createClass({
     return (
       <div>
         <form action={this.state.actionLink} method="post" encType="multipart/form-data">
-          <input name="" type="hidden" value={this.state.fromPerson}/>
+          <input name="fromPerson" type="hidden" value={this.state.fromPerson}/>
 
           <HeaderView />
 
