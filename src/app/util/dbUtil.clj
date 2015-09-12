@@ -16,9 +16,10 @@
 (defn str->pgtimestamp
   "Convert string into pbtimestamp"
   [time-string]
-  (java.sql.Timestamp. (c/to-long (f/parse vn-time-formatter time-string)))
-  ;; (java.sql.Timestamp. (.getTime (java.util.Date.)))
-  )
+  (->> time-string
+       (f/parse vn-time-formatter)
+       c/to-long
+       java.sql.Timestamp.))
 
 (defn table-empty?
   "Check if a table is empty, contains no row"
