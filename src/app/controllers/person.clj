@@ -222,7 +222,7 @@
            (POST "/addChild" [] add-child-process)
            (GET "/addParent/childId/:childId" [] add-parent)
            (GET "/addPartner/partnerId/:partnerId" [] add-partner)
-           (GET "/add/parentId/:parentId" [] add-person-from-parent)
+           (GET "/add/parentId/:parentId" [] add-person/add-person-from-parent)
            (GET "/add/partnerId/:partnerId" [] add-person-from-partner)
            (GET "/add/childId/:childId" [] add-person-from-child)
            (GET "/addPerson" [] add-person/add-person-from-none)
