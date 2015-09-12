@@ -14,7 +14,8 @@
             [app.util.security :refer [user-access admin-access]]
             [korma.db :as kd]
             [app.i18n.main :refer [make-t-with-scope make-page-tran]]
-            [korma.core :as kc]))
+            [korma.core :as kc]
+            [app.controllers.person.add :as add-person]))
 
 (defn- find-person-from-request [request param-name]
   (-> request
@@ -224,7 +225,7 @@
            (GET "/add/parentId/:parentId" [] add-person-from-parent)
            (GET "/add/partnerId/:partnerId" [] add-person-from-partner)
            (GET "/add/childId/:childId" [] add-person-from-child)
-           (GET "/addPerson" [] add-person-get)
+           (GET "/addPerson" [] add-person/add-person-from-none)
            (GET "/find" [] find-person)
            (POST "/add/process" [] add-person-process)
            ))
