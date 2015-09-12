@@ -79,7 +79,7 @@ var ProfileView = React.createClass({
               Tên
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="name" type="text" value=""/>
+              <input className="form-control" name="name" type="text"/>
             </div>
           </div>
 
@@ -88,7 +88,7 @@ var ProfileView = React.createClass({
               Ngày sinh
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-birthdate-input" name="birthdate" type="text" value=""/>
+              <input className="form-control js-birthdate-input" name="birthdate" type="text"/>
             </div>
           </div>
 
@@ -106,7 +106,7 @@ var ProfileView = React.createClass({
               Ngày mất
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-deathdate-input" name="deathdate" type="text" value=""/>
+              <input className="form-control js-deathdate-input" name="deathdate" type="text" />
             </div>
           </div>
 
@@ -124,7 +124,7 @@ var ProfileView = React.createClass({
               Điện thoại
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="phone" type="text" value=""/>
+              <input className="form-control" name="phone" type="text" />
             </div>
           </div>
 

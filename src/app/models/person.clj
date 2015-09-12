@@ -24,13 +24,20 @@
    :dead "dead"
    :unknown "unknown"})
 
+(defn prepare-data
+  [{alive_status :alive_status :as status}]
+  (if alive_status
+    (assoc status :alive_status (db-util/str->pgobject "person_alive_status_enum" alive_status))
+    status))
+
 (defentity person
   (table :tbl_person)
   (pk :id)
   (transform (fn [{picture :picture :as p}]
                (if picture
                  p
-                 (assoc p :picture (:default-person-image config))))))
+                 (assoc p :picture (:default-person-image config)))))
+  (prepare prepare-data))
 
 (def pg-validation
   (vl/validation-set))
@@ -127,7 +134,7 @@
              (.setValue gender)))
          genders)]
     (->> (where {:gender [in gender-pg]})
-       (select person))))
+         (select person))))
 
 (defn count-parent [person-id]
   (let [[result] (neo4j/execute-statement query/count-parent person-id)

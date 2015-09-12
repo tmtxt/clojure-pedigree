@@ -66,6 +66,7 @@ var ParentView = React.createClass({
         <div className="parent-body">
           <ul>
             <li>
+              <input name="fatherId" type="hidden" value={this.state.father.id}/>
               <div className="parent-image people-image">
                 <img className="img-responsive img-rounded" alt="" src={this.state.father.picture}/>
               </div>
@@ -81,6 +82,7 @@ var ParentView = React.createClass({
               </div>
             </li>
             <li>
+              <input name="motherId" type="hidden" value={this.state.mother.id}/>
               <div className="parent-image people-image">
                 <img className="img-responsive img-rounded" alt="" src={this.state.mother.picture}/>
               </div>

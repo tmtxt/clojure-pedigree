@@ -55,7 +55,7 @@
            (GET  "/add/childId/:childId"     [] add-person/add-person-from-child)
            (GET  "/add/person"               [] add-person/add-person-from-none)
            (GET  "/find/list/simple"         [] find-person/find-list-simple)
-           (POST "/add/process"              [] add-person-process)))
+           (POST "/add/process"              [] add-person/add-person-process)))
 
 ;; (def person-rules [{:pattern #"^/person/add.*"
 ;;                     :handler admin-access}])

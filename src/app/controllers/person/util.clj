@@ -3,7 +3,7 @@
             [app.models.person :as person]))
 
 (defn find-person-from-request [request param-name]
-  (-> request
-      (util/param param-name)
-      (util/parse-int)
-      (person/find-by-person-id)))
+  (let [param-name (keyword param-name)
+        params (util/params request)
+        param (get params param-name)]
+    (-> param util/parse-int person/find-by-person-id)))
