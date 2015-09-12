@@ -30,7 +30,7 @@
                 ;; :death_date death-date
                 :alive_status status
                 :address address
-                ;; :gender gender
+                :gender gender
                 :phone_no phone}]
     (person/add-person person)
     ))

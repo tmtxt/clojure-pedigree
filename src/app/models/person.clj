@@ -25,10 +25,15 @@
    :unknown "unknown"})
 
 (defn prepare-data
-  [{alive_status :alive_status :as status}]
-  (if alive_status
-    (assoc status :alive_status (db-util/str->pgobject "person_alive_status_enum" alive_status))
-    status))
+  [{alive-status :alive_status
+    gender :gender
+    :as data}]
+  (let [convert #(if %1 (db-util/str->pgobject %2 %1))
+        alive-status (convert alive-status "person_alive_status_enum")
+        gender (convert gender "person_gender_enum")]
+    (assoc data
+           :alive_status alive-status
+           :gender gender)))
 
 (defentity person
   (table :tbl_person)
