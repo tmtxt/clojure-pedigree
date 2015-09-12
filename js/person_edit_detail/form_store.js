@@ -14,6 +14,10 @@ function getActionLink() {
   return this.actionLink;
 }
 
+function getFromPerson() {
+  return this.fromPerson;
+}
+
 function init(opts) {
   global = require('./global.js');
 
@@ -28,6 +32,9 @@ function init(opts) {
   }
   this.actionLink = actionLink;
 
+  var fromPerson = opts.fromPerson;
+  this.fromPerson = fromPerson;
+
   return this;
 }
 
@@ -35,12 +42,14 @@ var store = {
   // data
   action: null,
   actionLink: null,
+  fromPerson: null,
 
   // funcs
   init: init,
   onAddPage: onAddPage,
   onEditPage: onEditPage,
-  getActionLink: getActionLink
+  getActionLink: getActionLink,
+  getFromPerson: getFromPerson
 };
 module.exports = store;
 

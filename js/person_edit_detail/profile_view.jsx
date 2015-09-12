@@ -34,7 +34,7 @@ var ProfileView = React.createClass({
     });
 
     return (
-      <select className="form-control" ref="statuses" onChange={this.handleStatusChange}>
+      <select name="status" className="form-control" ref="statuses" onChange={this.handleStatusChange}>
         {statuses}
       </select>
     );
@@ -57,7 +57,7 @@ var ProfileView = React.createClass({
     });
 
     return (
-      <select className="form-control">
+      <select className="form-control" name="gender">
         {genders}
       </select>
     );
@@ -79,7 +79,7 @@ var ProfileView = React.createClass({
               Tên
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="" type="text" value=""/>
+              <input className="form-control" name="name" type="text" value=""/>
             </div>
           </div>
 
@@ -88,7 +88,7 @@ var ProfileView = React.createClass({
               Ngày sinh
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-birthdate-input" name="" type="text" value=""/>
+              <input className="form-control js-birthdate-input" name="birthdate" type="text" value=""/>
             </div>
           </div>
 
@@ -106,7 +106,7 @@ var ProfileView = React.createClass({
               Ngày mất
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-deathdate-input" name="" type="text" value=""/>
+              <input className="form-control js-deathdate-input" name="deathdate" type="text" value=""/>
             </div>
           </div>
 
@@ -124,7 +124,7 @@ var ProfileView = React.createClass({
               Điện thoại
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="" type="text" value=""/>
+              <input className="form-control" name="phone" type="text" value=""/>
             </div>
           </div>
 
@@ -133,7 +133,7 @@ var ProfileView = React.createClass({
               Địa chỉ
             </div>
             <div className="profile-body-right">
-              <textarea className="form-control" cols="30" id="" name="" rows="3"></textarea>
+              <textarea className="form-control" cols="30" id="" name="address" rows="3"></textarea>
             </div>
           </div>
         </div>

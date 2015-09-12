@@ -41,7 +41,8 @@ global.actions.findPerson = findPersonAction;
 
 // Init
 formStore.init({
-  action: action
+  action: action,
+  fromPerson: fromPerson
 });
 pictureStore.init();
 parentStore.init({

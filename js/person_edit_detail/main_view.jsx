@@ -15,7 +15,8 @@ var Col3View = require("./col_3_view.jsx");
 var MainView = React.createClass({
   getInitialState: function() {
     return {
-      actionLink: FormStore.getActionLink()
+      actionLink: FormStore.getActionLink(),
+      fromPerson: FormStore.getFromPerson()
     };
   },
 
@@ -23,6 +24,8 @@ var MainView = React.createClass({
     return (
       <div>
         <form action={this.state.actionLink}>
+          <input name="" type="hidden" value={this.state.fromPerson}/>
+
           <HeaderView />
 
           <div className="editperson-body">
