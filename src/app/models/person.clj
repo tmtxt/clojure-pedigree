@@ -27,12 +27,17 @@
 (defn prepare-data
   [{alive-status :alive_status
     gender :gender
+    birth-date :birth_date
     :as data}]
-  (let [convert #(if %1 (db-util/str->pgobject %2 %1))
-        alive-status (convert alive-status "person_alive_status_enum")
-        gender (convert gender "person_gender_enum")]
+  (let [to-enum #(if %1 (db-util/str->pgobject %2 %1) nil)
+        to-timestamp #(if % (db-util/str->pgtimestamp %) nil)
+
+        alive-status (to-enum alive-status "person_alive_status_enum")
+        gender (to-enum gender "person_gender_enum")
+        birth-date (to-timestamp birth-date)]
     (assoc data
            :alive_status alive-status
+           :birth_date birth-date
            :gender gender)))
 
 (defentity person

@@ -26,7 +26,7 @@
          phone :phone
          address :address} params
         person {:full_name full-name
-                ;; :birth_date birth-date
+                :birth_date birth-date
                 ;; :death_date death-date
                 :alive_status status
                 :address address

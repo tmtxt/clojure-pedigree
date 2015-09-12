@@ -14,6 +14,7 @@
                  [korma "0.4.2"]
                  [environ "1.0.0"]
                  [org.clojure/data.json "0.2.6"]
+                 [clj-time "0.11.0"]
                  [org.postgresql/postgresql "9.3-1100-jdbc41"]
                  [org.clojure/tools.cli "0.3.1"]
                  [org.clojure/tools.logging "0.3.1"]
