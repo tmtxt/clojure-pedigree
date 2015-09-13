@@ -68,6 +68,11 @@
     (node/find-by-props :person {:person_id (:id entity)})
     nil))
 
+(defn find-all-entities-by-ids
+  "Find all from postgres where id in ids list"
+  [ids]
+  (db-util/find-all-by-ids person ids))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn- extract-partner-ids [rows]
   (map (fn [[id]] id) rows))

@@ -23,11 +23,11 @@
   (let [children-path (rest path)
         continue (not (empty? children-path))
         user-id (first path)
-        tree (assoc-in tree (conj assoc-path :user-id) user-id)]
+        tree (assoc-in tree (conj assoc-path :person-id) user-id)]
     (if continue
       (let [children (get-in tree (conj assoc-path :children) [])
             child-id (second path)
-            child-set (filter (fn [child] (= (:user-id child) child-id)) children)
+            child-set (filter (fn [child] (= (:person-id child) child-id)) children)
             child (if (empty? child-set) {} (first child-set))
             idx (if (empty? child-set) (count children) (.indexOf children child))
             child-assoc-path (conj assoc-path :children idx)
@@ -65,19 +65,21 @@
     person-info))
 
 (defn- get-tree-from-node [root & [depth]]
-  (let [rows (query-tree (:user_id root) depth)
+  (let [rows (query-tree (:person-id root) depth)
         paths (map (fn [[path _ marriage last_order]] [path marriage last_order]) rows)
         ids (extract-ids paths)
-        person-rows (person/find-all-by-ids ids)
+        person-rows (person/find-all-entities-by-ids ids)
         person-info (extract-person-info person-rows)
-        init-tree root]
-    (extract-tree paths init-tree person-info)))
+        init-tree root
+        ]
+    (extract-tree paths init-tree person-info)
+    ))
 
-(defn get-tree
+(defn get-tree2
   "Get tree from user id"
   ([]
    (neo4j/with-transaction
-     (let [root-node (person/find-root-node)]
+     (let [root-node (-> (person/find-root) (:node))]
        (get-tree-from-node root-node default-depth))))
 
   ([user-id]
@@ -90,3 +92,18 @@
    (neo4j/with-transaction
      (let [root-node (person/find-node-by-user-id user-id)]
        (get-tree-from-node root-node depth)))))
+
+(defn get-tree
+  "Get tree from person id"
+  ([]
+   (neo4j/with-transaction
+     (let [find-root (person/find-root :include-node true :include-partners true)
+           root-node (:node find-root)
+           root-node (assoc root-node :info (:entity find-root))
+           root-node (assoc root-node :marriage (:partners find-root))]
+       (get-tree-from-node root-node default-depth))))
+
+  ([person-id]
+   (neo4j/with-transaction
+     (let [root-node (-> {:id person-id} (person/find-person-by :include-node true) :node)]
+       (println root-node)))))

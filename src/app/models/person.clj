@@ -10,7 +10,10 @@
             [config.main :refer [config]]
             [slingshot.slingshot :refer [throw+ try+]]
             [app.models.pedigreeRelation :as prl]
-            [app.models.marriageRelation :as mrl]))
+            [app.models.marriageRelation :as mrl]
+            [app.models.person.definition :as definition]
+            [app.models.person.add :as add]
+            [app.models.person.find :as find]))
 
 (def GENDERS_MAP
   {:male "male"
@@ -24,61 +27,16 @@
    :dead "dead"
    :unknown "unknown"})
 
-(defn prepare-data
-  [{alive-status :alive_status
-    gender :gender
-    birth-date :birth_date
-    :as data}]
-  (let [to-enum #(if %1 (db-util/str->pgobject %2 %1) nil)
-        to-timestamp #(if % (db-util/str->pgtimestamp %) nil)
+(def person definition/person)
 
-        alive-status (to-enum alive-status "person_alive_status_enum")
-        gender (to-enum gender "person_gender_enum")
-        birth-date (to-timestamp birth-date)]
-    (assoc data
-           :alive_status alive-status
-           :birth_date birth-date
-           :gender gender)))
+(def add-person add/add-person)
 
-(defentity person
-  (table :tbl_person)
-  (pk :id)
-  (transform (fn [{picture :picture :as p}]
-               (if picture
-                 p
-                 (assoc p :picture (:default-person-image config)))))
-  (prepare prepare-data))
+(def find-person-by find/find-person-by)
+(def find-root find/find-root)
+(def find-all-entities-by-ids find/find-all-entities-by-ids)
 
-(def pg-validation
-  (vl/validation-set))
 
-(def neo4j-validation
-  (vl/validation-set
-   (vl/presence-of :user_id)
-   (vl/validate-by :user_id #(db-util/exists? person {:id %}) :message "User Id not exist")))
 
-(defn add-person-node
-  "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
-  [person-entity & {:keys [is-root]
-                    :or {is-root false}}]
-  (let [person-node (node/create-or-update
-                     :person
-                     {:user_id (person-entity :id)}
-                     {:is_root is-root})]
-    {:success true
-     :person person-entity
-     :node person-node}))
-
-(defn add-person
-  "Add new person into postgres and neo4j"
-  [person-map & {:keys [is-root]
-                 :or {is-root false}}]
-  (let [errors (pg-validation person-map)]
-    (if (empty? errors)
-      (let [new-person (insert person (values person-map))]
-        (add-person-node new-person :is-root is-root))
-      {:success false
-       :errors errors})))
 
 (defn find-node-by-user-id
   "Find the node from neo4j using the input user id"
