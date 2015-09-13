@@ -2,6 +2,7 @@
   (:require [app.util.db-util :as db-util]
             [korma.core :as kc]
             [camel-snake-kebab.core :refer :all]
+            [app.models.person.util :as model-util]
             [camel-snake-kebab.extras :refer [transform-keys]]
             [config.main :refer [config]]))
 
@@ -23,9 +24,6 @@
 (def NodeProps (PersonNode/getBasis))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn- record-to-entity [record]
-  (transform-keys ->snake_case record))
-
 ;;; transform data from clojure data to pg data when insert/update
 (defn- prepare-data
   [{alive-status :alive-status
@@ -42,7 +40,7 @@
            :alive-status alive-status
            :birth-date birth-date
            :gender gender)]
-    (record-to-entity data)))
+    (model-util/camel-keys->snake-keys data)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn- entity-to-record
