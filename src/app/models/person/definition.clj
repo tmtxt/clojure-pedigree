@@ -17,7 +17,7 @@
 
 ;;; for neo4j result
 (defrecord PersonNode
-    [person-id is-root])
+    [person-id is-root user-id])
 
 ;;; props list
 (def EntityProps (PersonEntity/getBasis))
@@ -44,7 +44,7 @@
     (model-util/camel-keys->snake-keys data)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn- entity-to-record
+(defn entity-to-record
   "Convert korma entity to PersonEntity record"
   [entity]
   (let [entity (transform-keys ->kebab-case entity)]
@@ -67,3 +67,9 @@
   (kc/pk :id)
   (kc/transform transform-data)
   (kc/prepare prepare-data))
+
+(defn node-to-record
+  "Convert node to PersonNode record"
+  [node]
+  (let [node (transform-keys ->kebab-case node)]
+    (map->PersonNode node)))

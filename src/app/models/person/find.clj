@@ -4,7 +4,7 @@
             [app.neo4j.node :as node]
             [app.neo4j.main :as neo4j]
             [app.neo4j.query :as query]
-            [app.models.person.definition :refer [person]]
+            [app.models.person.definition :refer [person node-to-record]]
             [app.models.person.util :as model-util]
             [app.models.person.prepare :as prepare]
             [camel-snake-kebab.extras :refer [transform-keys]]
@@ -104,3 +104,25 @@
            :entity person-entity
            :node person-node
            :partners partners)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+(defn find-root-node
+  "Find the root node from neo4j"
+  []
+  (let [[result] (neo4j/execute-statement query/find-root)
+        data (-> result :data)
+        rows (map #(:row %) data)
+        row (first rows)
+        [root] row]
+    (node-to-record root)))
+
+(defn find-root
+  [& {:keys [include-node include-partners]
+      :or {include-node false
+           include-partners false}}]
+  (let [root-node (find-root-node)
+        root-person (find-person-by {:id (:person-id root-node)} :include-partners include-partners)
+        root-person (if include-node (assoc root-person :node root-node) root-person)]
+    root-person
+    ))
