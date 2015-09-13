@@ -1,16 +1,15 @@
 (ns app.models.person.validation
   (:require [validateur.validation :as vl]
             [clj-time.format :as f]
-            [clj-time.coerce :as c]))
-
-(def vn-time-formatter (f/formatter "dd/MM/yyyy"))
+            [clj-time.coerce :as c]
+            [app.util.datetime :as datetime-util]))
 
 (defn- validate-date-time [date-time-string]
   (if (nil? date-time-string)
     true
     (try
       (do
-        (f/parse vn-time-formatter date-time-string)
+        (f/parse datetime-util/vn-time-formatter date-time-string)
         true)
       (catch Exception e false))
     ))
