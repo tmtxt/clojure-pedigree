@@ -14,7 +14,7 @@
       (catch Exception e false))
     ))
 
-(def pg-validation
+(def validate-person-data
   (vl/validation-set
    (vl/validate-by :birth-date validate-date-time
                    :message "wrong format")
