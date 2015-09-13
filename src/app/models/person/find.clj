@@ -3,6 +3,7 @@
             [app.util.db-util :as db-util]
             [app.neo4j.node :as node]
             [app.neo4j.main :as neo4j]
+            [app.neo4j.query :as query]
             [app.models.person.definition :refer [person]]
             [app.models.person.util :as model-util]
             [app.models.person.prepare :as prepare]
@@ -52,27 +53,54 @@
                       criteria)]
     (model-util/camel-keys->snake-keys criteria)))
 
-(defn find-entity [criteria]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn find-all-entity [criteria]
   (->> criteria
        (process-criteria)
        (kc/where)
-       (kc/select person)
-       (first)))
+       (kc/select person)))
+
+(defn find-entity [criteria]
+  (-> criteria find-all-entity first))
 
 (defn find-node-from-entity [entity]
   (if entity
     (node/find-by-props :person {:person_id (:id entity)})
     nil))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn- extract-partner-ids [rows]
+  (map (fn [[id]] id) rows))
+
+(defn- extract-partner-id-order [rows]
+  (reduce (fn [id-order [id order]] (assoc id-order id order)) {} rows))
+
+(defn- combine-partner-info [id-order partners]
+  (map (fn [partner] (assoc partner :order (get id-order (:id partner)))) partners))
+
+(defn find-partners-of-entity
+  "Find all partners information of the input person"
+  [entity]
+  (let [[result] (neo4j/execute-statement query/find-partner (:id entity))
+        data (-> result :data)
+        partners-list (map #(:row %) data)
+        ids (extract-partner-ids partners-list)
+        partners-id-order (extract-partner-id-order partners-list)
+        partners-rows (db-util/find-all-by-ids person ids)
+        partners-info (combine-partner-info partners-id-order partners-rows)]
+    partners-info))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; you should use this function
 (defn find-person-by
-  [criteria & {:keys [include-node include-marriage]
+  [criteria & {:keys [include-node include-partners]
                :or {include-node false
-                    include-marrage false}}]
+                    include-partners false}}]
   (let [result {}
         person-entity (find-entity criteria)
-        person-node (if include-node (find-node-from-entity person-entity) nil)]
+        person-node (if include-node (find-node-from-entity person-entity) nil)
+        partners (if include-partners (find-partners-of-entity person-entity))]
     (assoc result
            :entity person-entity
-           :node person-node)
-    ))
+           :node person-node
+           :partners partners)))
