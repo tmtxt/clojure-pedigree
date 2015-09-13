@@ -30,12 +30,9 @@
     gender :gender
     birth-date :birth-date
     :as data}]
-  (let [to-enum #(if %1 (db-util/str->pgobject %2 %1) nil)
-        to-timestamp #(if % (db-util/str->pgtimestamp %) nil)
-
-        alive-status (to-enum alive-status "person_alive_status_enum")
-        gender (to-enum gender "person_gender_enum")
-        birth-date (to-timestamp birth-date)
+  (let [alive-status (db-util/str->pgobject "person_alive_status_enum" alive-status)
+        gender (db-util/str->pgobject "person_gender_enum" gender)
+        birth-date (db-util/str->pgtimestamp birth-date)
         data (assoc data
            :alive-status alive-status
            :birth-date birth-date

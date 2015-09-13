@@ -7,19 +7,20 @@
 (defn str->pgobject
   "Convert string into pgobject. Used for transform"
   [type value]
-  (doto (PGobject.)
-    (.setType type)
-    (.setValue value)))
+  (if type (doto (PGobject.)
+             (.setType type)
+             (.setValue value)) type))
 
 (def vn-time-formatter (f/formatter "dd/MM/yyyy"))
 
 (defn str->pgtimestamp
   "Convert string into pbtimestamp"
   [time-string]
-  (->> time-string
-       (f/parse vn-time-formatter)
-       c/to-long
-       java.sql.Timestamp.))
+  (if time-string (->> time-string
+                       (f/parse vn-time-formatter)
+                       c/to-long
+                       java.sql.Timestamp.)
+      time-string))
 
 (defn table-empty?
   "Check if a table is empty, contains no row"
