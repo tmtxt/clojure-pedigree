@@ -7,17 +7,13 @@
             [app.controllers.person.add.from-partner :as from-partner]
             [app.controllers.person.add.from-child :as from-child]))
 
-(defn add-person-from-none [request]
-  (from-none/process-get-request request))
+(def add-person-from-none from-none/process-get-request)
 
-(defn add-person-from-parent [request]
-  (from-parent/process-get-request request))
+(def add-person-from-parent from-parent/process-get-request)
 
-(defn add-person-from-partner [request]
-  (from-partner/process-get-request request))
+(def add-person-from-partner from-partner/process-get-request)
 
-(defn add-person-from-child [request]
-  (from-child/process-get-request request))
+(def add-person-from-child from-child/process-get-request)
 
 (defn add-person-process [request]
   (let [params (util/params request)

@@ -6,4 +6,4 @@
   (let [param-name (keyword param-name)
         params (util/params request)
         param (get params param-name)]
-    (-> param util/parse-int person/find-by-person-id)))
+    (-> param util/parse-int person/find-person-by-id :entity)))

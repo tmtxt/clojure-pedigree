@@ -33,9 +33,12 @@
 
 (def find-person-by find/find-person-by)
 (def find-root find/find-root)
-(def find-all-entities-by-ids find/find-all-entities-by-ids)
-
-
+(def find-entities-by-ids find/find-entities-by-ids)
+(def find-person-by-id find/find-person-by-id)
+(def find-node-by-person-id find/find-node-by-person-id)
+(def find-entity-by-full-name find/find-entity-by-full-name)
+(def find-entities-by-genders find/find-entities-by-genders)
+(def find-partners-of-entity find/find-partners-of-entity)
 
 
 (defn find-node-by-user-id

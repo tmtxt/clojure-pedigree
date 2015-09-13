@@ -68,7 +68,7 @@
   (let [rows (query-tree (:person-id root) depth)
         paths (map (fn [[path _ marriage last_order]] [path marriage last_order]) rows)
         ids (extract-ids paths)
-        person-rows (person/find-all-entities-by-ids ids)
+        person-rows (person/find-entities-by-ids ids)
         person-info (extract-person-info person-rows)
         init-tree root
         ]

@@ -14,7 +14,9 @@
   (if full-name ['like (str "%" full-name "%")] nil))
 
 (defn- process-gender [gender]
-  (prepare/prepare-gender gender))
+  (if (vector? gender)
+    ['in (map #(prepare/prepare-gender %) gender)]
+    (prepare/prepare-gender gender)))
 
 (defn- process-alive-status [alive-status]
   (prepare/prepare-alive-status alive-status))
@@ -54,24 +56,27 @@
     (model-util/camel-keys->snake-keys criteria)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn find-all-entity [criteria]
+(defn find-entities [criteria]
   (->> criteria
        (process-criteria)
        (kc/where)
        (kc/select person)))
 
 (defn find-entity [criteria]
-  (-> criteria find-all-entity first))
+  (-> criteria find-entities first))
 
 (defn find-node-from-entity [entity]
   (if entity
     (node/find-by-props :person {:person_id (:id entity)})
     nil))
 
-(defn find-all-entities-by-ids
+(defn find-entities-by-ids
   "Find all from postgres where id in ids list"
   [ids]
   (db-util/find-all-by-ids person ids))
+
+(defn find-entities-by-genders [genders]
+  (find-entities {:gender genders}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn- extract-partner-ids [rows]
@@ -131,3 +136,16 @@
         root-person (if include-node (assoc root-person :node root-node) root-person)]
     root-person
     ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn find-person-by-id
+  [id {:keys [include-node include-partners]
+       :or {include-node false
+            include-partners false}}]
+  (find-person-by {:id id} :include-node include-node :include-partners include-partners))
+
+(defn find-node-by-person-id [id]
+  (-> id (find-person-by-id :include-node true) :node))
+
+(defn find-entity-by-full-name [full-name]
+  (-> {:full-name full-name} (find-person-by) :entity))

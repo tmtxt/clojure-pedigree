@@ -51,7 +51,7 @@
          "nil all"
          (let [person-result (create-person-from-request request)
                person-node (person-result :node)
-               father-node (person/find-node-by-user-id (:id father))
-               mother-node (person/find-node-by-user-id (:id mother))]
+               father-node (person/find-node-by-person-id (:id father))
+               mother-node (person/find-node-by-person-id (:id mother))]
            (prl/add-child father-node mother-node person-node 0)
            ))))))
