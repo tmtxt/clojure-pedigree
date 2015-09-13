@@ -20,7 +20,7 @@
   "Create new persons when the app starts if there is no person presented yet"
   []
   (when (db-util/table-empty? person-model/person)
-    (neo4j/with-transaction conn
+    (neo4j/with-transaction
       (kd/transaction
        (let [root-husband (-> {:full_name "Root Husband"
                                :picture "/assets/img/a.jpg"}
