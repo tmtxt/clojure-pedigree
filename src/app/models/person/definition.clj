@@ -3,6 +3,7 @@
             [korma.core :as kc]
             [camel-snake-kebab.core :refer :all]
             [app.models.person.util :as model-util]
+            [app.models.person.prepare :as prepare]
             [camel-snake-kebab.extras :refer [transform-keys]]
             [config.main :refer [config]]))
 
@@ -29,13 +30,16 @@
   [{alive-status :alive-status
     gender :gender
     birth-date :birth-date
+    death-date :death-date
     :as data}]
-  (let [alive-status (db-util/str->pgobject "person_alive_status_enum" alive-status)
-        gender (db-util/str->pgobject "person_gender_enum" gender)
-        birth-date (db-util/str->pgtimestamp birth-date)
+  (let [alive-status (prepare/prepare-alive-status alive-status)
+        gender (prepare/prepare-gender gender)
+        birth-date (prepare/prepare-birth-date birth-date)
+        death-date (prepare/prepare-death-date death-date)
         data (assoc data
            :alive-status alive-status
            :birth-date birth-date
+           :death-date death-date
            :gender gender)]
     (model-util/camel-keys->snake-keys data)))
 
