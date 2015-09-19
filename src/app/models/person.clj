@@ -43,14 +43,3 @@
 (def find-partners-of-entity find/find-partners-of-entity)
 (def count-parents parent/count-parents)
 (def enough-parents? parent/enough-parents?)
-
-(defn find-by-genders [genders]
-  (let [gender-pg
-        (map
-         (fn [gender]
-           (doto (PGobject.)
-             (.setType "person_gender_enum")
-             (.setValue gender)))
-         genders)]
-    (->> (where {:gender [in gender-pg]})
-         (select person))))
