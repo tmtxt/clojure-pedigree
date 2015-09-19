@@ -139,9 +139,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn find-person-by-id
-  [id {:keys [include-node include-partners]
-       :or {include-node false
-            include-partners false}}]
+  [id & {:keys [include-node include-partners]
+         :or {include-node false
+              include-partners false}}]
   (find-person-by {:id id} :include-node include-node :include-partners include-partners))
 
 (defn find-node-by-person-id [id]

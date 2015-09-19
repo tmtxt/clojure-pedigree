@@ -13,7 +13,8 @@
             [app.models.marriageRelation :as mrl]
             [app.models.person.definition :as definition]
             [app.models.person.add :as add]
-            [app.models.person.find :as find]))
+            [app.models.person.find :as find]
+            [app.models.person.parent :as parent]))
 
 (def GENDERS_MAP
   {:male "male"
@@ -39,6 +40,8 @@
 (def find-entity-by-full-name find/find-entity-by-full-name)
 (def find-entities-by-genders find/find-entities-by-genders)
 (def find-partners-of-entity find/find-partners-of-entity)
+(def count-parents parent/count-parents)
+(def enough-parents? parent/enough-parents?)
 
 
 (defn find-node-by-user-id
@@ -106,12 +109,3 @@
          genders)]
     (->> (where {:gender [in gender-pg]})
          (select person))))
-
-(defn count-parent [person-id]
-  (let [[result] (neo4j/execute-statement query/count-parent person-id)
-        data (:data result)
-        count (-> data first :row first)]
-    count))
-
-(defn enough-parent? [person-id]
-  (= (count-parent person-id) 2))

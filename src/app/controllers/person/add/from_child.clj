@@ -8,9 +8,9 @@
 (defn process-get-request [request]
   (neo4j/with-transaction
     (let [child (controller-util/find-person-from-request request "childId")]
-      (if (and child (-> child :id person/enough-parent? not))
+      (if (and child (-> child person/enough-parents? not))
         (render/render-add-page request {:action "add"
-                                    :from "child"
-                                    :child child})
+                                         :from "child"
+                                         :child child})
         (render/render-add-page request))
       )))
