@@ -80,7 +80,7 @@
     (make-display-map request genders-map)))
 
 (defn filter-person-keys [person]
-  (let [select-fn #(select-keys % [:full_name :picture :id])]
+  (let [select-fn #(select-keys % [:full-name :picture :id])]
     (select-fn person)))
 
 (defn filter-parent-keys

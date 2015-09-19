@@ -11,7 +11,7 @@ function getPerson() {
 exports.getPerson = getPerson;
 
 function normalizePerson(person) {
-  var fullName = person.fullName || person.full_name;
+  var fullName = person.fullName || person.full_name || person['full-name'];
 
   return {
     id: person.id,
