@@ -84,13 +84,13 @@
 
   ([user-id]
    (neo4j/with-transaction
-     (let [root-node (person/find-node-by-user-id user-id)]
+     (let [root-node (person/find-node-by-person-id user-id)]
        (get-tree-from-node root-node default-depth))))
 
   ([user-id & {:keys [depth]
                :or [depth default-depth]}]
    (neo4j/with-transaction
-     (let [root-node (person/find-node-by-user-id user-id)]
+     (let [root-node (person/find-node-by-person-id user-id)]
        (get-tree-from-node root-node depth)))))
 
 (defn get-tree

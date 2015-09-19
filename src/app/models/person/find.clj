@@ -78,6 +78,9 @@
 (defn find-entities-by-genders [genders]
   (find-entities {:gender genders}))
 
+(defn find-entities-by-full-name [full-name]
+  (find-entities {:full-name full-name}))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn- extract-partner-ids [rows]
   (map (fn [[id]] id) rows))

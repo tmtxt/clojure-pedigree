@@ -18,36 +18,6 @@
             [app.controllers.person.add :as add-person]
             [app.controllers.person.find :as find-person]))
 
-(defn- find-person-from-request [request param-name]
-  (-> request
-      (util/param param-name)
-      (util/parse-int)
-      (person/find-by-person-id)))
-
-(defn add-from-parent-process [request]
-  "parent"
-  )
-
-(defn add-from-partner-process [request]
-  "partner")
-
-(defn add-from-child-process [request]
-  "child")
-
-(defn add-from-none-process [request]
-  "none")
-
-(defn add-person-process [request]
-  (neo4j/with-transaction
-    (let [params (util/params request)
-          {from-person :fromPerson} params]
-      (case from-person
-        "parent" (add-from-parent-process request)
-        "child" (add-from-child-process request)
-        "partner" (add-from-partner-process request)
-        (add-from-none-process request))
-      )))
-
 (def person-routes
   (context "/person" []
            (GET  "/add/parentId/:parentId"   [] add-person/add-person-from-parent)

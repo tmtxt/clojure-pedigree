@@ -31,7 +31,7 @@
           (response partners))
 
         term
-        (let [all (-> term person/find-by-name person-util/filter-persons-keys)]
+        (let [all (-> term person/find-entities-by-full-name person-util/filter-persons-keys)]
           (response all))
 
         :else
