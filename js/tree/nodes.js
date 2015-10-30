@@ -6,6 +6,7 @@ var d3 = require('d3');
 var Render = require('./render.js');
 var Util = require('./util.js');
 var Marriage = require('./marriage');
+var Modal = require('./modal.jsx');
 
 // Variables
 var id = 0;
@@ -54,7 +55,7 @@ function appendCircles(page, nodeEnter) {
 function appendNames(page, nodeEnter) {
   // Person name
   nodeEnter.append("svg:text")
-    .text(function(d) { return d.info.full_name; })
+    .text(function(d) { return d.info["full-name"]; })
     .attr("y", -19)
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
@@ -72,7 +73,7 @@ function appendImages(page, nodeEnter) {
     .attr("height", "40px")
     .attr("width", "40px")
     .on('click', function(d){
-      // Util.showInfoModal(d.id);
+      Modal.showPersonInfo(d.info);
     });
 }
 
