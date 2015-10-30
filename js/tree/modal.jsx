@@ -7,7 +7,7 @@ var PersonModal = React.createClass({
   render: function() {
     return (
       <div className="modal fade js-person-info-modal" tabIndex="-1" role="dialog">
-        <div className="modal-dialog" role="document">
+        <div className="modal-dialog modal-sm" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
