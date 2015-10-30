@@ -1,4 +1,5 @@
 (ns app.models.person
+  (:import [org.postgresql.util PGobject])
   (:require [korma.core :refer :all]
             [app.util.dbUtil :as db-util]
             [app.neo4j.main :as neo4j]
@@ -6,9 +7,14 @@
             [app.neo4j.query :as query]
             [app.neo4j.relation :as relation]
             [validateur.validation :as vl]
+            [config.main :refer [config]]
             [slingshot.slingshot :refer [throw+ try+]]
             [app.models.pedigreeRelation :as prl]
-            [app.models.marriageRelation :as mrl]))
+            [app.models.marriageRelation :as mrl]
+            [app.models.person.definition :as definition]
+            [app.models.person.add :as add]
+            [app.models.person.find :as find]
+            [app.models.person.parent :as parent]))
 
 (def GENDERS_MAP
   {:male "male"
@@ -17,87 +23,118 @@
    :les "les"
    :unknown "unknown"})
 
-(defentity person
-  (table :tbl_person)
-  (pk :id))
+(def STATUSES_MAP
+  {:alive "alive"
+   :dead "dead"
+   :unknown "unknown"})
 
-(def pg-validation
-  (vl/validation-set))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Person Korma entity definition
+(def person definition/person)
 
-(def neo4j-validation
-  (vl/validation-set
-   (vl/presence-of :user_id)
-   (vl/validate-by :user_id #(db-util/exists? person {:id %}) :message "User Id not exist")))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Functions for adding person
 
-(defn add-person-node
-  "Add person node into neo4j using the person entity, optionally specify keyword is-root of the system"
-  [person-entity & {:keys [is-root]
-                    :or {is-root false}}]
-  (let [person-node (node/create-or-update
-                     :person
-                     {:user_id (person-entity :id)}
-                     {:is_root is-root})]
-    {:success true
-     :person person-entity
-     :node person-node}))
+;;; Add one person to the system
+;;; Required params
+;;; person-data: PersonEntity or {}
+;;; Keyword params
+;;; :is-root - whether this person is root or not, default is false
+;;; Return type
+;;; {:success success-or-not
+;;;  :entity  PersonEntity
+;;;  :node    PersonNode}
+(def add-person add/add-person)
 
-(defn add-person
-  "Add new person into postgres and neo4j"
-  [person-map & {:keys [is-root]
-                 :or {is-root false}}]
-  (let [errors (pg-validation person-map)]
-    (if (empty? errors)
-      (let [new-person (insert person (values person-map))]
-        (add-person-node new-person :is-root is-root))
-      {:success false
-       :errors errors})))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Functions for finding person(s)
 
-(defn find-node-by-user-id
-  "Find the node from neo4j using the input user id"
-  [user-id]
-  (node/find-by-props :person {:user_id user-id}))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Find one person
 
-(defn find-all-by-ids
-  "Find all from postgres where id in ids list"
-  [ids]
-  (db-util/find-all-by-ids person ids))
+;;;;;;;;;;;;;;;;;;;;
+;;; Find one person with multiple information, default is to return the entity
+;;; information only
+;;; The first param of each function is the criteria (depending on each
+;;; function, the criteria will be vary of types)
+;;; The rest of the params are keyword params for additional data returned by
+;;; the query
+;;; :include-node     - include the neo4j node
+;;; :include-partners - include the partners entities
+;;; The return value is a map
+;;; {:entity   the-entity-data
+;;;  :node     the-neo4j-node
+;;;  :partners the-partners-entities-as-vector}
 
-(defn find-by-person-id
-  "Find the info of the person from postgres with the person id"
-  [id]
-  (db-util/find-by-id person id))
+;;; General find person function
+;;; Required Params
+;;; criteria: {}
+;;; Keyword params
+;;; :include-node
+;;; :include-partners
+(def find-person-by find/find-person-by)
 
-(defn find-root-node
-  "Find the root node from neo4j"
-  []
-  (let [[result] (neo4j/execute-statement query/find-root)
-        data (-> result :data)
-        rows (map #(:row %) data)
-        row (first rows)
-        [root marriage] row
-        info (db-util/find-by-id person (:user_id root))
-        root-person (assoc root :marriage (find-all-by-ids marriage))
-        root-person (assoc root-person :info info)]
-    root-person))
+;;; Find root person
+;;; Keyword params
+;;; :include-node
+;;; :include-partners
+(def find-root find/find-root)
 
-(defn- extract-partner-ids [rows]
-  (map (fn [[id]] id) rows))
+;;; Find person by id
+;;; Required params
+;;; id: int
+;;; Keyword params
+;;; :include-node
+;;; :include-partners
+(def find-person-by-id find/find-person-by-id)
 
-(defn- extract-partner-id-order [rows]
-  (reduce (fn [id-order [id order]] (assoc id-order id order)) {} rows))
+;;;;;;;;;;;;;;;;;;;;
+;;; Find entity only
 
-(defn- combine-partner-info [id-order partners]
-  (map (fn [partner] (assoc partner :order (get id-order (:id partner)))) partners)
-  )
+;;; Required Params
+;;; full-name: string
+(def find-entity-by-full-name find/find-entity-by-full-name)
 
-(defn find-partners
-  "Find all partners information of the input person"
-  [person-id]
-  (let [[result] (neo4j/execute-statement query/find-partner person-id)
-        data (-> result :data)
-        partners-list (map #(:row %) data)
-        ids (extract-partner-ids partners-list)
-        partners-id-order (extract-partner-id-order partners-list)
-        partners-rows (find-all-by-ids ids)
-        partners-info (combine-partner-info partners-id-order partners-rows)]
-    partners-info))
+;;;;;;;;;;;;;;;;;;;;
+;;; Find node only
+
+;;; Find node by person is
+;;; Required Params
+;;; id: int
+(def find-node-by-person-id find/find-node-by-person-id)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Find multiple persons
+
+;;; Find all entities by the list of id
+;;; Required Params
+;;; ids: [int]
+(def find-entities-by-ids find/find-entities-by-ids)
+
+;;; Find all entities by full name
+;;; Required Params
+;;; full-name: string
+(def find-entities-by-full-name find/find-entities-by-full-name)
+
+;;; Find all entities by genders
+;;; Required Params
+;;; genders: [string]
+(def find-entities-by-genders find/find-entities-by-genders)
+
+;;; Find all partners entity of one entity
+;;; Required Params
+;;; entity: PersonEntity
+(def find-partners-of-entity find/find-partners-of-entity)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Util functions
+
+;;; Count parent of one entity
+;;; Required Params
+;;; entity: PersonEntity
+(def count-parents parent/count-parents)
+
+;;; Whether this entity has enough parent?
+;;; Required Params
+;;; entity: PersonEntity
+(def enough-parents? parent/enough-parents?)

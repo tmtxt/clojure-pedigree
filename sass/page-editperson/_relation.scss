@@ -1,0 +1,53 @@
+.page-editperson {
+  /* relation column general */
+  .editperson-body {
+    .editperson-col-3 {
+      flex: 2 2 0;
+    }
+  }
+
+  /* parent select */
+  .editperson-body {
+    .editperson-col-3 {
+      /* title */
+      .parent-title {
+        @include editperson-title;
+      }
+
+      .parent-help {
+        padding-top: 10px;
+      }
+
+      /* body */
+      .parent-body {
+        ul {
+          @include editperson-people-list;
+        }
+      }
+    }
+  }
+
+  /* family select */
+  .editperson-body {
+    .editperson-col-3 {
+      /* title */
+      .family-title {
+        @include editperson-title;
+      }
+
+      /* help text */
+      .family-help {
+        padding-top: 10px;
+      }
+
+      /* body */
+      .family-body {
+        .family-list {
+          ul.partner-list {
+            @include editperson-people-list;
+          }
+        }
+      }
+    }
+  }
+}

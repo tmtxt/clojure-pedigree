@@ -1,6 +1,8 @@
 (ns app.util.dbUtil
   (:import [org.postgresql.util PGobject])
-  (:require [korma.core :as kc]))
+  (:require [korma.core :as kc]
+            [clj-time.format :as f]
+            [clj-time.coerce :as c]))
 
 (defn str->pgobject
   "Convert string into pgobject. Used for transform"
@@ -8,6 +10,16 @@
   (doto (PGobject.)
     (.setType type)
     (.setValue value)))
+
+(def vn-time-formatter (f/formatter "dd/MM/yyyy"))
+
+(defn str->pgtimestamp
+  "Convert string into pbtimestamp"
+  [time-string]
+  (->> time-string
+       (f/parse vn-time-formatter)
+       c/to-long
+       java.sql.Timestamp.))
 
 (defn table-empty?
   "Check if a table is empty, contains no row"
@@ -53,3 +65,6 @@
   [entity where]
   (-> (find-all-by-attrs entity where)
       (first)))
+
+(defn find-all [entity]
+  (kc/select entity))

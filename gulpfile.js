@@ -19,6 +19,7 @@ var minify = require('gulp-minify-css');
 var babelify = require("babelify");
 var deasync = require('deasync');
 var rev = require('git-rev');
+var reactify = require('reactify');
 
 // bower
 gulp.task('bower', function(cb){
@@ -60,6 +61,7 @@ function createBundler(mode) {
 
     // transform
     // b.transform(babelify);
+    b.transform(reactify);
     b.transform(shimify);
 
     return b.bundle();

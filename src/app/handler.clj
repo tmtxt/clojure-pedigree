@@ -7,6 +7,7 @@
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [compojure.route :as route]
 
             [app.controllers.home :refer [home-routes home-rules]]
@@ -51,5 +52,6 @@
       (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
       (wrap-authentication authentication-backend)
       (wrap-params)
+      (wrap-multipart-params)
       (wrap-session)
       (wrap-json-response)))

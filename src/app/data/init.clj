@@ -20,51 +20,51 @@
   "Create new persons when the app starts if there is no person presented yet"
   []
   (when (db-util/table-empty? person-model/person)
-    (neo4j/with-transaction conn
+    (neo4j/with-transaction
       (kd/transaction
-       (let [root-husband (-> {:full_name "Root Husband"
+       (let [root-husband (-> {:full-name "Root Husband"
                                :picture "/assets/img/a.jpg"}
                               (person-model/add-person :is-root true) (:node))
-             root-wife    (-> {:full_name "Root Wife"
+             root-wife    (-> {:full-name "Root Wife"
                                :picture "/assets/img/b.jpg"}
                               (person-model/add-person) (:node))
 
-             f2-1-husband (-> {:full_name "F2-1-Husband"
+             f2-1-husband (-> {:full-name "F2-1-Husband"
                                :picture "/assets/img/c.jpg"}
                               (person-model/add-person) (:node))
-             f2-1-wife-1  (-> {:full_name "F2-1-Wife-1"
+             f2-1-wife-1  (-> {:full-name "F2-1-Wife-1"
                                :picture "/assets/img/d.jpg"}
                               (person-model/add-person) (:node))
-             f2-1-wife-2  (-> {:full_name "F2-1-Wife-2"
+             f2-1-wife-2  (-> {:full-name "F2-1-Wife-2"
                                :picture "/assets/img/e.jpg"}
                               (person-model/add-person) (:node))
-             f2-2-husband (-> {:full_name "F2-2-husband"
+             f2-2-husband (-> {:full-name "F2-2-husband"
                                :picture "/assets/img/g.jpg"}
                               (person-model/add-person) (:node))
-             f2-3-husband (-> {:full_name "F2-3-husband"
+             f2-3-husband (-> {:full-name "F2-3-husband"
                                :picture "/assets/img/h.jpg"}
                               (person-model/add-person) (:node))
-             f2-3-wife    (-> {:full_name "F2-3-wife"
+             f2-3-wife    (-> {:full-name "F2-3-wife"
                                :picture "/assets/img/i.jpg"}
                               (person-model/add-person) (:node))
 
-             f3-1-wife    (-> {:full_name "F3-1-wife"
+             f3-1-wife    (-> {:full-name "F3-1-wife"
                                :picture "/assets/img/j.jpg"}
                               (person-model/add-person) (:node))
-             f3-1-husband (-> {:full_name "F3-1-husband"
+             f3-1-husband (-> {:full-name "F3-1-husband"
                                :picture "/assets/img/k.jpg"}
                               (person-model/add-person) (:node))
-             f3-2-husband (-> {:full_name "F3-2-Husband"
+             f3-2-husband (-> {:full-name "F3-2-Husband"
                                :picture "/assets/img/l.jpg"}
                               (person-model/add-person) (:node))
-             f3-3-husband (-> {:full_name "F3-3-Husband"
+             f3-3-husband (-> {:full-name "F3-3-Husband"
                                :picture "/assets/img/m.jpg"}
                               (person-model/add-person) (:node))
-             f3-3-wife    (-> {:full_name "F3-3-Wife"
+             f3-3-wife    (-> {:full-name "F3-3-Wife"
                                :picture "/assets/img/n.jpg"}
                               (person-model/add-person) (:node))
 
-             f4-1-husband (-> {:full_name "F4-1-Wife"
+             f4-1-husband (-> {:full-name "F4-1-Wife"
                                :picture "/assets/img/o.jpg"}
                               (person-model/add-person) (:node))
              ]
