@@ -6,7 +6,7 @@ var jquery = require("jquery");
 var PersonModal = React.createClass({
   render: function() {
     return (
-      <div className="modal fade js-person-info-modal" tabIndex="-1" role="dialog">
+      <div className="modal fade person-info-modal js-person-info-modal" tabIndex="-1" role="dialog">
         <div className="modal-dialog modal-sm" role="document">
           <div className="modal-content">
             <div className="modal-header">
@@ -16,7 +16,12 @@ var PersonModal = React.createClass({
               </h4>
             </div>
             <div className="modal-body">
-        ...
+              <div className="person-info-left">
+                Hello
+              </div>
+              <div className="person-info-right">
+                ABC
+              </div>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
