@@ -7,7 +7,7 @@ var PersonModal = React.createClass({
   render: function() {
     return (
       <div className="modal fade person-info-modal js-person-info-modal" tabIndex="-1" role="dialog">
-        <div className="modal-dialog modal-sm" role="document">
+        <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -17,15 +17,20 @@ var PersonModal = React.createClass({
             </div>
             <div className="modal-body">
               <div className="person-info-left">
-                <img className="img-responsive" alt="" src={this.props["picture"]}/>
+                <img className="img-responsive" alt="" src={this.props.picture}/>
               </div>
               <div className="person-info-right">
-                ABC
+                <div className="person-info-line">
+                  Ngày Sinh: implementing
+                </div>
+                <div className="person-info-line">
+                  Ngày Sinh: implementing
+                </div>
               </div>
             </div>
             <div className="modal-footer">
+              <a href={"/person/add/parentId/" + this.props.id} className="btn btn-primary">Add child</a>
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
