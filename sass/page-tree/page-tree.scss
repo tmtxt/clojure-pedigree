@@ -14,4 +14,23 @@
       color: $brown;
     }
   }
+
+  /* user info modal */
+  .person-info-modal {
+    .modal-body {
+      @include flex(row nowrap);
+
+      .person-info-left {
+        flex: 1 1 0;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .person-info-right {
+        flex: 2 2 0;
+      }
+    }
+  }
 }
