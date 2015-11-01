@@ -17,7 +17,7 @@ var PersonModal = React.createClass({
             </div>
             <div className="modal-body">
               <div className="person-info-left">
-                Hello
+                <img className="img-responsive" alt="" src={this.props["picture"]}/>
               </div>
               <div className="person-info-right">
                 ABC
