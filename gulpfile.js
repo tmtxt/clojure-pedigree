@@ -21,6 +21,7 @@ var deasync = require('deasync');
 var rev = require('git-rev');
 var reactify = require('reactify');
 
+////////////////////////////////////////////////////////////////////////////////
 // bower
 gulp.task('bower', function(cb){
   bower.commands.install([], {save: true}, {})
@@ -29,6 +30,7 @@ gulp.task('bower', function(cb){
     });
 });
 
+////////////////////////////////////////////////////////////////////////////////
 // browserify config
 var browserifyConfig = {
   basedir: '.',
@@ -92,19 +94,9 @@ gulp.task('js-watch', function(){
   return bundle('./js/*.js', createBundler("watch"), 'watch');
 });
 
-// error handler
-function error(err) {
-  notifier.notify({message: 'Error: ' + err.message});
-  util.log(util.colors.red('Error: ' + err.message));
-}
-
-function browserifyError(err) {
-  error(err);
-  this.end();
-}
-
+////////////////////////////////////////////////////////////////////////////////
 // sass
-gulp.task('sass-dev', ['bower'], function(){
+function sassDev() {
   return gulp.src('./sass/main.scss')
     .pipe(plumber({errorHandler: error}))
     .pipe(sourcemaps.init())
@@ -112,19 +104,31 @@ gulp.task('sass-dev', ['bower'], function(){
     .pipe(prefixer())
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./resources/public/css'));
-});
+}
 
-gulp.task('sass-prod', ['bower'], function(){
+function sassProd() {
   return gulp.src('./sass/main.scss')
     .pipe(plumber({errorHandler: error}))
     .pipe(sass())
     .pipe(prefixer())
     .pipe(minify())
     .pipe(gulp.dest('./resources/public/css'));
+}
+
+gulp.task('sass-dev', ['bower'], function(){
+  return sassDev();
+});
+
+gulp.task('sass-prod', ['bower'], function(){
+  return sassProd();
+});
+
+gulp.task('sass-dev-watch', function(){
+  return sassDev();
 });
 
 gulp.task('sass-watch', function(){
-  gulp.watch('./sass/**/*.scss', ['sass-dev']);
+  gulp.watch('./sass/**/*.scss', ['sass-dev-watch']);
 });
 
 gulp.task('symlink', ['bower'], function(){
@@ -143,6 +147,7 @@ gulp.task('symlink', ['bower'], function(){
   fs.symlinkSync(source, dest);
 });
 
+//////////////////////////////////////////////////////////////////////
 // update version
 gulp.task('update-version', function(){
   var revExec = deasync(rev.long);
@@ -166,3 +171,14 @@ gulp.task('update-version', function(){
 gulp.task('dev', ['bower', 'js-dev', 'sass-dev', 'symlink', 'update-version']);
 gulp.task('prod', ['bower', 'js-prod', 'sass-prod', 'symlink', 'update-version']);
 gulp.task('watch', ['js-watch', 'sass-watch']);
+
+// error handler
+function error(err) {
+  notifier.notify({message: 'Error: ' + err.message});
+  util.log(util.colors.red('Error: ' + err.message));
+}
+
+function browserifyError(err) {
+  error(err);
+  this.end();
+}
