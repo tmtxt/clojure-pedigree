@@ -11,15 +11,16 @@ var uglify = require('gulp-uglify');
 var notifier = require('node-notifier');
 var util = require('gulp-util');
 var gulpif = require('gulp-if');
-var sass = require('gulp-sass');
+// var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var path = require('path');
 var prefixer = require('gulp-autoprefixer');
 var minify = require('gulp-minify-css');
 var babelify = require("babelify");
-var deasync = require('deasync');
+// var deasync = require('deasync');
 var rev = require('git-rev');
 var reactify = require('reactify');
+var through2 = require('through2');
 
 ////////////////////////////////////////////////////////////////////////////////
 // bower
@@ -40,16 +41,27 @@ var browserifyConfig = {
 // create browserify transform
 var cached = {};
 function createBundler(mode) {
-  var bundler = transform(function(filename){
+  var bundler = through2.obj(function(file, env, next){
+    var bundleFunc = function(err, res){
+      file.contents = res;
+      next(null, file);
+    };
+    var filename = file.path;
+
     var b;
     if(mode === "dev") {
       b = browserify(filename, _.extend(browserifyConfig, {debug: true}));
     } else if(mode === 'prod') {
       b = browserify(filename, browserifyConfig);
     } else if(mode === 'watch') {
-      if(cached[filename]) return cached[filename].bundle();
+      // if(cached[file.path]) {
+      //   cached[file.path].bundle(function(err, res){
+
+      //   });
+      //   return;
+      // }
       b = watchify(browserify(filename, _.extend(browserifyConfig, watchify.args, {debug: true})));
-      cached[filename] = b;
+      // cached[file.path] = b;
     }
 
     // event
@@ -57,6 +69,7 @@ function createBundler(mode) {
     if(mode === 'watch') {
       b.on('time', function(time){util.log(util.colors.green('Browserify'), filename, util.colors.blue('in ' + time + ' ms'));});
       b.on('update', function(){
+        console.log(filename);
         bundle(filename, createBundler('watch'), 'watch');
       });
     }
@@ -66,7 +79,7 @@ function createBundler(mode) {
     b.transform(reactify);
     b.transform(shimify);
 
-    return b.bundle();
+    b.bundle(bundleFunc);
   });
 
   return bundler;
@@ -168,7 +181,7 @@ gulp.task('update-version', function(){
 });
 
 // combine
-gulp.task('dev', ['bower', 'js-dev', 'sass-dev', 'symlink', 'update-version']);
+gulp.task('dev', ['bower', 'js-dev','symlink']);
 gulp.task('prod', ['bower', 'js-prod', 'sass-prod', 'symlink', 'update-version']);
 gulp.task('watch', ['js-watch', 'sass-watch']);
 
