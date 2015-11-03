@@ -54,14 +54,13 @@ function createBundler(mode) {
     } else if(mode === 'prod') {
       b = browserify(filename, browserifyConfig);
     } else if(mode === 'watch') {
-      // if(cached[file.path]) {
-      //   cached[file.path].bundle(function(err, res){
-
-      //   });
-      //   return;
-      // }
-      b = watchify(browserify(filename, _.extend(browserifyConfig, watchify.args, {debug: true})));
-      // cached[file.path] = b;
+      if(cached[file.path]) {
+        cached[file.path].bundle(bundleFunc);
+        return;
+      }
+      b = browserify(filename, _.extend(browserifyConfig, {cache: {}, packageCache: {}, debug: true}));
+      b.plugin(watchify);
+      cached[file.path] = b;
     }
 
     // event
@@ -69,7 +68,6 @@ function createBundler(mode) {
     if(mode === 'watch') {
       b.on('time', function(time){util.log(util.colors.green('Browserify'), filename, util.colors.blue('in ' + time + ' ms'));});
       b.on('update', function(){
-        console.log(filename);
         bundle(filename, createBundler('watch'), 'watch');
       });
     }

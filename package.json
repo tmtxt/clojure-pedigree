@@ -39,6 +39,7 @@
     "lodash": "^3.9.3",
     "node-notifier": "^4.2.1",
     "reactify": "^1.1.1",
+    "through2": "^2.0.0",
     "vinyl-transform": "^1.0.0",
     "watchify": "^3.6.0",
     "webpack": "^1.11.0"
