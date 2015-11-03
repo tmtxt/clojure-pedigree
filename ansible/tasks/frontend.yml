@@ -4,7 +4,7 @@
   sudo_user: "{{project_user}}"
   npm: >-
     name={{item}}
-    executable=~/.nvm/v{{nvm_node_version}}/bin/npm
+    executable=~/.nvm/versions/node/v{{nvm_node_version}}/bin/npm
     global=yes
   with_items:
     - "{{node_apps}}"
@@ -13,7 +13,7 @@
   sudo: yes
   sudo_user: "{{project_user}}"
   npm: >-
-    executable=~/.nvm/v{{nvm_node_version}}/bin/npm
+    executable=~/.nvm/versions/node/v{{nvm_node_version}}/bin/npm
     path={{project_dir}}
 
 - name: run gulp build

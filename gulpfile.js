@@ -11,7 +11,7 @@ var uglify = require('gulp-uglify');
 var notifier = require('node-notifier');
 var util = require('gulp-util');
 var gulpif = require('gulp-if');
-// var sass = require('gulp-sass');
+var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var path = require('path');
 var prefixer = require('gulp-autoprefixer');
@@ -180,8 +180,8 @@ gulp.task('update-version', function(){
 
 // combine
 gulp.task('dev', ['bower', 'js-dev','symlink']);
-gulp.task('prod', ['bower', 'js-prod', 'sass-prod', 'symlink', 'update-version']);
-gulp.task('watch', ['js-watch', 'sass-watch']);
+gulp.task('prod', ['bower', 'js-prod', 'symlink']);
+gulp.task('watch', ['js-watch']);
 
 // error handler
 function error(err) {
