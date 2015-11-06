@@ -19,6 +19,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 7474, host: 9254
   config.vm.network :forwarded_port, guest: 5432, host: 9255
 
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 2
+  end
+
+
   # provision
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "ansible/main.yml"
