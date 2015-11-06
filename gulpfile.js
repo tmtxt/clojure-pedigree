@@ -21,43 +21,7 @@ var through2 = require('through2');
 
 require('./gulp/bower.js');
 require('./gulp/browserify.js');
-
-////////////////////////////////////////////////////////////////////////////////
-// sass
-function sassDev() {
-  return gulp.src('./sass/main.scss')
-    .pipe(plumber({errorHandler: error}))
-    .pipe(sourcemaps.init())
-    .pipe(sass())
-    .pipe(prefixer())
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest('./resources/public/css'));
-}
-
-function sassProd() {
-  return gulp.src('./sass/main.scss')
-    .pipe(plumber({errorHandler: error}))
-    .pipe(sass())
-    .pipe(prefixer())
-    .pipe(minify())
-    .pipe(gulp.dest('./resources/public/css'));
-}
-
-gulp.task('sass-dev', ['bower'], function(){
-  return sassDev();
-});
-
-gulp.task('sass-prod', ['bower'], function(){
-  return sassProd();
-});
-
-gulp.task('sass-dev-watch', function(){
-  return sassDev();
-});
-
-gulp.task('sass-watch', function(){
-  gulp.watch('./sass/**/*.scss', ['sass-dev-watch']);
-});
+require('./gulp/sass.js');
 
 //////////////////////////////////////////////////////////////////////
 // update version
