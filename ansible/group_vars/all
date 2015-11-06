@@ -47,7 +47,7 @@ schemup_path: "{{project_dir}}/schema"
 # nvm
 nvm_user: "{{project_user}}"
 nvm_version: "v0.29.0"
-nvm_node_version: "5.0.0"
+nvm_node_version: "4.2.1"
 
 # web server
 ring_port: 3000

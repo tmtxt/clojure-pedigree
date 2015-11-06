@@ -9,12 +9,13 @@
   with_items:
     - "{{node_apps}}"
 
-- name: install gulp dependencies
+- name: install node dependencies
   sudo: yes
   sudo_user: "{{project_user}}"
-  npm: >-
-    executable=~/.nvm/versions/node/v{{nvm_node_version}}/bin/npm
-    path={{project_dir}}
+  command: bash -c ". ~/.nvm/nvm.sh; npm install --no-bin-links"
+  args:
+    chdir: "{{project_dir}}"
+  changed_when: false
 
 - name: run gulp build
   sudo: yes
