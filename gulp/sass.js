@@ -29,11 +29,11 @@ function sassProd() {
     .pipe(gulp.dest('./resources/public/css'));
 }
 
-gulp.task('sass-dev', ['bower'], function(){
+gulp.task('sass-dev', ['bower', 'symlink'], function(){
   return sassDev();
 });
 
-gulp.task('sass-prod', ['bower'], function(){
+gulp.task('sass-prod', ['bower', 'symlink'], function(){
   return sassProd();
 });
 
