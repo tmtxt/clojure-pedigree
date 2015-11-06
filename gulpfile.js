@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var fs = require('fs');
 var gulp = require('gulp');
-var bower = require('bower');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var shimify = require('browserify-shim');
@@ -20,14 +19,7 @@ var rev = require('git-rev');
 var reactify = require('reactify');
 var through2 = require('through2');
 
-////////////////////////////////////////////////////////////////////////////////
-// bower
-gulp.task('bower', function(cb){
-  bower.commands.install([], {save: true}, {})
-    .on('end', function(installed){
-      cb();
-    });
-});
+require('./gulp/bower.js');
 
 ////////////////////////////////////////////////////////////////////////////////
 // browserify config
