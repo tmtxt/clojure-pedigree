@@ -59,7 +59,17 @@ function selectPerson(data) {
       ajax: ajax,
       placeholder: 'Select',
       templateResult: function(person) {
-        return person["full-name"];
+        var template = "";
+        template += "";
+        template += "<span>";
+        template += '<img width="50px" height="50px" src="';
+        template += person.picture;
+        template += '" />';
+        template += person["full-name"];
+        template += "</span>";
+        template = jquery(template);
+        return template;
+        // return person["full-name"];
       },
       templateSelection: function(person) {
         return person["full-name"];
