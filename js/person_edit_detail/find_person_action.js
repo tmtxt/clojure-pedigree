@@ -27,6 +27,31 @@ function createSelectBox() {
   return selectBox;
 }
 
+function createTemplateResult(person) {
+  if (!!person.id) {
+    var template = "";
+    template += "";
+    template += "<span>";
+    template += '<img width="50px" height="50px" src="';
+    template += person.picture;
+    template += '" />';
+    template += person["full-name"];
+    template += "</span>";
+    template = jquery(template);
+    return template;
+  }
+
+  return "";
+}
+
+function createTemplateSelection(person) {
+  if (!!person.id) {
+    return person["full-name"];
+  }
+
+  return "Type name to select";
+}
+
 // Select person with modal
 // Returns a promise, resolve when finish selection, reject when not select
 function selectPerson(data) {
@@ -58,22 +83,8 @@ function selectPerson(data) {
     selectBox.select2({
       ajax: ajax,
       placeholder: 'Select',
-      templateResult: function(person) {
-        var template = "";
-        template += "";
-        template += "<span>";
-        template += '<img width="50px" height="50px" src="';
-        template += person.picture;
-        template += '" />';
-        template += person["full-name"];
-        template += "</span>";
-        template = jquery(template);
-        return template;
-        // return person["full-name"];
-      },
-      templateSelection: function(person) {
-        return person["full-name"];
-      }
+      templateResult: createTemplateResult,
+      templateSelection: createTemplateSelection
     });
     selectBox.on('select2:select', function(e){
       selectedPerson = e.params.data;
