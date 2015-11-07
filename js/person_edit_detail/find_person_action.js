@@ -29,16 +29,25 @@ function createSelectBox() {
 
 function createTemplateResult(person) {
   if (!!person.id) {
-    var template = "";
-    template += "";
-    template += "<span>";
-    template += '<img width="50px" height="50px" src="';
-    template += person.picture;
-    template += '" />';
-    template += person["full-name"];
-    template += "</span>";
-    template = jquery(template);
-    return template;
+    var div  = document.createElement('div');
+    div = jquery(div);
+    div.addClass('findperson-result-item');
+    var imgDiv  = document.createElement('div');
+    imgDiv = jquery(imgDiv);
+    imgDiv.addClass('img-rounded');
+    var img = document.createElement('img');
+    img = jquery(img);
+    img.attr('src', person.picture);
+    img.addClass('img-responsive');
+    var span = document.createElement('span');
+    span = jquery(span);
+    span.html(person['full-name']);
+
+    imgDiv.append(img);
+    div.append(imgDiv);
+    div.append(span);
+
+    return div;
   }
 
   return "";

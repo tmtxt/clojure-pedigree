@@ -3,10 +3,9 @@
 {% block content %}
 <!-- Using React for rendering this -->
 <div class="page-editperson" id="js-editperson-container">
+  {% include "person/_find_person_modal.html" %}
+  {% endblock %}
 </div>
-
-{% include "person/_find_person_modal.html" %}
-{% endblock %}
 
 {% block extra_script %}
 <script>
