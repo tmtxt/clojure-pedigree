@@ -27,6 +27,7 @@
                  [cider/cider-nrepl "0.9.1"]
                  [com.cemerick/piggieback "0.1.5"]
                  [com.rpl/specter "0.6.2"]
+                 [digest "1.4.4"]
                  ;; [com.cemerick/austin "0.1.6"]
                  [buddy "0.6.0"]
                  [log4j "1.2.15" :exclusions [javax.mail/mail
