@@ -27,3 +27,4 @@
 *.DS_Store*
 /src/app/views/version.clj
 /.lein-failures
+/resources/public/person-image
