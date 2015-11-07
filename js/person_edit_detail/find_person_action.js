@@ -27,6 +27,58 @@ function createSelectBox() {
   return selectBox;
 }
 
+function createTemplateResult(person) {
+  if (!!person.id) {
+    var div  = document.createElement('div');
+    div = jquery(div);
+    div.addClass('findperson-result-item');
+    var imgDiv  = document.createElement('div');
+    imgDiv = jquery(imgDiv);
+    imgDiv.addClass('img-rounded');
+    var img = document.createElement('img');
+    img = jquery(img);
+    img.attr('src', person.picture);
+    img.addClass('img-responsive');
+    var span = document.createElement('span');
+    span = jquery(span);
+    span.html(person['full-name']);
+
+    imgDiv.append(img);
+    div.append(imgDiv);
+    div.append(span);
+
+    return div;
+  }
+
+  return "";
+}
+
+function createTemplateSelection(person) {
+  if (!!person.id) {
+    var div  = document.createElement('div');
+    div = jquery(div);
+    div.addClass('findperson-selected-item');
+    var imgDiv  = document.createElement('div');
+    imgDiv = jquery(imgDiv);
+    imgDiv.addClass('img-rounded');
+    var img = document.createElement('img');
+    img = jquery(img);
+    img.attr('src', person.picture);
+    img.addClass('img-responsive');
+    var span = document.createElement('span');
+    span = jquery(span);
+    span.html(person['full-name']);
+
+    imgDiv.append(img);
+    div.append(imgDiv);
+    div.append(span);
+
+    return div;
+  }
+
+  return "Type name to select";
+}
+
 // Select person with modal
 // Returns a promise, resolve when finish selection, reject when not select
 function selectPerson(data) {
@@ -58,12 +110,8 @@ function selectPerson(data) {
     selectBox.select2({
       ajax: ajax,
       placeholder: 'Select',
-      templateResult: function(person) {
-        return person["full-name"];
-      },
-      templateSelection: function(person) {
-        return person["full-name"];
-      }
+      templateResult: createTemplateResult,
+      templateSelection: createTemplateSelection
     });
     selectBox.on('select2:select', function(e){
       selectedPerson = e.params.data;

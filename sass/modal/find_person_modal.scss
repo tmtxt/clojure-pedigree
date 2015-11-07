@@ -1,0 +1,47 @@
+.findperson-result-item {
+  @include flex(row nowrap);
+  align-items: center;
+  width: 100%;
+
+  div {
+    overflow: hidden;
+    height: 50px;
+    width: 50px;
+    @include flex(row nowrap);
+    align-items: center;
+    margin-right: 10px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  span {
+    font-weight: bold;
+    color: $brown;
+  }
+}
+
+.findperson-selected-item {
+  @include flex(row nowrap);
+  align-items: center;
+  width: 100%;
+
+  div {
+    overflow: hidden;
+    height: 20px;
+    width: 20px;
+    @include flex(row nowrap);
+    align-items: center;
+    margin-right: 10px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  span {
+    font-weight: bold;
+    color: $brown;
+  }
+}
