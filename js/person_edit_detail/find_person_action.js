@@ -59,10 +59,10 @@ function selectPerson(data) {
       ajax: ajax,
       placeholder: 'Select',
       templateResult: function(person) {
-        return person.full_name;
+        return person["full-name"];
       },
       templateSelection: function(person) {
-        return person.full_name;
+        return person["full-name"];
       }
     });
     selectBox.on('select2:select', function(e){

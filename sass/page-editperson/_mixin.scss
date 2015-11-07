@@ -16,6 +16,10 @@
     .people-image {
       flex: 1 1 0;
       padding-right: 10px;
+
+      img {
+        width: 100%;
+      }
     }
 
     .people-info {
