@@ -29,6 +29,7 @@ var PersonModal = React.createClass({
               </div>
             </div>
             <div className="modal-footer">
+              <a href={"/person/add/partnerId/" + this.props.id} className="btn btn-primary">Add Partner</a>
               <a href={"/person/add/parentId/" + this.props.id} className="btn btn-primary">Add child</a>
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
             </div>

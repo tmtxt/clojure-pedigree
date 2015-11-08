@@ -20,6 +20,7 @@ var PartnerView = React.createClass({
   render: function() {
     return (
       <li>
+        <input name="partnerId" type="hidden" value={this.state.partner.id}/>
         <div className="partner-image people-image">
           <img className="img-responsive img-rounded" alt="" src={this.state.partner.picture}/>
         </div>
@@ -83,9 +84,9 @@ var FamilyView = React.createClass({
 
     var addText;
     if(FamilyStore.addFromHusband()) {
-      addText = "Add Husband";
+      addText = "Add More Husband";
     } else {
-      addText = "Add Wife";
+      addText = "Add More Wife";
     }
 
     return (
@@ -101,11 +102,6 @@ var FamilyView = React.createClass({
             <ul className="partner-list">
               {partnersList}
             </ul>
-          </div>
-          <div className="family-buttons">
-            <button className="btn btn-success" onClick={this.handleAdd}>
-              {addText}
-            </button>
           </div>
         </div>
       </div>

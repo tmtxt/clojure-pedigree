@@ -62,7 +62,6 @@
 
 (defn create-person-from-request [request]
   (let [params (util/params request)
-        _ (clojure.pprint/pprint params)
         file-name (store-person-picture params)
         params (assoc params :picture file-name)
         person-data (params-to-person-data params)]

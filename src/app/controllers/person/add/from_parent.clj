@@ -4,8 +4,7 @@
             [app.controllers.person.add.render :as render]
             [app.util.person :as person-util]
             [app.controllers.person.util :as controller-util]
-            [app.models.marriageRelation :as mrl]
-            [app.models.pedigreeRelation :as prl]
+            [app.models.pedigree-relation :as prl]
             [korma.db :as kd]
             [app.util.main :as util]))
 
