@@ -5,7 +5,7 @@ you want, just include the dependencies in `project.clj`).
 To generate a basic model file
 
 ```
-$ lein run -m core.modelgen --name NAME --table TABLE --primary-key PK
+$ lein run -m command.modelgen --name NAME --table TABLE --primary-key PK
 ```
 
 - NAME: name of the model to generate (compulsory)
