@@ -4,8 +4,7 @@
             [app.controllers.person.add.render :as render]
             [app.util.person :as person-util]
             [app.controllers.person.util :as controller-util]
-            [app.models.marriageRelation :as mrl]
-            [app.models.pedigreeRelation :as prl]
+            [app.models.pedigree-relation :as prl]
             [korma.db :as kd]
             [app.util.main :as util]))
 
@@ -19,28 +18,6 @@
                                            :parent {parent-role parent}}))
         (render/render-add-page request)))))
 
-(defn params-to-person-data
-  [{full-name :name
-    birth-date :birthdate
-    status :status
-    gender :gender
-    death-date :deathdate
-    phone :phone
-    address :address}]
-
-  {:full_name full-name
-   :birth_date birth-date
-   ;; :death_date death-date
-   :alive_status status
-   :address address
-   :gender gender
-   :phone_no phone})
-
-(defn create-person-from-request [request]
-  (let [params (util/params request)
-        person-data (params-to-person-data params)]
-    (person/add-person person-data)))
-
 (defn process-post-request [request]
   (neo4j/with-transaction
     (kd/transaction
@@ -49,9 +26,12 @@
            mother (find-fn :motherId)]
        (if (every? nil? [father mother])
          "nil all"
-         (let [person-result (create-person-from-request request)
+         (let [person-result (controller-util/create-person-from-request request)
                person-node (person-result :node)
                father-node (person/find-node-by-person-id (:id father))
                mother-node (person/find-node-by-person-id (:id mother))]
-           (prl/add-child father-node mother-node person-node 0)
+           (cond
+             (nil? father) (prl/add-child-for-mother mother-node person-node 0)
+             (nil? mother) (prl/add-child-for-father father-node person-node 0)
+             :else (prl/add-child father-node mother-node person-node 0))
            ))))))

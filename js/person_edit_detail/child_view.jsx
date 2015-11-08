@@ -21,6 +21,7 @@ var ChildView = React.createClass({
 
     return (
       <div className="family-container">
+        <input name="childId" type="hidden" value={this.state.child.id}/>
         <div className="family-title">
           Child
         </div>

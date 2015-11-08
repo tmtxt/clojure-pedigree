@@ -3,6 +3,9 @@ var jquery = require('jquery');
 var _ = require('_');
 var d3 = require('d3');
 
+// Modules
+var Modal = require('./modal.jsx');
+
 // Components
 var marriageCheckbox = jquery('.js-toggle-marriage');
 
@@ -28,7 +31,7 @@ function createMarriageNode(node, data) {
     .attr("width", "40px")
     .datum(data)
     .on('click', function(d){
-      // Util.showInfoModal(d.id);
+      Modal.showPersonInfo(d);
     });
 }
 

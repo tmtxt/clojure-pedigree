@@ -7,4 +7,8 @@
 
 (def config
   {:ring-port {{ring_port}}
-   :nrepl-port {{nrepl_port}}})
+   :nrepl-port {{nrepl_port}}
+   :person-image-path "{{person_image_dir}}"
+   :person-image-path-original "{{person_image_dir}}/original"
+   :person-image-path-square "{{person_image_dir}}/square"
+   :person-image-path-small "{{person_image_dir}}/small"})

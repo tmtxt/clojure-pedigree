@@ -25,25 +25,6 @@
 (def NodeProps (PersonNode/getBasis))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; transform data from clojure data to pg data when insert/update
-(defn- prepare-data
-  [{alive-status :alive-status
-    gender :gender
-    birth-date :birth-date
-    death-date :death-date
-    :as data}]
-  (let [alive-status (prepare/prepare-alive-status alive-status)
-        gender (prepare/prepare-gender gender)
-        birth-date (prepare/prepare-birth-date birth-date)
-        death-date (prepare/prepare-death-date death-date)
-        data (assoc data
-           :alive-status alive-status
-           :birth-date birth-date
-           :death-date death-date
-           :gender gender)]
-    (model-util/camel-keys->snake-keys data)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn entity-to-record
   "Convert korma entity to PersonEntity record"
   [entity]
@@ -66,7 +47,7 @@
   (kc/table :tbl_person)
   (kc/pk :id)
   (kc/transform transform-data)
-  (kc/prepare prepare-data))
+  (kc/prepare prepare/prepare-data))
 
 (defn node-to-record
   "Convert node to PersonNode record"

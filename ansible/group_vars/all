@@ -8,6 +8,7 @@ ssl_enable: true
 site_name: "{{project_name}}"
 env: dev
 vagrant_env: false
+person_image_dir: "{{project_dir}}/resources/public/person-image"
 
 # folder for log files, build files,...
 out_dirs:
@@ -17,6 +18,10 @@ out_dirs:
   - "{{project_dir}}/scripts"               # script dir
   - "{{project_dir}}/src/config"            # clj config
   - "{{project_dir}}/password"
+  - "{{person_image_dir}}"
+  - "{{person_image_dir}}/original"
+  - "{{person_image_dir}}/small"
+  - "{{person_image_dir}}/square"
 
 node_apps:
   - bower

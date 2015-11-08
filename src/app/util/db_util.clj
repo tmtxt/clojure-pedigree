@@ -14,7 +14,7 @@
 (def vn-time-formatter (f/formatter "dd/MM/yyyy"))
 
 (defn str->pgtimestamp
-  "Convert string into pbtimestamp"
+  "Convert string into pgtimestamp"
   [time-string]
   (if time-string (->> time-string
                        (f/parse vn-time-formatter)
