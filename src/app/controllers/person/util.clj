@@ -24,7 +24,8 @@
     death-date :deathdate
     phone :phone
     picture :picture
-    address :address}]
+    address :address
+    summary :history}]
 
   {:full-name full-name
    :birth-date birth-date
@@ -33,7 +34,8 @@
    :address address
    :picture picture
    :gender gender
-   :phone_no phone})
+   :phone-no phone
+   :summary summary})
 
 (defn generate-random-name []
   (let [now (time/now)
