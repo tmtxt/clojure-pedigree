@@ -39,8 +39,6 @@ function enter(page, source, nodeGroups) {
   appendNames(page, nodeEnter);
   appendImages(page, nodeEnter);
   Marriage.appendMarriages(page, nodeEnter);
-
-  // NodeMarriage.appendMarriage(page, nodeEnter);
 }
 
 function appendCircles(page, nodeEnter) {
