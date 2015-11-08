@@ -24,10 +24,10 @@
     picture :picture
     address :address}]
 
-  {:full_name full-name
-   ;; :birth_date birth-date
-   ;; :death_date death-date
-   :alive_status status
+  {:full-name full-name
+   :birth-date birth-date
+   :death-date death-date
+   :alive-status status
    :address address
    :picture picture
    :gender gender
