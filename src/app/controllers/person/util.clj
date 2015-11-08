@@ -6,7 +6,9 @@
             [clj-time.core :as time]
             [clj-time.format :as time-format]
             [digest :refer [sha-256]]
-            [me.raynes.fs :refer [extension]]))
+            [me.raynes.fs :refer [extension]]
+            [clojure.string :refer [blank?]]
+            [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn find-person-from-request [request param-name]
   (let [param-name (keyword param-name)
@@ -39,20 +41,26 @@
         time-string (time-format/unparse time-formatter now)]
     (sha-256 time-string)))
 
-(defn store-person-picture [params]
-  (let [{{temp-file :tempfile original-name :filename} :picture} params
-        file-name (generate-random-name)
-        ext (extension original-name)
-        file-name (str file-name ext)]
-    (io/copy temp-file (io/file "resources"
-                                "public"
-                                "person-image"
-                                "original"
-                                file-name))
-    (str "/person-image/original/" file-name)))
+(defn store-person-picture [{{temp-file :tempfile original-name :filename} :picture}]
+  (try+
+   (when (nil? original-name) (throw+ nil))
+   (when (blank? original-name) (throw+ nil))
+   (let [file-name (generate-random-name)
+         ext (extension original-name)
+         file-name (str file-name ext)]
+     (io/copy temp-file (io/file "resources"
+                                 "public"
+                                 "person-image"
+                                 "original"
+                                 file-name))
+     (throw+ (str "/person-image/original/" file-name)))
+
+   (catch nil? _ nil)
+   (catch #(instance? String %) res res)))
 
 (defn create-person-from-request [request]
   (let [params (util/params request)
+        _ (clojure.pprint/pprint params)
         file-name (store-person-picture params)
         params (assoc params :picture file-name)
         person-data (params-to-person-data params)]
