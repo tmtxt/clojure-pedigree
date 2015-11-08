@@ -3,6 +3,7 @@
             [app.controllers.person.add.render :as render]
             [app.util.person :as person-util]
             [app.models.person :as person]
+            [korma.db :as kd]
             [app.controllers.person.util :as controller-util]))
 
 (defn process-get-request [request]
@@ -14,3 +15,9 @@
                                          :child child})
         (render/render-add-page request))
       )))
+
+(defn process-post-request [request]
+  (neo4j/with-transaction
+    (kd/transaction
+
+     )))

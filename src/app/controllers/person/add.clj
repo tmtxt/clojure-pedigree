@@ -21,4 +21,5 @@
         {from-person :fromPerson} params]
     (case from-person
       "parent" (from-parent/process-post-request request)
-      "partner" (from-partner/process-post-request request))))
+      "partner" (from-partner/process-post-request request)
+      "child" (from-child/process-post-request request))))
