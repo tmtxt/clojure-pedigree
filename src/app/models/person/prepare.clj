@@ -4,20 +4,20 @@
             [slingshot.slingshot :refer [try+ throw+]]
             [clojure.string :refer [blank?]]))
 
-(defn- prepare-alive-status [alive-status]
+(defn prepare-alive-status [alive-status]
   (db-util/str->pgobject "person_alive_status_enum" alive-status))
 
-(defn- prepare-gender [gender]
+(defn prepare-gender [gender]
   (db-util/str->pgobject "person_gender_enum" gender))
 
-(defn- prepare-birth-date [birth-date]
+(defn prepare-birth-date [birth-date]
   (try+
    (when (nil? birth-date) (throw+ nil))
    (when (blank? birth-date) (throw+ nil))
    (db-util/str->pgtimestamp birth-date)
    (catch nil? _ nil)))
 
-(defn- prepare-death-date [death-date]
+(defn prepare-death-date [death-date]
   (try+
    (when (nil? death-date) (throw+ nil))
    (when (blank? death-date) (throw+ nil))

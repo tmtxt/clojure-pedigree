@@ -23,7 +23,7 @@
         child    (-> child person-util/filter-person-keys json/write-str)
         partner  (-> partner person-util/filter-partner-keys json/write-str)]
     (layout/render request
-                   "person/edit_detail2.html"
+                   "person/edit_detail.html"
                    {:from from
                     :parent parent
                     :partner partner

@@ -1,143 +1,27 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
-<div class="page-editperson">
-  <div class="editperson-header">
-    <div class="editperson-title">
-      Add new person
-    </div>
-    <div class="editperson-buttons">
-      <button class="btn btn-success">Submit</button>
-      <button class="btn btn-danger">Cancel</button>
-    </div>
-  </div>
-
-  <div class="editperson-body">
-    <div class="editperson-col-1">
-      <div class="col-1-img">
-        <img class="img-responsive img-thumbnail" alt="" src="/assets/img/t.jpg"/>
-      </div>
-      <div class="col-1-buttons">
-        <button class="btn btn-success">Select</button>
-        <button class="btn btn-danger">Delete</button>
-      </div>
-    </div>
-
-    <div class="editperson-col-2">
-      <div class="profile-container js-profile-container" id="js-profile-container">
-      </div>
-
-      <div class="history-container">
-        <div class="history-header">
-          History
-        </div>
-        <div class="history-body">
-          <textarea class="form-control" cols="30" id="" name="" rows="10"></textarea>
-        </div>
-      </div>
-    </div>
-
-    <div class="editperson-col-3">
-      <div class="parent-container">
-        <div class="parent-title">
-          Parents
-        </div>
-        <div class="parent-help">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-        </div>
-        <div class="parent-body">
-          <ul>
-            <li>
-              <div class="parent-image people-image">
-                {% if params.parent.father %}
-                <img class="img-responsive img-rounded" alt="" src="{{ params.parent.father.picture }}"/>
-                {% else %}
-                <img class="img-responsive img-rounded" alt="" src="{{ config.default-person-image }}"/>
-                {% endif %}
-              </div>
-              <div class="parent-info people-info">
-                <div class="parent-name people-name">
-                  Father
-                </div>
-                <div>
-                  <a href="">Select</a>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="parent-image people-image">
-                {% if params.parent.mother %}
-                <img class="img-responsive img-rounded" alt="" src="{{ params.parent.mother.picture }}"/>
-                {% else %}
-                <img class="img-responsive img-rounded" alt="" src="{{ config.default-person-image }}"/>
-                {% endif %}
-              </div>
-              <div class="parent-info people-info">
-                <div class="parent-name people-name">
-                  Mother
-                </div>
-                <div>
-                  <a href="">Select</a>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="family-container">
-        <div class="family-title">
-          Family
-        </div>
-        <div class="family-help">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit
-        </div>
-        <div class="family-body">
-          <div class="family-list">
-            <ul class="partner-list">
-              <li>
-                <div class="partner-image people-image">
-                  <img class="img-responsive img-rounded" alt="" src="/assets/img/m.jpg"/>
-                </div>
-                <div class="partner-info people-info">
-                  <div class="partner-name people-name">
-                    Wife 1
-                  </div>
-                  <div>
-                    <a href="">Remove</a>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="partner-image people-image">
-                  <img class="img-responsive img-rounded" alt="" src="/assets/img/j.jpg"/>
-                </div>
-                <div class="partner-info people-info">
-                  <div class="partner-name people-name">
-                    Wife 2
-                  </div>
-                  <div>
-                    <a href="">Remove</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="family-buttons">
-            <button class="btn btn-success">Add</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Using React for rendering this -->
+<div class="page-editperson" id="js-editperson-container">
+  {% include "person/_find_person_modal.html" %}
+  {% endblock %}
 </div>
-{% endblock %}
 
 {% block extra_script %}
 <script>
+ // form action
+ window.formAction = "{{ params.action }}";
+
  // set display maps
  window.statuses = {{ params.statuses|safe }};
  window.genders = {{ params.genders|safe }};
+ window.parent = {{ params.parent|safe }};
+ window.partner = {{ params.partner|safe }};
+ window.child = {{ params.child|safe }};
+
+ {% if params.from %}
+   window.fromPerson = "{{ params.from }}";
+ {% endif %}
 </script>
 <script src="/js/person_edit_detail.js{{ version }}"></script>
 {% endblock %}
