@@ -1,7 +1,8 @@
 # -*- mode: conf -*-
 server {
-       server_name        {{ server_name }};
-       listen             80;
+       server_name           {{ server_name }};
+       listen                80;
+       client_max_body_size  10M;
 
        location / {
                 proxy_pass http://localhost:{{ ring_port }};

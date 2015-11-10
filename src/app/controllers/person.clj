@@ -27,8 +27,5 @@
            (GET  "/find/list/simple"         [] find-person/find-list-simple)
            (POST "/add/process"              [] add-person/add-person-process)))
 
-;; (def person-rules [{:pattern #"^/person/add.*"
-;;                     :handler admin-access}])
-
-(def person-rules [{:pattern #"^/person/them.*"
+(def person-rules [{:pattern #"^/person/add.*"
                     :handler admin-access}])

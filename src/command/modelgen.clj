@@ -1,4 +1,4 @@
-(ns core.modelgen
+(ns command.modelgen
   (:require [clojure.tools.cli :refer [parse-opts]]
             [selmer.parser :as parser]
             [clojure.string :as cljstr]))
