@@ -1,5 +1,104 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
-Hello
+<div class="page-persondetail">
+  <!-- header -->
+  <div class="persondetail-header">
+    <div class="persondetail-title">
+      Person Name
+    </div>
+    <div class="persondetail-buttons">
+      <button class="btn btn-success">Submit</button>
+      <button class="btn btn-danger">Cancel</button>
+    </div>
+  </div>
+
+  <!-- body -->
+  <div class="persondetail-body">
+    <!-- column 1 -->
+    <div class="persondetail-col-1">
+      <img class="img-responsive img-thumbnail" alt="" src="/assets/img/m.jpg" />
+    </div>
+
+    <!-- column 2 -->
+    <div class="persondetail-col-2">
+      <!-- profile view -->
+      <div class="persondetail-profile">
+        <div class="profile-header">
+          Thông tin
+        </div>
+
+        <div class="profile-body">
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Tên
+            </div>
+            <div class="profile-body-right">
+              Some name
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Ngày sinh
+            </div>
+            <div class="profile-body-right">
+              01/01/1990
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Tình trạng
+            </div>
+            <div class="profile-body-right">
+              Còn sống
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Ngày mất
+            </div>
+            <div class="profile-body-right">
+              01/01/1990
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Giới tính
+            </div>
+            <div class="profile-body-right">
+              Nam
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Điện thoại
+            </div>
+            <div class="profile-body-right">
+              0123456789
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Địa chỉ
+            </div>
+            <div class="profile-body-right">
+              B110 Chung cu huyen uy Thanh Tri Van Dien Ha Noi
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- column 3 -->
+    <div class="persondetail-col-3">
+      DEF
+    </div>
+  </div>
+</div>
 {% endblock %}
