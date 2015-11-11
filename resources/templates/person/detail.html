@@ -1,0 +1,138 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="page-persondetail">
+  <!-- header -->
+  <div class="persondetail-header">
+    <div class="persondetail-title">
+      Person Name
+    </div>
+    <div class="persondetail-buttons">
+      <button class="btn btn-success">Submit</button>
+      <button class="btn btn-danger">Cancel</button>
+    </div>
+  </div>
+
+  <!-- body -->
+  <div class="persondetail-body">
+    <!-- column 1 -->
+    <div class="persondetail-col-1">
+      <img class="img-responsive img-thumbnail" alt="" src="{{ params.person.picture }}" />
+    </div>
+
+    <!-- column 2 -->
+    <div class="persondetail-col-2">
+      <!-- profile view -->
+      <div class="persondetail-profile">
+        <div class="profile-header">
+          Thông tin
+        </div>
+
+        <div class="profile-body">
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Tên
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.full-name }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Ngày sinh
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.birth-date }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Tình trạng
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.alive-status }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Ngày mất
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.death-date }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Giới tính
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.gender }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Điện thoại
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.phone-no }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Địa chỉ
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.address }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- column 3 -->
+    <div class="persondetail-col-3">
+      <!-- parent view -->
+      <div class="persondetail-parents">
+        <div class="parent-title">
+          Cha mẹ
+        </div>
+        <div class="parent-help">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+        </div>
+        <div class="parent-body">
+          <ul>
+            <li>
+              <div class="parent-image people-image">
+                <img class="img-responsive img-rounded" alt="" src="/assets/img/t.jpg"/>
+              </div>
+              <div class="parent-info people-info">
+                <div class="parent-name people-name">
+                  <span>Father: </span>
+                  <span>some gentleman name</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="parent-image people-image">
+                <img class="img-responsive img-rounded" alt="" src="/assets/img/t.jpg"/>
+              </div>
+              <div class="parent-info people-info">
+                <div class="parent-name people-name">
+                  <span>Mother: </span>
+                  <span>some lady name</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -16,7 +16,8 @@
             [app.i18n.main :refer [make-t-with-scope make-page-tran]]
             [korma.core :as kc]
             [app.controllers.person.add :as add-person]
-            [app.controllers.person.find :as find-person]))
+            [app.controllers.person.find :as find-person]
+            [app.controllers.person.detail :as person-detail]))
 
 (def person-routes
   (context "/person" []
@@ -25,7 +26,8 @@
            (GET  "/add/childId/:childId"     [] add-person/add-person-from-child)
            (GET  "/add/person"               [] add-person/add-person-from-none)
            (GET  "/find/list/simple"         [] find-person/find-list-simple)
-           (POST "/add/process"              [] add-person/add-person-process)))
+           (POST "/add/process"              [] add-person/add-person-process)
+           (GET "/detail/:personId"           [] person-detail/show-detail)))
 
 (def person-rules [{:pattern #"^/person/add.*"
                     :handler admin-access}])

@@ -1,5 +1,6 @@
 (ns app.util.main
-  (:import [org.postgresql.util PGobject]))
+  (:import [org.postgresql.util PGobject])
+  (:require [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn param "Get the param from the request"
   [request name & [default]]
@@ -27,7 +28,8 @@
 
 (defn parse-int "Parse the input to integer"
   [input & [default]]
-  (if (integer? input) input
-      (try
-        (Integer/parseInt input)
-        (catch Exception e default))))
+  (try+
+   (when (integer? input) (throw+ input))
+   (Integer/parseInt input)
+   (catch integer? i i)
+   (catch Object _ default)))
