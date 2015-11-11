@@ -20,15 +20,34 @@ var PersonModal = React.createClass({
                 <img className="img-responsive" alt="" src={this.props.picture}/>
               </div>
               <div className="person-info-right">
-                <div className="person-info-line">
-                  Ngày Sinh: implementing
+                <div className="person-info-row">
+                  <div className="person-info-field">
+                    Họ tên
+                  </div>
+                  <div className="person-info-value">
+                    {this.props.fullName}
+                  </div>
                 </div>
-                <div className="person-info-line">
-                  Ngày Sinh: implementing
+                <div className="person-info-row">
+                  <div className="person-info-field">
+                    Ngày Sinh
+                  </div>
+                  <div className="person-info-value">
+                    {this.props["birth-date"]}
+                  </div>
+                </div>
+                <div className="person-info-row">
+                  <div className="person-info-field">
+                    Tình trạng
+                  </div>
+                  <div className="person-info-value">
+                    {this.props["alive-status"]}
+                  </div>
                 </div>
               </div>
             </div>
             <div className="modal-footer">
+              <a href={"/person/detail/" + this.props.id} className="btn btn-success">View Detail</a>
               <a href={"/person/add/childId/" + this.props.id} className="btn btn-primary">Add Parent</a>
               <a href={"/person/add/partnerId/" + this.props.id} className="btn btn-primary">Add Partner</a>
               <a href={"/person/add/parentId/" + this.props.id} className="btn btn-primary">Add child</a>
