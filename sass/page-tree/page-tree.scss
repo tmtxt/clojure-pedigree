@@ -22,6 +22,7 @@
 
       .person-info-left {
         flex: 1 1 0;
+        padding-right: 20px;
 
         img {
           width: 100%;
@@ -30,6 +31,27 @@
 
       .person-info-right {
         flex: 2 2 0;
+
+        .person-info-row {
+          @include flex(row nowrap);
+          align-items: center;
+          height: 40px;
+          border-bottom: 1px solid $grey;
+
+          .person-info-field {
+            flex: 1 1 0;
+            font-weight: bold;
+            color: $brown;
+          }
+
+          .person-info-value {
+            flex: 2 2 0;
+          }
+        }
+
+        .person-info-row:last-child {
+          border-bottom: 0;
+        }
       }
     }
   }
