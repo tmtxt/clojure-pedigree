@@ -17,7 +17,7 @@
   <div class="persondetail-body">
     <!-- column 1 -->
     <div class="persondetail-col-1">
-      <img class="img-responsive img-thumbnail" alt="" src="/assets/img/m.jpg" />
+      <img class="img-responsive img-thumbnail" alt="" src="{{ params.person.picture }}" />
     </div>
 
     <!-- column 2 -->
@@ -34,7 +34,7 @@
               Tên
             </div>
             <div class="profile-body-right">
-              Some name
+              {{ params.person.full-name }}
             </div>
           </div>
 
@@ -43,7 +43,7 @@
               Ngày sinh
             </div>
             <div class="profile-body-right">
-              01/01/1990
+              {{ params.person.birth-date }}
             </div>
           </div>
 
@@ -52,7 +52,7 @@
               Tình trạng
             </div>
             <div class="profile-body-right">
-              Còn sống
+              {{ params.person.alive-status }}
             </div>
           </div>
 
@@ -61,7 +61,7 @@
               Ngày mất
             </div>
             <div class="profile-body-right">
-              01/01/1990
+              {{ params.person.death-date }}
             </div>
           </div>
 
@@ -70,7 +70,7 @@
               Giới tính
             </div>
             <div class="profile-body-right">
-              Nam
+              {{ params.person.gender }}
             </div>
           </div>
 
@@ -79,7 +79,7 @@
               Điện thoại
             </div>
             <div class="profile-body-right">
-              0123456789
+              {{ params.person.phone-no }}
             </div>
           </div>
 
@@ -88,7 +88,7 @@
               Địa chỉ
             </div>
             <div class="profile-body-right">
-              B110 Chung cu huyen uy Thanh Tri Van Dien Ha Noi
+              {{ params.person.address }}
             </div>
           </div>
         </div>
