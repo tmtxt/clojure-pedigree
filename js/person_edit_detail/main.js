@@ -8,6 +8,7 @@ var genders = window.genders;
 var parent = window.parent;
 var partner = window.partner;
 var child = window.child;
+var person = window.person;
 var findPersonList = window.findPersonList;
 var fromPerson = window.fromPerson;
 var action = window.formAction;
@@ -23,11 +24,13 @@ var pictureStore = require('./picture_store.js');
 var parentStore = require('./parent_store.js');
 var familyStore = require('./family_store.js');
 var childStore = require('./child_store.js');
+var personStore = require('./person_store.js');
 global.stores.form = formStore;
 global.stores.picture = pictureStore;
 global.stores.parent = parentStore;
 global.stores.family = familyStore;
 global.stores.child = childStore;
+global.stores.person = personStore;
 
 // Actions
 var pictureAction = require('./picture_action.js');
@@ -53,6 +56,9 @@ familyStore.init({
 });
 childStore.init({
   child: child
+});
+personStore.init({
+  person: person
 });
 
 pictureAction.init();

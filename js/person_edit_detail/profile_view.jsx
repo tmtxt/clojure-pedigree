@@ -2,6 +2,10 @@
 var React = require("react");
 var jquery = require("jquery");
 
+// Global Flux
+var global = require("./global.js");
+PersonStore = global.stores.person;
+
 // Util functions
 function initDatePicker() {
   // Find components
@@ -19,7 +23,10 @@ function initDatePicker() {
 // Main View
 var ProfileView = React.createClass({
   getInitialState: function() {
-    return {showDeadDate: false};
+    return {
+      showDeadDate: false,
+      person: PersonStore.getPerson()
+    };
   },
 
   componentDidMount: function() {
@@ -79,7 +86,7 @@ var ProfileView = React.createClass({
               Tên
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="name" type="text"/>
+              <input className="form-control" name="name" type="text" defaultValue={this.state.person.fullName }/>
             </div>
           </div>
 
@@ -124,7 +131,7 @@ var ProfileView = React.createClass({
               Điện thoại
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="phone" type="text" />
+              <input className="form-control" name="phone" type="text" defaultValue={this.state.person.phoneNo}/>
             </div>
           </div>
 
@@ -133,7 +140,7 @@ var ProfileView = React.createClass({
               Địa chỉ
             </div>
             <div className="profile-body-right">
-              <textarea className="form-control" cols="30" id="" name="address" rows="3"></textarea>
+              <textarea className="form-control" cols="30" id="" name="address" rows="3">{this.state.person.address}</textarea>
             </div>
           </div>
         </div>
