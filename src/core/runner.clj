@@ -1,5 +1,6 @@
 (ns core.runner
-  (:require [app.repl :as server]))
+  (:require [app.repl :as server]
+            [clj-time.jdbc]))
 
 (defn -main
   [& args]
