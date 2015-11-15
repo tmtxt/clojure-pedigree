@@ -2,6 +2,7 @@
   (:require [app.models.person.definition :as definition]
             [app.models.person.add :as add]
             [app.models.person.find :as find]
+            [app.models.person.delete :as delete]
             [app.models.person.parent :as parent]
             [app.models.person.json :as json]))
 
@@ -34,6 +35,14 @@
 ;;;  :entity  PersonEntity
 ;;;  :node    PersonNode}
 (def add-person add/add-person)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Functions for deleting person
+
+;;; Delete one person from the system by its id
+;;; Required params
+;;; id: the (pg) id of the person
+(def delete-person delete/delete-person)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Functions for finding person(s)

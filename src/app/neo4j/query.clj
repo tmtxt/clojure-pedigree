@@ -18,3 +18,4 @@
 (def find-by-props (read-query "find_by_props"))
 (def find-partner (read-query "find_partner"))
 (def count-parent (read-query "count_parent"))
+(def delete-person (read-query "delete_person"))
