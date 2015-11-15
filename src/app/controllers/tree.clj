@@ -2,9 +2,7 @@
   (:require [compojure.core :refer :all]
             [app.tree.main :as tree]
             [ring.util.response :refer [response]]
-            [app.views.layout :refer [render]]
-            [clojure.data.json :as json]
-            [clj-time.coerce :as c]))
+            [app.views.layout :refer [render]]))
 
 (defn get-tree [request]
   (response (tree/get-tree)))

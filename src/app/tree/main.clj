@@ -2,9 +2,7 @@
   (:require [app.models.person :as person]
             [app.neo4j.main :as neo4j]
             [app.neo4j.query :as query]
-            [com.rpl.specter :refer :all]
-            [clj-time.format :as f]
-            [app.util.db-util :as db-util]))
+            [com.rpl.specter :refer :all]))
 
 (def ^{:private true} default-depth 5)
 
@@ -61,25 +59,13 @@
     ids))
 
 (defn- extract-person-info [rows]
-  (let [datetime-fn (fn [datetime] (if (nil? datetime) nil
-                                      (if (instance? String datetime)
-                                        datetime
-                                        (f/unparse db-util/vn-time-formatter datetime))
-                                      ))
-        reduce-fn (fn [person-info person]
-                    (let [person (assoc person :birth-date (datetime-fn (:birth-date person)))
-                          person (assoc person :death-date (datetime-fn (:birth-date person)))
-                          person (assoc person :created-at (datetime-fn (:created-at person)))]
-                      (assoc person-info (:id person) person)))
+  (let [reduce-fn (fn [person-info person]
+                    (assoc person-info (:id person) person))
         person-info (reduce reduce-fn {} rows)]
     person-info))
 
 (defn- get-tree-from-node [root & [depth]]
-  (let [root (assoc-in root [:info :created-at] nil)
-        root-marriage (:marriage root)
-        root-marriage (map (fn [person] (assoc person :created-at nil)) root-marriage)
-        root (assoc root :marriage root-marriage)
-        rows (query-tree (:person-id root) depth)
+  (let [rows (query-tree (:person-id root) depth)
         paths (map (fn [[path _ marriage last_order]] [path marriage last_order]) rows)
         ids (extract-ids paths)
         person-rows (person/find-entities-by-ids ids)

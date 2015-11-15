@@ -8,6 +8,7 @@
             [app.controllers.person.util :as controller-util]
             [app.util.db-util :as db-util]
             [clj-time.format :as f]
+            [clj-time.coerce :as c]
             [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn handle-get-request [request]
@@ -24,7 +25,7 @@
                    (if (contains? #{:death-date :birth-date :created-at} key)
                      (if (nil? value)
                        value
-                       (f/unparse db-util/vn-time-formatter value))
+                       (f/unparse db-util/vn-time-formatter (c/from-sql-time value)))
                      value)))
         :parent (-> {} person-util/filter-parent-keys json/write-str)
         :partner (-> {} person-util/filter-partner-keys json/write-str)
