@@ -39,6 +39,7 @@ var ProfileView = React.createClass({
     return {
       showDeadDate: this.showDeadDate(),
       aliveStatus: this.showAliveStatus(),
+      gender: PersonStore.getPerson().gender,
       person: PersonStore.getPerson()
     };
   },
@@ -84,7 +85,9 @@ var ProfileView = React.createClass({
     });
 
     return (
-      <select className="form-control" name="gender">
+      <select className="form-control"
+              defaultValue={this.state.gender}
+              name="gender">
         {genders}
       </select>
     );
