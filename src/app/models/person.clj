@@ -1,17 +1,5 @@
 (ns app.models.person
-  (:import [org.postgresql.util PGobject])
-  (:require [korma.core :refer :all]
-            [app.util.dbUtil :as db-util]
-            [app.neo4j.main :as neo4j]
-            [app.neo4j.node :as node]
-            [app.neo4j.query :as query]
-            [app.neo4j.relation :as relation]
-            [validateur.validation :as vl]
-            [config.main :refer [config]]
-            [slingshot.slingshot :refer [throw+ try+]]
-            [app.models.pedigreeRelation :as prl]
-            [app.models.marriageRelation :as mrl]
-            [app.models.person.definition :as definition]
+  (:require [app.models.person.definition :as definition]
             [app.models.person.add :as add]
             [app.models.person.find :as find]
             [app.models.person.parent :as parent]))
