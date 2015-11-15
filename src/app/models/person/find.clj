@@ -112,7 +112,7 @@
                     include-partners false
                     json-friendly false}}]
   (let [person-entity (find-entity criteria)
-        person-entity (if json-friendly (json/json-friendlyize person-entity) person-entity)
+        person-entity (if json-friendly (json/json-friendlify person-entity) person-entity)
         person-node (if include-node (find-node-from-entity person-entity) nil)
         partners (if include-partners (find-partners-of-entity person-entity))]
     {:entity person-entity

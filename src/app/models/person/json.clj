@@ -9,7 +9,7 @@
 
 (def timestamp-keys #{:birth-date :death-date :created-at})
 
-(defn json-friendlyize [person-entity]
+(defn json-friendlify [person-entity]
   (into {}
         (for [[k v] person-entity]
           (if (-> timestamp-keys (contains? k))
