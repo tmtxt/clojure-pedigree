@@ -68,7 +68,10 @@
 
 (defn find-node-from-entity [entity]
   (if entity
-    (node/find-by-props :person {:person_id (:id entity)})
+    (let [props {:person_id (:id entity)}
+          person-node (node/find-by-props :person props)
+          person-node (node-to-record person-node)]
+      person-node)
     nil))
 
 (defn find-entities-by-ids
