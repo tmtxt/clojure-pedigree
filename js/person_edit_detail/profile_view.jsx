@@ -5,6 +5,7 @@ var jquery = require("jquery");
 // Global Flux
 var global = require("./global.js");
 PersonStore = global.stores.person;
+FormStore = global.stores.form;
 
 // Util functions
 function initDatePicker() {
@@ -22,9 +23,22 @@ function initDatePicker() {
 
 // Main View
 var ProfileView = React.createClass({
+  showDeadDate: function() {
+    if (FormStore.onEditPage() && PersonStore.getPerson().aliveStatus == "dead") {
+      return true;
+    }
+    return false;
+  },
+
+  showAliveStatus: function() {
+    var person = PersonStore.getPerson();
+    return person.aliveStatus;
+  },
+
   getInitialState: function() {
     return {
-      showDeadDate: false,
+      showDeadDate: this.showDeadDate(),
+      aliveStatus: this.showAliveStatus(),
       person: PersonStore.getPerson()
     };
   },
@@ -34,6 +48,8 @@ var ProfileView = React.createClass({
   },
 
   makeStatusOptions: function() {
+    var This = this;
+
     var statuses =_.map(this.props.statuses, function(v, k){
       return (
         <option key={k} value={k}>{v}</option>
@@ -41,7 +57,9 @@ var ProfileView = React.createClass({
     });
 
     return (
-      <select name="status" className="form-control" ref="statuses" onChange={this.handleStatusChange}>
+      <select name="status" className="form-control"
+              value={this.state.aliveStatus}
+              ref="statuses" onChange={this.handleStatusChange}>
         {statuses}
       </select>
     );
@@ -54,6 +72,8 @@ var ProfileView = React.createClass({
     } else {
       this.setState({showDeadDate: false});
     }
+
+    this.setState({aliveStatus: status});
   },
 
   makeGenderOptions: function() {
@@ -95,7 +115,9 @@ var ProfileView = React.createClass({
               Ngày sinh
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-birthdate-input" name="birthdate" type="text"/>
+              <input className="form-control js-birthdate-input"
+                     defaultValue={this.state.person.birthDate}
+                     name="birthdate" type="text"/>
             </div>
           </div>
 
