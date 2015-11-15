@@ -17,6 +17,7 @@
             [korma.core :as kc]
             [app.controllers.person.add :as add-person]
             [app.controllers.person.edit :as edit-person]
+            [app.controllers.person.delete :as delete-person]
             [app.controllers.person.find :as find-person]
             [app.controllers.person.detail :as person-detail]))
 
@@ -29,7 +30,8 @@
            (GET  "/find/list/simple"         [] find-person/find-list-simple)
            (POST "/add/process"              [] add-person/add-person-process)
            (GET "/detail/:personId"          [] person-detail/show-detail)
-           (GET "/edit/:personId"            [] edit-person/handle-get-request)))
+           (GET "/edit/:personId"            [] edit-person/handle-get-request)
+           (GET "/delete/:personId"          [] delete-person/handle-get-request)))
 
 ;; (def person-rules [{:pattern #"^/person/add.*"
 ;;                     :handler admin-access}])
