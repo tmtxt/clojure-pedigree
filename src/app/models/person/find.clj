@@ -132,21 +132,29 @@
     (node-to-record root)))
 
 (defn find-root
-  [& {:keys [include-node include-partners]
+  [& {:keys [include-node include-partners json-friendly]
       :or {include-node false
-           include-partners false}}]
+           include-partners false
+           json-friendly false}}]
   (let [root-node (find-root-node)
-        root-person (find-person-by {:id (:person-id root-node)} :include-partners include-partners)
+        root-person (find-person-by
+                     {:id (:person-id root-node)}
+                     :include-partners include-partners
+                     :json-friendly json-friendly)
         root-person (if include-node (assoc root-person :node root-node) root-person)]
     root-person
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn find-person-by-id
-  [id & {:keys [include-node include-partners]
+  [id & {:keys [include-node include-partners json-friendly]
          :or {include-node false
-              include-partners false}}]
-  (find-person-by {:id id} :include-node include-node :include-partners include-partners))
+              include-partners false
+              json-friendly false}}]
+  (find-person-by {:id id}
+                  :include-node include-node
+                  :include-partners include-partners
+                  :json-friendly json-friendly))
 
 (defn find-node-by-person-id [id]
   (-> id (find-person-by-id :include-node true) :node))

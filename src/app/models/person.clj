@@ -67,6 +67,7 @@
 ;;; Keyword params
 ;;; :include-node
 ;;; :include-partners
+;;; :json-friendly
 (def find-root find/find-root)
 
 ;;; Find person by id
@@ -75,6 +76,7 @@
 ;;; Keyword params
 ;;; :include-node
 ;;; :include-partners
+;;; :json-friendly
 (def find-person-by-id find/find-person-by-id)
 
 ;;;;;;;;;;;;;;;;;;;;
