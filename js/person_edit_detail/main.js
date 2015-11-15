@@ -47,7 +47,9 @@ formStore.init({
   action: action,
   fromPerson: fromPerson
 });
-pictureStore.init();
+pictureStore.init({
+  person: person
+});
 parentStore.init({
   parent: parent
 });
