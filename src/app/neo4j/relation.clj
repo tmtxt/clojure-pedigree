@@ -1,6 +1,8 @@
 (ns app.neo4j.relation
   (:require [app.neo4j.main :as neo4j]
             [app.neo4j.impl.relation :as relation]
+            [camel-snake-kebab.core :refer :all]
+            [camel-snake-kebab.extras :refer [transform-keys]]
             [clojurewerkz.neocons.rest.transaction :as tx]))
 
 (defn create-or-update
@@ -15,7 +17,9 @@
   [start-label start-identifier
    end-label end-identifier
    label props]
-  (let [statement (relation/create-or-update-statement start-label start-identifier
+  (let [start-identifier (transform-keys ->snake_case start-identifier)
+        end-identifier (transform-keys ->snake_case end-identifier)
+        statement (relation/create-or-update-statement start-label start-identifier
                                                        end-label end-identifier
                                                        label props)
         [_ result] (tx/execute neo4j/*conn* neo4j/*tran* [statement])]

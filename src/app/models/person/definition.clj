@@ -17,7 +17,7 @@
 
 ;;; for neo4j result
 (defrecord PersonNode
-    [person-id is-root user-id])
+    [person-id is-root])
 
 ;;; props list
 (def EntityProps (PersonEntity/getBasis))
@@ -54,3 +54,8 @@
   [node]
   (let [node (transform-keys ->kebab-case node)]
     (map->PersonNode node)))
+
+(defn record-to-node
+  "Convert PersonNode record back to node"
+  [record]
+  (transform-keys ->snake_case record))
