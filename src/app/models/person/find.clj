@@ -7,6 +7,7 @@
             [app.models.person.definition :refer [person node-to-record]]
             [app.models.person.util :as model-util]
             [app.models.person.prepare :as prepare]
+            [app.models.person.json :as json]
             [camel-snake-kebab.extras :refer [transform-keys]]
             [camel-snake-kebab.core :refer :all]))
 
@@ -33,26 +34,26 @@
          alive-status :alive-status
          birth-date :birth-date
          death-date :death-date} criteria
-         criteria (if full-name (->> full-name
-                                     (process-full-name)
-                                     (assoc criteria :full-name))
-                      criteria)
-         criteria (if gender (->> gender
-                                  (process-gender)
-                                  (assoc criteria :gender))
-                      criteria)
-         criteria (if alive-status (->> alive-status
-                                        (process-alive-status)
-                                        (assoc criteria :alive-status))
-                      criteria)
-         criteria (if birth-date (->> birth-date
-                                      (process-birth-date)
-                                      (assoc criteria :birth-date))
-                      criteria)
-         criteria (if death-date (->> death-date
-                                      (process-death-date)
-                                      (assoc criteria :death-date))
-                      criteria)]
+        criteria (if full-name (->> full-name
+                                    (process-full-name)
+                                    (assoc criteria :full-name))
+                     criteria)
+        criteria (if gender (->> gender
+                                 (process-gender)
+                                 (assoc criteria :gender))
+                     criteria)
+        criteria (if alive-status (->> alive-status
+                                       (process-alive-status)
+                                       (assoc criteria :alive-status))
+                     criteria)
+        criteria (if birth-date (->> birth-date
+                                     (process-birth-date)
+                                     (assoc criteria :birth-date))
+                     criteria)
+        criteria (if death-date (->> death-date
+                                     (process-death-date)
+                                     (assoc criteria :death-date))
+                     criteria)]
     (model-util/camel-keys->snake-keys criteria)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -106,17 +107,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; you should use this function
 (defn find-person-by
-  [criteria & {:keys [include-node include-partners]
+  [criteria & {:keys [include-node include-partners json-friendly]
                :or {include-node false
-                    include-partners false}}]
-  (let [result {}
-        person-entity (find-entity criteria)
+                    include-partners false
+                    json-friendly false}}]
+  (let [person-entity (find-entity criteria)
+        person-entity (if json-friendly (json/json-friendlify person-entity) person-entity)
         person-node (if include-node (find-node-from-entity person-entity) nil)
         partners (if include-partners (find-partners-of-entity person-entity))]
-    (assoc result
-           :entity person-entity
-           :node person-node
-           :partners partners)))
+    {:entity person-entity
+     :node person-node
+     :partners partners}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -131,21 +132,29 @@
     (node-to-record root)))
 
 (defn find-root
-  [& {:keys [include-node include-partners]
+  [& {:keys [include-node include-partners json-friendly]
       :or {include-node false
-           include-partners false}}]
+           include-partners false
+           json-friendly false}}]
   (let [root-node (find-root-node)
-        root-person (find-person-by {:id (:person-id root-node)} :include-partners include-partners)
+        root-person (find-person-by
+                     {:id (:person-id root-node)}
+                     :include-partners include-partners
+                     :json-friendly json-friendly)
         root-person (if include-node (assoc root-person :node root-node) root-person)]
     root-person
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn find-person-by-id
-  [id & {:keys [include-node include-partners]
+  [id & {:keys [include-node include-partners json-friendly]
          :or {include-node false
-              include-partners false}}]
-  (find-person-by {:id id} :include-node include-node :include-partners include-partners))
+              include-partners false
+              json-friendly false}}]
+  (find-person-by {:id id}
+                  :include-node include-node
+                  :include-partners include-partners
+                  :json-friendly json-friendly))
 
 (defn find-node-by-person-id [id]
   (-> id (find-person-by-id :include-node true) :node))

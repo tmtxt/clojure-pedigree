@@ -4,6 +4,11 @@ var microEvent = require('microevent');
 
 function init(opts) {
   global = require('./global.js');
+  var person = opts.person;
+
+  if (!!person && !!person.picture) {
+    this.setPictureLink(person.picture);
+  }
 
   return this;
 }

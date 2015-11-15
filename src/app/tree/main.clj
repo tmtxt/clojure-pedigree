@@ -75,24 +75,6 @@
     (extract-tree paths init-tree person-info)
     ))
 
-(defn get-tree2
-  "Get tree from user id"
-  ([]
-   (neo4j/with-transaction
-     (let [root-node (-> (person/find-root) (:node))]
-       (get-tree-from-node root-node default-depth))))
-
-  ([user-id]
-   (neo4j/with-transaction
-     (let [root-node (person/find-node-by-person-id user-id)]
-       (get-tree-from-node root-node default-depth))))
-
-  ([user-id & {:keys [depth]
-               :or [depth default-depth]}]
-   (neo4j/with-transaction
-     (let [root-node (person/find-node-by-person-id user-id)]
-       (get-tree-from-node root-node depth)))))
-
 (defn get-tree
   "Get tree from person id"
   ([]

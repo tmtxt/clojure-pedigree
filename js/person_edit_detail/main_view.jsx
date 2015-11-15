@@ -20,7 +20,17 @@ var MainView = React.createClass({
     };
   },
 
+  renderCol3View: function() {
+    if (FormStore.onEditPage()) {
+      return null;
+    } else {
+      return <Col3View />;
+    }
+  },
+
   render: function() {
+    var col3View = this.renderCol3View();
+
     return (
       <div>
         <form action={this.state.actionLink} method="post" encType="multipart/form-data">
@@ -32,7 +42,7 @@ var MainView = React.createClass({
             <Col1View />
             <Col2View statuses={this.props.statuses}
                       genders={this.props.genders} />
-            <Col3View />
+            {col3View}
           </div>
         </form>
       </div>

@@ -28,7 +28,7 @@ function init(opts) {
   if (this.action === "add") {
     actionLink = "/person/add/process";
   } else {
-    actionLink = "/person/edit";
+    actionLink = "/person/edit/process";
   }
   this.actionLink = actionLink;
 

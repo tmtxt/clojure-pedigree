@@ -2,6 +2,11 @@
 var React = require("react");
 var jquery = require("jquery");
 
+// Global Flux
+var global = require("./global.js");
+PersonStore = global.stores.person;
+FormStore = global.stores.form;
+
 // Util functions
 function initDatePicker() {
   // Find components
@@ -18,8 +23,25 @@ function initDatePicker() {
 
 // Main View
 var ProfileView = React.createClass({
+  showDeadDate: function() {
+    if (FormStore.onEditPage() && PersonStore.getPerson().aliveStatus == "dead") {
+      return true;
+    }
+    return false;
+  },
+
+  showAliveStatus: function() {
+    var person = PersonStore.getPerson();
+    return person.aliveStatus;
+  },
+
   getInitialState: function() {
-    return {showDeadDate: false};
+    return {
+      showDeadDate: this.showDeadDate(),
+      aliveStatus: this.showAliveStatus(),
+      gender: PersonStore.getPerson().gender,
+      person: PersonStore.getPerson()
+    };
   },
 
   componentDidMount: function() {
@@ -27,6 +49,8 @@ var ProfileView = React.createClass({
   },
 
   makeStatusOptions: function() {
+    var This = this;
+
     var statuses =_.map(this.props.statuses, function(v, k){
       return (
         <option key={k} value={k}>{v}</option>
@@ -34,7 +58,9 @@ var ProfileView = React.createClass({
     });
 
     return (
-      <select name="status" className="form-control" ref="statuses" onChange={this.handleStatusChange}>
+      <select name="status" className="form-control"
+              value={this.state.aliveStatus}
+              ref="statuses" onChange={this.handleStatusChange}>
         {statuses}
       </select>
     );
@@ -47,6 +73,8 @@ var ProfileView = React.createClass({
     } else {
       this.setState({showDeadDate: false});
     }
+
+    this.setState({aliveStatus: status});
   },
 
   makeGenderOptions: function() {
@@ -57,7 +85,9 @@ var ProfileView = React.createClass({
     });
 
     return (
-      <select className="form-control" name="gender">
+      <select className="form-control"
+              defaultValue={this.state.gender}
+              name="gender">
         {genders}
       </select>
     );
@@ -79,7 +109,7 @@ var ProfileView = React.createClass({
               Tên
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="name" type="text"/>
+              <input className="form-control" name="name" type="text" defaultValue={this.state.person.fullName }/>
             </div>
           </div>
 
@@ -88,7 +118,9 @@ var ProfileView = React.createClass({
               Ngày sinh
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-birthdate-input" name="birthdate" type="text"/>
+              <input className="form-control js-birthdate-input"
+                     defaultValue={this.state.person.birthDate}
+                     name="birthdate" type="text"/>
             </div>
           </div>
 
@@ -106,7 +138,9 @@ var ProfileView = React.createClass({
               Ngày mất
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-deathdate-input" name="deathdate" type="text" />
+              <input className="form-control js-deathdate-input"
+                     defaultValue={this.state.person.deathDate}
+                     name="deathdate" type="text" />
             </div>
           </div>
 
@@ -124,7 +158,7 @@ var ProfileView = React.createClass({
               Điện thoại
             </div>
             <div className="profile-body-right">
-              <input className="form-control" name="phone" type="text" />
+              <input className="form-control" name="phone" type="text" defaultValue={this.state.person.phoneNo}/>
             </div>
           </div>
 
@@ -133,7 +167,7 @@ var ProfileView = React.createClass({
               Địa chỉ
             </div>
             <div className="profile-body-right">
-              <textarea className="form-control" cols="30" id="" name="address" rows="3"></textarea>
+              <textarea className="form-control" cols="30" id="" name="address" rows="3">{this.state.person.address}</textarea>
             </div>
           </div>
         </div>
