@@ -135,7 +135,9 @@ var ProfileView = React.createClass({
               Ngày mất
             </div>
             <div className="profile-body-right">
-              <input className="form-control js-deathdate-input" name="deathdate" type="text" />
+              <input className="form-control js-deathdate-input"
+                     defaultValue={this.state.person.deathDate}
+                     name="deathdate" type="text" />
             </div>
           </div>
 
