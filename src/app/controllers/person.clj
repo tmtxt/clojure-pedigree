@@ -31,5 +31,8 @@
            (GET "/detail/:personId"          [] person-detail/show-detail)
            (GET "/edit/:personId"            [] edit-person/handle-get-request)))
 
-(def person-rules [{:pattern #"^/person/add.*"
+;; (def person-rules [{:pattern #"^/person/add.*"
+;;                     :handler admin-access}])
+
+(def person-rules [{:pattern #"^/person/kfjsdljfkl.*"
                     :handler admin-access}])
