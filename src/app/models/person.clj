@@ -2,7 +2,8 @@
   (:require [app.models.person.definition :as definition]
             [app.models.person.add :as add]
             [app.models.person.find :as find]
-            [app.models.person.parent :as parent]))
+            [app.models.person.parent :as parent]
+            [app.models.person.json :as json]))
 
 (def GENDERS_MAP
   {:male "male"
@@ -129,3 +130,6 @@
 ;;; Required Params
 ;;; entity: PersonEntity
 (def enough-parents? parent/enough-parents?)
+
+;;; Convert Person Entity to Json friendly Entity
+(def json-friendlify json/json-friendlify)

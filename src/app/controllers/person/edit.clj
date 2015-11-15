@@ -6,6 +6,7 @@
             [app.util.main :as util]
             [clojure.data.json :as json]
             [app.controllers.person.util :as controller-util]
+            [app.models.person :as person-model]
             [app.util.db-util :as db-util]
             [clj-time.format :as f]
             [clj-time.coerce :as c]
@@ -18,15 +19,7 @@
        request
        "person/edit_detail.html"
        {:from "none"
-        :person (json/write-str
-                 person
-                 :value-fn
-                 (fn [key value]
-                   (if (contains? #{:death-date :birth-date :created-at} key)
-                     (if (nil? value)
-                       value
-                       (f/unparse db-util/vn-time-formatter (c/from-sql-time value)))
-                     value)))
+        :person (-> person person-model/json-friendlify json/write-str)
         :parent (-> {} person-util/filter-parent-keys json/write-str)
         :partner (-> {} person-util/filter-partner-keys json/write-str)
         :child (-> {} person-util/filter-person-keys json/write-str)
