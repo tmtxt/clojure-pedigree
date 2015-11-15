@@ -60,6 +60,7 @@
 ;;; Keyword params
 ;;; :include-node
 ;;; :include-partners
+;;; :json-friendly
 (def find-person-by find/find-person-by)
 
 ;;; Find root person
