@@ -99,11 +99,8 @@ stores.init({
 global.stores = stores;
 
 // Render
-var MainView = require('./main_view.jsx');
+var MainView = require('./views/main_view.jsx')(global);
 React.render(
-  React.createElement(MainView,
-                      {statuses: statuses,
-                       genders: genders,
-                       parent: parent}),
+  React.createElement(MainView, {}),
   document.getElementById('js-editperson-container')
 );
