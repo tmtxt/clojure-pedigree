@@ -16,8 +16,17 @@ var Col2View = React.createClass({
     };
   },
 
-  handleStatusChange: function(e) {
+  componentDidMount: function() {
+    PersonStore.bind("change", this.personChanged);
+  },
 
+  handleStatusChange: function(e) {
+    var status = React.findDOMNode(this.refs.statuses).value.trim();
+    PersonStore.setAliveStatus(status);
+  },
+
+  personChanged: function() {
+    this.setState({person: PersonStore.getPerson()});
   },
 
   renderStatuses: function() {

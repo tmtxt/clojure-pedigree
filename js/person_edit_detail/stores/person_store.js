@@ -41,4 +41,9 @@ store.removePicture = function() {
   this.trigger('change');
 };
 
+store.setAliveStatus = function(status) {
+  this.person.aliveStatus = status;
+  this.trigger('change');
+};
+
 microEvent.mixin(store);
