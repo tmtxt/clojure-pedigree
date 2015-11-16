@@ -32,8 +32,14 @@
   (let [person (controller-util/find-person-from-request request "personid")]
     (if person
       (let [params (util/params request)
-            file-name (controller-util/store-person-picture params)
-            params (assoc params :picture file-name)
-            person-data (controller-util/params-to-person-data params)]
-        "hello")
+            ;; file-name (controller-util/store-person-picture params)
+            ;; params (assoc params :picture file-name)
+            person-data (controller-util/params-to-person-data params)
+            person-data (dissoc person-data :picture)
+            person-id (:id person)
+            result (person-model/update-person person-id person-data)
+            success (:success result)]
+        (if success
+          "person updated"
+          (:message result)))
       (str "Person not found"))))

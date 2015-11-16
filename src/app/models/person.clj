@@ -3,6 +3,7 @@
             [app.models.person.add :as add]
             [app.models.person.find :as find]
             [app.models.person.delete :as delete]
+            [app.models.person.update :as update]
             [app.models.person.parent :as parent]
             [app.models.person.json :as json]))
 
@@ -41,8 +42,17 @@
 
 ;;; Delete one person from the system by its id
 ;;; Required params
-;;; id: the (pg) id of the person
+;;;  id: the (pg) id of the person
 (def delete-person delete/delete-person)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Functions for updating person
+
+;;; Update person based on its id
+;;; Required params
+;;;  id: the (pg) id of the person
+;;;  person-data: person data map
+(def update-person update/update-person)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Functions for finding person(s)
