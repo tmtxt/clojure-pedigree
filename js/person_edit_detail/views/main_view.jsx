@@ -1,8 +1,15 @@
 // Libs
 var React = require("react");
+
+// Application Data
 var global;
 var stores;
 var config;
+
+// Sub views
+var Col1View;
+var Col2View;
+var Col3View;
 
 // Main View class
 var MainView = React.createClass({
@@ -10,7 +17,15 @@ var MainView = React.createClass({
     return {};
   },
 
+  renderCol1: function() {
+    return (
+      <Col1View />
+    );
+  },
+
   render: function() {
+    var col1 = this.renderCol1();
+
     return (
       <div>
         <form action={config.getFormActionLink()} method="post" encType="multipart/form-data">
@@ -27,6 +42,7 @@ var MainView = React.createClass({
           </div>
 
           <div className="editperson-body">
+            {col1}
           </div>
         </form>
       </div>
@@ -35,9 +51,13 @@ var MainView = React.createClass({
 });
 
 module.exports = function(gbl) {
+  // Init application data
   global = gbl;
   stores = global.stores;
   config = global.config;
+
+  // Init Sub views
+  Col1View = require("./col_1_view.jsx")(gbl);
 
   return MainView;
 };

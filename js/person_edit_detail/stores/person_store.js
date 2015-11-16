@@ -10,6 +10,7 @@ function init(opts) {
   } else {
     person = util.getPerson();
   }
+  this.person = person;
 
   return this;
 }
