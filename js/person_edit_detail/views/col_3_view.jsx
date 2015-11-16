@@ -27,16 +27,28 @@ var Col3View = React.createClass({
         <PartnerView />
       );
     }
+    return null;
+  },
+
+  renderChildView: function() {
+    if (config.isFromChild()) {
+      return (
+        <ChildView />
+      );
+    }
+    return null;
   },
 
   render: function() {
     var parentView = this.renderParentView();
     var partnerView = this.renderPartnerView();
+    var childView = this.renderChildView();
 
     return (
       <div className="editperson-col-3">
         {parentView}
         {partnerView}
+        {childView}
       </div>
     );
   }
@@ -50,6 +62,7 @@ module.exports = function(gbl) {
   // Init sub views
   ParentView = require("./parent_view.jsx")(gbl);
   PartnerView = require("./partner_view.jsx")(gbl);
+  ChildView = require("./child_view.jsx")(gbl);
 
   return Col3View;
 };
