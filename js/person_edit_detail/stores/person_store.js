@@ -1,11 +1,12 @@
 // Libs
 var util = require('./util.js');
 var microEvent = require('microevent');
+var _ = require('_');
 
 function init(opts) {
   var person = opts.person;
 
-  if (!!person) {
+  if (!!person && !_.isEmpty(person)) {
     person = util.normalizePerson(person);
   } else {
     person = util.getPerson();

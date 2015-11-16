@@ -96,7 +96,7 @@ config.initEditPage = function(opts) {
 ////////////////////////////////////////////////////////////////////////////////
 // Get Functions
 config.getFormActionLink = function() {
-  return this.formActionLink;
+  return this.actionLink;
 };
 
 config.getFromPerson = function() {
