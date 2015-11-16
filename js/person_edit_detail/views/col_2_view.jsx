@@ -6,6 +6,7 @@ var _ = require("_");
 var global;
 var stores;
 var config;
+var util;
 var PersonStore;
 
 // View class
@@ -18,6 +19,7 @@ var Col2View = React.createClass({
 
   componentDidMount: function() {
     PersonStore.bind("change", this.personChanged);
+    util.initDatePicker();
   },
 
   handleStatusChange: function(e) {
@@ -152,6 +154,7 @@ module.exports = function(gbl) {
   global = gbl;
   stores = global.stores;
   config = global.config;
+  util = global.util;
   PersonStore = stores.PersonStore;
 
   return Col2View;

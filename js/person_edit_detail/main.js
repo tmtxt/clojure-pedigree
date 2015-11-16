@@ -100,6 +100,9 @@ stores.init({
 }, global);
 global.stores = stores;
 
+var util = require('./util.js');
+global.util = util;
+
 // Render
 var MainView = require('./views/main_view.jsx')(global);
 React.render(
