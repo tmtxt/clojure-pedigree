@@ -50,6 +50,7 @@ store.getMother = function() {
   return this.mother;
 };
 
+// Set Functions
 store.setFather = function(person) {
   person = util.normalizePerson(person);
   this.father = person;
@@ -62,6 +63,7 @@ store.setMother = function(person) {
   this.trigger('change');
 };
 
+// Remove Functions
 store.removeFather = function() {
   var father = util.getPerson();
   this.father = father;

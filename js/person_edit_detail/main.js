@@ -84,6 +84,7 @@ var global = {};
 
 // New Code
 var config = require('./config.js');
+global.config = config;
 config.init({
   action: action,
   fromPerson: fromPerson,
@@ -92,19 +93,18 @@ config.init({
   partner: partner,
   parent: parent
 }, global);
-global.config = config;
 
 var stores = require('./stores/main.js');
+global.stores = stores;
 stores.init({
   child: child,
   partner: partner,
   parent: parent
 }, global);
-global.stores = stores;
 
 var actions = require('./actions/main.js');
-actions.init({}, global);
 global.actions = actions;
+actions.init({}, global);
 
 var util = require('./util.js');
 global.util = util;

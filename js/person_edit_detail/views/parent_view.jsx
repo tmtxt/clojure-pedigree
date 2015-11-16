@@ -5,6 +5,7 @@ var React = require("react");
 var global;
 var config;
 var ParentStore;
+var ParentAction;
 
 // View class
 var ParentView = React.createClass({
@@ -106,6 +107,7 @@ module.exports = function(gbl) {
   global = gbl;
   config = global.config;
   ParentStore = global.stores.ParentStore;
+  ParentAction = global.actions.ParentAction;
 
   return ParentView;
 };
