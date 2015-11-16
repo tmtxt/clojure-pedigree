@@ -23,8 +23,15 @@ var MainView = React.createClass({
     );
   },
 
+  renderCol2: function() {
+    return (
+      <Col2View />
+    );
+  },
+
   render: function() {
     var col1 = this.renderCol1();
+    var col2 = this.renderCol2();
 
     return (
       <div>
@@ -43,6 +50,7 @@ var MainView = React.createClass({
 
           <div className="editperson-body">
             {col1}
+            {col2}
           </div>
         </form>
       </div>
@@ -58,6 +66,7 @@ module.exports = function(gbl) {
 
   // Init Sub views
   Col1View = require("./col_1_view.jsx")(gbl);
+  Col2View = require("./col_2_view.jsx")(gbl);
 
   return MainView;
 };

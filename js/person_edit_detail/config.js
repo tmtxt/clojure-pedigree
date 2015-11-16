@@ -14,7 +14,9 @@ var FROM_WIFE = "wife";
 var config = {
   actionLink: null,
   fromPerson: null,
-  fromPartner: null
+  fromPartner: null,
+  statusesList: null,
+  gendersList: null
 };
 module.exports = config;
 
@@ -22,6 +24,12 @@ module.exports = config;
 // Init Functions
 config.init = function(opts, global) {
   this.initAction(opts);
+  this.initDisplayData(opts);
+};
+
+config.initDisplayData = function(opts) {
+  this.statusesList = opts.statusesList;
+  this.gendersList = opts.gendersList;
 };
 
 config.initAction = function(opts) {
@@ -80,6 +88,14 @@ config.getFormActionLink = function() {
 
 config.getFromPerson = function() {
   return this.fromPerson;
+};
+
+config.getStatusesList = function() {
+  return this.statusesList;
+};
+
+config.getGendersList = function() {
+  return this.gendersList;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

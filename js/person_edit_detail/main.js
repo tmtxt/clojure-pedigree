@@ -86,7 +86,9 @@ var global = {};
 var config = require('./config.js');
 config.init({
   action: action,
-  fromPerson: fromPerson
+  fromPerson: fromPerson,
+  statusesList: statuses,
+  gendersList: genders
 }, global);
 global.config = config;
 
