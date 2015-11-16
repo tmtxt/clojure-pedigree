@@ -3,9 +3,9 @@ var React = require("react");
 
 // Application Data
 var global;
-var stores;
 var config;
 var PersonStore;
+var PictureAction;
 
 // View class
 var Col1View = React.createClass({
@@ -31,12 +31,12 @@ var Col1View = React.createClass({
 
   handleSelectImage: function(e) {
     e.preventDefault();
-    // PictureAction.selectPicture();
+    PictureAction.selectPicture();
   },
 
   handleDeleteImage: function(e) {
     e.preventDefault();
-    // PictureAction.removePicture();
+    PictureAction.removePicture();
   },
 
   render: function() {
@@ -60,9 +60,9 @@ var Col1View = React.createClass({
 module.exports = function(gbl) {
   // Init application data
   global = gbl;
-  stores = global.stores;
   config = global.config;
-  PersonStore = stores.PersonStore;
+  PersonStore = global.stores.PersonStore;
+  PictureAction = global.actions.PictureAction;
 
   return Col1View;
 };

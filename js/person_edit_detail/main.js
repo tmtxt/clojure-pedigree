@@ -100,6 +100,10 @@ stores.init({
 }, global);
 global.stores = stores;
 
+var actions = require('./actions/main.js');
+actions.init({}, global);
+global.actions = actions;
+
 var util = require('./util.js');
 global.util = util;
 
