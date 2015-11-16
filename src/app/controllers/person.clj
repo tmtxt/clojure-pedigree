@@ -31,6 +31,7 @@
            (POST "/add/process"              [] add-person/add-person-process)
            (GET "/detail/:personId"          [] person-detail/show-detail)
            (GET "/edit/:personId"            [] edit-person/handle-get-request)
+           (POST "/editProcess"              [] edit-person/handle-post-request)
            (GET "/delete/:personId"          [] delete-person/handle-get-request)))
 
 ;; (def person-rules [{:pattern #"^/person/add.*"

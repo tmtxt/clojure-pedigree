@@ -27,3 +27,6 @@
         :genders (-> request person-util/gender-display json/write-str)
         :action "edit"}
        ))))
+
+(defn handle-post-request [request]
+  "hello")
