@@ -3,6 +3,16 @@ function getPerson() {
     id: null,
     fullName: "Not selected",
     picture: "/assets/img/userbasic.jpg",
+    address: null,
+    phoneNo: null,
+    summary: null,
+    gender: null,
+    aliveStatus: null,
+    birthDate: null,
+    deathDate: null,
+    createdAt: null,
+    job: null,
+
     selected: false,
     canRemove: true
   };
