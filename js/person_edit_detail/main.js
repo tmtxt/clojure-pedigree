@@ -80,16 +80,30 @@ var action = window.formAction;
 //   document.getElementById('js-editperson-container')
 // );
 
+var global = {};
+
 // New Code
 var config = require('./config.js');
 config.init({
   action: action,
   fromPerson: fromPerson
-});
+}, global);
+global.config = config;
 
 var stores = require('./stores/main.js');
 stores.init({
   child: child,
   partner: partner,
   parent: parent
-});
+}, global);
+global.stores = stores;
+
+// Render
+var MainView = require('./main_view.jsx');
+React.render(
+  React.createElement(MainView,
+                      {statuses: statuses,
+                       genders: genders,
+                       parent: parent}),
+  document.getElementById('js-editperson-container')
+);

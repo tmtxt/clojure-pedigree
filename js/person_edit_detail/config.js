@@ -20,7 +20,7 @@ module.exports = config;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Init Functions
-config.init = function(opts) {
+config.init = function(opts, global) {
   this.initAction(opts);
 };
 

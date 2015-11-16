@@ -1,6 +1,3 @@
-// Config
-var config = require('../config.js');
-
 // Global Stores
 var stores = {
   ChildStore: null,
@@ -11,8 +8,9 @@ var stores = {
 module.exports = stores;
 
 // Init Functions
-stores.init = function(opts) {
+stores.init = function(opts, global) {
   // Assign
+  var config = global.config;
   this.ChildStore = require('./child_store.js');
   this.PartnerStore = require('./partner_store.js');
   this.ParentStore = require('./parent_store.js');
