@@ -35,7 +35,7 @@ config.initDisplayData = function(opts) {
 config.initAction = function(opts) {
   var action = opts.action;
 
-  if (this.action === ACTION_ADD) {
+  if (action === ACTION_ADD) {
     this.action = ACTION_ADD;
     this.actionLink = "/person/add/process";
     this.initAddPage(opts);
