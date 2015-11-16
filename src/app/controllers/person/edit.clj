@@ -29,4 +29,11 @@
        ))))
 
 (defn handle-post-request [request]
-  "hello")
+  (let [person (controller-util/find-person-from-request request "personid")]
+    (if person
+      (let [params (util/params request)
+            file-name (controller-util/store-person-picture params)
+            params (assoc params :picture file-name)
+            person-data (controller-util/params-to-person-data params)]
+        "hello")
+      (str "Person not found"))))
