@@ -143,7 +143,9 @@ var Col2View = React.createClass({
                 Địa chỉ
               </div>
               <div className="profile-body-right">
-                <textarea className="form-control" cols="30" id="" name="address" rows="3">{this.state.person.address}</textarea>
+                <textarea className="form-control" cols="30" id=""
+                          defaultValue={this.state.person.address}
+                          name="address" rows="3"></textarea>
               </div>
             </div>
 
@@ -155,7 +157,8 @@ var Col2View = React.createClass({
             Tiểu sử
           </div>
           <div className="history-body">
-            <textarea name="history" className="form-control js-history-editor">{this.state.person.summary}</textarea>
+            <textarea name="history" defaultValue={this.state.person.summary}
+                      className="form-control js-history-editor"></textarea>
           </div>
         </div>
       </div>
