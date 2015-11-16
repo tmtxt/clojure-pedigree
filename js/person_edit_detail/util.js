@@ -14,3 +14,13 @@ function initDatePicker() {
   });
 }
 exports.initDatePicker = initDatePicker;
+
+function initSummaryEditor() {
+  var historyEditor = jquery(".js-history-editor");
+  historyEditor.markdown({
+    iconlibrary: "fa",
+    resize: "vertical",
+    height: 300
+  });
+}
+exports.initSummaryEditor = initSummaryEditor;

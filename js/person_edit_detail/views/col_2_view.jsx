@@ -20,6 +20,7 @@ var Col2View = React.createClass({
   componentDidMount: function() {
     PersonStore.bind("change", this.personChanged);
     util.initDatePicker();
+    util.initSummaryEditor();
   },
 
   handleStatusChange: function(e) {
@@ -142,6 +143,15 @@ var Col2View = React.createClass({
               </div>
             </div>
 
+          </div>
+        </div>
+
+        <div className="history-container">
+          <div className="history-header">
+            Tiểu sử
+          </div>
+          <div className="history-body">
+            <textarea name="history" className="form-control js-history-editor">{this.state.person.summary}</textarea>
           </div>
         </div>
       </div>
