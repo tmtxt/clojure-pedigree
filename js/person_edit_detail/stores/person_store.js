@@ -9,6 +9,7 @@ function init(opts) {
     person = util.normalizePerson(person);
   } else {
     person = util.getPerson();
+    person.fullName = "";
   }
   this.person = person;
 
