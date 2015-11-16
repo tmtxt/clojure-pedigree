@@ -39,6 +39,8 @@ var store = {
 };
 module.exports = store;
 
+microEvent.mixin(store);
+
 // Get Functions
 store.getFather = function() {
   return this.father;

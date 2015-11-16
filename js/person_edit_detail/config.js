@@ -8,6 +8,8 @@ var FROM_CHILD = "child";
 var FROM_NONE = "none";
 var FROM_HUSBAND = "husband";
 var FROM_WIFE = "wife";
+var FROM_FATHER = "father";
+var FROM_MOTHER = "mother";
 
 ////////////////////////////////////////////////////////////////////////////////
 // Global Config
@@ -15,6 +17,7 @@ var config = {
   actionLink: null,
   fromPerson: null,
   fromPartner: null,
+  fromParent: null,
   statusesList: null,
   gendersList: null
 };
@@ -51,6 +54,7 @@ config.initAddPage = function(opts) {
 
   switch(fromPerson) {
   case FROM_PARENT:
+    this.initAddFromParent(opts);
     break;
   case FROM_PARTNER:
     this.initAddFromPartner(opts);
@@ -62,6 +66,15 @@ config.initAddPage = function(opts) {
   }
 
   this.fromPerson = fromPerson;
+};
+
+config.initAddFromParent = function(opts) {
+  var parent = opts.parent;
+  if (!!parent.father) {
+    this.fromParent = FROM_FATHER;
+  } else {
+    this.fromParent = FROM_MOTHER;
+  }
 };
 
 config.initAddFromPartner = function(opts) {
@@ -130,4 +143,12 @@ config.isFromHusband = function() {
 
 config.isFromWife = function() {
   return this.fromPartner === FROM_WIFE;
+};
+
+config.isFromFather = function() {
+  return this.fromParent === FROM_FATHER;
+};
+
+config.isFromMother = function() {
+  return this.fromParent = FROM_MOTHER;
 };

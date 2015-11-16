@@ -23,6 +23,10 @@ var Col2View = React.createClass({
     util.initSummaryEditor();
   },
 
+  componentWillUnmount: function() {
+    PersonStore.unbind("change", this.personChanged);
+  },
+
   handleStatusChange: function(e) {
     var status = React.findDOMNode(this.refs.statuses).value.trim();
     PersonStore.setAliveStatus(status);

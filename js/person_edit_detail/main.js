@@ -88,7 +88,9 @@ config.init({
   action: action,
   fromPerson: fromPerson,
   statusesList: statuses,
-  gendersList: genders
+  gendersList: genders,
+  partner: partner,
+  parent: parent
 }, global);
 global.config = config;
 
