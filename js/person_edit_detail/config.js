@@ -150,5 +150,5 @@ config.isFromFather = function() {
 };
 
 config.isFromMother = function() {
-  return this.fromParent = FROM_MOTHER;
+  return this.fromParent === FROM_MOTHER;
 };

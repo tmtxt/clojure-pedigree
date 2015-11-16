@@ -72,7 +72,7 @@ var ParentView = React.createClass({
                   <span>Father: </span>
                   <span>{this.state.father.fullName}</span>
                 </div>
-                <div className={config.isFromFather() ? "" : "hidden"}>
+                <div className={!config.isFromFather() ? "" : "hidden"}>
                   <a href="#" onClick={this.handleSelectFather}>Select</a>&nbsp;
                   <a href="#" onClick={this.handleRemoveFather}>Remove</a>
                 </div>
@@ -88,7 +88,7 @@ var ParentView = React.createClass({
                   <span>Mother: </span>
                   <span>{this.state.mother.fullName}</span>
                 </div>
-                <div className={config.isFromMother() ? "" : "hidden"}>
+                <div className={!config.isFromMother() ? "" : "hidden"}>
                   <a href="#" onClick={this.handleSelectMother}>Select</a>&nbsp;
                   <a href="#" onClick={this.handleRemoveMother}>Remove</a>
                 </div>
