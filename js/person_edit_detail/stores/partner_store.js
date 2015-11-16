@@ -1,7 +1,5 @@
 // Libs
 var util = require('./util.js');
-var microEvent = require('microevent');
-var _ = require('_');
 
 function init(opts) {
   var partner = opts.partner;
@@ -14,7 +12,7 @@ function init(opts) {
   }
   person = util.normalizePerson(person);
   person.canRemove = false;
-  this.partners.push(person);
+  this.partner = person;
 
   return this;
 }
@@ -22,30 +20,13 @@ function init(opts) {
 // Partner Store
 var store = {
   // data
-  partners: [],
+  partner: null,
 
   // funcs
   init: init
 };
 module.exports = store;
 
-store.getPartners = function() {
-  return this.partners;
+store.getPartner = function() {
+  return this.partner;
 };
-
-store.addPartner = function(person) {
-  person = util.normalizePerson(person);
-  person.canRemove = true;
-  this.partners.push(person);
-  this.trigger('change');
-};
-
-store.removePartner = function(id) {
-  var partners = _.filter(this.partners, function(partner){
-    return partner.id !== id;
-  });
-  this.partners = partners;
-  this.trigger('change');
-};
-
-microEvent.mixin(store);
