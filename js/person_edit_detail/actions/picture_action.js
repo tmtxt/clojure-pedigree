@@ -1,19 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
 // Libs
 var jquery = require('jquery');
 var q = require("q");
 
-// Modules
 var global;
-var PictureStore;
+var stores;
+var PersonStore;
 
-// init func
-function init(opts) {
-  global = require('./global.js');
-  PictureStore = global.stores.picture;
-
-  return this;
+function init(opts, gbl) {
+  global = gbl;
+  stores = global.stores;
+  PersonStore = stores.PersonStore;
 }
 
+// Picture action
+var action = {
+  init: init
+};
+module.exports = action;
+
+////////////////////////////////////////////////////////////////////////////////
 // open file input selection for user to select an image
 // Returns a promise, resolve with the image link if selected
 // reject otherwise
@@ -43,21 +49,15 @@ function selectFile() {
   });
 }
 
-// select picture
-function selectPicture() {
+// Select picture
+action.selectPicture = function() {
   selectFile().then(function(url){
-    PictureStore.setPictureLink(url);
+    PersonStore.setPicture(url);
   });
-}
-
-// remove picture
-function removePicture() {
-  PictureStore.removePictureLink();
-}
-
-var action = {
-  init: init,
-  selectPicture: selectPicture,
-  removePicture: removePicture
 };
-module.exports = action;
+
+////////////////////////////////////////////////////////////////////////////////
+// Remove picture
+action.removePicture = function() {
+  PersonStore.removePicture();
+};

@@ -1,4 +1,4 @@
-var microEvent = require('microevent');
+// Libs
 var util = require('./util.js');
 
 function init(opts) {
@@ -6,8 +6,6 @@ function init(opts) {
 
   if(!!child) {
     child = util.normalizePerson(child);
-  } else {
-    child = util.getPerson();
   }
   this.child = child;
 
@@ -18,6 +16,7 @@ function getChild() {
   return this.child;
 }
 
+// Child Store
 var store = {
   // data
   child: null,
@@ -27,5 +26,3 @@ var store = {
   getChild: getChild
 };
 module.exports = store;
-
-microEvent.mixin(store);

@@ -13,69 +13,38 @@ var findPersonList = window.findPersonList;
 var fromPerson = window.fromPerson;
 var action = window.formAction;
 
-// Global Object
-var global = require('./global.js').init({
-  fromPerson: fromPerson
-});
+var global = {};
 
-// Store
-var formStore = require('./form_store.js');
-var pictureStore = require('./picture_store.js');
-var parentStore = require('./parent_store.js');
-var familyStore = require('./family_store.js');
-var childStore = require('./child_store.js');
-var personStore = require('./person_store.js');
-global.stores.form = formStore;
-global.stores.picture = pictureStore;
-global.stores.parent = parentStore;
-global.stores.family = familyStore;
-global.stores.child = childStore;
-global.stores.person = personStore;
-
-// Actions
-var pictureAction = require('./picture_action.js');
-var parentAction = require('./parent_action.js');
-var familyAction = require('./family_action.js');
-var findPersonAction = require('./find_person_action.js');
-global.actions.picture = pictureAction;
-global.actions.parent = parentAction;
-global.actions.family = familyAction;
-global.actions.findPerson = findPersonAction;
-
-// Init
-formStore.init({
+var config = require('./config.js');
+global.config = config;
+config.init({
   action: action,
-  fromPerson: fromPerson
-});
-pictureStore.init({
-  person: person
-});
-parentStore.init({
+  fromPerson: fromPerson,
+  statusesList: statuses,
+  gendersList: genders,
+  partner: partner,
   parent: parent
-});
-familyStore.init({
-  partner: partner
-});
-childStore.init({
-  child: child
-});
-personStore.init({
+}, global);
+
+var stores = require('./stores/main.js');
+global.stores = stores;
+stores.init({
+  child: child,
+  partner: partner,
+  parent: parent,
   person: person
-});
+}, global);
 
-pictureAction.init();
-parentAction.init();
-familyAction.init();
-findPersonAction.init();
+var actions = require('./actions/main.js');
+global.actions = actions;
+actions.init({}, global);
 
-// Components
-var MainView = require('./main_view.jsx');
+var util = require('./util.js');
+global.util = util;
 
-// Start rendering
+// Render
+var MainView = require('./views/main_view.jsx')(global);
 React.render(
-  React.createElement(MainView,
-                      {statuses: statuses,
-                       genders: genders,
-                       parent: parent}),
+  React.createElement(MainView, {}),
   document.getElementById('js-editperson-container')
 );

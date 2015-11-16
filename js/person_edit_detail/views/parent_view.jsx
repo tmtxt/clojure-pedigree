@@ -1,10 +1,13 @@
+// Libs
 var React = require("react");
 
-// Global Flux
-var global = require("./global.js");
-var ParentStore = global.stores.parent;
-var ParentAction = global.actions.parent;
+// Application Data
+var global;
+var config;
+var ParentStore;
+var ParentAction;
 
+// View class
 var ParentView = React.createClass({
   getInitialState: function() {
     return {
@@ -14,11 +17,11 @@ var ParentView = React.createClass({
   },
 
   componentDidMount: function() {
-    ParentStore.bindChanged(this.parentChanged);
+    ParentStore.bind("change", this.parentChanged);
   },
 
   componentWillUnmount: function() {
-    ParentStore.unbindChanged(this.parentChanged);
+    ParentStore.unbind("change", this.parentChanged);
   },
 
   parentChanged: function() {
@@ -50,13 +53,8 @@ var ParentView = React.createClass({
   },
 
   render: function() {
-    var rootClassName = "parent-container";
-    if (!(global.addFromParent() || global.addFromNone())) {
-      rootClassName += " hidden";
-    }
-
     return (
-      <div className={rootClassName}>
+      <div>
         <div className="parent-title">
           Parents
         </div>
@@ -75,7 +73,7 @@ var ParentView = React.createClass({
                   <span>Father: </span>
                   <span>{this.state.father.fullName}</span>
                 </div>
-                <div className={ParentStore.canChangeFather() ? "" : "hidden"}>
+                <div className={!config.isFromFather() ? "" : "hidden"}>
                   <a href="#" onClick={this.handleSelectFather}>Select</a>&nbsp;
                   <a href="#" onClick={this.handleRemoveFather}>Remove</a>
                 </div>
@@ -91,7 +89,7 @@ var ParentView = React.createClass({
                   <span>Mother: </span>
                   <span>{this.state.mother.fullName}</span>
                 </div>
-                <div className={ParentStore.canChangeMother() ? "" : "hidden"}>
+                <div className={!config.isFromMother() ? "" : "hidden"}>
                   <a href="#" onClick={this.handleSelectMother}>Select</a>&nbsp;
                   <a href="#" onClick={this.handleRemoveMother}>Remove</a>
                 </div>
@@ -103,4 +101,13 @@ var ParentView = React.createClass({
     );
   }
 });
-module.exports = ParentView;
+
+module.exports = function(gbl) {
+  // Init application data
+  global = gbl;
+  config = global.config;
+  ParentStore = global.stores.ParentStore;
+  ParentAction = global.actions.ParentAction;
+
+  return ParentView;
+};

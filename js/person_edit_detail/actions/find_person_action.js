@@ -1,22 +1,30 @@
+////////////////////////////////////////////////////////////////////////////////
 // Libs
 var jquery = require('jquery');
-var q = require('q');
+var q = require("q");
 
-// Modules
 var global;
+var stores;
+
+function init(opts, gbl) {
+  global = gbl;
+  stores = global.stores;
+}
+
+// Picture action
+var action = {
+  init: init,
+  selectPerson: selectPerson
+};
+module.exports = action;
 
 // Components
 var findPersonModal = jquery('.js-find-person-modal');
 var selectBoxContainer = jquery('.js-select-person-container');
 var selectPersonButton = jquery('.js-confirm-select-person-button');
 
-// Init
-function init(opts) {
-  global = require('./global.js');
-
-  return this;
-}
-
+////////////////////////////////////////////////////////////////////////////////
+// Functions
 function createSelectBox() {
   selectBoxContainer.empty();
   var selectBox = document.createElement('select');
@@ -141,9 +149,3 @@ function unbindModal() {
   findPersonModal.unbind();
   selectPersonButton.unbind();
 }
-
-var action = {
-  init: init,
-  selectPerson: selectPerson
-};
-module.exports = action;

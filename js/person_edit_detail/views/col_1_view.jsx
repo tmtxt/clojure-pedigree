@@ -1,24 +1,31 @@
-var global = require("./global.js");
-var PictureStore = global.stores.picture;
-var PictureAction = global.actions.picture;
+// Libs
+var React = require("react");
 
-// Main view
+// Application Data
+var global;
+var config;
+var PersonStore;
+var PictureAction;
+
+// View class
 var Col1View = React.createClass({
   getInitialState: function() {
-    return {imageLink: PictureStore.getPictureLink()};
+    return {
+      imageLink: PersonStore.getPerson().picture
+    };
   },
 
   componentDidMount: function() {
-    PictureStore.bindChanged(this.pictureChanged);
+    PersonStore.bind("change", this.pictureChanged);
   },
 
   componentWillUnmount: function() {
-    PictureStore.unbindChanged(this.pictureChanged);
+    PersonStore.unbind("change", this.pictureChanged);
   },
 
   pictureChanged: function() {
     this.setState({
-      imageLink: PictureStore.getPictureLink()
+      imageLink: PersonStore.getPerson().picture
     });
   },
 
@@ -49,4 +56,13 @@ var Col1View = React.createClass({
     );
   }
 });
-module.exports = Col1View;
+
+module.exports = function(gbl) {
+  // Init application data
+  global = gbl;
+  config = global.config;
+  PersonStore = global.stores.PersonStore;
+  PictureAction = global.actions.PictureAction;
+
+  return Col1View;
+};

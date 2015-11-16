@@ -1,29 +1,24 @@
+// Libs
 var React = require("react");
 
-// Global Flux
-var global = require("./global.js");
-var ChildStore = global.stores.child;
+// Application Data
+var global;
+var config;
+var PartnerStore;
 
-var ChildView = React.createClass({
+// View class
+var PartnerView = React.createClass({
   getInitialState: function() {
     return {
-      child: ChildStore.getChild()
+      partner: PartnerStore.getPartner()
     };
   },
 
   render: function() {
-    if(!global.addFromChild()) {
-      return (
-        <div>
-        </div>
-      );
-    }
-
     return (
-      <div className="family-container">
-        <input name="childId" type="hidden" value={this.state.child.id}/>
+      <div>
         <div className="family-title">
-          Child
+          Family
         </div>
         <div className="family-help">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit
@@ -32,12 +27,13 @@ var ChildView = React.createClass({
           <div className="family-list">
             <ul className="partner-list">
               <li>
+                <input name="partnerId" type="hidden" value={this.state.partner.id}/>
                 <div className="partner-image people-image">
-                  <img className="img-responsive img-rounded" alt="" src={this.state.child.picture}/>
+                  <img className="img-responsive img-rounded" alt="" src={this.state.partner.picture}/>
                 </div>
                 <div className="partner-info people-info">
                   <div className="partner-name people-name">
-                    {this.state.child.fullName}
+                    {this.state.partner.fullName}
                   </div>
                 </div>
               </li>
@@ -48,4 +44,12 @@ var ChildView = React.createClass({
     );
   }
 });
-module.exports = ChildView;
+
+module.exports = function(gbl) {
+  // Init application data
+  global = gbl;
+  config = global.config;
+  PartnerStore = global.stores.PartnerStore;
+
+  return PartnerView;
+};
