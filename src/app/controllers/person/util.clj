@@ -75,7 +75,8 @@
      (when (nil? original-name) (throw+ picture))
      (when (blank? original-name) (throw+ picture))
      ;; delete the old file
-     (io/delete-file (io/file (str "resources/public" picture)))
+     (when (-> picture (.contains "person-image"))
+       (io/delete-file (io/file (str "resources/public" picture))))
      ;; store the new file
      (store-person-picture params))
    (catch Object pic pic)))
