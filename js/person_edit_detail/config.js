@@ -44,7 +44,7 @@ config.initAction = function(opts) {
     this.initAddPage(opts);
   } else {
     this.action = ACTION_EDIT;
-    this.actionLink = "/person/edit/process";
+    this.actionLink = "/person/editProcess";
     this.initEditPage(opts);
   }
 };

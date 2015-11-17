@@ -66,3 +66,17 @@
         params (assoc params :picture file-name)
         person-data (params-to-person-data params)]
     (person/add-person person-data)))
+
+(defn update-person-picture
+  [params person]
+  (try+
+   (let [{{temp-file :tempfile original-name :filename} :picture} params
+         {picture :picture} person]
+     (when (nil? original-name) (throw+ picture))
+     (when (blank? original-name) (throw+ picture))
+     ;; delete the old file
+     (when (-> picture (.contains "person-image"))
+       (io/delete-file (io/file (str "resources/public" picture))))
+     ;; store the new file
+     (store-person-picture params))
+   (catch Object pic pic)))

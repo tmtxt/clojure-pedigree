@@ -74,6 +74,7 @@ var Col2View = React.createClass({
 
     return (
       <div className="editperson-col-2">
+        <input name="personid" type="hidden" value={this.state.person.id} />
         <div className="profile-container">
           <div className="profile-header">
             Hồ sơ
