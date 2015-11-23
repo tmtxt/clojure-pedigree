@@ -25,7 +25,7 @@ var PersonModal = React.createClass({
                     Họ tên
                   </div>
                   <div className="person-info-value">
-                    {this.props.fullName}
+                    {this.props["full-name"]}
                   </div>
                 </div>
                 <div className="person-info-row">
