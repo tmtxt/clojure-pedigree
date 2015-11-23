@@ -1,5 +1,5 @@
 (ns app.models.person.definition
-  (:require [app.util.db-util :as db-util]
+  (:require [app.util.pg :as db-util]
             [korma.core :as kc]
             [camel-snake-kebab.core :refer :all]
             [app.models.person.util :as model-util]

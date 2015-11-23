@@ -7,7 +7,7 @@
             [clojure.data.json :as json]
             [app.controllers.person.util :as controller-util]
             [app.models.person :as person-model]
-            [app.util.db-util :as db-util]
+            [app.util.pg :as db-util]
             [clj-time.format :as f]
             [clj-time.coerce :as c]
             [slingshot.slingshot :refer [try+ throw+]]))

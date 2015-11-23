@@ -1,4 +1,4 @@
-(ns app.util.db-util
+(ns app.util.pg
   (:import [org.postgresql.util PGobject])
   (:require [korma.core :as kc]
             [clj-time.format :as f]

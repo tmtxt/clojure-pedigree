@@ -4,7 +4,7 @@
             [app.models.user-role :as user-role-model]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.accessrules :refer (error)]
-            [app.util.db-util :as db-util]))
+            [app.util.pg :as db-util]))
 
 (defn authen-user
   "Authenticate the input username and password. Return user entity if authenticated, otherwise, return nil"

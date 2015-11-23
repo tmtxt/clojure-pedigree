@@ -1,6 +1,6 @@
 (ns app.models.person.find
   (:require [korma.core :as kc]
-            [app.util.db-util :as db-util]
+            [app.util.pg :as db-util]
             [app.neo4j.node :as node]
             [app.neo4j.main :as neo4j]
             [app.neo4j.query :as query]
