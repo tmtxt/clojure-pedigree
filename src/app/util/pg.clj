@@ -1,6 +1,7 @@
 (ns app.util.pg
   (:import [org.postgresql.util PGobject])
   (:require [korma.core :as kc]
+            [app.util.datetime :as datetime]
             [clj-time.format :as f]
             [clj-time.coerce :as c]))
 
@@ -11,13 +12,11 @@
              (.setType type)
              (.setValue value)) type))
 
-(def vn-time-formatter (f/formatter "dd/MM/yyyy"))
-
 (defn str->pgtimestamp
   "Convert string into pgtimestamp"
   [time-string]
   (if time-string (->> time-string
-                       (f/parse vn-time-formatter)
+                       (f/parse datetime/default-time-formatter)
                        c/to-long
                        java.sql.Timestamp.)
       time-string))
