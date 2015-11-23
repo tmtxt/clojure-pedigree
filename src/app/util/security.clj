@@ -1,7 +1,7 @@
 (ns app.util.security
   (:require [crypto.password.bcrypt :as crypto]
             [app.models.user :as user-model]
-            [app.models.userRole :as user-role-model]
+            [app.models.user-role :as user-role-model]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.accessrules :refer (error)]
             [app.util.db-util :as db-util]))

@@ -1,4 +1,4 @@
-(ns app.models.userRole
+(ns app.models.user-role
   (:use [korma.core])
   (:import [org.postgresql.util PGobject])
   (:require [app.util.db-util :as db-util]))
