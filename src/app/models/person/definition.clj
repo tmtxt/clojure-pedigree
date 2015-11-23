@@ -10,10 +10,18 @@
 ;;; custom-defined record
 ;;; for postgres result
 (defrecord PersonEntity
-    [id full-name address
-     phone-no summary gender
-     alive-status death-date birth-date
-     picture created-at job])
+    [id
+     full-name
+     address
+     phone-no
+     summary
+     gender
+     alive-status
+     death-date
+     birth-date
+     picture
+     created-at
+     job])
 
 ;;; for neo4j result
 (defrecord PersonNode
