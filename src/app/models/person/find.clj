@@ -76,8 +76,11 @@
 
 (defn find-entities-by-ids
   "Find all from postgres where id in ids list"
-  [ids]
-  (db-util/find-all-by-ids person ids))
+  [ids & {:keys [json-friendly]
+          :or {json-friendly false}}]
+  (let [persons (db-util/find-all-by-ids person ids)
+        persons (if json-friendly (map #(json/json-friendlify %) persons) persons)]
+    persons))
 
 (defn find-entities-by-genders [genders]
   (find-entities {:gender genders}))
