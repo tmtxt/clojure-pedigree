@@ -4,8 +4,8 @@
             [app.util.db-util :as db-util]
             [app.neo4j.main :as neo4j]
             [korma.db :as kd]
-            [app.models.marriageRelation :as mrl]
-            [app.models.pedigreeRelation :as prl]
+            [app.models.marriage-relation :as mrl]
+            [app.models.pedigree-relation :as prl]
             [config.neo4j :refer [conn]]))
 
 (defn create-init-user []
