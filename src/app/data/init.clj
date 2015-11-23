@@ -1,7 +1,7 @@
 (ns app.data.init
   (:require [app.models.user :as user-model]
             [app.models.person :as person-model]
-            [app.util.dbUtil :as db-util]
+            [app.util.db-util :as db-util]
             [app.neo4j.main :as neo4j]
             [korma.db :as kd]
             [app.models.marriageRelation :as mrl]

@@ -2,7 +2,7 @@
   (:use [korma.core])
   (:require [app.models.userRole :refer [add-user-role user-role]]
             [crypto.password.bcrypt :as crypto]
-            [app.util.dbUtil :as db-util]
+            [app.util.db-util :as db-util]
             [buddy.auth :refer [authenticated?]]
             [validateur.validation :as vl]))
 
