@@ -5,11 +5,12 @@
   <!-- header -->
   <div class="persondetail-header">
     <div class="persondetail-title">
-      Person Name
+      {{ params.person.full-name }}
     </div>
     <div class="persondetail-buttons">
-      <a href="/person/edit/{{ params.person.id }}" class="btn btn-success">Edit</a>
-      <a href="/person/delete/{{ params.person.id }}" class="btn btn-danger">Cancel</a>
+      <a href="/person/edit/{{ params.person.id }}" class="btn btn-success">Chỉnh sửa</a>
+      &nbsp;&nbsp;&nbsp;
+      <a href="/person/delete/{{ params.person.id }}" class="btn btn-danger">Xóa</a>
     </div>
   </div>
 
@@ -31,7 +32,7 @@
         <div class="profile-body">
           <div class="profile-body-row">
             <div class="profile-body-left">
-              Tên
+              Họ và Tên
             </div>
             <div class="profile-body-right">
               {{ params.person.full-name }}
