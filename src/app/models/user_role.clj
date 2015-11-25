@@ -1,7 +1,7 @@
-(ns app.models.userRole
+(ns app.models.user-role
   (:use [korma.core])
   (:import [org.postgresql.util PGobject])
-  (:require [app.util.dbUtil :as db-util]))
+  (:require [app.util.pg :as db-util]))
 
 (def USER_ROLE_NAME_USER "user")
 (def USER_ROLE_NAME_ADMIN "admin")

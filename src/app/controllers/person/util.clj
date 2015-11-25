@@ -14,7 +14,7 @@
   (let [param-name (keyword param-name)
         params (util/params request)
         param (get params param-name)]
-    (-> param util/parse-int person/find-person-by-id :entity)))
+    (-> param util/parse-int (person/find-person-by-id :json-friendly true) :entity)))
 
 (defn params-to-person-data
   [{full-name :name

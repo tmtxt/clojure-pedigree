@@ -25,7 +25,7 @@ var PersonModal = React.createClass({
                     Họ tên
                   </div>
                   <div className="person-info-value">
-                    {this.props.fullName}
+                    {this.props["full-name"]}
                   </div>
                 </div>
                 <div className="person-info-row">
@@ -33,7 +33,7 @@ var PersonModal = React.createClass({
                     Ngày Sinh
                   </div>
                   <div className="person-info-value">
-                    {this.props["birth-date"]}
+                    {this.props["birth-date"] ? this.props["birth-date"] : "Không rõ"}
                   </div>
                 </div>
                 <div className="person-info-row">

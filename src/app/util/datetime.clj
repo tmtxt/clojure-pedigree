@@ -3,3 +3,5 @@
             [clj-time.coerce :as c]))
 
 (def vn-time-formatter (f/formatter "dd/MM/yyyy"))
+
+(def default-time-formatter vn-time-formatter)

@@ -68,7 +68,7 @@
   (let [rows (query-tree (:person-id root) depth)
         paths (map (fn [[path _ marriage last_order]] [path marriage last_order]) rows)
         ids (extract-ids paths)
-        person-rows (person/find-entities-by-ids ids)
+        person-rows (person/find-entities-by-ids ids :json-friendly true)
         person-info (extract-person-info person-rows)
         init-tree root
         ]
@@ -79,7 +79,7 @@
   "Get tree from person id"
   ([]
    (neo4j/with-transaction
-     (let [find-root (person/find-root :include-node true :include-partners true)
+     (let [find-root (person/find-root :include-node true :include-partners true :json-friendly true)
            root-node (:node find-root)
            root-node (assoc root-node :info (:entity find-root))
            root-node (assoc root-node :marriage (:partners find-root))]

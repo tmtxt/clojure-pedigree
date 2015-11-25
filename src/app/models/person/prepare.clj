@@ -1,5 +1,5 @@
 (ns app.models.person.prepare
-  (:require [app.util.db-util :as db-util]
+  (:require [app.util.pg :as db-util]
             [app.models.person.util :as model-util]
             [slingshot.slingshot :refer [try+ throw+]]
             [clojure.string :refer [blank?]]))
