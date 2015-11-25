@@ -22,3 +22,6 @@
             (= k :alive-status)
             [k (display/status-to-string v)]
             :else [k v]))))
+
+(defn json-friendlify-all [person-entities]
+  (map #(json-friendlify %) person-entities))
