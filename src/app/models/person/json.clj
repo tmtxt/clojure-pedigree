@@ -5,14 +5,20 @@
             [slingshot.slingshot :refer [throw+ try+]]
             [clj-time.format :as f]
             [clj-time.coerce :as c]
+            [app.models.person.display :as display]
             [app.util.datetime :as dt]))
 
-(def timestamp-keys #{:birth-date :death-date :created-at})
+(def ^:private timestamp-keys #{:birth-date :death-date :created-at})
 
 (defn json-friendlify [person-entity]
   (into {}
         (for [[k v] person-entity]
-          (if (-> timestamp-keys (contains? k))
+          (cond
+            (-> timestamp-keys (contains? k))
             (if (nil? v) [k nil]
                 [k (->> v (c/from-sql-time) (f/unparse dt/vn-time-formatter))])
-            [k v]))))
+            (= k :gender)
+            [k (display/gender-to-string v)]
+            (= k :alive-status)
+            [k (display/status-to-string v)]
+            :else [k v]))))
