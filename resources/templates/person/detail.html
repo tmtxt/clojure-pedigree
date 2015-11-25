@@ -99,40 +99,7 @@
     <!-- column 3 -->
     <div class="persondetail-col-3">
       <!-- parent view -->
-      <div class="persondetail-parents">
-        <div class="parent-title">
-          Cha mẹ
-        </div>
-        <div class="parent-help">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-        </div>
-        <div class="parent-body">
-          <ul>
-            <li>
-              <div class="parent-image people-image">
-                <img class="img-responsive img-rounded" alt="" src="/assets/img/t.jpg"/>
-              </div>
-              <div class="parent-info people-info">
-                <div class="parent-name people-name">
-                  <span>Father: </span>
-                  <span>some gentleman name</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="parent-image people-image">
-                <img class="img-responsive img-rounded" alt="" src="/assets/img/t.jpg"/>
-              </div>
-              <div class="parent-info people-info">
-                <div class="parent-name people-name">
-                  <span>Mother: </span>
-                  <span>some lady name</span>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+      {% include "person/_detail_parents.html" %}
     </div>
   </div>
 </div>

@@ -184,13 +184,15 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn find-person-by-id
-  [id & {:keys [include-node include-partners json-friendly]
+  [id & {:keys [include-node include-partners include-parents json-friendly]
          :or {include-node false
               include-partners false
+              include-parents false
               json-friendly false}}]
   (find-person-by {:id id}
                   :include-node include-node
                   :include-partners include-partners
+                  :include-parents include-parents
                   :json-friendly json-friendly))
 
 (defn find-node-by-person-id [id]
