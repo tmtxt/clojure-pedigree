@@ -100,14 +100,16 @@
 
 (defn find-partners-of-entity
   "Find all partners information of the input person"
-  [entity]
+  [entity & {:keys [json-friendly]
+             :or {json-friendly false}}]
   (let [[result] (neo4j/execute-statement query/find-partner (:id entity))
         data (-> result :data)
         partners-list (map #(:row %) data)
         ids (extract-partner-ids partners-list)
         partners-id-order (extract-partner-id-order partners-list)
         partners-rows (db-util/find-all-by-ids person ids)
-        partners-info (combine-partner-info partners-id-order partners-rows)]
+        partners-info (combine-partner-info partners-id-order partners-rows)
+        partners-info (if json-friendly (map #(json/json-friendlify %) partners-info) partners-info)]
     partners-info))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -120,7 +122,7 @@
   (let [person-entity (find-entity criteria)
         person-entity (if json-friendly (json/json-friendlify person-entity) person-entity)
         person-node (if include-node (find-node-from-entity person-entity) nil)
-        partners (if include-partners (find-partners-of-entity person-entity))]
+        partners (if include-partners (find-partners-of-entity person-entity :json-friendly json-friendly))]
     {:entity person-entity
      :node person-node
      :partners partners}))
