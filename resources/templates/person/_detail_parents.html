@@ -1,0 +1,62 @@
+<div class="persondetail-parents">
+  <div class="parent-title">
+    Cha mẹ
+  </div>
+  <div class="parent-help">
+    {% if not all params.father params.mother %}
+      {% if not any params.father params.mother %}
+        Chưa có thông tin về cha mẹ của thành viên này
+      {% else %}
+        {% if not params.father %}
+          Chưa có thông tin về cha của thành viên này
+        {% endif %}
+        {% if not params.mother %}
+          Chưa có thông tin về mẹ của thành viên này
+        {% endif %}
+      {% endif %}
+    {% else %}
+      Click vào để xem thông tin chi tiết
+    {% endif %}
+  </div>
+  <div class="parent-body">
+    <ul>
+      {% if params.father %}
+      <li>
+        <div class="parent-image people-image">
+          <a href="/person/detail/{{ params.father.id }}">
+            <img class="img-responsive img-rounded" alt="" src="{{ params.father.picture }}"/>
+          </a>
+        </div>
+        <div class="parent-info people-info">
+          <div class="parent-name people-name">
+            <span>Cha: </span>
+            <span>{{ params.father.full-name }}</span>
+          </div>
+          <div>
+            <a href="/person/detail/{{ params.father.id }}">Xem thông tin</a>
+          </div>
+        </div>
+      </li>
+      {% endif %}
+
+      {% if params.mother %}
+      <li>
+        <div class="parent-image people-image">
+          <a href="/person/detail/{{ params.mother.id }}">
+            <img class="img-responsive img-rounded" alt="" src="{{ params.mother.picture }}"/>
+          </a>
+        </div>
+        <div class="parent-info people-info">
+          <div class="parent-name people-name">
+            <span>Mẹ: </span>
+            <span>{{ params.mother.full-name }}</span>
+          </div>
+          <div>
+            <a href="/person/detail/{{ params.mother.id }}">Xem thông tin</a>
+          </div>
+        </div>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

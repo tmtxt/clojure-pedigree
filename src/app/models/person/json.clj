@@ -15,10 +15,12 @@
         (for [[k v] person-entity]
           (cond
             (-> timestamp-keys (contains? k))
-            (if (nil? v) [k nil]
-                [k (->> v (c/from-sql-time) (f/unparse dt/vn-time-formatter))])
+            [k (display/timestamp-to-string v)]
             (= k :gender)
             [k (display/gender-to-string v)]
             (= k :alive-status)
             [k (display/status-to-string v)]
-            :else [k v]))))
+            :else [k (display/value-to-string v)]))))
+
+(defn json-friendlify-all [person-entities]
+  (map #(json-friendlify %) person-entities))

@@ -109,23 +109,52 @@
         partners-id-order (extract-partner-id-order partners-list)
         partners-rows (db-util/find-all-by-ids person ids)
         partners-info (combine-partner-info partners-id-order partners-rows)
-        partners-info (if json-friendly (map #(json/json-friendlify %) partners-info) partners-info)]
+        partners-info (if json-friendly (json/json-friendlify-all partners-info) partners-info)]
     partners-info))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn- combine-parent-info [parents-list parents-rows]
+  (into
+   {}
+   (for [parent parents-rows]
+     (let [k (get parents-list (:id parent))
+           k (clojure.string/replace k "_child" "")
+           k (keyword k)]
+       [k parent]
+       ))))
+
+(defn find-parents-of-entity
+  "Find parents information of the input person"
+  [entity & {:keys [json-friendly]
+             :or {json-friendly false}}]
+  (let [[result] (neo4j/execute-statement query/find-parent (:id entity))
+        data (:data result)
+        parents-list (map #(:row %) data)
+        parents-ids (map #(first %) parents-list)
+        parents-list (into {} parents-list)
+        parents-rows (db-util/find-all-by-ids person parents-ids)
+        parents-rows (if json-friendly (json/json-friendlify-all parents-rows) parents-rows)
+        parents-info (combine-parent-info parents-list parents-rows)]
+    parents-info
+    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; you should use this function
 (defn find-person-by
-  [criteria & {:keys [include-node include-partners json-friendly]
+  [criteria & {:keys [include-node include-partners include-parents json-friendly]
                :or {include-node false
                     include-partners false
+                    include-parents false
                     json-friendly false}}]
   (let [person-entity (find-entity criteria)
         person-entity (if json-friendly (json/json-friendlify person-entity) person-entity)
         person-node (if include-node (find-node-from-entity person-entity) nil)
-        partners (if include-partners (find-partners-of-entity person-entity :json-friendly json-friendly))]
+        partners (if include-partners (find-partners-of-entity person-entity :json-friendly json-friendly))
+        parents (if include-parents (find-parents-of-entity person-entity :json-friendly json-friendly))]
     {:entity person-entity
      :node person-node
-     :partners partners}))
+     :partners partners
+     :parents parents}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -155,13 +184,15 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn find-person-by-id
-  [id & {:keys [include-node include-partners json-friendly]
+  [id & {:keys [include-node include-partners include-parents json-friendly]
          :or {include-node false
               include-partners false
+              include-parents false
               json-friendly false}}]
   (find-person-by {:id id}
                   :include-node include-node
                   :include-partners include-partners
+                  :include-parents include-parents
                   :json-friendly json-friendly))
 
 (defn find-node-by-person-id [id]
