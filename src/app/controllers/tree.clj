@@ -11,8 +11,7 @@
 (defn tree-page
   ;; render layout page for pedigree tree
   [request]
-  (let [params (util/params request)
-        ])
+  (let [params (util/params request)])
   (render request "tree/tree.html"))
 
 (def tree-routes

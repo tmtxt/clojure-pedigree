@@ -76,6 +76,17 @@
     (extract-tree paths init-tree person-info)
     ))
 
+(defn- find-root [person-id]
+  (let [find-root (person/find-person-by {:id person-id}
+                                         :include-node true
+                                         :include-partners true
+                                         :json-friendly true)
+        root-entity (:entity find-root)
+        result (if (empty? root-entity)
+                 (person/find-root :include-node true :include-partners true :json-friendly true)
+                 find-root)]
+    result))
+
 (defn get-tree
   "Get tree from person id"
   ([]
@@ -88,16 +99,9 @@
 
   ([person-id]
    (neo4j/with-transaction
-     (try+
-      (let [find-root (person/find-person-by {:id person-id}
-                                             :include-node true
-                                             :include-partners true
-                                             :json-friendly true)
-            root-entity (:entity find-root)
-            _ (when (empty? root-entity) (throw+ "not found"))
+     (let [find-root (find-root person-id)
             root-node (:node find-root)
             root-node (assoc root-node :info (:entity find-root))
             root-node (assoc root-node :marriage (:partners find-root))]
         (get-tree-from-node root-node default-depth))
-      (catch Object _ {}))
      )))
