@@ -8,6 +8,10 @@
 (defn get-tree [request]
   (response (tree/get-tree)))
 
+(defn get-tree-from-person [request]
+  (let [person-id (->> "personId" (util/param request) util/parse-int)]
+    (response (tree/get-tree person-id))))
+
 (defn tree-page
   ;; render layout page for pedigree tree
   [request & [person-id]]
@@ -25,6 +29,7 @@
 (def tree-routes
   (context
    "/tree" []
-   (GET "/get" [] get-tree)
+   (GET "/getFromPerson/:personId" [] get-tree-from-person)
+   (GET "/getFromNone" [] get-tree)
    (GET "/viewTree" [] view-tree)
    (GET "/view/:personId" [] view-from-person)))

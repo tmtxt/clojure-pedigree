@@ -19,9 +19,9 @@
 {% endblock %}
 
 {% block extra_script %}
-<script src="/js/tree.js{{ version }}"></script>
 <script>
  window.isAuthenticated = {{ user.authenticated|default:"false" }};
  window.personId = {{ params.personId }};
 </script>
+<script src="/js/tree.js{{ version }}"></script>
 {% endblock %}
