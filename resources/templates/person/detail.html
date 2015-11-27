@@ -7,15 +7,16 @@
     <div class="persondetail-title">
       {{ params.person.full-name }}
     </div>
-    {% if user.authenticated %}
+
     <div class="persondetail-buttons">
       <a href="/tree/view/{{ params.person.id }}" class="btn btn-info">Xem cây gia phả</a>
+      {% if user.authenticated %}
       &nbsp;&nbsp;
       <a href="/person/edit/{{ params.person.id }}" class="btn btn-success">Chỉnh sửa</a>
       &nbsp;&nbsp;
       <a href="/person/delete/{{ params.person.id }}" class="btn btn-danger">Xóa</a>
+      {% endif %}
     </div>
-    {% endif %}
   </div>
 
   <!-- body -->
