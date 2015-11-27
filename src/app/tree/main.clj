@@ -2,7 +2,8 @@
   (:require [app.models.person :as person]
             [app.neo4j.main :as neo4j]
             [app.neo4j.query :as query]
-            [com.rpl.specter :refer :all]))
+            [com.rpl.specter :refer :all]
+            [slingshot.slingshot :refer [try+ throw+]]))
 
 (def ^{:private true} default-depth 5)
 
@@ -87,5 +88,16 @@
 
   ([person-id]
    (neo4j/with-transaction
-     (let [root-node (-> {:id person-id} (person/find-person-by :include-node true) :node)]
-       (println root-node)))))
+     (try+
+      (let [find-root (person/find-person-by {:id person-id}
+                                             :include-node true
+                                             :include-partners true
+                                             :json-friendly true)
+            root-entity (:entity find-root)
+            _ (when (empty? root-entity) (throw+ "not found"))
+            root-node (:node find-root)
+            root-node (assoc root-node :info (:entity find-root))
+            root-node (assoc root-node :marriage (:partners find-root))]
+        (get-tree-from-node root-node default-depth))
+      (catch Object _ {}))
+     )))
