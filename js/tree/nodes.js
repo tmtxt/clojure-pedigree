@@ -71,7 +71,7 @@ function appendImages(page, nodeEnter) {
     .attr("height", "40px")
     .attr("width", "40px")
     .on('click', function(d){
-      Modal.showPersonInfo(d.info);
+      Modal.showPersonInfo(page, d.info);
     });
 }
 

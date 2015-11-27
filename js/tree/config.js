@@ -66,4 +66,10 @@ config.setShowDetailModal = function(val) {
   return this;
 };
 
+// Is authenticated?
+config.isAuthenticated = function() {
+  var isAuthenticated = window.isAuthenticated || false;
+  return isAuthenticated;
+};
+
 module.exports = config;

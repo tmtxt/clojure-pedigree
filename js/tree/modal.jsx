@@ -47,11 +47,17 @@ var PersonModal = React.createClass({
               </div>
             </div>
             <div className="modal-footer">
-              <a href={"/person/detail/" + this.props.id} className="btn btn-success">View Detail</a>
-              <a href={"/person/add/childId/" + this.props.id} className="btn btn-primary">Add Parent</a>
-              <a href={"/person/add/partnerId/" + this.props.id} className="btn btn-primary">Add Partner</a>
-              <a href={"/person/add/parentId/" + this.props.id} className="btn btn-primary">Add child</a>
-              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+              <a href={"/person/detail/" + this.props.id} className="btn btn-success">Chi tiết</a>
+              {this.props.isAuthenticated ? <a href={"/person/add/childId/" + this.props.id}
+                                               className="btn btn-primary">Thêm Cha Mẹ</a>
+               : null }
+              {this.props.isAuthenticated ? <a href={"/person/add/partnerId/" + this.props.id}
+                                               className="btn btn-primary">Thêm vợ chồng</a>
+               : null }
+              {this.props.isAuthenticated ? <a href={"/person/add/parentId/" + this.props.id}
+                                               className="btn btn-primary">Thêm con</a>
+               : null }
+              <button type="button" className="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
           </div>
         </div>
@@ -61,7 +67,10 @@ var PersonModal = React.createClass({
 });
 
 // Render function
-function showPersonInfo(info) {
+function showPersonInfo(page, info) {
+  // is authenticated?
+  info.isAuthenticated = page.config.isAuthenticated();
+
   // unmount first
   React.unmountComponentAtNode(
     document.getElementById("js-user-modal-container")
