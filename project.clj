@@ -12,7 +12,7 @@
                  [com.novemberain/validateur "2.4.2"]
                  [com.taoensso/tower "3.0.2"]
                  [korma "0.4.2"]
-                 [environ "1.0.0"]
+                 [environ "1.0.1"]
                  [org.clojure/data.json "0.2.6"]
                  [clj-time "0.11.0"]
                  [camel-snake-kebab "0.3.2"]
@@ -70,13 +70,13 @@
 
    :production
    {:ring {:open-browser? false, :stacktraces? false, :auto-reload? false}
-    :env {:someconfig "production"}}
+    :env {:profile "production"}}
 
    :dev
    {:dependencies [[ring-mock "0.1.5"]
                    [ring/ring-devel "1.4.0"]]
     :ring {:open-browser? false}
-    :env {:someconfig "dev"}
+    :env {:profile "dev"}
     :repl-options {:nrepl-middleware
                    [cemerick.piggieback/wrap-cljs-repl
                     cider.nrepl.middleware.apropos/wrap-apropos

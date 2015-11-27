@@ -1,5 +1,6 @@
 (ns app.controllers.person
   (:require [compojure.core :refer :all]
+            [environ.core :refer [env]]
             [app.util.security :refer [user-access admin-access]]
             [app.controllers.person.add :as add-person]
             [app.controllers.person.edit :as edit-person]
@@ -20,8 +21,13 @@
            (POST "/editProcess"              [] edit-person/handle-post-request)
            (GET "/delete/:personId"          [] delete-person/handle-get-request)))
 
-;; (def person-rules [{:pattern #"^/person/add.*"
-;;                     :handler admin-access}])
-
-(def person-rules [{:pattern #"^/person/kfjsdljfkl.*"
-                    :handler admin-access}])
+(def person-rules
+  (if (-> :profile env (= "dev"))
+    [{:pattern #"^/person/sfkjdslkjfldjfs.*"
+      :handler admin-access}]
+    [{:pattern #"^/person/add.*"
+      :handler admin-access}
+     {:pattern #"^/person/edit.*"
+      :handler admin-access}
+     {:pattern #"^/person/delete.*"
+      :handler admin-access}]))

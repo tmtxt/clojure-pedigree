@@ -7,11 +7,13 @@
     <div class="persondetail-title">
       {{ params.person.full-name }}
     </div>
+    {% if user.authenticated %}
     <div class="persondetail-buttons">
       <a href="/person/edit/{{ params.person.id }}" class="btn btn-success">Chỉnh sửa</a>
       &nbsp;&nbsp;&nbsp;
       <a href="/person/delete/{{ params.person.id }}" class="btn btn-danger">Xóa</a>
     </div>
+    {% endif %}
   </div>
 
   <!-- body -->
@@ -75,6 +77,7 @@
             </div>
           </div>
 
+          {% if user.authenticated %}
           <div class="profile-body-row">
             <div class="profile-body-left">
               Điện thoại
@@ -92,6 +95,7 @@
               {{ params.person.address }}
             </div>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>

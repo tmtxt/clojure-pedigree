@@ -4,6 +4,7 @@
             [app.models.user-role :as user-role-model]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.accessrules :refer (error)]
+            [slingshot.slingshot :refer [try+ throw+]]
             [app.util.pg :as db-util]))
 
 (defn authen-user

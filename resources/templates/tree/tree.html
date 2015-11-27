@@ -20,4 +20,7 @@
 
 {% block extra_script %}
 <script src="/js/tree.js{{ version }}"></script>
+<script>
+ window.isAuthenticated = {{ user.authenticated|default:"false" }};
+</script>
 {% endblock %}
