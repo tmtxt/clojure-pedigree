@@ -72,4 +72,10 @@ config.isAuthenticated = function() {
   return isAuthenticated;
 };
 
+// Root person id
+config.personId = window.personId;
+config.getPersonId = function() {
+  return this.personId;
+};
+
 module.exports = config;
