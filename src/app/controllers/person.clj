@@ -20,8 +20,9 @@
            (POST "/editProcess"              [] edit-person/handle-post-request)
            (GET "/delete/:personId"          [] delete-person/handle-get-request)))
 
-;; (def person-rules [{:pattern #"^/person/add.*"
-;;                     :handler admin-access}])
-
-(def person-rules [{:pattern #"^/person/kfjsdljfkl.*"
+(def person-rules [{:pattern #"^/person/add.*"
+                    :handler admin-access}
+                   {:pattern #"^/person/edit.*"
+                    :handler admin-access}
+                   {:pattern #"^/person/delete.*"
                     :handler admin-access}])
