@@ -21,7 +21,7 @@ function init(page) {
 }
 exports.init = init;
 
-function createMarriageNode(node, data) {
+function createMarriageNode(page, node, data) {
   return d3.select(node).append("svg:image")
     .attr("xlink:href", data.picture)
     .attr("class", "marriage-image")
@@ -31,7 +31,7 @@ function createMarriageNode(node, data) {
     .attr("width", "40px")
     .datum(data)
     .on('click', function(d){
-      Modal.showPersonInfo(d);
+      Modal.showPersonInfo(page, d);
     });
 }
 
@@ -47,7 +47,7 @@ function enableMarriage(page) {
   nodes.forEach(function(node) {
     var order = 0;
     _.each(node.__data__.marriage, function(marriage) {
-      var marriageNode = createMarriageNode(node, marriage);
+      var marriageNode = createMarriageNode(page, node, marriage);
       marriageNode
         .transition()
         .duration(duration)
