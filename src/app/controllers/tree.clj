@@ -10,12 +10,21 @@
 
 (defn tree-page
   ;; render layout page for pedigree tree
-  [request]
-  (let [params (util/params request)])
-  (render request "tree/tree.html"))
+  [request & [person-id]]
+  (let [person-id (if person-id person-id "null")]
+    (render request "tree/tree.html"
+            {:personId person-id})))
+
+(defn view-tree [request]
+  (tree-page request))
+
+(defn view-from-person [request]
+  (let [person-id (util/param request "personId")]
+    (tree-page request person-id)))
 
 (def tree-routes
   (context
    "/tree" []
    (GET "/get" [] get-tree)
-   (GET "/view" [] tree-page)))
+   (GET "/viewTree" [] view-tree)
+   (GET "/view/:personId" [] view-from-person)))

@@ -17,7 +17,6 @@
 
 (defn add-person-process [request]
   (let [params (util/params request)
-        _ (clojure.pprint/pprint params)
         {from-person :fromPerson} params]
     (case from-person
       "parent" (from-parent/process-post-request request)
