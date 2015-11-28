@@ -13,13 +13,18 @@
             [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn handle-get-request [request]
-  (let [person (controller-util/find-person-from-request request "personId")]
-    (when person
+  (let [person-id (util/param request "personId")
+        person-result (-> person-id util/parse-int person-model/find-person-by-id)
+        person-entity (:entity person-result)]
+    (when person-entity
       (layout/render
        request
        "person/edit_detail.html"
        {:from "none"
-        :person (-> person person-model/json-friendlify json/write-str)
+        :person (-> person-entity
+                    (person-model/json-friendlify :fields [:birth-date :death-date :created-at]
+                                                  :keep-nil true)
+                    json/write-str)
         :parent (-> {} person-util/filter-parent-keys json/write-str)
         :partner (-> {} person-util/filter-partner-keys json/write-str)
         :child (-> {} person-util/filter-person-keys json/write-str)

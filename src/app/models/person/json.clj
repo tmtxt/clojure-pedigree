@@ -10,17 +10,27 @@
 
 (def ^:private timestamp-keys #{:birth-date :death-date :created-at})
 
-(defn json-friendlify [person-entity]
-  (into {}
-        (for [[k v] person-entity]
-          (cond
-            (-> timestamp-keys (contains? k))
-            [k (display/timestamp-to-string v)]
-            (= k :gender)
-            [k (display/gender-to-string v)]
-            (= k :alive-status)
-            [k (display/status-to-string v)]
-            :else [k (display/value-to-string v)]))))
+(defn- json-friendlify-each [k v & [keep-nil]]
+  (cond
+    (-> timestamp-keys (contains? k))
+    [k (display/timestamp-to-string v keep-nil)]
+    (= k :gender)
+    [k (display/gender-to-string v keep-nil)]
+    (= k :alive-status)
+    [k (display/status-to-string v keep-nil)]
+    :else [k (display/value-to-string v keep-nil)]))
+
+(defn json-friendlify [person-entity & {:keys [fields keep-nil]
+                                        :or {fields nil
+                                             keep-nil false}}]
+  (let [fields (when fields (set fields))]
+    (into {}
+          (for [[k v] person-entity]
+            (cond
+              (nil? fields) (json-friendlify-each k v keep-nil)
+              (-> fields (contains? k)) (json-friendlify-each k v keep-nil)
+              :else [k v]
+              )))))
 
 (defn json-friendlify-all [person-entities]
   (map #(json-friendlify %) person-entities))
