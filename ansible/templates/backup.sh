@@ -25,11 +25,11 @@ do
 done
 
 # Backup postgres database
-PGDATABASE={{ db_name }}
-PGHOST={{ db_host }}
-PGUSER={{ db_user }}
-PGPASSWORD={{ db_password }}
-PGPORT=5432
+export PGDATABASE={{ db_name }}
+export PGHOST={{ db_host }}
+export PGUSER={{ db_user }}
+export PGPASSWORD={{ db_password }}
+export PGPORT=5432
 
 mkdir -p $TEMP_DIR/postgres
 cd $TEMP_DIR/postgres
