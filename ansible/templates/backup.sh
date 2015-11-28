@@ -38,3 +38,4 @@ cd $TEMP_DIR
 zip -r -u $FILE_NAME postgres
 
 # Delete temp folder
+rm -rf $TEMP_DIR/postgres
