@@ -7,6 +7,7 @@ FILE_NAME="{{ project_dir }}/backup/backup-on-$CURRENT_TIME.$FILE_EXT"
 DIRS=(
     "{{ log_dir }}"
     "{{ password_dir }}"
+    "{{ person_image_dir }}"
 )
 
 for path in "${DIRS[@]}"
