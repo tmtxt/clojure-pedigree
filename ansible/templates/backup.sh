@@ -2,7 +2,7 @@
 
 # Create temp folder
 TEMP_DIR="{{ project_dir }}/temp"
-mkdir $TEMP_DIR
+mkdir -p $TEMP_DIR
 
 # Backup folders
 CURRENT_TIME="$(date +%Y-%m-%d-%H-%M-%S)"
@@ -10,15 +10,17 @@ FILE_EXT="zip"
 FILE_NAME="{{ project_dir }}/backup/backup-on-$CURRENT_TIME.$FILE_EXT"
 
 DIRS=(
-    "{{ log_dir }}"
-    "{{ password_dir }}"
-    "{{ person_image_dir }}"
+    {{ log_dir }}
+    {{ password_dir }}
+    {{ person_image_dir }}
+    {{ neo4j_path }}
 )
 
-for path in "${DIRS[@]}"
+for dir_path in "${DIRS[@]}"
 do
-    dir=$(basename $path)
-    cd $path/..
+    cd "$dir_path"
+    cd ..
+    dir=$(basename "$dir_path")
     zip -r -u $FILE_NAME $dir
 done
 
@@ -29,7 +31,7 @@ PGUSER={{ db_user }}
 PGPASSWORD={{ db_password }}
 PGPORT=5432
 
-mkdir $TEMP_DIR/postgres
+mkdir -p $TEMP_DIR/postgres
 cd $TEMP_DIR/postgres
 pg_dump -cO > postgres.sql
 cd $TEMP_DIR
