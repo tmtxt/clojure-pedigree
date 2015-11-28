@@ -101,6 +101,9 @@
           {% endif %}
         </div>
       </div>
+
+      <div class="persondetail-history js-persondetail-history">
+      </div>
     </div>
 
     <!-- column 3 -->
@@ -113,4 +116,11 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+ window.personHistory = {{ params.person.summary|json|safe }};
+</script>
+<script src="/js/person_view_detail.js{{ version }}"></script>
 {% endblock %}

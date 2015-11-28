@@ -48,6 +48,7 @@
     "react": "global:React",
     "flux": "global:Flux",
     "microevent": "global:MicroEvent",
-    "EventEmitter": "global:EventEmitter"
+    "EventEmitter": "global:EventEmitter",
+    "markdown": "global:markdown"
   }
 }
