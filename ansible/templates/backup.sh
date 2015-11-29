@@ -12,7 +12,7 @@ CURRENT_TIME="$(date +%Y-%m-%d-%H-%M-%S)"
 FILE_EXT="zip"
 FILE_NAME="{{ project_dir }}/backup/backup-on-$CURRENT_TIME.$FILE_EXT"
 
-# folder to backup
+# folders to backup
 declare -A DIRS=(
     [logs]={{ log_dir }}
     [password]={{ password_dir }}
