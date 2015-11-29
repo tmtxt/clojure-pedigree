@@ -28,3 +28,5 @@
 /src/app/views/version.clj
 /.lein-failures
 /resources/public/person-image
+/backup/*
+/temp/*

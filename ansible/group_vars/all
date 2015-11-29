@@ -13,6 +13,7 @@ person_image_dir: "{{project_dir}}/resources/public/person-image"
 # folder for log files, build files,...
 out_dirs:
   - "{{project_dir}}/logs"                  # log dir
+  - "{{project_dir}}/backup"                # backup dir
   - "{{project_dir}}/resources/public/cljs" # cljs build dir
   - "{{project_dir}}/target"                # clj build dir
   - "{{project_dir}}/scripts"               # script dir

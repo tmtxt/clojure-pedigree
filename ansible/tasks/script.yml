@@ -25,3 +25,21 @@
     dest={{script_dir}}/start.sh
     mode=755
     owner={{project_user}}
+
+- name: create backup script
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/backup.sh
+    dest={{script_dir}}/backup.sh
+    mode=755
+    owner={{project_user}}
+
+- name: create restore script
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/restore.sh
+    dest={{script_dir}}/restore.sh
+    mode=755
+    owner={{project_user}}
