@@ -24,16 +24,15 @@ for k in "${!DIRS[@]}"; do
     cp -R $RESTORE_DIR/$k/* ${DIRS[$k]}/
 done
 
-# # Copy back the directory to there destination
-# # log dir
-# rm -rf /vagrant/logs
-# cp -R $TEMP_DIR/backup/logs /vagrant/logs
-# # password dir
-# rm -rf /vagrant/password
-# cp -R $TEMP_DIR/backup/password /vagrant/password
-# # person image dir
-# rm -rf /vagrant/resources/public/person-image
-# cp -R $TEMP_DIR/backup/person-image /vagrant/resources/public/person-image
-# # neo4j dir
-# rm -rf ~/neo4j
-# cp -R $TEMP_DIR/backup/neo4j ~/neo4j
+# restore postgres db
+export PGDATABASE={{ db_name }}
+export PGHOST={{ db_host }}
+export PGUSER={{ db_user }}
+export PGPASSWORD={{ db_password }}
+export PGPORT=5432
+
+cd $RESTORE_DIR/postgres
+psql < postgres.sql
+
+# remove restore dir
+rm -rf $RESTORE_DIR
