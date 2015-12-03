@@ -1,31 +1,25 @@
 # Clojure Pedigree Website
 
-Pedigree Management website in Clojure
+Vietnamese Pedigree Management website in Clojure
 
-# not finished yet...
+Technologies stack:
+
+- [Vagrant](https://www.vagrantup.com/) and [Ansible](http://www.ansible.com/) for setting up and provisioning
+- [Clojure](http://clojure.org/)/[Ring](https://github.com/ring-clojure/ring)/[Compojure](https://github.com/weavejester/compojure) for backend server
+- [PostgreSQL](http://www.postgresql.org/) and [Korma](https://github.com/korma/Korma)
+- [Neo4j](http://neo4j.com/) and [Neocons](http://clojureneo4j.info/articles/getting_started.html)
+- [D3](http://d3js.org/) for rendering pedigree tree
+- [React](https://facebook.github.io/react/) for rendering complex pages
+- [Gulp](http://gulpjs.com/) and [Browserify](http://browserify.org/) for build
+tools
+- [Sass](http://sass-lang.com/) for stylesheet
 
 # Documentation
 
 Documentation is located under docs folder, you should read them in this order
 
-- [Setup](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/setup.md)
+- [Setup](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/readme.md)
 - [Provision](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/provision.md)
 - [Database](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/database.md)
-- [Models](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/models.md)
-- [Controllers](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/controllers.md)
-- [Views](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/views.md)
-- [Static Files](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/static.md)
 - [Logging](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/logging.md)
-- [Environment Variables](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/environment.md)
-
-# Provision
-
-- Add host to ansible/hosts
-- Add a file name **extra_vars.yml**, which defines the `project_dir` variable
-(and other variable if you need)
-- Execute `run.sh` in ansible folder
-
-# Note
-
-If you are running a VPS with less than 1GB of RAM, probably you need to setup
-swap for using when compilation.
+- [App Command](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/command.md)

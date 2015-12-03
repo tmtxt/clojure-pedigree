@@ -8,37 +8,16 @@ $ vagrant provision
 
 # 2. Production deployment
 
-# Preparation
+## Preparation
 
-- Install Ansible on the server
-- Create a new user for project, clone the project to the user's home (or
-  somewhere with the sufficient permission)
-- Create a file for holding the extra vars, for example
-
-extra_vars.yml
-
-```
----
-project_user: skeleton
-project_dir: /home/skeleton/clojure-web-skeleton
-db_password: qeimdjspleks
-service_prefix: skeleton
-```
-
-- Run the provision with this command (using a user account with sudo
-  permission, not the project user)
-
-```
-ansible-playbook -i localhost, -c local -e "@/path/to/extra_vars.yml" -K /path/to/clojure-web-skeleton/ansible/main.yml
-```
+Edit variables to overwrite in `ansible/host_vars` and use `ansible/run.sh` script
 
 # Variables
 
 You must overwrite these variables on server
 
-- `project_name`: the short unique name of project, default to **skeleton**
+- `project_name`: the short unique name of project, default to **pedigree**
 - `project_dir`: real path to the project
-- `db_password`: password to access database
 
 These variables can be optionally overwritten
 
