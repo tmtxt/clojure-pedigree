@@ -18,8 +18,8 @@ tools
 
 Documentation is located under docs folder, you should read them in this order
 
-- [Setup](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/readme.md)
-- [Provision](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/provision.md)
-- [Database](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/database.md)
-- [Logging](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/logging.md)
-- [App Command](https://github.com/tmtxt/clojure-web-skeleton/blob/master/docs/command.md)
+- [Setup](https://github.com/tmtxt/clojure-pedigree/blob/master/docs/readme.md)
+- [Provision](https://github.com/tmtxt/clojure-pedigree/blob/master/docs/provision.md)
+- [Database](https://github.com/tmtxt/clojure-pedigree/blob/master/docs/database.md)
+- [Logging](https://github.com/tmtxt/clojure-pedigree/blob/master/docs/logging.md)
+- [App Command](https://github.com/tmtxt/clojure-pedigree/blob/master/docs/command.md)
