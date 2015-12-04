@@ -79,7 +79,7 @@ function appendMarriages(page, nodeEnter) {
       if(!!node) {
         var order = 0;
         _.each(node.__data__.marriage, function(marriage){
-          var marriageNode = createMarriageNode(node, marriage);
+          var marriageNode = createMarriageNode(page, node, marriage);
           marriageNode
             .transition()
             .duration(0)
