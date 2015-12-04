@@ -13,8 +13,10 @@
 (defn find-person-from-request [request param-name]
   (let [param-name (keyword param-name)
         params (util/params request)
-        param (get params param-name)]
-    (-> param util/parse-int (person/find-person-by-id :json-friendly true) :entity)))
+        param (get params param-name)
+        result (-> param util/parse-int (person/find-person-by-id :json-friendly true) :entity)
+        result (if (empty? result) nil result)]
+    result))
 
 (defn params-to-person-data
   [{full-name :name
