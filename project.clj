@@ -3,7 +3,7 @@
   :url "http://example.com/FIXME"
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/tools.nrepl "0.2.10"]
+                 [org.clojure/tools.nrepl "0.2.12"]
                  [compojure "1.3.4"]
                  [ring-server "0.4.0"]
                  [ring/ring-json "0.4.0"]
@@ -24,7 +24,7 @@
                  [slingshot "0.12.2"]
                  [crypto-password "0.1.3"]
                  [weasel "0.7.0"]
-                 [cider/cider-nrepl "0.9.1"]
+                 [cider/cider-nrepl "0.10.0"]
                  [com.cemerick/piggieback "0.1.5"]
                  [com.rpl/specter "0.6.2"]
                  [digest "1.4.4"]
