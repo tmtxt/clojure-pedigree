@@ -6,8 +6,7 @@
             [config.main :refer [config]]
             [config.db]
             [cider.nrepl :refer [cider-nrepl-handler]]
-            [app.data.init :refer [create-init-data]]
-            [cemerick.piggieback :refer [wrap-cljs-repl]]))
+            [app.data.init :refer [create-init-data]]))
 
 (defonce server (atom nil))
 
@@ -41,10 +40,6 @@
   (reset! server nil))
 
 (defn start-repl []
-  ;; enable when using with cljs repl
-  ;; (repl-server/start-server :port (config :nrepl-port)
-  ;;                           :handler (repl-server/default-handler
-  ;;                           #'wrap-cljs-repl))
   (repl-server/start-server :port (config :nrepl-port)
                             :handler cider-nrepl-handler)
   (println (str "nRepl server running on port " (config :nrepl-port))))

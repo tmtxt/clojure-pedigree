@@ -25,7 +25,6 @@
                  [crypto-password "0.1.3"]
                  [weasel "0.7.0"]
                  [cider/cider-nrepl "0.10.0"]
-                 [com.cemerick/piggieback "0.1.5"]
                  [com.rpl/specter "0.6.2"]
                  [digest "1.4.4"]
                  [me.raynes/fs "1.4.6"]
@@ -78,8 +77,7 @@
     :ring {:open-browser? false}
     :env {:profile "dev"}
     :repl-options {:nrepl-middleware
-                   [cemerick.piggieback/wrap-cljs-repl
-                    cider.nrepl.middleware.apropos/wrap-apropos
+                   [cider.nrepl.middleware.apropos/wrap-apropos
                     cider.nrepl.middleware.classpath/wrap-classpath
                     cider.nrepl.middleware.complete/wrap-complete
                     cider.nrepl.middleware.debug/wrap-debug
