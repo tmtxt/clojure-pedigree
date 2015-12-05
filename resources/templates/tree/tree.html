@@ -21,7 +21,8 @@
 {% block extra_script %}
 <script>
  window.isAuthenticated = {{ user.authenticated|default:"false" }};
- window.personId = {{ params.personId }};
+ window.personId = {{ params.personId|safe }};
+ window.treeDepth = {{ params.depth|safe }};
 </script>
 <script src="/js/tree.js{{ version }}"></script>
 {% endblock %}

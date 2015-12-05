@@ -89,19 +89,14 @@
 
 (defn get-tree
   "Get tree from person id"
-  ([]
-   (neo4j/with-transaction
-     (let [find-root (person/find-root :include-node true :include-partners true :json-friendly true)
-           root-node (:node find-root)
-           root-node (assoc root-node :info (:entity find-root))
-           root-node (assoc root-node :marriage (:partners find-root))]
-       (get-tree-from-node root-node default-depth))))
-
-  ([person-id]
-   (neo4j/with-transaction
-     (let [find-root (find-root person-id)
-            root-node (:node find-root)
-            root-node (assoc root-node :info (:entity find-root))
-            root-node (assoc root-node :marriage (:partners find-root))]
-        (get-tree-from-node root-node default-depth))
-     )))
+  [& {:keys [person-id depth]
+      :or {person-id nil
+           depth default-depth}}]
+  (neo4j/with-transaction
+    (let [find-root (if (nil? person-id)
+                      (person/find-root :include-node true :include-partners true :json-friendly true)
+                      (find-root person-id))
+          root-node (:node find-root)
+          root-node (assoc root-node :info (:entity find-root))
+          root-node (assoc root-node :marriage (:partners find-root))]
+      (get-tree-from-node root-node depth))))
