@@ -93,7 +93,8 @@
       :or {person-id nil
            depth default-depth}}]
   (neo4j/with-transaction
-    (let [find-root (if (nil? person-id)
+    (let [depth (if (nil? depth) default-depth depth)
+          find-root (if (nil? person-id)
                       (person/find-root :include-node true :include-partners true :json-friendly true)
                       (find-root person-id))
           root-node (:node find-root)

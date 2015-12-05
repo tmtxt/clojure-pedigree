@@ -6,6 +6,12 @@
             [app.views.layout :refer [render]]
             [app.util.main :as util]))
 
+(defn get-tree-data [request]
+  (let [params (util/params request)
+        person-id (-> params :personId util/parse-int)
+        depth (-> params :depth util/parse-int)]
+    (response (tree/get-tree :person-id person-id :depth depth))))
+
 (defn get-tree [request]
   (response (tree/get-tree)))
 
@@ -20,7 +26,6 @@
                    depth nil}}]
   (let [person-id (json/write-str person-id)
         depth (json/write-str depth)]
-    (println person-id)
     (render request "tree/tree.html"
             {:personId person-id
              :depth depth})))
@@ -42,8 +47,7 @@
 (def tree-routes
   (context
    "/tree" []
-   (GET "/getFromPerson/:personId" [] get-tree-from-person)
-   (GET "/getFromNone" [] get-tree)
+   (GET "/data" [] get-tree-data)
 
    (GET "/view/" [] view-tree)
    (GET "/view/person/:personId" [] view-tree)

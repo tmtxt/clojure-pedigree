@@ -6,17 +6,16 @@ var q = require('q');
 function getTreeData(page) {
   var config = page.config;
   var rootId = config.getPersonId();
-  var url;
-
-  if (!!rootId) {
-    url = '/tree/getFromPerson/' + rootId;
-  } else {
-    url = '/tree/getFromNone';
-  }
+  var treeDepth = config.getTreeDepth();
+  var url = "/tree/data";
 
   return q.Promise(function(resolve, reject){
     jquery.ajax({
       type: 'GET',
+      data: {
+        personId: rootId,
+        depth: treeDepth
+      },
       url: url,
       success: function(data) {
         page.root = data;
