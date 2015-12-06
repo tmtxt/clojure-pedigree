@@ -78,4 +78,10 @@ config.getPersonId = function() {
   return this.personId;
 };
 
+// Tree depth
+config.treeDepth = window.treeDepth;
+config.getTreeDepth = function() {
+  return this.treeDepth;
+};
+
 module.exports = config;
