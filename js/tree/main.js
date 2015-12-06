@@ -3,6 +3,7 @@ var Config = require('./config.js');
 var Init = require('./init.js');
 var Render = require('./render.js');
 var Marriage = require('./marriage.js');
+var Depth = require('./depth.js');
 
 // Global page object
 var page = {
