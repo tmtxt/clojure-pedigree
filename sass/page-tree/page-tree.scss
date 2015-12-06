@@ -1,5 +1,7 @@
 /* Tree page */
 
+@import "./_checkbox.scss";
+
 /* Tree graph (SVG) element */
 .tree-page {
   @include svg-tree-graph;

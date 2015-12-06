@@ -15,6 +15,9 @@
 @import "./_header.scss";
 @import "./_footer.scss";
 
+/* components */
+@import "./components/checkbox.scss";
+
 /* pages */
 @import "./page-index/page-index.scss";
 @import "./page-login/page-login.scss";
