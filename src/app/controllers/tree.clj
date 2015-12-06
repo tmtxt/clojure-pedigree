@@ -33,6 +33,9 @@
       (not (nil? person-id)) (tree-page request :person-id person-id)
       :else (tree-page request :depth depth))))
 
+(defn export-tree [request]
+  (render request "tree/export.html"))
+
 (def tree-routes
   (context
    "/tree" []
@@ -41,4 +44,6 @@
    (GET "/view/" [] view-tree)
    (GET "/view/person/:personId" [] view-tree)
    (GET "/view/depth/:depth" [] view-tree)
-   (GET "/view/person/:personId/depth/:depth" [] view-tree)))
+   (GET "/view/person/:personId/depth/:depth" [] view-tree)
+
+   (GET "/export/person/:personId" [] export-tree)))
