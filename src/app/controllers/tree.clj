@@ -12,13 +12,6 @@
         depth (-> params :depth util/parse-int)]
     (response (tree/get-tree :person-id person-id :depth depth))))
 
-(defn get-tree [request]
-  (response (tree/get-tree)))
-
-(defn get-tree-from-person [request]
-  (let [person-id (->> "personId" (util/param request) util/parse-int)]
-    (response (tree/get-tree :person-id person-id))))
-
 (defn tree-page
   ;; render layout page for pedigree tree
   [request & {:keys [person-id depth]
@@ -39,10 +32,6 @@
       (not-every? nil? [person-id depth]) (tree-page request :person-id person-id :depth depth)
       (not (nil? person-id)) (tree-page request :person-id person-id)
       :else (tree-page request :depth depth))))
-
-(defn view-from-person [request]
-  (let [person-id (util/param request "personId")]
-    (tree-page request person-id)))
 
 (def tree-routes
   (context
