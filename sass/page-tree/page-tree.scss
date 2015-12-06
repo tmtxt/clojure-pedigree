@@ -12,8 +12,24 @@
   }
 
   .controls-container {
+    @include flex(row nowrap);
+
     label {
       color: $brown;
+    }
+
+    div.controls-depth-container {
+      @include flex(row nowrap);
+      align-items: center;
+      margin-left: 10px;
+
+      input {
+        margin-right: 5px;
+      }
+
+      button {
+        width: 100%;
+      }
     }
   }
 
