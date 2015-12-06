@@ -6,6 +6,12 @@ var config = require('./config.js');
 var updateDepthButton = jquery('.js-update-tree-depth');
 var treeDepthInput = jquery('.js-tree-depth-input');
 
+// init value for tree depth input
+var treeDepth = config.getTreeDepth();
+if (!!treeDepth) {
+  treeDepthInput.val(treeDepth);
+}
+
 // on update depth
 updateDepthButton.click(function(){
   var depth;
