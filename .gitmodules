@@ -22,3 +22,6 @@
 [submodule "ansible/roles/ferm"]
 	path = ansible/roles/ferm
 	url = https://github.com/tmtxt/ferm-ubuntu-ansible.git
+[submodule "ansible/roles/docker"]
+	path = ansible/roles/docker
+	url = https://github.com/angstwad/docker.ubuntu.git

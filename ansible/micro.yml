@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+    - name: update apt-get
+      sudo: yes
+      apt: update_cache=yes cache_valid_time=43200 # update after 12 hours
+
+- hosts: all
+  roles:
+    - { role: docker, sudo: yes }
