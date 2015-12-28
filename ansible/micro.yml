@@ -12,6 +12,7 @@
     - name: build web server docker image
       sudo: yes
       docker_image: >-
-        path="/vagrant/docker/web-server"
+        path="{{ project_dir }}/images/web-server"
         name="app/webserver"
-        state="present"
+        state="build"
+      changed_when: False

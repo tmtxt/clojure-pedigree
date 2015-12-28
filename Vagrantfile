@@ -7,9 +7,9 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
-  # # config
-  # project_name = "pedigree"
-  # project_user = "vagrant"
+  # config
+  project_name = "pedigree"
+  project_user = "vagrant"
 
   # # port forwarding
   # config.vm.network :forwarded_port, guest: 80, host: 9250
@@ -29,21 +29,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "ansible/micro.yml"
 
-    # ansible.extra_vars = {
-    #   # general
-    #   project_name: project_name,
-    #   project_user: project_user,
-    #   project_dir: "/vagrant",
+    ansible.extra_vars = {
+      # general
+      project_name: project_name,
+      project_user: project_user,
+      project_dir: "/vagrant",
 
-    #   # db
-    #   db_name: project_name,
-    #   db_user: project_user,
+      # db
+      db_name: project_name,
+      db_user: project_user,
 
-    #   # vagrant specific
-    #   vagrant_env: true,
-    #   ssl_enable: false,
-    #   server_name: 'localhost',
-    #   env: 'dev'
-    # }
+      # vagrant specific
+      vagrant_env: true,
+      ssl_enable: false,
+      server_name: 'localhost',
+      env: 'dev'
+    }
   end
 end
