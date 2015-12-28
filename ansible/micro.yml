@@ -9,10 +9,20 @@
   # roles:
   #   - { role: docker, sudo: yes }
   tasks:
+
+    # web server
     - name: build web server docker image
       sudo: yes
       docker_image: >-
         path="{{ project_dir }}/images/web-server"
         name="app/webserver"
+        state="build"
+      changed_when: False
+
+    - name: build docker image for postgres
+      sudo: yes
+      docker_image: >-
+        path="{{ project_dir }}/images/postgres"
+        name="app/postgres"
         state="build"
       changed_when: False
