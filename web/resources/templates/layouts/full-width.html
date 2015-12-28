@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "layouts/_meta.html" %}
+  </head>
+  <body class="site">
+    {% include "layouts/_header.html" %}
+
+    <main class="site-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    {% include "layouts/_footer.html" %}
+
+    <!-- script tag -->
+    {% include "layouts/_scripts.html" %}
+    {% block extra_script %}{% endblock %}
+  </body>
+</html>

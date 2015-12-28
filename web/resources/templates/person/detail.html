@@ -1,0 +1,126 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<div class="page-persondetail">
+  <!-- header -->
+  <div class="persondetail-header">
+    <div class="persondetail-title">
+      {{ params.person.full-name }}
+    </div>
+
+    <div class="persondetail-buttons">
+      <a href="/tree/view/person/{{ params.person.id }}" class="btn btn-info">Xem cây gia phả</a>
+      {% if user.authenticated %}
+      &nbsp;&nbsp;
+      <a href="/person/edit/{{ params.person.id }}" class="btn btn-success">Chỉnh sửa</a>
+      &nbsp;&nbsp;
+      <a href="/person/delete/{{ params.person.id }}" class="btn btn-danger">Xóa</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- body -->
+  <div class="persondetail-body">
+    <!-- column 1 -->
+    <div class="persondetail-col-1">
+      <img class="img-responsive img-thumbnail" alt="" src="{{ params.person.picture }}" />
+    </div>
+
+    <!-- column 2 -->
+    <div class="persondetail-col-2">
+      <!-- profile view -->
+      <div class="persondetail-profile">
+        <div class="profile-header">
+          Thông tin
+        </div>
+
+        <div class="profile-body">
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Họ và Tên
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.full-name }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Ngày sinh
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.birth-date }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Tình trạng
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.alive-status }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Ngày mất
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.death-date }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Giới tính
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.gender }}
+            </div>
+          </div>
+
+          {% if user.authenticated %}
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Điện thoại
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.phone-no }}
+            </div>
+          </div>
+
+          <div class="profile-body-row">
+            <div class="profile-body-left">
+              Địa chỉ
+            </div>
+            <div class="profile-body-right">
+              {{ params.person.address }}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="persondetail-history js-persondetail-history">
+      </div>
+    </div>
+
+    <!-- column 3 -->
+    <div class="persondetail-col-3">
+      <!-- parents view -->
+      {% include "person/_detail_parents.html" %}
+
+      <!-- partners view -->
+      {% include "person/_detail_partners.html" %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+ window.personHistory = {{ params.person.summary|json|safe }};
+</script>
+<script src="/js/person_view_detail.js{{ version }}"></script>
+{% endblock %}

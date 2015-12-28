@@ -1,0 +1,36 @@
+<header class="site-header">
+  <div class="container-fluid header-banner">
+    <div class="container">
+      <div class="header-site-name">
+        Trần Văn gia phả
+      </div>
+      <div class="header-site-headline">
+        Gìn giữ cho muôn đời sau
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid header-nav">
+
+    <div class="container">
+      <nav class="header-content" role="banner">
+        <ul class="header-content--left header-menu">
+          <li><a href="/">Trang chủ</a></li>
+          <li><a href="#">Thành viên</a></li>
+          <li><a href="/tree/view/">Cây gia phả</a></li>
+          <li><a href="#">Lịch sử dòng họ</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+        <ul class="header-content--right header-menu">
+          {% if user.authenticated %}
+            <li class="header-user">Xin chào
+              <span class="header-user-name">{{ user.username }}</span> <a class="header-user-logout" href="/logout"><i class="fa fa-sign-out fa-lg"></i></a>
+            </li>
+          {% else if %}
+            <li><a href="/login">Đăng nhập</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

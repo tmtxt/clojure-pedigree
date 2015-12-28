@@ -1,0 +1,28 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<!-- Using React for rendering this -->
+<div class="page-editperson" id="js-editperson-container">
+  {% include "person/_find_person_modal.html" %}
+  {% endblock %}
+</div>
+
+{% block extra_script %}
+<script>
+ // form action
+ window.formAction = "{{ params.action }}";
+
+ // set display maps
+ window.statuses = {{ params.statuses|safe }};
+ window.genders = {{ params.genders|safe }};
+ window.parent = {{ params.parent|safe }};
+ window.partner = {{ params.partner|safe }};
+ window.child = {{ params.child|safe }};
+ window.person = {{ params.person|safe }}
+
+ {% if params.from %}
+   window.fromPerson = "{{ params.from }}";
+ {% endif %}
+</script>
+<script src="/js/person_edit_detail.js{{ version }}"></script>
+{% endblock %}
