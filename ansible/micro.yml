@@ -1,18 +1,22 @@
 ---
-# - hosts: all
-#   tasks:
-#     - name: update apt-get
-#       sudo: yes
-#       apt: update_cache=yes cache_valid_time=43200 # update after 12 hours
+- hosts: all
+  tasks:
+    - include: micro-tasks/init.yml
 
 - hosts: all
-  # roles:
-  #   - { role: docker, sudo: yes }
+  roles:
+    - { role: docker, sudo: yes }
   tasks:
-
-    # web server
-    - name: build web server docker image
+    - name: add docker group
       sudo: yes
+      group: name=docker state=present
+
+    - name: add project user to docker group
+      sudo: yes
+      user: name={{ project_user }} groups=docker append=yes
+
+    # web
+    - name: build web server docker image
       docker_image: >-
         path="{{ project_dir }}/images/web-server"
         name="app/webserver"
@@ -20,9 +24,21 @@
       changed_when: False
 
     - name: build docker image for postgres
-      sudo: yes
       docker_image: >-
         path="{{ project_dir }}/images/postgres"
         name="app/postgres"
         state="build"
       changed_when: False
+
+    - name: start postgres image
+      docker:
+        name: postgres
+        image: app/postgres
+        state: started
+        ports:
+          - "9250:5432"
+        env:
+          POSTGRES_PASSWORD: pass
+          POSTGRES_DB: test
+
+    # - include: tasks/schemup.yml
