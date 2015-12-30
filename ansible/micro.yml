@@ -15,11 +15,17 @@
       sudo: yes
       user: name={{ project_user }} groups=docker append=yes
 
-    - include: micro-tasks/docker-images.yml
-    # - include: micro-tasks/docker-run.yml
     - include: micro-tasks/docker-compose.yml
 
-    - name: run docker compose for web service
+    - name: build docker images for web service
+      sudo: yes
+      sudo_user: "{{ project_user }}"
+      command: docker-compose build
+      args:
+        chdir: "{{ project_dir }}/web"
+      changed_when: False
+
+    - name: run docker images for web service
       sudo: yes
       sudo_user: "{{ project_user }}"
       command: docker-compose up -d
