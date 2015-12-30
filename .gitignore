@@ -30,3 +30,5 @@
 /resources/public/person-image
 /backup/*
 /temp/*
+
+/web/docker-compose.yml

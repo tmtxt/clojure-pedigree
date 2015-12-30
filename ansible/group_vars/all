@@ -3,6 +3,7 @@
 # general information
 project_name: pedigree
 project_user: "{{project_name}}"
+name_prefix: "{{ project_name }}"
 service_prefix: "{{project_name}}"
 ssl_enable: true
 site_name: "{{project_name}}"
@@ -39,6 +40,8 @@ password_dir: "{{project_dir}}/password"
 db_name: "{{project_name}}"
 db_user: "{{project_user}}"
 db_host: localhost
+db_port: 13000
+db_pass: random
 pg_random_password: true
 pg_password_file: "{{password_dir}}/postgres"
 
