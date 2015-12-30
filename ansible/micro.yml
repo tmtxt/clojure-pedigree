@@ -19,16 +19,14 @@
     - name: build web server docker image
       docker_image: >-
         path="{{ project_dir }}/images/web-server"
-        name="app/webserver"
-        state="build"
-      changed_when: False
+        name="app-webserver"
+        state="present"
 
     - name: build docker image for postgres
       docker_image: >-
         path="{{ project_dir }}/images/postgres"
-        name="app/postgres"
-        state="build"
-      changed_when: False
+        name="app-postgres"
+        state="present"
 
     - name: start postgres image
       docker:

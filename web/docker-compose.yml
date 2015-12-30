@@ -1,9 +1,10 @@
 webserver:
   build: ./images/webserver
-  container_name: app/webserver
+  container_name: app-webserver
 
 postgres:
   image: postgres:9.4.5
+  container_name: app-postgres
   ports:
     - "9250:5432"
   environment:
