@@ -1,0 +1,11 @@
+webserver:
+  build: ./images/webserver
+  container_name: app/webserver
+
+postgres:
+  image: postgres:9.4.5
+  ports:
+    - "9250:5432"
+  environment:
+    POSTGRES_PASSWORD: pass
+    POSTGRES_DB: test
