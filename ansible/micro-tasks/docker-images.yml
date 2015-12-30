@@ -1,0 +1,12 @@
+---
+- name: build web server docker image
+  docker_image: >-
+    path="{{ project_dir }}/web/images/webserver"
+    name="{{ name_prefix }}-web-server"
+    state="present"
+
+- name: build docker image for postgres
+  docker_image: >-
+    path="{{ project_dir }}/web/images/postgres"
+    name="{{ name_prefix }}-web-postgres"
+    state="present"

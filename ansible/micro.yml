@@ -15,35 +15,6 @@
       sudo: yes
       user: name={{ project_user }} groups=docker append=yes
 
-    # web
-    - name: build web server docker image
-      docker_image: >-
-        path="{{ project_dir }}/images/web-server"
-        name="app-webserver"
-        state="present"
-
-    - name: build docker image for postgres
-      docker_image: >-
-        path="{{ project_dir }}/images/postgres"
-        name="app-postgres"
-        state="present"
-
-    - name: generate docker-compose.yml file for web
-      sudo: yes
-      sudo_user: "{{ project_user }}"
-      template: >-
-        src=templates/web/docker-compose.yml
-        dest={{ project_dir }}/web/docker-compose.yml
-
-    - name: start postgres image
-      docker:
-        name: app-postgres
-        image: app-postgres
-        state: started
-        ports:
-          - "9250:5432"
-        env:
-          POSTGRES_PASSWORD: pass
-          POSTGRES_DB: test
-
-    # - include: tasks/schemup.yml
+    - include: micro-tasks/docker-images.yml
+    - include: micro-tasks/docker-run.yml
+    - include: micro-tasks/docker-compose.yml

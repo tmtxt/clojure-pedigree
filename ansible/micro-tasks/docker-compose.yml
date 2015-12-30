@@ -1,0 +1,7 @@
+---
+- name: generate docker-compose.yml file for web
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  template: >-
+    src=templates/web/docker-compose.yml
+    dest={{ project_dir }}/web/docker-compose.yml

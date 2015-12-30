@@ -1,0 +1,17 @@
+---
+- name: start web server image
+  docker:
+    name: "{{ name_prefix }}-web-server"
+    image: "{{ name_prefix }}-web-server"
+    state: started
+
+- name: start postgres image
+  docker:
+    name: "{{ name_prefix }}-web-postgres"
+    image: "{{ name_prefix }}-web-postgres"
+    state: started
+    ports:
+      - "{{ db_port }}:5432"
+    env:
+      POSTGRES_PASSWORD: "{{ db_pass }}"
+      POSTGRES_DB: "{{ db_name }}"
