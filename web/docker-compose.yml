@@ -1,8 +1,8 @@
-webserver:
+app-webserver:
   build: ./images/webserver
   container_name: app-webserver
 
-postgres:
+app-postgres:
   image: postgres:9.4.5
   container_name: app-postgres
   ports:

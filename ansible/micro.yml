@@ -30,8 +30,8 @@
 
     - name: start postgres image
       docker:
-        name: postgres
-        image: app/postgres
+        name: app-postgres
+        image: app-postgres
         state: started
         ports:
           - "9250:5432"
