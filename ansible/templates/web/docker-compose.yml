@@ -13,3 +13,4 @@ postgres:
 
 schemup:
   build: ./images/schemup
+  command: sh -c 'while true; do sleep 10000; done'
