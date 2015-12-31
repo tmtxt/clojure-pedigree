@@ -14,8 +14,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # port forwarding
   config.vm.network :forwarded_port, guest: 9250, host: 9250
-  # config.vm.network :forwarded_port, guest: 3000, host: 9251
-  # config.vm.network :forwarded_port, guest: 7888, host: 9252
+  config.vm.network :forwarded_port, guest: 3000, host: 9251
+  config.vm.network :forwarded_port, guest: 7888, host: 9252
   # config.vm.network :forwarded_port, guest: 9000, host: 9253
   # config.vm.network :forwarded_port, guest: 7474, host: 9254
   config.vm.network :forwarded_port, guest: web_db_host_port, host: 9255

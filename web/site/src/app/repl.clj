@@ -6,7 +6,8 @@
             [config.main :refer [config]]
             [config.db]
             [cider.nrepl :refer [cider-nrepl-handler]]
-            [app.data.init :refer [create-init-data]]))
+            ;; [app.data.init :refer [create-init-data]]
+            ))
 
 (defonce server (atom nil))
 
@@ -44,5 +45,5 @@
                             :handler cider-nrepl-handler)
   (println (str "nRepl server running on port " (config :nrepl-port))))
 
-(defn create-init-db []
-  (create-init-data))
+;; (defn create-init-db []
+;;   (create-init-data))
