@@ -5,3 +5,10 @@
   template: >-
     src=templates/web/db.clj
     dest={{project_dir}}/web/site/src/config/db.clj
+
+- name: generate system.clj config
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/web/system.clj
+    dest={{project_dir}}/web/site/src/config/system.clj

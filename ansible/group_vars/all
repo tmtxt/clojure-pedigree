@@ -18,8 +18,14 @@ web_db_host: postgres
 web_db_pass: password
 web_db_port: 5432
 
-# port to map to host computer
-web_db_host_port: 5432
-
 # schemup
 web_schemup_path: "{{project_dir}}/web/schema"
+
+# server
+web_ring_port: 3000
+web_nrepl_port: 7888
+
+# port to map to host computer
+web_db_host_port: 5432
+web_ring_host_port: 3000
+web_nrepl_host_port: 7888

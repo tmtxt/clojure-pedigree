@@ -5,6 +5,9 @@ server:
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
     - {{ project_dir }}/web/site:/usr/src/app
+  ports:
+    - "{{ web_ring_host_port }}:{{ web_ring_port }}"
+    - "{{ web_nrepl_host_port }}:{{ web_nrepl_port }}"
 
 postgres:
   build: ./images/postgres
@@ -12,7 +15,7 @@ postgres:
     POSTGRES_PASSWORD: {{ web_db_pass }}
     POSTGRES_DB: {{ web_db_name }}
   ports:
-    - "{{ web_db_host_port }}:5432"
+    - "{{ web_db_host_port }}:{{ web_db_port }}"
 
 schemup:
   build: ./images/schemup
