@@ -2,6 +2,7 @@
 # EDIT THE TEMPLATE IN ansible/templates/web/docker-compose.yml
 server:
   build: ./images/server
+  command: sh -c 'while true; do sleep 10000; done'
 
 postgres:
   build: ./images/postgres
