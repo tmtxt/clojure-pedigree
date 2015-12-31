@@ -4,8 +4,8 @@
     - include: micro-tasks/init.yml
 
 - hosts: all
-  roles:
-    - { role: docker, sudo: yes }
+  # roles:
+  #   - { role: docker, sudo: yes }
   tasks:
     - include: micro-tasks/docker-compose.yml
 
