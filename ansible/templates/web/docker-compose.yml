@@ -5,8 +5,6 @@ server:
 
 postgres:
   build: ./images/postgres
-  ports:
-    - "{{ db_port }}:5432"
   environment:
     POSTGRES_PASSWORD: {{ db_pass }}
     POSTGRES_DB: {{ db_name }}
@@ -14,3 +12,8 @@ postgres:
 schemup:
   build: ./images/schemup
   command: sh -c 'while true; do sleep 10000; done'
+  links:
+    - postgres
+  volumes:
+    - ./schema:/schema
+  working_dir: /schema

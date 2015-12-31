@@ -1,0 +1,18 @@
+---
+table: tbl_person_relation
+from: null
+to: txt_1
+sql: |
+  CREATE TYPE PERSON_RELATION_TYPE_ENUM AS ENUM (
+        'father-child',
+        'mother-child',
+        'husband-wife'
+        );
+
+  CREATE TABLE tbl_person_relation (
+        id SERIAL NOT NULL PRIMARY KEY,
+        first_person_id INT REFERENCES tbl_person(id) ON DELETE CASCADE,
+        second_person_id INT REFERENCES tbl_person(id) ON DELETE CASCADE,
+        relation_type PERSON_RELATION_TYPE_ENUM NOT NULL,
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+        );

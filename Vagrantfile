@@ -35,10 +35,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       project_user: project_user,
       project_dir: "/vagrant",
 
-      # db
-      db_name: project_name,
-      db_user: project_user,
-
       # vagrant specific
       vagrant_env: true,
       ssl_enable: false,

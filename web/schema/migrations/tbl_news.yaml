@@ -1,0 +1,12 @@
+---
+table: tbl_news
+from: null
+to: txt_1
+sql: |
+  CREATE TABLE tbl_news (
+          id SERIAL NOT NULL PRIMARY KEY,
+          title TEXT,
+          image TEXT,
+          content TEXT,
+          created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+          );

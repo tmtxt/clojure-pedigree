@@ -38,20 +38,11 @@ password_dir: "{{project_dir}}/password"
 
 # database
 db_name: "{{project_name}}"
-db_user: "{{project_user}}"
-db_host: localhost
-db_port: 13000
+db_user: postgres
+db_host: postgres
 db_pass: random
-pg_random_password: true
-pg_password_file: "{{password_dir}}/postgres"
 
-# virtualenv
-virtualenv_path: "~"
-
-# schemup
-schemup_user: "{{project_user}}"
-schemup_virtualenv_path: "{{virtualenv_path}}"
-schemup_path: "{{project_dir}}/schema"
+schemup_path: "{{project_dir}}/web/schema"
 
 # nvm
 nvm_user: "{{project_user}}"
