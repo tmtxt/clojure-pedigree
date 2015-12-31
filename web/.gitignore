@@ -1,2 +1,3 @@
 schema/db.json
 site/target/*
+site/src/config/db.clj

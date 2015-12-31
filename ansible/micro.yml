@@ -8,6 +8,7 @@
   #   - { role: docker, sudo: yes }
   tasks:
     - include: micro-tasks/docker-compose.yml
+    - include: micro-tasks/config.yml
 
     - name: run docker images for web service
       sudo: yes

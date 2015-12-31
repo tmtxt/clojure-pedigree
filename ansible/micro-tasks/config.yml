@@ -1,0 +1,7 @@
+---
+- name: generate db.clj config
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/web/db.clj
+    dest={{project_dir}}/web/site/src/config/db.clj
