@@ -17,4 +17,5 @@
       register: web_docker_compose_result
       # changed_when: web_docker_compose_result.stderr.find('Starting') != -1
 
+    - include: micro-tasks/scripts.yml
     - include: micro-tasks/schemup.yml

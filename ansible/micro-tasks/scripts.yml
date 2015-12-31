@@ -1,0 +1,18 @@
+---
+- name: create attach script for web server
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  template: >-
+    src=templates/web/attach_web_server.sh
+    dest={{ script_dir }}/attach_web_server.sh
+    mode=755
+    owner={{ project_user }}
+
+- name: create attach script for schemup
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  template: >-
+    src=templates/web/attach_schemup.sh
+    dest={{ script_dir }}/attach_schemup.sh
+    mode=755
+    owner={{ project_user }}
