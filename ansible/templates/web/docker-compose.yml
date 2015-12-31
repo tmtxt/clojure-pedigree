@@ -3,6 +3,8 @@
 server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
+  volumes:
+    - {{ project_dir }}/web/site:/usr/src/app
 
 postgres:
   build: ./images/postgres
