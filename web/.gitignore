@@ -1,3 +1,5 @@
 schema/db.json
 site/target/*
 site/src/config/db.clj
+site/src/config/system.clj
+site/dev-resources/*
