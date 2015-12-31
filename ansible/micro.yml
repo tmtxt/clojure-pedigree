@@ -7,29 +7,12 @@
   roles:
     - { role: docker, sudo: yes }
   tasks:
-    - name: add docker group
-      sudo: yes
-      group: name=docker state=present
-
-    - name: add project user to docker group
-      sudo: yes
-      user: name={{ project_user }} groups=docker append=yes
-
     - include: micro-tasks/docker-compose.yml
-
-    - name: build docker images for web service
-      sudo: yes
-      sudo_user: "{{ project_user }}"
-      command: docker-compose build
-      args:
-        chdir: "{{ project_dir }}/web"
-      changed_when: False
 
     - name: run docker images for web service
       sudo: yes
-      sudo_user: "{{ project_user }}"
       command: docker-compose up -d
       args:
         chdir: "{{ project_dir }}/web"
       register: web_docker_compose_result
-      changed_when: web_docker_compose_result.stderr.find('Starting') != -1
+      # changed_when: web_docker_compose_result.stderr.find('Starting') != -1
