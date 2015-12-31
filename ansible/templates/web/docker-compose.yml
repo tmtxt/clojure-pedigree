@@ -7,10 +7,10 @@ server:
 postgres:
   build: ./images/postgres
   environment:
-    POSTGRES_PASSWORD: {{ db_pass }}
-    POSTGRES_DB: {{ db_name }}
+    POSTGRES_PASSWORD: {{ web_db_pass }}
+    POSTGRES_DB: {{ web_db_name }}
   ports:
-    - "5432:5432"
+    - "{{ web_db_host_port }}:5432"
 
 schemup:
   build: ./images/schemup

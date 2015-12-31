@@ -1,64 +1,25 @@
 # -*- mode: yaml -*-
 ---
+################################################################################
 # general information
 project_name: pedigree
 project_user: "{{project_name}}"
-name_prefix: "{{ project_name }}"
-service_prefix: "{{project_name}}"
-ssl_enable: true
-site_name: "{{project_name}}"
-env: dev
-vagrant_env: false
-person_image_dir: "{{project_dir}}/resources/public/person-image"
 
-# folder for log files, build files,...
-out_dirs:
-  - "{{project_dir}}/logs"                  # log dir
-  - "{{project_dir}}/backup"                # backup dir
-  - "{{project_dir}}/resources/public/cljs" # cljs build dir
-  - "{{project_dir}}/target"                # clj build dir
-  - "{{project_dir}}/scripts"               # script dir
-  - "{{project_dir}}/src/config"            # clj config
-  - "{{project_dir}}/password"
-  - "{{person_image_dir}}"
-  - "{{person_image_dir}}/original"
-  - "{{person_image_dir}}/small"
-  - "{{person_image_dir}}/square"
-
-node_apps:
-  - bower
-  - gulp
-  - browserify
-  - webpack
-
-# folders
+# dirs
 script_dir: "{{project_dir}}/scripts"
-log_dir: "{{project_dir}}/logs"
-password_dir: "{{project_dir}}/password"
+
+################################################################################
+# variables for web section
 
 # database
-db_name: "{{project_name}}"
-db_user: postgres
-db_host: postgres
-db_pass: random
+web_db_name: "{{project_name}}"
+web_db_user: postgres
+web_db_host: postgres
+web_db_pass: password
+web_db_port: 5432
 
-schemup_path: "{{project_dir}}/web/schema"
+# port to map to host computer
+web_db_host_port: 5432
 
-# nvm
-nvm_user: "{{project_user}}"
-nvm_version: "v0.29.0"
-nvm_node_version: "4.2.1"
-
-# web server
-ring_port: 3000
-nrepl_port: 7888
-
-# neo4j
-neo4j_user: "{{project_user}}"
-neo4j_port: 7474
-neo4j_random_password: true
-neo4j_password_file: "{{password_dir}}/neo4j"
-neo4j_enable_remote_shell: true
-neo4j_remote_shell_port: 7475
-neo4j_generate_script: true
-neo4j_script_dir: "{{script_dir}}"
+# schemup
+web_schemup_path: "{{project_dir}}/web/schema"

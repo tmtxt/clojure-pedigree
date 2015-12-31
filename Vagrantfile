@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config
   project_name = "pedigree"
   project_user = "vagrant"
+  web_db_host_port = 5432
 
   # port forwarding
   config.vm.network :forwarded_port, guest: 9250, host: 9250
@@ -17,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.network :forwarded_port, guest: 7888, host: 9252
   # config.vm.network :forwarded_port, guest: 9000, host: 9253
   # config.vm.network :forwarded_port, guest: 7474, host: 9254
-  # config.vm.network :forwarded_port, guest: 5432, host: 9255
+  config.vm.network :forwarded_port, guest: web_db_host_port, host: 9255
 
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
@@ -34,12 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       project_name: project_name,
       project_user: project_user,
       project_dir: "/vagrant",
-
-      # vagrant specific
-      vagrant_env: true,
-      ssl_enable: false,
-      server_name: 'localhost',
-      env: 'dev'
+      web_db_host_port: web_db_host_port
     }
   end
 end

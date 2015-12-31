@@ -1,10 +1,10 @@
 ---
 - name: generate schemup db config file
   sudo: yes
-  sudo_user: "{{project_user}}"
+  sudo_user: "{{ project_user }}"
   template: >-
     src=templates/web/db.json
-    dest={{schemup_path}}/db.json
+    dest={{ web_schemup_path }}/db.json
 
 - name: create script for running schemup
   sudo: yes
