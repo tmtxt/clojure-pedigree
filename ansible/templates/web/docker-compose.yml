@@ -36,3 +36,6 @@ neo4j:
     - "{{ web_neo4j_host_port }}:{{ web_neo4j_port }}"
   environment:
     NEO4J_AUTH: none
+
+fronend:
+  build: ./images/frontend
