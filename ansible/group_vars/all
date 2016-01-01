@@ -19,7 +19,7 @@ web_db_pass: password
 web_db_port: 5432
 
 # schemup
-web_schemup_path: "{{project_dir}}/web/schema"
+web_schemup_path: "{{project_dir}}/schema"
 
 # server
 web_ring_port: 3000

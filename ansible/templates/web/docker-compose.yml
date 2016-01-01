@@ -4,7 +4,7 @@ server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - {{ project_dir }}/web/site:/usr/src/app
+    - {{ project_dir }}/site:/usr/src/app
     - /root/.m2
   ports:
     - "{{ web_ring_host_port }}:{{ web_ring_port }}"

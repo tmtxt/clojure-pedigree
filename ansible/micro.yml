@@ -14,7 +14,7 @@
       sudo: yes
       command: docker-compose up -d
       args:
-        chdir: "{{ project_dir }}/web"
+        chdir: "{{ project_dir }}"
       register: web_docker_compose_result
       # changed_when: web_docker_compose_result.stderr.find('Starting') != -1
 
