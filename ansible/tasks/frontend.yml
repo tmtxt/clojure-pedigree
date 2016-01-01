@@ -10,3 +10,19 @@
   with_items:
     - npm_install.sh
     - gulp_prod.sh
+
+- name: install frontend dependencies
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  command: ./npm_install.sh
+  args:
+    chdir: "{{ script_dir }}"
+  changed_when: False
+
+- name: run gulp build
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  command: ./gulp_prod.sh
+  args:
+    chdir: "{{ script_dir }}"
+  changed_when: False

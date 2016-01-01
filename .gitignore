@@ -30,3 +30,5 @@
 /site/src/config/neo4j.clj
 /docker-compose.yml
 /site/node_modules
+/site/sass/bower
+/site/src/app/views/version.clj
