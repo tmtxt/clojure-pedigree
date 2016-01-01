@@ -6,5 +6,5 @@
 - name: create necessary directories
   sudo: yes
   sudo_user: "{{project_user}}"
-  file: path={{ item }} state=directory
+  file: path={{item}} state=directory
   with_items: out_dirs

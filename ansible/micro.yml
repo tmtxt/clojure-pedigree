@@ -1,14 +1,14 @@
 ---
 - hosts: all
   tasks:
-    - include: micro-tasks/init.yml
+    - include: tasks/init.yml
 
 - hosts: all
   # roles:
   #   - { role: docker, sudo: yes }
   tasks:
-    - include: micro-tasks/docker-compose.yml
-    - include: micro-tasks/config.yml
+    - include: tasks/docker-compose.yml
+    - include: tasks/config.yml
 
     - name: run docker images for web service
       sudo: yes
@@ -18,5 +18,5 @@
       register: web_docker_compose_result
       # changed_when: web_docker_compose_result.stderr.find('Starting') != -1
 
-    - include: micro-tasks/scripts.yml
-    - include: micro-tasks/schemup.yml
+    - include: tasks/scripts.yml
+    - include: tasks/schemup.yml

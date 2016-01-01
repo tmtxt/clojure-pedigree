@@ -7,6 +7,8 @@ project_user: "{{project_name}}"
 
 # dirs
 script_dir: "{{project_dir}}/scripts"
+out_dirs:
+  - "{{ script_dir }}"
 
 ################################################################################
 # variables for web section
