@@ -1,0 +1,7 @@
+{
+	"database": "{{ web_db_name }}",
+	"user": "{{ web_db_user }}",
+	"password": "{{ web_db_pass }}",
+	"host": "{{ web_db_host }}",
+	"port": {{ web_db_port }}
+}

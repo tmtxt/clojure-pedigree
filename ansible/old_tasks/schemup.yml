@@ -1,0 +1,17 @@
+---
+- name: generate schemup db config file
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  template: >-
+    src=templates/db.json
+    dest={{schemup_path}}/db.json
+
+- name: run schemup
+  sudo: yes
+  sudo_user: "{{schemup_user}}"
+  when: schemup_path is defined
+  command: "{{virtualenv_path}}/env/bin/schemup commit"
+  args:
+    chdir: "{{schemup_path}}"
+  register: schemup_result
+  changed_when: schemup_result.stdout.find('Creating') != -1 or schemup_result.stderr.find('Upgrading') != -1

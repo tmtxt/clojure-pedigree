@@ -41,6 +41,7 @@
 
 (defn start-repl []
   (repl-server/start-server :port (config :nrepl-port)
+                            :bind "0.0.0.0"
                             :handler cider-nrepl-handler)
   (println (str "nRepl server running on port " (config :nrepl-port))))
 
