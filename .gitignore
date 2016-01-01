@@ -29,3 +29,4 @@
 /site/dev-resources/*
 /site/src/config/neo4j.clj
 /docker-compose.yml
+/site/node_modules

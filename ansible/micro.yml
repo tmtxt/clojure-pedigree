@@ -20,3 +20,4 @@
 
     - include: tasks/scripts.yml
     - include: tasks/schemup.yml
+    - include: tasks/frontend.yml

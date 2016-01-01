@@ -1,0 +1,9 @@
+---
+- name: create script for installing project dependencies
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  template: >-
+    src=templates/web/npm_install.sh
+    dest={{ script_dir }}/npm_install.sh
+    mode=755
+    owner="{{ project_user }}"
