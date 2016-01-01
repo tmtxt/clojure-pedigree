@@ -1,9 +1,12 @@
 ---
-- name: create script for installing project dependencies
+- name: create scripts for frontend
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
-    src=templates/web/npm_install.sh
-    dest={{ script_dir }}/npm_install.sh
+    src=templates/web/{{ item }}
+    dest={{ script_dir }}/{{ item }}
     mode=755
     owner="{{ project_user }}"
+  with_items:
+    - npm_install.sh
+    - gulp_prod.sh
