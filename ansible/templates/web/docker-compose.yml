@@ -35,4 +35,4 @@ neo4j:
   ports:
     - "{{ web_neo4j_host_port }}:{{ web_neo4j_port }}"
   environment:
-    NEO4J_AUTH: {{ web_neo4j_user }}/{{ web_neo4j_pass }}
+    NEO4J_AUTH: none

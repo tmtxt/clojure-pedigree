@@ -27,8 +27,6 @@ web_nrepl_port: 7888
 
 # neo4j
 web_neo4j_host: neo4j
-web_neo4j_user: neo4j
-web_neo4j_pass: password
 web_neo4j_port: 7474
 
 # port to map to host computer

@@ -10,11 +10,11 @@
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [compojure.route :as route]
 
-            ;; [app.controllers.home :refer [home-routes home-rules]]
-            ;; [app.controllers.person :refer [person-routes person-rules]]
-            ;; [app.controllers.user :refer [user-routes user-rules]]
-            ;; [app.controllers.admin :refer [admin-routes admin-rules]]
-            ;; [app.controllers.tree :refer [tree-routes]]
+            [app.controllers.home :refer [home-routes home-rules]]
+            [app.controllers.person :refer [person-routes person-rules]]
+            [app.controllers.user :refer [user-routes user-rules]]
+            [app.controllers.admin :refer [admin-routes admin-rules]]
+            [app.controllers.tree :refer [tree-routes]]
 
             [ring.middleware.session :refer [wrap-session]]
             [noir.session :as session]
@@ -36,20 +36,20 @@
 
 (def authentication-backend (session-backend))
 
-;; (def authorization-rules (concat
-;;                           user-rules
-;;                           admin-rules
-;;                           home-rules
-;;                           person-rules))
+(def authorization-rules (concat
+                          user-rules
+                          admin-rules
+                          home-rules
+                          person-rules))
 
 (def app
-  (-> (routes ;; home-routes
-              ;; person-routes
-              ;; user-routes
-              ;; admin-routes
-              ;; tree-routes
+  (-> (routes home-routes
+              person-routes
+              user-routes
+              admin-routes
+              tree-routes
               app-routes)
-      ;; (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
+      (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
       (wrap-authentication authentication-backend)
       (wrap-params)
       (wrap-multipart-params)
