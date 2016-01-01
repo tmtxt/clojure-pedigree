@@ -25,7 +25,14 @@ web_schemup_path: "{{project_dir}}/web/schema"
 web_ring_port: 3000
 web_nrepl_port: 7888
 
+# neo4j
+web_neo4j_host: neo4j
+web_neo4j_user: neo4j
+web_neo4j_pass: password
+web_neo4j_port: 7474
+
 # port to map to host computer
 web_db_host_port: 5432
 web_ring_host_port: 3000
 web_nrepl_host_port: 7888
+web_neo4j_host_port: 7474
