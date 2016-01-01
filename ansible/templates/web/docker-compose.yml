@@ -47,4 +47,6 @@ frontend:
   build: ./images/frontend
   volumes_from:
     - sources
+  volumes:
+    - {{ project_dir }}:/usr/src/root
   command: sh -c 'while true; do sleep 10000; done'
