@@ -2,8 +2,6 @@
   (:require [korma.core :as kc]
             [app.util.pg :as db-util]
             [app.models.person.node :as node]
-            [app.neo4j.main :as neo4j]
-            [app.neo4j.query :as query]
             [app.models.person.definition :refer [person node-to-record]]
             [app.models.person.util :as model-util]
             [app.models.person.prepare :as prepare]
