@@ -12,7 +12,9 @@ app.set('config', config);
 
 // database
 var neo4j = require('./database/neo4j.js').init(config);
+var query = require('./query');
 app.set('neo4j', neo4j);
+app.set('query', query);
 
 // plugin
 app.use(bodyParser.json());
