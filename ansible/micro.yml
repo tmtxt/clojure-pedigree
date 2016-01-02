@@ -7,17 +7,8 @@
   roles:
     - { role: docker, sudo: yes }
   tasks:
-    - include: tasks/docker-compose.yml
     - include: tasks/config.yml
-
-    - name: run docker images for web service
-      sudo: yes
-      command: docker-compose up -d
-      args:
-        chdir: "{{ project_dir }}"
-      register: web_docker_compose_result
-      changed_when: False
-
+    - include: tasks/docker-compose.yml
     - include: tasks/scripts.yml
     - include: tasks/schemup.yml
     - include: tasks/frontend.yml
