@@ -4,6 +4,9 @@ var config = new Map([
   ['appName', 'neo node']
 ]);
 
-var main = new Map([config, system]);
+var main = new Map(function*() {
+  yield* system;
+  yield* config;
+}());
 
-module.exports = config;
+module.exports = main;
