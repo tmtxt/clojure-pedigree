@@ -23,6 +23,7 @@ server:
   links:
     - postgres:{{ web_db_host }}
     - neo4j
+    - neonode:{{ neo_node_host }}
 
 postgres:
   build: ./images/postgres
