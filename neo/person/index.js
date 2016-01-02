@@ -5,5 +5,6 @@ var find = require('./find.js');
 
 router.get('/findRoot', find.findRootHandler);
 router.get('/findPerson', find.findPersonHandler);
+router.get('/findPartners', find.findPartnersHandler);
 
 module.exports = router;
