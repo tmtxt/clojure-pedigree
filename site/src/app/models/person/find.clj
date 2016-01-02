@@ -124,13 +124,13 @@
   "Find parents information of the input person"
   [entity & {:keys [json-friendly]
              :or {json-friendly false}}]
-  (let [[result] (neo4j/execute-statement query/find-parent (:id entity))
-        data (:data result)
-        parents-list (map #(:row %) data)
-        parents-ids (map #(first %) parents-list)
-        parents-list (into {} parents-list)
+  (let [parents-list (node/find-parents-node (:id entity))
+        parents-ids (map #(:parent_id %) parents-list)
         parents-rows (db-util/find-all-by-ids person parents-ids)
         parents-rows (if json-friendly (json/json-friendlify-all parents-rows) parents-rows)
+        parents-list (map #(vals %) parents-list)
+        parents-list (map #(into [] %) parents-list)
+        parents-list (into {} parents-list)
         parents-info (combine-parent-info parents-list parents-rows)]
     parents-info
     ))
