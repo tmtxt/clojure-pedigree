@@ -16,3 +16,6 @@
 
 (defn find-partners-nodes [person-id]
   (neonode :get "findPartners" {:personId person-id}))
+
+(defn find-parents-node [person-id]
+  (neonode :get "findParents" {:personId person-id}))
