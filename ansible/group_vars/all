@@ -3,12 +3,14 @@
 ################################################################################
 # general information
 project_name: pedigree
-project_user: "{{project_name}}"
+project_user: "{{ project_name }}"
 
 # dirs
-script_dir: "{{project_dir}}/scripts"
+script_dir: "{{ project_dir }}/scripts"
+cache_dir: "{{ project_dir }}/cache"
 out_dirs:
   - "{{ script_dir }}"
+  - "{{ cache_dir }}"
 
 ################################################################################
 # variables for web section

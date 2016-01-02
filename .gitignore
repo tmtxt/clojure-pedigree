@@ -32,3 +32,4 @@
 /site/node_modules
 /site/sass/bower
 /site/src/app/views/version.clj
+/cache
