@@ -7,5 +7,6 @@ function readQuery(query) {
 
 var queries = new Map();
 queries.set('findPartners', readQuery('find_partners'));
+queries.set('findParents', readQuery('find_parents'));
 
 module.exports = queries;
