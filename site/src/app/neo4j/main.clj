@@ -1,7 +1,9 @@
 (ns app.neo4j.main
-  (:require [config.neo4j :refer [conn]]
+  (:require [config.neo4j :refer [conn neonode-host neonode-port]]
             [app.neo4j.impl.statement :as stm]
-            [clojurewerkz.neocons.rest.transaction :as tx]))
+            [clojurewerkz.neocons.rest.transaction :as tx]
+            [clj-http.client :as client]
+            [clojure.data.json :as json]))
 
 (def ^:dynamic *tran*)
 (def ^:dynamic *conn*)
@@ -24,4 +26,16 @@
   [statement & args]
   (let [query-obj (apply stm/raw-query statement args)
         [_ result] (tx/execute *conn* *tran* [query-obj])]
+    result))
+
+(def method-map
+  {:get client/get
+   :post client/post})
+
+;;; call neonode api
+(defn neonode [method url data]
+  (let [func (get method-map method (:get method-map))
+        uri (str "http://" neonode-host ":" neonode-port url)
+        body (->> data (func uri) :body)
+        result (json/read-str body :key-fn keyword)]
     result))
