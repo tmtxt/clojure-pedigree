@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-router.post('/get', function(req, res, next) {
-  res.send('hello');
-});
+var find = require('./find.js');
+
+router.post('/findRoot', find.findRootHandler);
 
 module.exports = router;
