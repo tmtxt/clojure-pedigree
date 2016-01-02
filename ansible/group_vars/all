@@ -13,9 +13,6 @@ out_dirs:
   - "{{ cache_dir }}"
   - "{{ cache_dir }}/.m2"
 
-################################################################################
-# variables for web section
-
 # database
 web_db_name: "{{project_name}}"
 web_db_user: postgres
@@ -34,8 +31,12 @@ web_nrepl_port: 7888
 web_neo4j_host: neo4j
 web_neo4j_port: 7474
 
+# neo4j service
+neo_node_port: 3000
+
 # port to map to host computer
 web_db_host_port: 5432
 web_ring_host_port: 3000
 web_nrepl_host_port: 7888
 web_neo4j_host_port: 7474
+neo_node_host_port: 3001
