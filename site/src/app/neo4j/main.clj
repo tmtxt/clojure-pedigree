@@ -36,6 +36,8 @@
 (defn neonode [method url data]
   (let [func (get method-map method (:get method-map))
         uri (str "http://" neonode-host ":" neonode-port url)
-        body (->> data (func uri) :body)
+        params {:content-type :json
+                :body (json/write-str data)}
+        body (->> params (func uri) :body)
         result (json/read-str body :key-fn keyword)]
     result))
