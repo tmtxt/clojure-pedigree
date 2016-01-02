@@ -1,6 +1,10 @@
 var express = require('express');
 var app = express();
 
+// config
+var config = require('./config/main.js');
+app.set('config', config);
+
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });

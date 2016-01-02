@@ -17,3 +17,10 @@
   args:
     chdir: "{{ script_dir }}"
   changed_when: False
+
+- name: generate config file for neonode server
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  template: >-
+    src=templates/web/system.js
+    dest={{ project_dir }}/neo/config/system.js
