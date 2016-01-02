@@ -13,3 +13,6 @@
 
 (defn find-root []
   (neonode :get "findRoot" {}))
+
+(defn find-partners-nodes [person-id]
+  (neonode :get "findPartners" {:personId person-id}))

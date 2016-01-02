@@ -89,10 +89,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn- extract-partner-ids [rows]
-  (map (fn [[id]] id) rows))
+  (map #(:partner_id %) rows))
 
 (defn- extract-partner-id-order [rows]
-  (reduce (fn [id-order [id order]] (assoc id-order id order)) {} rows))
+  (reduce (fn [id-order {id :partner_id order :partner_order}] (assoc id-order id order)) {} rows))
 
 (defn- combine-partner-info [id-order partners]
   (map (fn [partner] (assoc partner :order (get id-order (:id partner)))) partners))
@@ -101,9 +101,7 @@
   "Find all partners information of the input person"
   [entity & {:keys [json-friendly]
              :or {json-friendly false}}]
-  (let [[result] (neo4j/execute-statement query/find-partner (:id entity))
-        data (-> result :data)
-        partners-list (map #(:row %) data)
+  (let [partners-list (node/find-partners-nodes (:id entity))
         ids (extract-partner-ids partners-list)
         partners-id-order (extract-partner-id-order partners-list)
         partners-rows (db-util/find-all-by-ids person ids)
