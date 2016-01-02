@@ -9,7 +9,7 @@ server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - /root/.m2
+    - {{ cache_dir }}/.m2:/root/.m2
   volumes_from:
     - sources
   ports:

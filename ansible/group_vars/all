@@ -11,6 +11,7 @@ cache_dir: "{{ project_dir }}/cache"
 out_dirs:
   - "{{ script_dir }}"
   - "{{ cache_dir }}"
+  - "{{ cache_dir }}/.m2"
 
 ################################################################################
 # variables for web section
