@@ -14,8 +14,11 @@
 (defn find-root []
   (neonode :get "findRoot" {}))
 
-(defn find-partners-nodes [person-id]
+(defn find-partners [person-id]
   (neonode :get "findPartners" {:personId person-id}))
 
-(defn find-parents-node [person-id]
+(defn find-parents [person-id]
   (neonode :get "findParents" {:personId person-id}))
+
+(defn add-or-update [data]
+  (neonode :post "addOrUpdate" {:data data}))

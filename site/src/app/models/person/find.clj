@@ -99,7 +99,7 @@
   "Find all partners information of the input person"
   [entity & {:keys [json-friendly]
              :or {json-friendly false}}]
-  (let [partners-list (node/find-partners-nodes (:id entity))
+  (let [partners-list (node/find-partners (:id entity))
         ids (extract-partner-ids partners-list)
         partners-id-order (extract-partner-id-order partners-list)
         partners-rows (db-util/find-all-by-ids person ids)
@@ -122,7 +122,7 @@
   "Find parents information of the input person"
   [entity & {:keys [json-friendly]
              :or {json-friendly false}}]
-  (let [parents-list (node/find-parents-node (:id entity))
+  (let [parents-list (node/find-parents (:id entity))
         parents-ids (map #(:parent_id %) parents-list)
         parents-rows (db-util/find-all-by-ids person parents-ids)
         parents-rows (if json-friendly (json/json-friendlify-all parents-rows) parents-rows)

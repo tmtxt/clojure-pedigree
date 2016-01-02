@@ -53,7 +53,7 @@ function addOrUpdateHandler(req, res, next) {
     if (!!person) data = _.extend(person, data);
     return addOrUpdate(neo4j, data);
   }).then(function(person){
-    res.json({success: true, node: person});
+    res.json({success: true, data: person});
   }).catch(function(){
     res.json({success: false});
   });
