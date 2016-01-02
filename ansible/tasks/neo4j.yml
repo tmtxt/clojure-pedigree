@@ -1,5 +1,5 @@
 ---
-- name: create scripts for frontend
+- name: create scripts for neonode
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
@@ -8,21 +8,19 @@
     mode=755
     owner="{{ project_user }}"
   with_items:
-    - frontend_npm_install.sh
-    - gulp_prod.sh
+    - neonode_npm_install.sh
 
-- name: install frontend dependencies
+- name: install neonode dependencies
   sudo: yes
   sudo_user: "{{ project_user }}"
-  command: ./frontend_npm_install.sh
+  command: ./neonode_npm_install.sh
   args:
     chdir: "{{ script_dir }}"
   changed_when: False
 
-- name: run gulp build
+- name: generate config file for neonode server
   sudo: yes
   sudo_user: "{{ project_user }}"
-  command: ./gulp_prod.sh
-  args:
-    chdir: "{{ script_dir }}"
-  changed_when: False
+  template: >-
+    src=templates/web/system.js
+    dest={{ project_dir }}/neo/config/system.js

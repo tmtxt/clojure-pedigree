@@ -23,3 +23,4 @@
     - alias dcp='sudo docker-compose ps'
     - alias aw='{{ script_dir}}/attach_web_server.sh'
     - alias af='{{ script_dir}}/attach_frontend.sh'
+    - alias an='{{ script_dir}}/attach_neonode.sh'

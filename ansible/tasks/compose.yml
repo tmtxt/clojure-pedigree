@@ -5,3 +5,11 @@
   template: >-
     src=templates/web/docker-compose.yml
     dest={{ project_dir }}/docker-compose.yml
+
+- name: run docker images for web service
+  sudo: yes
+  command: docker-compose up -d
+  args:
+    chdir: "{{ project_dir }}"
+  register: web_docker_compose_result
+  changed_when: False
