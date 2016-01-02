@@ -1,10 +1,15 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+
 var person = require('./person');
 
 // config
 var config = require('./config/main.js');
 app.set('config', config);
+
+// plugin
+app.use(bodyParser.json());
 
 // routes
 app.get('/', function (req, res) {
@@ -12,6 +17,7 @@ app.get('/', function (req, res) {
 });
 app.use('/person', person);
 
+// start server
 var port = config.get('serverPort');
 var server = app.listen(port, function () {
   var port = server.address().port;
