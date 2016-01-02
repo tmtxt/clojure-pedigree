@@ -2,15 +2,14 @@
   (:require [app.neo4j.main :as neo4j]
             [slingshot.slingshot :refer [throw+ try+]]))
 
-(defn find-by-person-id [person-id]
-  (let [result (->> {:personId person-id}
-                    (neo4j/neonode :get "/person/findPerson"))]
+(defn- neonode [method endpoint data]
+  (let [result (neo4j/neonode method (str "/person/" endpoint) data)]
     (if (:success result)
       (:data result)
       nil)))
 
+(defn find-by-person-id [person-id]
+  (neonode :get "findPerson" {:personId person-id}))
+
 (defn find-root []
-  (let [result (neo4j/neonode :get "/person/findRoot" {})]
-    (if (:success result)
-      (:data result)
-      nil)))
+  (neonode :get "findRoot" {}))
