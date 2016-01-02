@@ -23,12 +23,12 @@ function findMatching(neo4j, data) {
 
 function addOrUpdate(neo4j, data) {
   return new Promise(function(resolve, reject){
-    var handler = function(err){
+    var handler = function(err, person){
       if (err) {
         reject(err);
         return;
       }
-      resolve();
+      resolve(person);
     };
 
     if (!!data.id) {
@@ -52,8 +52,8 @@ function addOrUpdateHandler(req, res, next) {
   findMatching(neo4j, data).then(function(person){
     if (!!person) data = _.extend(person, data);
     return addOrUpdate(neo4j, data);
-  }).then(function(){
-    res.json({success: true});
+  }).then(function(person){
+    res.json({success: true, node: person});
   }).catch(function(){
     res.json({success: false});
   });
