@@ -8,7 +8,7 @@
     - { role: docker, sudo: yes }
   tasks:
     - include: tasks/config.yml
-    - include: tasks/docker-compose.yml
+    - include: tasks/compose.yml
     - include: tasks/scripts.yml
     - include: tasks/schemup.yml
     - include: tasks/frontend.yml
