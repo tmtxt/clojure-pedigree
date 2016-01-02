@@ -1,7 +1,7 @@
 (ns app.models.person.find
   (:require [korma.core :as kc]
             [app.util.pg :as db-util]
-            [app.neo4j.node :as node]
+            [app.models.person.node :as node]
             [app.neo4j.main :as neo4j]
             [app.neo4j.query :as query]
             [app.models.person.definition :refer [person node-to-record]]
@@ -68,8 +68,7 @@
 
 (defn find-node-from-entity [entity]
   (if entity
-    (let [props {:person_id (:id entity)}
-          person-node (node/find-by-props :person props)
+    (let [person-node (node/find-by-person-id (:id entity))
           person-node (node-to-record person-node)]
       person-node)
     nil))
@@ -161,12 +160,7 @@
 (defn find-root-node
   "Find the root node from neo4j"
   []
-  (let [[result] (neo4j/execute-statement query/find-root)
-        data (-> result :data)
-        rows (map #(:row %) data)
-        row (first rows)
-        [root] row]
-    (node-to-record root)))
+  (node/find-root))
 
 (defn find-root
   [& {:keys [include-node include-partners json-friendly]
@@ -196,7 +190,7 @@
                   :json-friendly json-friendly))
 
 (defn find-node-by-person-id [id]
-  (-> id (find-person-by-id :include-node true) :node))
+  (node/find-by-person-id id))
 
 (defn find-entity-by-full-name [full-name]
   (-> {:full-name full-name} (find-person-by) :entity))
