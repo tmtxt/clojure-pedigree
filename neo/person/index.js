@@ -3,6 +3,7 @@ var router = express.Router();
 
 var find = require('./find.js');
 
-router.post('/findRoot', find.findRootHandler);
+router.get('/findRoot', find.findRootHandler);
+router.get('/findPerson', find.findPersonHandler);
 
 module.exports = router;
