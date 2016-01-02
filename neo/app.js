@@ -1,12 +1,18 @@
+// express
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
+// handler
 var person = require('./person');
 
 // config
 var config = require('./config/main.js');
 app.set('config', config);
+
+// database
+var neo4j = require('./database/neo4j.js').init(config);
+app.set('neo4j', neo4j);
 
 // plugin
 app.use(bodyParser.json());
