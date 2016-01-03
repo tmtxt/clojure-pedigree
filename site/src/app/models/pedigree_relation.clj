@@ -1,6 +1,5 @@
 (ns app.models.pedigree-relation
-  (:require [app.neo4j.main :as neo4j]
-            [app.neo4j.relation :as relation]))
+  (:require [app.neo4j.main :as neo4j]))
 
 (def RELATION_TYPES
   {:father-child :father_child
