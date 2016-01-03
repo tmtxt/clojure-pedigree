@@ -18,12 +18,12 @@ function handleDeleteRelations(neo4j, util, values) {
   return Promise.all(promises);
 }
 
-function handleAddRelations(neo4j, util, husbandNode, wifeNode, order) {
-  var props = {};
-  if (!!order) props.order = order;
+function handleAddRelations(neo4j, util, husbandNode, wifeNode, husbandOrder, wifeOrder) {
+  var husbandProps = {order: husbandOrder};
+  var wifeProps = {order: wifeOrder};
 
-  return Promise.all([util.relation.addRelationBetweenNodes(neo4j, husbandNode, wifeNode, 'husband_wife', props),
-                  util.relation.addRelationBetweenNodes(neo4j, wifeNode, husbandNode, 'wife_husband', props)]);
+  return Promise.all([util.relation.addRelationBetweenNodes(neo4j, husbandNode, wifeNode, 'husband_wife', husbandProps),
+                  util.relation.addRelationBetweenNodes(neo4j, wifeNode, husbandNode, 'wife_husband', wifeProps)]);
 }
 
 function addMarriageHandler(req, res, next) {
@@ -32,7 +32,8 @@ function addMarriageHandler(req, res, next) {
   var util = app.get('util');
   var husbandId = req.body.husbandId;
   var wifeId = req.body.wifeId;
-  var order = req.body.order;
+  var husbandOrder = req.body.husbandOrder | 0;
+  var wifeOrder = req.body.wifeOrder | 0;
 
   var findHusband = util.person.findPersonNodeByPersonId(neo4j, husbandId);
   var findWife = util.person.findPersonNodeByPersonId(neo4j, wifeId);
@@ -49,7 +50,7 @@ function addMarriageHandler(req, res, next) {
       return handleDeleteRelations(neo4j, util, values);
     })
     .then(function(){
-      return handleAddRelations(neo4j, util, husband, wife, order);
+      return handleAddRelations(neo4j, util, husband, wife, husbandOrder, wifeOrder);
     })
     .then(function(values){
       res.json({success: true, data: values});
