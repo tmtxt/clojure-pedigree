@@ -22,3 +22,6 @@
 
 (defn add-or-update [data]
   (neonode :post "addOrUpdate" {:data data}))
+
+(defn delete [person-id]
+  (neonode :post "delete" {:personId person-id}))

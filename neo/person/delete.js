@@ -40,7 +40,7 @@ function deleteHandler(req, res, next) {
   findMatching(neo4j, personId).then(function(person){
     return deleteNode(neo4j, person);
   }).then(function(){
-    res.json({success: true});
+    res.json({success: true, data: "success"});
   }).catch(function(){
     res.json({success: false});
   });
