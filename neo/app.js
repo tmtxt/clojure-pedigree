@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var person = require('./person');
 var pedigree = require('./pedigree');
 var marriage = require('./marriage');
+var tree = require('./tree');
 
 // config
 var config = require('./config/main.js');
@@ -32,6 +33,7 @@ app.get('/', function (req, res) {
 app.use('/person', person);
 app.use('/pedigree', pedigree);
 app.use('/marriage', marriage);
+app.use('/tree', tree);
 
 // start server
 var port = config.get('serverPort');
