@@ -92,3 +92,26 @@ function addChildForParentHandler(req, res, next) {
   });
 }
 exports.addChildForParentHandler = addChildForParentHandler;
+
+function validateAdd(req, res, next) {
+  var body = req.body;
+  var data = {
+    parentId: body.parentId,
+    childId: body.childId,
+    type: body.type
+  };
+
+  var valid = true;
+  _.each(data, function(val) {
+    if (!val) {
+      valid = false;
+    }
+  });
+
+  if (!valid) {
+    res.json({success: false, message: 'Not enough params'});
+    return;
+  }
+  next();
+}
+exports.validateAdd = validateAdd;
