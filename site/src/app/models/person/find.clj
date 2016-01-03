@@ -156,7 +156,7 @@
 (defn find-root-node
   "Find the root node from neo4j"
   []
-  (node/find-root))
+  (node-to-record (node/find-root)))
 
 (defn find-root
   [& {:keys [include-node include-partners json-friendly]
@@ -186,7 +186,7 @@
                   :json-friendly json-friendly))
 
 (defn find-node-by-person-id [id]
-  (node/find-by-person-id id))
+  (node-to-record (node/find-by-person-id id)))
 
 (defn find-entity-by-full-name [full-name]
   (-> {:full-name full-name} (find-person-by) :entity))
