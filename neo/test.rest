@@ -73,3 +73,12 @@ Content-Type: application/json
   "wifeId": 211,
   "order": 2
 }
+
+#
+GET :url/tree/get
+Content-Type: application/json
+
+{
+  "rootId": 1,
+  "depth": 1
+}

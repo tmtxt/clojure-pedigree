@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/get', function(req, res, next){
-  res.send('hello');
-});
+var get = require('./get.js');
+
+router.get('/get', get.getTreeHandler);
 
 module.exports = router;

@@ -9,5 +9,6 @@ var queries = new Map();
 queries.set('findPartners', readQuery('find_partners'));
 queries.set('findParents', readQuery('find_parents'));
 queries.set('countParents', readQuery('count_parents'));
+queries.set('getTree', readQuery('get_tree'));
 
 module.exports = queries;
