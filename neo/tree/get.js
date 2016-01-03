@@ -14,7 +14,7 @@ function getTreeHandler(req, res, next) {
       return;
     }
 
-    res.json(results);
+    res.json({success: true, data: results});
   });
 }
 exports.getTreeHandler = getTreeHandler;
