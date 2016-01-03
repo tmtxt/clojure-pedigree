@@ -33,7 +33,7 @@ Content-Type: application/json
 
 {
   "data": {
-    "person_id": 445
+    "person_id": 211
   }
 }
 
@@ -62,4 +62,14 @@ Content-Type: application/json
   "childId": 445,
   "type": "father_child",
   "order": 1
+}
+
+#
+POST :url/marriage/addMarriage
+Content-Type: application/json
+
+{
+  "husbandId": 210,
+  "wifeId": 211,
+  "order": 2
 }

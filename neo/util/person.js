@@ -1,3 +1,5 @@
+// Find person node person id
+// Returns a promise, resolve the found node or reject if cannot find
 function findPersonNodeByPersonId(neo4j, personId) {
   return new Promise(function(resolve, reject){
     var data = {person_id: personId};
