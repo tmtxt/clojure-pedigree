@@ -25,3 +25,6 @@
 
 (defn delete [person-id]
   (neonode :post "delete" {:personId person-id}))
+
+(defn count-parents [person-id]
+  (neonode :get "countParents" {:personId person-id}))
