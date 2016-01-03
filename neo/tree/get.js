@@ -10,7 +10,6 @@ function getTreeHandler(req, res, next) {
   query = util.format(query, rootId, depth);
   neo4j.query(query, function(err, results){
     if (err) {
-      console.log(err);
       res.json({success: false});
       return;
     }
