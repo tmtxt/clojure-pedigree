@@ -2,12 +2,10 @@
   (:require [app.models.user :as user-model]
             [app.models.person :as person-model]
             [app.util.pg :as db-util]
-            [app.neo4j.main :as neo4j]
             [korma.db :as kd]
             [app.models.marriage-relation :as mrl]
             [app.models.pedigree-relation :as prl]
-            [app.data.sample :as sample]
-            [config.neo4j :refer [conn]]))
+            [app.data.sample :as sample]))
 
 (defn create-init-user []
   (when (db-util/table-empty? user-model/user)
