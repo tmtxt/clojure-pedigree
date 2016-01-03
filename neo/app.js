@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 
 // handler
 var person = require('./person');
+var pedigree = require('./pedigree');
 
 // config
 var config = require('./config/main.js');
@@ -24,6 +25,7 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 app.use('/person', person);
+app.use('/pedigree', pedigree);
 
 // start server
 var port = config.get('serverPort');

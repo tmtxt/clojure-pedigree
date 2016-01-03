@@ -33,8 +33,7 @@ Content-Type: application/json
 
 {
   "data": {
-    "person_id": 444,
-    "hello": "abc"
+    "person_id": 445
   }
 }
 
@@ -52,4 +51,15 @@ Content-Type: application/json
 
 {
   "personId": 3
+}
+
+#
+POST :url/pedigree/addChildForParent
+Content-Type: application/json
+
+{
+  "parentId": 444,
+  "childId": 445,
+  "type": "father_child",
+  "order": 1
 }
