@@ -1,0 +1,55 @@
+:url = http://site.com:9253
+
+#
+GET :url/person/findRoot
+
+#
+GET :url/person/findPerson
+Content-Type: application/json
+
+{
+  "personId": 2
+}
+
+#
+GET :url/person/findPartners
+Content-Type: application/json
+
+{
+  "personId": 3
+}
+
+#
+GET :url/person/findParents
+Content-Type: application/json
+
+{
+  "personId": 3
+}
+
+#
+POST :url/person/addOrUpdate
+Content-Type: application/json
+
+{
+  "data": {
+    "person_id": 444,
+    "hello": "abc"
+  }
+}
+
+#
+POST :url/person/delete
+Content-Type: application/json
+
+{
+  "personId": 444
+}
+
+#
+GET :url/person/countParents
+Content-Type: application/json
+
+{
+  "personId": 3
+}

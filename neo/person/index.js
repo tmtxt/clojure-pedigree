@@ -4,6 +4,7 @@ var router = express.Router();
 var find = require('./find.js');
 var add = require('./add.js');
 var deletePerson = require('./delete.js');
+var parent = require('./parent.js');
 var util = require('./util.js');
 
 router.use('/findPerson', util.requirePersonId);
@@ -18,5 +19,8 @@ router.post('/addOrUpdate', add.addOrUpdateHandler);
 
 router.use('/delete', util.requirePersonId);
 router.post('/delete', deletePerson.deleteHandler);
+
+router.use('/countParents', util.requirePersonId);
+router.get('/countParents', parent.countParentsHandler);
 
 module.exports = router;
