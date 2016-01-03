@@ -1,19 +1,5 @@
 var _ = require('lodash');
 
-function findMatchingPerson(neo4j, personId) {
-  return new Promise(function(resolve, reject){
-    var data = {person_id: personId};
-    neo4j.find(data, 'person', function(err, persons){
-      if (err || persons.length === 0) {
-        reject();
-        return;
-      }
-
-      resolve(persons[0]);
-    });
-  });
-}
-
 function findMatchingRelation(neo4j, parentNode, childNode, type) {
   return new Promise(function(resolve, reject){
     neo4j.relationships(parentNode, 'out', type, function(err, results){
@@ -63,13 +49,14 @@ function updateRel(neo4j, rel, order) {
 function addChildForParentHandler(req, res, next) {
   var app = req.app;
   var neo4j = app.get('neo4j');
+  var util = app.get('util');
   var parentId = req.body.parentId;
   var childId = req.body.childId;
   var type = req.body.type;
   var order = req.body.order;
 
-  var findParent = findMatchingPerson(neo4j, parentId);
-  var findChild = findMatchingPerson(neo4j, childId);
+  var findParent = util.person.findPersonNodeByPersonId(neo4j, parentId);
+  var findChild = util.person.findPersonNodeByPersonId(neo4j, childId);
 
   var parentNode, childNode;
 
