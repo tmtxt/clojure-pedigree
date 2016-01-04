@@ -1,6 +1,5 @@
 (ns app.models.marriage-relation
-  (:require [app.neo4j.relation :as relation]
-            [app.neo4j.main :as neo4j]))
+  (:require [app.neo4j.main :as neo4j]))
 
 (def RELATION_TYPES
   {:husband-wife :husband_wife
