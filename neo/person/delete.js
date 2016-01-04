@@ -22,7 +22,7 @@ function deleteNode(neo4j, node) {
       return;
     }
 
-    neo4j.delete(node, function(err){
+    neo4j.delete(node, true, function(err){
       if (err) {
         reject(err);
       } else {
