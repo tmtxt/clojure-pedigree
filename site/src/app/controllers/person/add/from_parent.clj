@@ -1,6 +1,5 @@
 (ns app.controllers.person.add.from-parent
-  (:require [app.neo4j.main :as neo4j]
-            [app.models.person :as person]
+  (:require [app.models.person :as person]
             [app.controllers.person.add.render :as render]
             [app.util.person :as person-util]
             [app.controllers.person.util :as controller-util]
