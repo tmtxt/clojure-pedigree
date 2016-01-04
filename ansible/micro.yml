@@ -7,8 +7,21 @@
   roles:
     - { role: docker, sudo: yes }
   tasks:
+    - name: install packages
+      sudo: yes
+      apt: name={{item}}
+      with_items:
+        - git
+        - nginx
+
     - include: tasks/config.yml
     - include: tasks/compose.yml
     - include: tasks/scripts.yml
     - include: tasks/schemup.yml
     - include: tasks/frontend.yml
+    - include: tasks/nginx.yml
+
+  handlers:
+    - name: restart nginx
+      sudo: yes
+      service: name=nginx state=restarted

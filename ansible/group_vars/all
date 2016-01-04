@@ -4,6 +4,7 @@
 # general information
 project_name: pedigree
 project_user: "{{ project_name }}"
+site_name: "{{ project_name }}"
 
 # dirs
 script_dir: "{{ project_dir }}/scripts"
