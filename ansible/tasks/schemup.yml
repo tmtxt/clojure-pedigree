@@ -3,14 +3,14 @@
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
-    src=templates/web/db.json
+    src=templates/schemup/db.json
     dest={{ web_schemup_path }}/db.json
 
 - name: create script for running schemup
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
-    src=templates/web/schemup.sh
+    src=templates/schemup/schemup.sh
     dest={{ script_dir }}/schemup.sh
     mode=755
     owner={{ project_user }}

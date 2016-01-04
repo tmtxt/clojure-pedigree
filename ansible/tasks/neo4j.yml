@@ -3,7 +3,7 @@
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
-    src=templates/web/{{ item }}
+    src=templates/neo4j/{{ item }}
     dest={{ script_dir }}/{{ item }}
     mode=755
     owner="{{ project_user }}"
@@ -22,5 +22,5 @@
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
-    src=templates/web/system.js
+    src=templates/neo4j/system.js
     dest={{ project_dir }}/neo/config/system.js

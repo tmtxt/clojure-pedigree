@@ -3,7 +3,7 @@
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
-    src=templates/web/attach_{{ item }}.sh
+    src=templates/docker/attach_{{ item }}.sh
     dest={{ script_dir }}/attach_{{ item }}.sh
     mode=755
     owner={{ project_user }}
