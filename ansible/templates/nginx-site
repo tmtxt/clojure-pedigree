@@ -5,6 +5,6 @@ server {
        client_max_body_size  10M;
 
        location / {
-                proxy_pass http://localhost:{{ ring_port }};
+                proxy_pass http://localhost:{{ web_ring_host_port }};
        }
 }

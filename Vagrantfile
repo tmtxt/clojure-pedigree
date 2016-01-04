@@ -43,7 +43,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       web_ring_host_port: web_ring_host_port,
       web_nrepl_host_port: web_nrepl_host_port,
       web_neo4j_host_port: web_neo4j_host_port,
-      neo_node_host_port: neo_node_host_port
+      neo_node_host_port: neo_node_host_port,
+      server_name: 'localhost'
     }
   end
 end
