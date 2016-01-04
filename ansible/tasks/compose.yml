@@ -3,15 +3,11 @@
   sudo: yes
   sudo_user: "{{ project_user }}"
   template: >-
-    src=templates/web/docker-compose.yml
-    dest={{ project_dir }}/docker-compose.yml
-
-- name: generate docker-compose.prod.yml file
-  sudo: yes
-  sudo_user: "{{ project_user }}"
-  template: >-
-    src=templates/web/docker-compose.prod.yml
-    dest={{ project_dir }}/docker-compose.prod.yml
+    src=templates/docker/{{ item }}.yml
+    dest={{ project_dir }}/{{ item }}.yml
+  with_items:
+    - docker-compose
+    - docker-compose.prod
 
 - name: run docker images for web service
   sudo: yes
