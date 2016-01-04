@@ -35,6 +35,7 @@ neo_neo4j_port: 7474
 
 # neo4j service
 neo_node_port: 3000
+neo_node_host: neonode
 
 # port to map to host computer
 web_db_host_port: 5432

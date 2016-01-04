@@ -1,7 +1,5 @@
 (ns app.models.person.json
   (:require [app.models.person.definition :as definition]
-            [korma.core :as kc]
-            [app.neo4j.main :as neo4j]
             [slingshot.slingshot :refer [throw+ try+]]
             [clj-time.format :as f]
             [clj-time.coerce :as c]

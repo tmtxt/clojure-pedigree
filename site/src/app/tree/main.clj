@@ -1,7 +1,6 @@
 (ns app.tree.main
   (:require [app.models.person :as person]
-            [app.neo4j.main :as neo4j]
-            [app.neo4j.query :as query]
+            [app.tree.db :as tree-db]
             [com.rpl.specter :refer :all]
             [slingshot.slingshot :refer [try+ throw+]]))
 
@@ -10,10 +9,11 @@
 (defn- query-tree
   "Query tree using Neo4j"
   [root-id depth]
-  (let [result (neo4j/execute-statement query/get-tree root-id depth)
-        data (-> result first :data)
-        rows (map #(:row %) data)]
-    rows))
+  (let [results (tree-db/query-tree root-id depth)
+        results (map (fn [{path :path marriage :marriage depth :depth last-order :last_order last-parent :last_parent}]
+                       [path depth marriage last-order last-parent])
+                     results)]
+    results))
 
 (defn- extract-marriage-info [marriage person-info]
   (map #(get person-info %) marriage))
@@ -92,12 +92,11 @@
   [& {:keys [person-id depth]
       :or {person-id nil
            depth default-depth}}]
-  (neo4j/with-transaction
-    (let [depth (if (nil? depth) default-depth depth)
-          find-root (if (nil? person-id)
-                      (person/find-root :include-node true :include-partners true :json-friendly true)
-                      (find-root person-id))
-          root-node (:node find-root)
-          root-node (assoc root-node :info (:entity find-root))
-          root-node (assoc root-node :marriage (:partners find-root))]
-      (get-tree-from-node root-node depth))))
+  (let [depth (if (nil? depth) default-depth depth)
+        find-root (if (nil? person-id)
+                    (person/find-root :include-node true :include-partners true :json-friendly true)
+                    (find-root person-id))
+        root-node (:node find-root)
+        root-node (assoc root-node :info (:entity find-root))
+        root-node (assoc root-node :marriage (:partners find-root))]
+    (get-tree-from-node root-node depth)))

@@ -1,6 +1,5 @@
 (ns app.controllers.person.edit
-  (:require [app.neo4j.main :as neo4j]
-            [korma.db :as kd]
+  (:require [korma.db :as kd]
             [app.util.person :as person-util]
             [app.views.layout :as layout]
             [app.util.main :as util]

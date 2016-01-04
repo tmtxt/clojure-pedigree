@@ -1,9 +1,7 @@
 (ns app.models.person.find
   (:require [korma.core :as kc]
             [app.util.pg :as db-util]
-            [app.neo4j.node :as node]
-            [app.neo4j.main :as neo4j]
-            [app.neo4j.query :as query]
+            [app.models.person.node :as node]
             [app.models.person.definition :refer [person node-to-record]]
             [app.models.person.util :as model-util]
             [app.models.person.prepare :as prepare]
@@ -68,8 +66,7 @@
 
 (defn find-node-from-entity [entity]
   (if entity
-    (let [props {:person_id (:id entity)}
-          person-node (node/find-by-props :person props)
+    (let [person-node (node/find-by-person-id (:id entity))
           person-node (node-to-record person-node)]
       person-node)
     nil))
@@ -90,10 +87,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn- extract-partner-ids [rows]
-  (map (fn [[id]] id) rows))
+  (map #(:partner_id %) rows))
 
 (defn- extract-partner-id-order [rows]
-  (reduce (fn [id-order [id order]] (assoc id-order id order)) {} rows))
+  (reduce (fn [id-order {id :partner_id order :partner_order}] (assoc id-order id order)) {} rows))
 
 (defn- combine-partner-info [id-order partners]
   (map (fn [partner] (assoc partner :order (get id-order (:id partner)))) partners))
@@ -102,9 +99,7 @@
   "Find all partners information of the input person"
   [entity & {:keys [json-friendly]
              :or {json-friendly false}}]
-  (let [[result] (neo4j/execute-statement query/find-partner (:id entity))
-        data (-> result :data)
-        partners-list (map #(:row %) data)
+  (let [partners-list (node/find-partners (:id entity))
         ids (extract-partner-ids partners-list)
         partners-id-order (extract-partner-id-order partners-list)
         partners-rows (db-util/find-all-by-ids person ids)
@@ -127,13 +122,13 @@
   "Find parents information of the input person"
   [entity & {:keys [json-friendly]
              :or {json-friendly false}}]
-  (let [[result] (neo4j/execute-statement query/find-parent (:id entity))
-        data (:data result)
-        parents-list (map #(:row %) data)
-        parents-ids (map #(first %) parents-list)
-        parents-list (into {} parents-list)
+  (let [parents-list (node/find-parents (:id entity))
+        parents-ids (map #(:parent_id %) parents-list)
         parents-rows (db-util/find-all-by-ids person parents-ids)
         parents-rows (if json-friendly (json/json-friendlify-all parents-rows) parents-rows)
+        parents-list (map #(vals %) parents-list)
+        parents-list (map #(into [] %) parents-list)
+        parents-list (into {} parents-list)
         parents-info (combine-parent-info parents-list parents-rows)]
     parents-info
     ))
@@ -161,12 +156,7 @@
 (defn find-root-node
   "Find the root node from neo4j"
   []
-  (let [[result] (neo4j/execute-statement query/find-root)
-        data (-> result :data)
-        rows (map #(:row %) data)
-        row (first rows)
-        [root] row]
-    (node-to-record root)))
+  (node-to-record (node/find-root)))
 
 (defn find-root
   [& {:keys [include-node include-partners json-friendly]
@@ -196,7 +186,7 @@
                   :json-friendly json-friendly))
 
 (defn find-node-by-person-id [id]
-  (-> id (find-person-by-id :include-node true) :node))
+  (node-to-record (node/find-by-person-id id)))
 
 (defn find-entity-by-full-name [full-name]
   (-> {:full-name full-name} (find-person-by) :entity))

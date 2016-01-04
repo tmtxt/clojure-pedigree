@@ -22,7 +22,7 @@ server:
     - "{{ web_nrepl_host_port }}:{{ web_nrepl_port }}"
   links:
     - postgres:{{ web_db_host }}
-    - neo4j
+    - neonode:{{ neo_node_host }}
 
 postgres:
   build: ./images/postgres

@@ -1,6 +1,5 @@
 (ns app.controllers.person.delete
-  (:require [app.neo4j.main :as neo4j]
-            [korma.db :as kd]
+  (:require [korma.db :as kd]
             [app.util.person :as person-util]
             [app.views.layout :as layout]
             [app.util.main :as util]
@@ -13,19 +12,18 @@
             [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn handle-get-request [request]
-  (neo4j/with-transaction
-    (kd/transaction
-     (try+
-      (let [params (util/params request)
-            id (-> params :personId util/parse-int)
-            _ (if (nil? id) (throw+ "id is null"))
-            person (person-model/find-person-by-id
-                    id :include-node true)
-            person-entity (:entity person)
-            _ (if (nil? person-entity) (throw+ "person not found"))
-            person-node (:node person)
-            _ (if (:is-root person-node) (throw+ "cannot delete root person"))]
-        (person-model/delete-person id)
-        "person deleted")
-      (catch #(instance? String %) res res)
-      ))))
+  (kd/transaction
+   (try+
+    (let [params (util/params request)
+          id (-> params :personId util/parse-int)
+          _ (if (nil? id) (throw+ "id is null"))
+          person (person-model/find-person-by-id
+                  id :include-node true)
+          person-entity (:entity person)
+          _ (if (nil? person-entity) (throw+ "person not found"))
+          person-node (:node person)
+          _ (if (:is-root person-node) (throw+ "cannot delete root person"))]
+      (person-model/delete-person id)
+      "person deleted")
+    (catch #(instance? String %) res res)
+    )))
