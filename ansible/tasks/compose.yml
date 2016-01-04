@@ -15,7 +15,7 @@
 
 - name: run docker images for web service
   sudo: yes
-  command: docker-compose up -d
+  command: sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   args:
     chdir: "{{ project_dir }}"
   register: web_docker_compose_result

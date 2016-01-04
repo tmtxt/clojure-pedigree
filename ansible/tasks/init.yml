@@ -18,6 +18,7 @@
   with_items:
     - alias dcb='sudo docker-compose build'
     - alias dcu='sudo docker-compose up -d'
+    - alias dcup='sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
     - alias dck='sudo docker-compose kill'
     - alias dcr='sudo docker-compose rm -f'
     - alias dcp='sudo docker-compose ps'
