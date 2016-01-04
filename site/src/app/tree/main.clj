@@ -1,8 +1,6 @@
 (ns app.tree.main
   (:require [app.models.person :as person]
-            [app.neo4j.main :as neo4j]
             [app.tree.db :as tree-db]
-            [app.neo4j.query :as query]
             [com.rpl.specter :refer :all]
             [slingshot.slingshot :refer [try+ throw+]]))
 
@@ -15,12 +13,7 @@
         results (map (fn [{path :path marriage :marriage depth :depth last-order :last_order last-parent :last_parent}]
                        [path depth marriage last-order last-parent])
                      results)]
-    results)
-  ;; (let [result (neo4j/execute-statement query/get-tree root-id depth)
-  ;;       data (-> result first :data)
-  ;;       rows (map #(:row %) data)]
-  ;;   rows)
-  )
+    results))
 
 (defn- extract-marriage-info [marriage person-info]
   (map #(get person-info %) marriage))
