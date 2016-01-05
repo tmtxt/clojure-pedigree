@@ -15,12 +15,19 @@
         - nginx
 
     - include: tasks/config.yml
-    - include: tasks/compose.yml
     - include: tasks/scripts.yml
     - include: tasks/schemup.yml
     - include: tasks/frontend.yml
     - include: tasks/neo4j.yml
     - include: tasks/nginx.yml
+
+    - name: run docker images for web service
+      sudo: yes
+      command: sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+      args:
+        chdir: "{{ project_dir }}"
+      register: web_docker_compose_result
+      changed_when: False
 
   handlers:
     - name: restart nginx
