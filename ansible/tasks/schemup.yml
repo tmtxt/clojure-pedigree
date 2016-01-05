@@ -1,4 +1,11 @@
 ---
+- name: start postgres container
+  sudo: yes
+  command: docker-compose up -d postgres
+  args:
+    chdir: "{{ project_dir }}"
+  changed_when: False
+
 - name: generate schemup db config file
   sudo: yes
   sudo_user: "{{ project_user }}"
