@@ -10,6 +10,7 @@
                  [clj-http "2.0.0"]
                  [selmer "0.8.2"]
                  [lib-noir "0.9.9"]
+                 [clj-jgit "0.8.8"]
                  [com.novemberain/validateur "2.4.2"]
                  [com.taoensso/tower "3.0.2"]
                  [korma "0.4.2"]

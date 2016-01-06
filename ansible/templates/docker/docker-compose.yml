@@ -15,6 +15,7 @@ server:
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
     - {{ cache_dir }}/.m2:/root/.m2
+    - {{ project_dir }}:{{ web_root_git_dir }}
   volumes_from:
     - websources
   ports:
@@ -34,7 +35,6 @@ postgres:
 
 schemup:
   build: ./images/schemup
-  command: sh -c 'while true; do sleep 10000; done'
   links:
     - postgres
   volumes:
@@ -54,7 +54,6 @@ frontend:
     - websources
   volumes:
     - {{ project_dir }}:/usr/src/root
-  command: sh -c 'while true; do sleep 10000; done'
 
 neonode:
   build: ./images/neonode

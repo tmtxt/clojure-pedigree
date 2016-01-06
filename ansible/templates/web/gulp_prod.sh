@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd {{ project_dir }}
-sudo docker exec -it $(sudo docker-compose ps | grep 'frontend' | awk '{print $1}') gulp prod
+sudo docker-compose run frontend gulp prod

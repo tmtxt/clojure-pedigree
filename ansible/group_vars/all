@@ -27,6 +27,7 @@ web_schemup_path: "{{project_dir}}/schema"
 # server
 web_ring_port: 3000
 web_nrepl_port: 7888
+web_root_git_dir: /usr/src/root
 
 # neo4j
 web_neo4j_host: neo4j

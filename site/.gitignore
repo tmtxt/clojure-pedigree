@@ -18,4 +18,3 @@
 /src/config/neo4j.clj
 /node_modules
 /sass/bower
-/src/app/views/version.clj

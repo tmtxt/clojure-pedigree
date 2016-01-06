@@ -19,3 +19,13 @@
   template: >-
     src=templates/web/system.clj
     dest={{project_dir}}/site/src/config/system.clj
+
+- name: generate docker-compose.yml file
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  template: >-
+    src=templates/docker/{{ item }}.yml
+    dest={{ project_dir }}/{{ item }}.yml
+  with_items:
+    - docker-compose
+    - docker-compose.prod
