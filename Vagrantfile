@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # provision
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "ansible/micro.yml"
+    ansible.playbook = "ansible/main.yml"
 
     ansible.extra_vars = {
       # general
