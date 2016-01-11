@@ -23,3 +23,16 @@
                          :version (str "?version=" version)
                          :config config}]
     (utf-8-response (parser/render-file template template-params))))
+
+(def alert-type {:success "success"
+                 :info "info"
+                 :warning "warning"
+                 :danger "danger"
+                 :error "danger"})
+
+;;; render message page
+(defn render-message [request message & {:keys [type]
+                                 :or {type :info}}]
+  (let [alert-class (get alert-type type "info")]
+    (render request "layouts/message.html" {:message message
+                                            :alert-class alert-class})))
