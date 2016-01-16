@@ -11,7 +11,8 @@
             [app.models.user.validation :as validation]
             [app.models.user.add :as add]
             [app.models.user.find :as find]
-            [app.models.user.update :as upd]))
+            [app.models.user.update :as upd]
+            [app.models.user.password :as password]))
 
 ;;; Entity
 (def user definition/user)
@@ -23,6 +24,8 @@
 (def find-by-username find/find-by-username)
 
 (def change-password upd/update-password)
+
+(def correct-password? password/correct-password?)
 
 (defn get-user-from-request "Create a user map from the request" [request]
   ;; (cond
