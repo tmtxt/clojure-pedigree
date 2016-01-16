@@ -4,7 +4,9 @@
             [app.models.user-role :refer [user-role]]
             [slingshot.slingshot :refer [throw+ try+]]))
 
-(defn find-by-username [username]
+(defn find-by-username
+  "Find user entity by username"
+  [username]
   (-> user
       (select
        (with user-role)
