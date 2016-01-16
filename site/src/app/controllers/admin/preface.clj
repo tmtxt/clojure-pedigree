@@ -5,8 +5,14 @@
             [validateur.validation :as vl]
             [app.models.minor-content :refer [find-content]]))
 
-(def ^:private key "preface")
+(def ^:private preface-key "preface")
 
 (defn preface-render [request]
-  (let [content (find-content key)]
+  (let [content (find-content preface-key)]
     (render request "admin/preface.html" content)))
+
+(defn preface-process [request]
+  (let [preface (util/param request "preface-content" "")
+        content {:content preface}]
+
+    ))

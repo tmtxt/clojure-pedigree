@@ -16,7 +16,8 @@
    (GET "/index" [] view-index)
    (GET "/changePassword" [] profile/change-password-render)
    (POST "/changePassword" [] profile/change-password-process)
-   (GET "/prefaceManagement" [] preface/preface-render)))
+   (GET "/prefaceManagement" [] preface/preface-render)
+   (POST "/prefaceManagement" [] preface/preface-process)))
 
 (def admin-rules
   (if (-> :profile env (= "dev"))
