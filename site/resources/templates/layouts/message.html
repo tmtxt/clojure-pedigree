@@ -1,5 +1,28 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-{{ params.class }}">
+      <div class="panel-heading">
+        <h1 class="panel-title">{{ params.title }}</h1>
+      </div>
+      <div class="panel-body">
+        <p>
+          {{ params.message }}
+        </p>
+        <p>
+          Redirect
+        </p>
+      </div>
+      <div class="panel-footer">
+        <a class="btn btn-default" href="/" role="button">Về trang chủ</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
 
 {% endblock %}
