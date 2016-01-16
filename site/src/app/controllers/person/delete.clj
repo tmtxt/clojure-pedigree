@@ -24,6 +24,5 @@
           person-node (:node person)
           _ (if (:is-root person-node) (throw+ "cannot delete root person"))]
       (person-model/delete-person id)
-      "person deleted")
-    (catch #(instance? String %) res res)
-    )))
+      (layout/render-message request "Thành viên đã xóa" :type :info :redirect "/" :text "Trang chủ"))
+    (catch #(instance? String %) res (layout/render-message request res :type :error)))))

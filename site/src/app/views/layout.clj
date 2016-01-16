@@ -23,3 +23,28 @@
                          :version (str "?version=" version)
                          :config config}]
     (utf-8-response (parser/render-file template template-params))))
+
+(def alert-type {:success "success"
+                 :info "warning"
+                 :warning "danger"
+                 :danger "danger"
+                 :error "danger"})
+
+(def alert-title {:success "Thành công"
+                  :info "Thông báo"
+                  :warning "Thông tin"
+                  :danger "Lỗi"
+                  :error "Lỗi"})
+
+;;; render message page
+(defn render-message [request message & {:keys [type redirect text]
+                                         :or {type :info
+                                              redirect nil
+                                              text nil}}]
+  (let [class (get alert-type type "warning")
+        title (get alert-title type "Thông tin")]
+    (render request "layouts/message.html" {:message message
+                                            :class class
+                                            :title title
+                                            :redirect redirect
+                                            :text text})))

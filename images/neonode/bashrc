@@ -1,1 +1,2 @@
 alias ll='ls -alh'
+alias na='nodemon --legacy-watch app.js'

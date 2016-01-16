@@ -41,6 +41,9 @@
 (defn welcome [request]
   (layout/render request "home/welcome.html"))
 
+(defn message [request]
+  (layout/render-message request "hello" :redirect "/tree/view/" :text "Cây gia phả"))
+
 (defroutes home-routes
   (GET "/" [] home)
 
@@ -49,7 +52,8 @@
   (GET "/logout" [] logout)
   (POST "/logout" [] logout)
 
-  (GET "/welcome" [] welcome))
+  (GET "/welcome" [] welcome)
+  (GET "/message" [] message))
 
 (def home-rules [{:uri "/login"
                   :handler security/anonymous-access
