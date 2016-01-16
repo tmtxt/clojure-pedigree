@@ -13,3 +13,8 @@
     (if (-> password nil? not)
       (assoc entity :password (hash-password password))
       entity)))
+
+(defn correct-password?
+  "Check if the user entity has correct password"
+  [entity password]
+  (crypto/check password (:password entity)))
