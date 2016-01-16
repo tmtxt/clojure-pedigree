@@ -20,6 +20,9 @@
           <li><a href="/tree/view/">Cây gia phả</a></li>
           <li><a href="#">Lịch sử dòng họ</a></li>
           <li><a href="#">Liên hệ</a></li>
+          {% ifequal user.role "admin" %}
+            <li><a href="/admin/index">Quản trị</a></li>
+          {% endifequal %}
         </ul>
         <ul class="header-content--right header-menu">
           {% if user.authenticated %}
