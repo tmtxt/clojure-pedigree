@@ -2,11 +2,10 @@
   (:require [compojure.core :refer :all]
             [environ.core :refer [env]]
             [app.views.layout :refer [render]]
-            [app.util.main :as util]
-            [app.models.user :as user-model]
-            [slingshot.slingshot :refer [try+ throw+]]
             [app.util.security :refer [user-access admin-access]]
-            [app.controllers.admin.profile :as profile]))
+
+            [app.controllers.admin.profile :as profile]
+            [app.controllers.admin.preface :as preface]))
 
 (defn view-index [request]
   (render request "admin/index.html"))
@@ -16,7 +15,8 @@
    "/admin" []
    (GET "/index" [] view-index)
    (GET "/changePassword" [] profile/change-password-render)
-   (POST "/changePassword" [] profile/change-password-process)))
+   (POST "/changePassword" [] profile/change-password-process)
+   (GET "/prefaceManagement" [] preface/preface-render)))
 
 (def admin-rules
   (if (-> :profile env (= "dev"))
