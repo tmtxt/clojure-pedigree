@@ -28,15 +28,14 @@
 (def correct-password? password/correct-password?)
 
 (defn get-user-from-request "Create a user map from the request" [request]
-  ;; (cond
-  ;;   (-> :profile env (= "dev"))
-  ;;   {:authenticated true
-  ;;    :username "dev"
-  ;;    :role "admin"
-  ;;    :locale "vi"}
-  ;;   (authenticated? request)
-  ;;   (get-in request [:session :user-info])
-  ;;   :else {:authenticated false})
-  (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false})
-
+  (cond
+    (-> :profile env (= "dev"))
+    {:authenticated true
+     :username "dev"
+     :role "admin"
+     :locale "vi"}
+    (authenticated? request)
+    (get-in request [:session :user-info])
+    :else {:authenticated false})
+  ;; (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false})
   )
