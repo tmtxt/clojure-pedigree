@@ -7,10 +7,14 @@
 (defn view-index [request]
   (render request "admin/index.html"))
 
+(defn change-password-render [request]
+  (render request "admin/change_password.html"))
+
 (def admin-routes
   (context
    "/admin" []
-   (GET "/index" [] view-index)))
+   (GET "/index" [] view-index)
+   (GET "/changePassword" [] change-password-render)))
 
 (def admin-rules
   (if (-> :profile env (= "dev"))

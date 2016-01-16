@@ -12,9 +12,9 @@
           <div class="col-md-3">
             <div class="list-group">
               <div class="list-group-item list-group-item-warning">
-                Cras justo odio
+                Thông tin tài khoản
               </div>
-              <a href="/admin/index" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="/admin/changePassword" class="list-group-item">Đổi mật khẩu</a>
               <a href="#" class="list-group-item">Morbi leo risus</a>
               <div class="list-group-item list-group-item-warning">
                 Cras justo odio
@@ -24,12 +24,17 @@
               <div class="list-group-item list-group-item-warning">
                 Cras justo odio
               </div>
-              <a href="/admin/index" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
               <a href="#" class="list-group-item">Morbi leo risus</a>
             </div>
           </div>
           <div class="col-md-9">
-            <div class="panel panel-default">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  {% block heading %}{% endblock %}
+                </h3>
+              </div>
               <div class="panel-body">
                 {% block content %}{% endblock %}
               </div>
