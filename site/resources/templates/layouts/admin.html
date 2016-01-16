@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "layouts/_meta.html" %}
+  </head>
+  <body class="site">
+    {% include "layouts/_header.html" %}
+
+    <main class="site-content">
+      <div class="container site-container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="list-group">
+              <div class="list-group-item list-group-item-warning">
+                Cras justo odio
+              </div>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Morbi leo risus</a>
+              <div class="list-group-item list-group-item-warning">
+                Cras justo odio
+              </div>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Morbi leo risus</a>
+              <div class="list-group-item list-group-item-warning">
+                Cras justo odio
+              </div>
+              <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item">Morbi leo risus</a>
+            </div>
+          </div>
+          <div class="col-md">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {% include "layouts/_footer.html" %}
+
+    <!-- script tag -->
+    {% include "layouts/_scripts.html" %}
+    {% block extra_script %}{% endblock %}
+  </body>
+</html>
