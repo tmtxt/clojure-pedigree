@@ -11,9 +11,11 @@
         <p>
           {{ params.message }}
         </p>
+        {% if params.redirect %}
         <p>
-          Redirect
+          Tự động quay về {{ params.text }} trong 5 giây
         </p>
+        {% endif %}
       </div>
       <div class="panel-footer">
         <a class="btn btn-default" href="/" role="button">Về trang chủ</a>
@@ -24,5 +26,11 @@
 {% endblock %}
 
 {% block extra_script %}
-
+<script>
+ {% if params.redirect %}
+ var redirectLink = {{ params.redirect|json|safe }};
+ var redirectText = {{ params.text|json|safe }};
+ {% endif %}
+</script>
+<script src="/js/message_page.js{{ version }}"></script>
 {% endblock %}

@@ -37,10 +37,14 @@
                   :error "Lỗi"})
 
 ;;; render message page
-(defn render-message [request message & {:keys [type]
-                                         :or {type :info}}]
+(defn render-message [request message & {:keys [type redirect text]
+                                         :or {type :info
+                                              redirect nil
+                                              text nil}}]
   (let [class (get alert-type type "warning")
         title (get alert-title type "Thông tin")]
     (render request "layouts/message.html" {:message message
                                             :class class
-                                            :title title})))
+                                            :title title
+                                            :redirect redirect
+                                            :text text})))

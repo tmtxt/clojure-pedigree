@@ -42,7 +42,7 @@
   (layout/render request "home/welcome.html"))
 
 (defn message [request]
-  (layout/render-message request "hello"))
+  (layout/render-message request "hello" :redirect "/tree/view/" :text "Cây gia phả"))
 
 (defroutes home-routes
   (GET "/" [] home)
