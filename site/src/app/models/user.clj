@@ -43,13 +43,24 @@
                  (with user-role)
                  (where {:username username}))))
 
+(defn change-password [user-id password]
+  (let [user-data (first (select user (where {:id user-id})))]
+    (if user-data
+      (let [password-hash (crypto/encrypt password)
+            result (update user (set-fields {:password password-hash}) (where {:id user-id}))]
+        (clojure.pprint/pprint result))
+      false)))
+
 (defn get-user-from-request "Create a user map from the request" [request]
-  (cond
-    (-> :profile env (= "dev"))
-    {:authenticated true
-     :username "dev"
-     :role "admin"
-     :locale "vi"}
-    (authenticated? request)
-    (get-in request [:session :user-info])
-    :else {:authenticated false}))
+  ;; (cond
+  ;;   (-> :profile env (= "dev"))
+  ;;   {:authenticated true
+  ;;    :username "dev"
+  ;;    :role "admin"
+  ;;    :locale "vi"}
+  ;;   (authenticated? request)
+  ;;   (get-in request [:session :user-info])
+  ;;   :else {:authenticated false})
+  (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false})
+  (clojure.pprint/pprint (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false}))
+  )
