@@ -5,14 +5,10 @@
             [app.util.pg :as db-util]
             [environ.core :refer [env]]
             [buddy.auth :refer [authenticated?]]
-            [validateur.validation :as vl]))
+            [validateur.validation :as vl]
+            [app.models.user.definition :as definition]))
 
-(defentity user
-  (table :tbl_user)
-
-  (pk :id)
-
-  (has-one user-role {:fk :user_id}))
+(def user definition/user)
 
 (def validation
   (vl/validation-set
@@ -61,6 +57,7 @@
   ;;   (authenticated? request)
   ;;   (get-in request [:session :user-info])
   ;;   :else {:authenticated false})
-  (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false})
   (clojure.pprint/pprint (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false}))
+  (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false})
+
   )
