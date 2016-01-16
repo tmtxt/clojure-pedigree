@@ -13,7 +13,7 @@
                           :full_name "Admin"
                           :email "admin@example.com"
                           :password "admin"}
-                         :admin)))
+                         :role :admin)))
 
 (defn create-init-person
   "Create new persons when the app starts if there is no person presented yet"

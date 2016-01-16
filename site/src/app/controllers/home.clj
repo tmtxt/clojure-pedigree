@@ -27,9 +27,9 @@
     (if user-info
       (let [session (:session request)
             updated-session (assoc session
-                                   :identity (user-info :id)
+                                   :identity (:id user-info)
                                    :user-info user-info
-                                   :locale (user-info :locale))]
+                                   :locale (:locale user-info))]
         (-> (redirect "/welcome") (assoc :session updated-session)))
       (layout/render request "home/login.html" {:message (t :login/invalid-error)}))))
 

@@ -12,11 +12,10 @@
   [username password]
   (let [user (user-model/find-by-username username)]
     (if (and user (crypto/check password (:password user)))
-      {:id (:id user)
-       :username (:username user)
-       :role (:role_name user)
-       :authenticated true
-       :locale (:language user)}
+      (assoc user
+             :role (:role-name user)
+             :authenticated true
+             :locale (:language user))
       nil)))
 
 (defn unauthorized-handler [request value]

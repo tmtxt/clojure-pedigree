@@ -5,51 +5,38 @@
             [app.util.pg :as db-util]
             [environ.core :refer [env]]
             [buddy.auth :refer [authenticated?]]
-            [validateur.validation :as vl]))
+            [validateur.validation :as vl]
 
-(defentity user
-  (table :tbl_user)
+            [app.models.user.definition :as definition]
+            [app.models.user.validation :as validation]
+            [app.models.user.add :as add]
+            [app.models.user.find :as find]
+            [app.models.user.update :as upd]
+            [app.models.user.password :as password]))
 
-  (pk :id)
+;;; Entity
+(def user definition/user)
 
-  (has-one user-role {:fk :user_id}))
+(def validate-user validation/validate-user)
 
-(def validation
-  (vl/validation-set
-   (vl/presence-of :username)
-   (vl/presence-of :full_name)
-   (vl/presence-of :email)
-   (vl/presence-of :password)
-   (vl/validate-by :username #(not (db-util/exists? user {:username %})) :message "Username already exist")
-   (vl/validate-by :email #(not (db-util/exists? user {:email %})) :message "Email already exist")))
+(def add-user add/add-user)
 
-(defn add-user
-  "Add user with their role. Default role is :user"
-  [user-map & [role]]
-  (let [errors (validation user-map)]
-    (if (empty? errors)
-      (let [password-hash (crypto/encrypt (:password user-map))
-            new-user-map (assoc user-map :password password-hash)
-            new-user (insert user (values new-user-map))
-            user-role (if role role :user)]
-        (add-user-role new-user user-role)
-        {:success true
-         :user new-user})
-      {:success false
-       :errors errors})))
+(def find-by-username find/find-by-username)
 
-(defn find-by-username [username]
-  (first (select user
-                 (with user-role)
-                 (where {:username username}))))
+(def change-password upd/update-password)
+
+(def correct-password? password/correct-password?)
 
 (defn get-user-from-request "Create a user map from the request" [request]
-  (cond
-    (-> :profile env (= "dev"))
-    {:authenticated true
-     :username "dev"
-     :role "admin"
-     :locale "vi"}
-    (authenticated? request)
-    (get-in request [:session :user-info])
-    :else {:authenticated false}))
+  ;; (cond
+  ;;   (-> :profile env (= "dev"))
+  ;;   {:authenticated true
+  ;;    :username "dev"
+  ;;    :role "admin"
+  ;;    :locale "vi"}
+  ;;   (authenticated? request)
+  ;;   (get-in request [:session :user-info])
+  ;;   :else {:authenticated false})
+  (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false})
+
+  )
