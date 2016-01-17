@@ -29,11 +29,3 @@
   with_items:
     - docker-compose
     - docker-compose.prod
-
-- name: generate ferm config file for project
-  sudo: yes
-  template: >-
-    src=templates/ferm-input.conf
-    dest=/etc/ferm/input/{{project_name}}.conf
-  notify:
-    - reload ferm

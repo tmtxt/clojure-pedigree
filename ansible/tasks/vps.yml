@@ -7,10 +7,6 @@
   sudo: yes
   apt: name=git
 
-- name: create project user
-  user: name={{project_user}} shell=/bin/bash groups=docker append=yes
-  sudo: yes
-
 - name: clone the repo
   sudo: yes
   sudo_user: "{{project_user}}"
