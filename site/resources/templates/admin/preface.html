@@ -1,0 +1,18 @@
+{% extends "layouts/admin.html" %}
+
+{% block heading %}
+Lời tâm huyết
+{% endblock %}
+
+{% block content %}
+<form action="/admin/prefaceManagement" method="POST">
+  <div class="form-group">
+    <label for="preface-content">Nội dung</label>
+    <textarea name="preface-content" class="form-control" rows="10">{{ params.content }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-default">Cập nhật</button>
+</form>
+{% endblock %}
+
+{% block extra_script %}
+{% endblock %}

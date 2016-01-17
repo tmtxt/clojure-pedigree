@@ -1,0 +1,11 @@
+---
+table: tbl_minor_content
+from: null
+to: txt_1
+sql: |
+  CREATE TABLE tbl_minor_content (
+        id SERIAL NOT NULL PRIMARY KEY,
+        "key" VARCHAR(500) UNIQUE NOT NULL,
+        "value" JSONB NOT NULL DEFAULT '{}',
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+        );
