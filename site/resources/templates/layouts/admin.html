@@ -28,6 +28,11 @@
             </div>
           </div>
           <div class="col-md-9">
+            {% if params.message %}
+            <div class="alert js-admin-message" role="alert">
+              {{ params.message }}
+            </div>
+            {% endif %}
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <h3 class="panel-title">
@@ -49,5 +54,11 @@
     {% include "layouts/_scripts.html" %}
     {% block extra_script %}{% endblock %}
     <script src="/js/admin_sidebar.js{{ version }}"></script>
+    {% if params.message %}
+    <script>
+     var messageType = {{ params.message-type|json|safe }};
+    </script>
+    <script src="/js/admin_message.js{{ version }}"></script>
+    {% endif %}
   </body>
 </html>
