@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       web_neo4j_host_port: web_neo4j_host_port,
       neo_node_host_port: neo_node_host_port,
       server_name: 'localhost'
+      vagrant_env: true
     }
   end
 end
