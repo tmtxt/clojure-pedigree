@@ -6,13 +6,17 @@
             [ring.util.response :refer [response redirect content-type]]
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]
-            [app.i18n.main :refer [make-t make-page-tran]]))
+            [app.i18n.main :refer [make-t make-page-tran]]
+            [config.main :refer [config]]
+            [app.models.minor-content :refer [find-content]]))
+
+(def preface-key (:preface-key config))
 
 ;;; index
 (defn home [request]
   (layout/render request
                  "home/index.html"
-                 {}
+                 {:preface (-> preface-key find-content :content)}
                  (make-page-tran request :page-index)))
 
 ;;; login

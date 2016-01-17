@@ -3,9 +3,10 @@
             [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
             [validateur.validation :as vl]
-            [app.models.minor-content :refer [find-content update-content]]))
+            [app.models.minor-content :refer [find-content update-content]]
+            [config.main :refer [config]]))
 
-(def ^:private preface-key "preface")
+(def preface-key (:preface-key config))
 
 (defn preface-render [request & [message type]]
   (let [content (find-content preface-key)
