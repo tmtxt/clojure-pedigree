@@ -1,5 +1,7 @@
 (ns app.models.minor-content
-  (:require [korma.core :refer [defentity table pk select where transform prepare update set-fields] :rename {update upd}]
+  (:require [korma.core
+             :refer [defentity table pk select where transform prepare update insert set-fields values]
+             :rename {update upd}]
             [clojure.data.json :as json]
             [app.util.pg :as pg]))
 
@@ -33,3 +35,9 @@
   [key val]
   (upd minor-content (set-fields {:value val})
        (where {:key key})))
+
+(defn add-content
+  "Add new content by key"
+  [key val]
+  (insert minor-content (values {:key key
+                                 :value val})))
