@@ -5,6 +5,7 @@
 project_name: pedigree
 project_user: "{{ project_name }}"
 site_name: "{{ project_name }}"
+person_image_dir: "{{project_dir}}/site/resources/public/person-image"
 
 # dirs
 script_dir: "{{ project_dir }}/scripts"
@@ -13,6 +14,10 @@ out_dirs:
   - "{{ script_dir }}"
   - "{{ cache_dir }}"
   - "{{ cache_dir }}/.m2"
+  - "{{person_image_dir}}"
+  - "{{person_image_dir}}/original"
+  - "{{person_image_dir}}/small"
+  - "{{person_image_dir}}/square"
 
 # database
 web_db_name: "{{project_name}}"

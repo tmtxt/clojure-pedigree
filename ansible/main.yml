@@ -25,11 +25,21 @@
     - include: tasks/schemup.yml
     - include: tasks/frontend.yml
     - include: tasks/neo4j.yml
+    - include: tasks/web.yml
     - include: tasks/nginx.yml
+
+    - name: kill all docker containers
+      sudo: yes
+      sudo_user: "{{ project_user }}"
+      command: docker-compose stop
+      args:
+        chdir: "{{ project_dir }}"
+      changed_when: False
 
     - name: run docker images for web service
       sudo: yes
-      command: sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+      sudo_user: "{{ project_user }}"
+      command: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
       args:
         chdir: "{{ project_dir }}"
       register: web_docker_compose_result
