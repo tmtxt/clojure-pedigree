@@ -1,0 +1,8 @@
+---
+- name: install leiningen dependencies
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  command: docker-compose run server lein deps
+  args:
+    chdir: "{{ project_dir }}"
+  changed_when: False

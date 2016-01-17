@@ -1,6 +1,7 @@
 ---
 - name: start postgres container
   sudo: yes
+  sudo_user: "{{ project_user }}"
   command: docker-compose up -d postgres
   args:
     chdir: "{{ project_dir }}"
