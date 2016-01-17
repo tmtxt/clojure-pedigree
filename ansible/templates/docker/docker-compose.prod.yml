@@ -2,7 +2,7 @@
 # EDIT THE TEMPLATE IN ansible/templates/web/docker-compose.prod.yml
 # Extend the default docker-compose file to add command for auto run containers
 server:
-  command: lein run
+  command: lein with-profile production run
 
 neonode:
   command: node app.js
