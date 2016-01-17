@@ -9,7 +9,7 @@
 
 (defn preface-render [request & [message type]]
   (let [content (find-content preface-key)
-        content (if message (assoc content :message content) content)
+        content (if message (assoc content :message message) content)
         content (if type (assoc content :message-type type) content)]
     (render request "admin/preface.html" content)))
 
