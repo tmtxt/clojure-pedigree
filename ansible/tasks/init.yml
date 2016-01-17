@@ -16,12 +16,12 @@
     dest=~/.bashrc
     line="{{ item }}"
   with_items:
-    - alias dcb='sudo docker-compose build'
-    - alias dcu='sudo docker-compose up -d'
-    - alias dcup='sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
-    - alias dck='sudo docker-compose kill'
-    - alias dcr='sudo docker-compose rm -f'
-    - alias dcp='sudo docker-compose ps'
+    - alias dcb='docker-compose build'
+    - alias dcu='docker-compose up -d'
+    - alias dcup='docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
+    - alias dck='docker-compose kill'
+    - alias dcr='docker-compose rm -f'
+    - alias dcp='docker-compose ps'
     - alias aw='{{ script_dir}}/attach_web_server.sh'
     - alias af='{{ script_dir}}/attach_frontend.sh'
     - alias an='{{ script_dir}}/attach_neonode.sh'

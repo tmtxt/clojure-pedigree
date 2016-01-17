@@ -1,11 +1,17 @@
 ---
 - hosts: all
+  roles:
+    - { role: docker, sudo: yes }
+
+- hosts: giapha.truongtx.me
+  tasks:
+    - include: tasks/vps.yml
+
+- hosts: all
   tasks:
     - include: tasks/init.yml
 
 - hosts: all
-  roles:
-    - { role: docker, sudo: yes }
   tasks:
     - name: install packages
       sudo: yes
