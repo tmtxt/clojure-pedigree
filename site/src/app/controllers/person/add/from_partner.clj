@@ -5,16 +5,16 @@
             [app.controllers.person.util :as controller-util]
             [app.models.marriage-relation :as mrl]
             [korma.db :as kd]
-            [slingshot.slingshot :refer [try+ throw+]]))
+            [slingshot.slingshot :refer [try+ throw+]]
+            [app.views.layout :refer [render-message]]))
 
 (defn process-get-request [request]
-  (let [partner (controller-util/find-person-from-request request "partnerId")]
-    (if partner
-      (let [partner-role (person-util/determine-partner-role-single partner)]
-        (render/render-add-page request {:action "add"
-                                         :from "partner"
-                                         :partner {partner-role partner}}))
-      (render/render-add-page request))))
+  (if-let [partner (controller-util/find-person-from-request request "partnerId")]
+    (let [partner-role (person-util/determine-partner-role-single partner)]
+      (render/render-add-page request {:action "add"
+                                       :from "partner"
+                                       :partner {partner-role partner}}))
+    (render-message request "Có lỗi xảy ra" :type :error)))
 
 (defn process-post-request [request]
   (kd/transaction
