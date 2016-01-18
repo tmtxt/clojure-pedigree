@@ -29,7 +29,7 @@
           </div>
           <div class="col-md-9">
             {% if params.message %}
-            <div class="alert js-admin-message" role="alert">
+            <div class="alert js-message-alert" role="alert">
               {{ params.message }}
             </div>
             {% endif %}
@@ -58,7 +58,7 @@
     <script>
      var messageType = {{ params.message-type|json|safe }};
     </script>
-    <script src="/js/admin_message.js{{ version }}"></script>
+    <script src="/js/message_alert.js{{ version }}"></script>
     {% endif %}
   </body>
 </html>
