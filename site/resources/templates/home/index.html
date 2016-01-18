@@ -5,13 +5,17 @@
   <div class="site-container-row">
     {% include "home/_index_preface.html" %}
 
+    {% if params.include %}
     {% include "home/_index_members.html" %}
+    {% endif %}
   </div>
+  {% if params.include %}
   <div class="site-container-row">
     {% include "home/_index_news.html" %}
 
     {% include "home/_index_images.html" %}
   </div>
+  {% endif %}
   <div class="site-container-row">
     {% include "home/_index_tree.html" %}
 
