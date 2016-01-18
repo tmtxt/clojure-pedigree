@@ -11,12 +11,14 @@
             [app.models.minor-content :refer [find-content]]))
 
 (def preface-key (:preface-key config))
+(def tree-desc-key (:tree-description-key config))
 
 ;;; index
 (defn home [request]
   (layout/render request
                  "home/index.html"
-                 {:preface (-> preface-key find-content :content)}
+                 {:preface (-> preface-key find-content :content)
+                  :tree-desc (-> tree-desc-key find-content :content)}
                  (make-page-tran request :page-index)))
 
 ;;; login
