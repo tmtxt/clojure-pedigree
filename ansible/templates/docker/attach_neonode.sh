@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd {{ project_dir }}
-docker-compose run neonode bash
+sudo docker exec -it $(sudo docker-compose ps | grep 'neonode' | awk '{print $1}') bash
