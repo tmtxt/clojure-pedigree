@@ -44,6 +44,7 @@
   (let [class (get alert-type type "warning")
         title (get alert-title type "Thông tin")]
     (render request "layouts/message.html" {:message message
+                                            :message-page true
                                             :class class
                                             :title title
                                             :redirect redirect

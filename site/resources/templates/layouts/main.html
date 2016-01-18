@@ -8,6 +8,13 @@
 
     <main class="site-content">
       <div class="container site-container">
+        {% if params.message %}
+        {% if not params.message-page %}
+        <div class="alert js-message-alert" role="alert">
+          {{ params.message }}
+        </div>
+        {% endif %}
+        {% endif %}
         {% block content %}{% endblock %}
       </div>
     </main>
@@ -17,5 +24,13 @@
     <!-- script tag -->
     {% include "layouts/_scripts.html" %}
     {% block extra_script %}{% endblock %}
+    {% if params.message %}
+    {% if not params.message-page %}
+    <script>
+     var messageType = {{ params.message-type|json|safe }};
+    </script>
+    <script src="/js/message_alert.js{{ version }}"></script>
+    {% endif %}
+    {% endif %}
   </body>
 </html>

@@ -1,7 +1,9 @@
 (ns app.controllers.person.add.render
   (:require [app.util.person :as person-util]
             [clojure.data.json :as json]
-            [app.views.layout :as layout]))
+            [app.views.layout :as layout]
+            [korma.db :refer [rollback]]
+            [app.views.layout :refer [render-message]]))
 
 (def default-opts
   {:parent {}
@@ -32,3 +34,9 @@
                     :genders genders
                     :person {}
                     :action action})))
+
+(defn render-error
+  "Render error page after add"
+  [request]
+  (rollback)
+  (render-message request "Có lỗi xảy ra" :type :error))

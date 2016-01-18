@@ -4,26 +4,34 @@
             [app.util.person :as person-util]
             [app.controllers.person.util :as controller-util]
             [app.models.marriage-relation :as mrl]
-            [korma.db :as kd]
-            [slingshot.slingshot :refer [try+ throw+]]))
+            [korma.db :refer [transaction]]
+            [slingshot.slingshot :refer [try+ throw+]]
+            [app.views.layout :refer [render-message]]
+            [ring.util.response :refer [redirect]]))
 
 (defn process-get-request [request]
-  (let [partner (controller-util/find-person-from-request request "partnerId")]
-    (if partner
-      (let [partner-role (person-util/determine-partner-role-single partner)]
-        (render/render-add-page request {:action "add"
-                                         :from "partner"
-                                         :partner {partner-role partner}}))
-      (render/render-add-page request))))
+  (if-let [partner (controller-util/find-person-from-request request "partnerId")]
+    (let [partner-role (person-util/determine-partner-role-single partner)]
+      (render/render-add-page request {:action "add"
+                                       :from "partner"
+                                       :partner {partner-role partner}}))
+    (render-message request "Có lỗi xảy ra" :type :error)))
+
+(defn- find-partner
+  "Find the partner entity from the request"
+  [request]
+  (if-let [partner (controller-util/find-person-from-request request :partnerId)]
+    partner
+    (throw+ "partner not found")))
 
 (defn process-post-request [request]
-  (kd/transaction
-   (let [partner (controller-util/find-person-from-request request :partnerId)]
-     (if (nil? partner)
-       "partner nil"
-       (let [person-result (controller-util/create-person-from-request request)
-             person-entity (person-result :entity)
-             partner-role (person-util/determine-partner-role-single person-entity)]
-         (if (= partner-role :husband)
-           (mrl/add-marriage partner person-entity)
-           (mrl/add-marriage person-entity partner)))))))
+  (transaction
+   (try+
+    (let [partner (find-partner request)
+          person (-> request controller-util/create-person-from-request :entity)
+          partner-role (person-util/determine-partner-role-single person)]
+      (if (= partner-role :husband)
+        (mrl/add-marriage partner person)
+        (mrl/add-marriage person partner))
+      (->> (:id person) (str "/person/detail/") redirect))
+    (catch Object _ (render/render-error request)))))

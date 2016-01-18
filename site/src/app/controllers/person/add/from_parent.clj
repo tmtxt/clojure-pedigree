@@ -2,31 +2,48 @@
   (:require [app.models.person :as person]
             [app.controllers.person.add.render :as render]
             [app.util.person :as person-util]
-            [app.controllers.person.util :as controller-util]
+            [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
             [app.models.pedigree-relation :as prl]
-            [korma.db :as kd]
-            [app.util.main :as util]))
+            [korma.db :refer [transaction rollback]]
+            [app.util.main :as util]
+            [slingshot.slingshot :refer [try+ throw+]]
+            [ring.util.response :refer [redirect]]))
+
+(defn- render-page
+  "Render add page with the parent entity"
+  [request parent]
+  (let [parent-role (person-util/determine-father-mother-single parent)]
+    (render/render-add-page request {:action "add"
+                                     :from "parent"
+                                     :parent {parent-role parent}})))
 
 (defn process-get-request [request]
-  (let [parent (controller-util/find-person-from-request request "parentId")]
-    (if parent
-      (let [parent-role (person-util/determine-father-mother-single parent)]
-        (render/render-add-page request {:action "add"
-                                         :from "parent"
-                                         :parent {parent-role parent}}))
-      (render/render-add-page request))))
+  (if-let [parent (find-person-from-request request "parentId")]
+    (render-page request parent)
+    (render/render-add-page request)))
+
+(defn- find-parents
+  "Find parents entities from request, return [father mother]"
+  [request]
+  (let [find-fn #(find-person-from-request request %)
+        father (find-fn :fatherId)
+        mother (find-fn :motherId)]
+    [father mother]))
+
+(defn- validate-parents
+  "Validate parent entities"
+  [parents]
+  (when (every? nil? parents) (throw+ "nil all")))
 
 (defn process-post-request [request]
-  (kd/transaction
-   (let [find-fn #(controller-util/find-person-from-request request %)
-         father (find-fn :fatherId)
-         mother (find-fn :motherId)]
-     (if (every? nil? [father mother])
-       "nil all"
-       (let [person-result (controller-util/create-person-from-request request)
-             person-entity (person-result :entity)]
-         (cond
-           (nil? father) (prl/add-child-for-mother mother person-entity 0)
-           (nil? mother) (prl/add-child-for-father father person-entity 0)
-           :else (prl/add-child father mother person-entity 0))
-         )))))
+  (transaction
+   (try+
+    (let [[father mother] (find-parents request)
+          _ (validate-parents [father mother])
+          person (-> request create-person-from-request :entity)]
+      (cond
+        (nil? father) (prl/add-child-for-mother mother person 0)
+        (nil? mother) (prl/add-child-for-father father person 0)
+        :else (prl/add-child father mother person 0))
+      (redirect (str "/person/detail/" (:id person))))
+    (catch Object _ (render/render-error request)))))
