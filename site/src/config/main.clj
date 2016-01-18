@@ -6,6 +6,7 @@
    :homepage {:preface-image "/assets/img/preface.jpg"}
    :default-person-image "/assets/img/userbasic.jpg"
    :preface-key "preface"
+   :tree-description-key "tree-description"
    })
 
 (def config
