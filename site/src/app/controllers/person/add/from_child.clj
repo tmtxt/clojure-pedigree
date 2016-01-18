@@ -3,10 +3,12 @@
             [app.controllers.person.add.render :as render]
             [app.util.person :as person-util]
             [app.models.person :as person]
-            [korma.db :as kd]
+            [korma.db :refer [transaction]]
             [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
             [app.models.pedigree-relation :as prl]
-            [app.views.layout :refer [render-message]]))
+            [app.views.layout :refer [render-message]]
+            [slingshot.slingshot :refer [try+ throw+]]
+            [ring.util.response :refer [redirect]]))
 
 (defn process-get-request [request]
   (let [child (find-person-from-request request "childId")]
@@ -22,13 +24,21 @@
                                        :from "child"
                                        :child child}))))
 
+(defn- find-child
+  "Find child entity from the request"
+  [request]
+  (if-let [child (find-person-from-request request :childId)]
+    child
+    (throw+ "child not found")))
+
 (defn process-post-request [request]
-  (kd/transaction
-   (if-let [child (find-person-from-request request :childId)]
-     (let [person-result (create-person-from-request request)
-           person-entity (person-result :entity)
-           parent-role (person-util/determine-father-mother-single person-entity)]
-       (if (= parent-role :father)
-         (prl/add-child-for-father person-entity child)
-         (prl/add-child-for-mother person-entity child)))
-     "child nil")))
+  (transaction
+   (try+
+    (let [child (find-child request)
+          person (-> request create-person-from-request :entity)
+          parent-role (person-util/determine-father-mother-single person)]
+      (if (= parent-role :father)
+        (prl/add-child-for-father person child)
+        (prl/add-child-for-mother person child))
+      (->> (:id person) (str "/person/detail/") redirect))
+    (catch Object _ (render/render-error request)))))

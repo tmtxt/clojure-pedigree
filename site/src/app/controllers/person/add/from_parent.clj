@@ -7,7 +7,6 @@
             [korma.db :refer [transaction rollback]]
             [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
-            [app.views.layout :refer [render-message]]
             [ring.util.response :refer [redirect]]))
 
 (defn- render-page
@@ -36,12 +35,6 @@
   [parents]
   (when (every? nil? parents) (throw+ "nil all")))
 
-(defn- render-error
-  "Render error page after add"
-  [request]
-  (rollback)
-  (render-message request "Có lỗi xảy ra" :type :error))
-
 (defn process-post-request [request]
   (transaction
    (try+
@@ -53,4 +46,4 @@
         (nil? mother) (prl/add-child-for-father father person 0)
         :else (prl/add-child father mother person 0))
       (redirect (str "/person/detail/" (:id person))))
-    (catch Object _ (render-error request)))))
+    (catch Object _ (render/render-error request)))))
