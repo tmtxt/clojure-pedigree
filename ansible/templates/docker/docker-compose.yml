@@ -50,6 +50,7 @@ neo4j:
 
 frontend:
   build: ./images/frontend
+  command: sh -c 'while true; do sleep 10000; done'
   volumes_from:
     - websources
   volumes:

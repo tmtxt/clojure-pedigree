@@ -11,6 +11,14 @@
     - frontend_npm_install.sh
     - gulp_prod.sh
 
+- name: start frontend container
+  sudo: yes
+  sudo_user: "{{ project_user }}"
+  command: docker-compose up -d frontend
+  args:
+    chdir: "{{ script_dir }}"
+  changed_when: False
+
 - name: install frontend dependencies
   sudo: yes
   sudo_user: "{{ project_user }}"

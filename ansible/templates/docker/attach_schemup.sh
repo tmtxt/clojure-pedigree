@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd {{ project_dir }}
-docker-compose run schemup bash
+docker exec -it $(docker-compose ps | grep 'schemup' | awk '{print $1}') bash
