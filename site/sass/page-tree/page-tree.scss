@@ -36,39 +36,22 @@
   /* user info modal */
   .person-info-modal {
     .modal-body {
-      @include flex(row nowrap);
-
-      .person-info-left {
-        flex: 1 1 0;
-        padding-right: 20px;
-
-        img {
-          width: 100%;
-        }
-      }
-
       .person-info-right {
-        flex: 2 2 0;
+        .table {
+          tr:first-child {
+            td {
+              border-top: 0px;
+            }
+          }
 
-        .person-info-row {
-          @include flex(row nowrap);
-          align-items: center;
-          height: 40px;
-          border-bottom: 1px solid $grey;
+          .btn {
+            margin-right: 5px;
+          }
 
-          .person-info-field {
-            flex: 1 1 0;
+          .person-info-label {
             font-weight: bold;
             color: $brown;
           }
-
-          .person-info-value {
-            flex: 2 2 0;
-          }
-        }
-
-        .person-info-row:last-child {
-          border-bottom: 0;
         }
       }
     }
