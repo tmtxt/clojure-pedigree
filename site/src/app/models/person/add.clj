@@ -13,8 +13,8 @@
 (defn- add-person-node
   "Add person node in Neo4j for person entity"
   [entity is-root]
-  (add-node {:person_id (:id entity)
-             :is_root is-root}))
+  (add-node {:person-id (:id entity)
+             :is-root is-root}))
 
 (defn add-person
   "Add new person into postgres and neo4j."
