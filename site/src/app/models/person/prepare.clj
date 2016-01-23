@@ -39,4 +39,4 @@
                     :birth-date birth-date
                     :death-date death-date
                     :gender gender)]
-    (model-util/camel-keys->snake-keys data)))
+    data))
