@@ -12,7 +12,9 @@
       nil)))
 
 (defn find-by-person-id [person-id]
-  (neonode :get "findPerson" {:personId person-id}))
+  (let [result (neonode :get "findPerson" {:personId person-id})
+        node (entity->record result map->PersonNode)]
+    node))
 
 (defn find-root []
   (neonode :get "findRoot" {}))
