@@ -40,14 +40,14 @@ var PersonModal = React.createClass({
                   <tr>
                     <td colSpan="2">
                       <a href={"/person/detail/" + this.props.id} className="btn btn-success">Chi tiết</a>
-                      <a href={"/person/detail/" + this.props.id} className="btn btn-success">Chi tiết</a>
+                      <a href={"/tree/view/person/" + this.props.id} className="btn btn-success">Xem cây gia phả</a>
+                      <a href={"/person/edit/" + this.props.id} className="btn btn-success">Chỉnh sửa</a>
                     </td>
                   </tr>
                 </table>
               </div>
             </div>
             <div className="modal-footer">
-              <a href={"/person/detail/" + this.props.id} className="btn btn-success">Chi tiết</a>
               {this.props.isAuthenticated ? <a href={"/person/add/childId/" + this.props.id}
                                                className="btn btn-primary">Thêm Cha Mẹ</a>
                : null }
@@ -57,7 +57,7 @@ var PersonModal = React.createClass({
               {this.props.isAuthenticated ? <a href={"/person/add/parentId/" + this.props.id}
                                                className="btn btn-primary">Thêm con</a>
                : null }
-              <button type="button" className="btn btn-default" data-dismiss="modal">Đóng</button>
+              <button type="button" className="btn btn-danger" data-dismiss="modal">Đóng</button>
             </div>
           </div>
         </div>
