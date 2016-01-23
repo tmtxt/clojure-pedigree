@@ -8,9 +8,6 @@
     [id full-name address phone-no summary gender alive-status
      death-date birth-date picture created-at job])
 
-(defrecord PersonNode
-    [person-id is-root])
-
 (defn- transform-func
   [data]
   (-> data (entity->record map->PersonEntity) transform-data))
@@ -44,5 +41,3 @@
 
 ;;; props list
 (def EntityProps (PersonEntity/getBasis))
-
-(def NodeProps (PersonNode/getBasis))

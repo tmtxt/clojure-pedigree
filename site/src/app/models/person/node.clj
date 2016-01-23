@@ -1,6 +1,9 @@
 (ns app.models.person.node
   (:require [app.neo4j.main :as neo4j]
-            [slingshot.slingshot :refer [throw+ try+]]))
+            [app.util.model :refer [entity->record record->entity]]))
+
+(defrecord PersonNode
+    [person-id is-root])
 
 (defn- neonode [method endpoint data]
   (let [result (neo4j/neonode method (str "/person/" endpoint) data)]
@@ -21,7 +24,10 @@
   (neonode :get "findParents" {:personId person-id}))
 
 (defn add-or-update [data]
-  (neonode :post "addOrUpdate" {:data data}))
+  (let [data (record->entity data)
+        result (neonode :post "addOrUpdate" {:data data})
+        node (entity->record result map->PersonNode)]
+    node))
 
 (defn delete [person-id]
   (neonode :post "delete" {:personId person-id}))
