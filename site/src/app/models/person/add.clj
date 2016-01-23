@@ -9,6 +9,7 @@
   [data]
   (insert person (values data)))
 
+;;; TODO update neonode
 (defn- add-person-node
   "Add person node in Neo4j for person entity"
   [entity is-root]
