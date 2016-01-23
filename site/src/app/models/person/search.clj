@@ -2,8 +2,17 @@
   (:require [korma.core :refer [select where]]
             [app.models.person.definition :refer [person]]
             [app.models.person.node
-             :refer [find-by-person-id]
-             :rename {find-by-person-id find-node-by-person-id}]))
+             :refer [find-by-person-id find-root]
+             :rename {find-by-person-id find-node-by-person-id
+                      find-root find-node-by-root}]))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; NOTE
+;;; Functions start with "find" are for finding entity, optionally with nodes.
+;;; They return a map with key :entity and :node
+;;;
+;;; Functions start with "find-node" are for finding node.
+;;; They return the node directly
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; By person id
@@ -33,5 +42,23 @@
                     (first))
         node (when (and entity include-node)
                (find-node-by-person-id (:id entity)))]
+    {:entity entity
+     :node node}))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Find root
+(defn find-node-root
+  "Find the root node"
+  []
+  (find-node-by-root))
+
+(defn find-root
+  "Find root entity"
+  [& {:keys [include-node]
+      :or {include-node false}}]
+  (let [node (find-node-root)
+        entity (when node
+                 (-> (:person-id node) (find-by-id) (:entity)))
+        node (when include-node node)]
     {:entity entity
      :node node}))

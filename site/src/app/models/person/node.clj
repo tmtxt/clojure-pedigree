@@ -17,7 +17,9 @@
     node))
 
 (defn find-root []
-  (neonode :get "findRoot" {}))
+  (let [result (neonode :get "findRoot" {})
+        node (entity->record result map->PersonNode)]
+    node))
 
 (defn find-partners [person-id]
   (neonode :get "findPartners" {:personId person-id}))
