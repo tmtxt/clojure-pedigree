@@ -16,7 +16,7 @@
            (GET  "/add/person"               [] add-person/add-person-from-none)
            (GET  "/find/list/simple"         [] find-person/find-list-simple)
            (POST "/add/process"              [] add-person/add-person-process)
-           (GET "/detail/:personId"          [] person-detail/show-detail)
+           (GET "/detail/:personId"          [] person-detail/process-get-request)
            (GET "/edit/:personId"            [] edit-person/handle-get-request)
            (POST "/editProcess"              [] edit-person/handle-post-request)
            (GET "/delete/:personId"          [] delete-person/handle-get-request)))
