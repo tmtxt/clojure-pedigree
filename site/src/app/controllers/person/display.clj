@@ -58,3 +58,9 @@
                            (let [func (value->string k keep-nil)]
                              [k (func v)])))]
     (merge entity new-entity)))
+
+(defn json-friendlify-all
+  "Json Friendlify all person entities"
+  [entities & {:keys [keys]
+               :or {keys nil}}]
+  (map #(json-friendlify %) entities))

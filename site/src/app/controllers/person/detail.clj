@@ -3,7 +3,8 @@
             [app.models.person :as person]
             [app.util.main :as util]
             [app.models.pedigree-relation :refer [find-parents]]
-            [app.models.marriage-relation :refer [find-partners]]))
+            [app.models.marriage-relation :refer [find-partners]]
+            [app.controllers.person.display :refer [json-friendlify json-friendlify-all]]))
 
 (defn- find-entity-from-request [request]
   (-> request util/params :personId util/parse-int person/find-by-id :entity))
@@ -13,7 +14,10 @@
   [request]
   (if-let [person (find-entity-from-request request)]
     (let [{father :father mother :mother} (find-parents person)
-          partners (find-partners person)]
+          father (json-friendlify father)
+          mother (json-friendlify mother)
+          partners (-> person find-partners json-friendlify-all)
+          person (json-friendlify person)]
       (layout/render request "person/detail.html"
                      {:person person
                       :father father
