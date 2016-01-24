@@ -13,6 +13,8 @@
 ;;;
 ;;; Functions start with "find-node" are for finding node.
 ;;; They return the node directly
+;;;
+;;; Functions start with "find-all" are for finding a list of entities
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; By person id
