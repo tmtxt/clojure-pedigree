@@ -32,6 +32,11 @@
   [id]
   (find-node-by-person-id id))
 
+(defn find-all-by-ids
+  "Find all person entities by ids"
+  [ids]
+  (select person (where {:id [in ids]})))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; By full name
 (defn find-by-full-name
