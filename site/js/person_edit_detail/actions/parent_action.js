@@ -24,33 +24,13 @@ module.exports = action;
 ////////////////////////////////////////////////////////////////////////////////
 // Select Functions
 action.selectFather = function() {
-  var data = {};
-  if(ParentStore.isMotherSelected()) {
-    data = {
-      parentId: ParentStore.getMother().id
-    };
-  } else {
-    data = {
-      parentRole: 'father'
-    };
-  }
-  FindPersonAction.selectPerson(data).then(function(person){
+  FindPersonAction.selectPerson(ParentStore.getPartners()).then(function(person){
     ParentStore.setFather(person);
   });
 };
 
 action.selectMother = function() {
-  var data = {};
-  if(ParentStore.isFatherSelected()) {
-    data = {
-      parentId: ParentStore.getFather().id
-    };
-  } else {
-    data = {
-      parentRole: 'mother'
-    };
-  }
-  FindPersonAction.selectPerson(data).then(function(person){
+  FindPersonAction.selectPerson(ParentStore.getPartners()).then(function(person){
     ParentStore.setMother(person);
   });
 };

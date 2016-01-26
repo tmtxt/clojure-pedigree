@@ -91,32 +91,11 @@ function createTemplateSelection(person) {
 // Returns a promise, resolve when finish selection, reject when not select
 function selectPerson(data) {
   return q.Promise(function(resolve, reject){
-    function makeData(params) {
-      if(!!params.term) {
-        data.term = params.term;
-      }
-      return data;
-    }
-
-    function processResults(data, page) {
-      return {
-        results: data
-      };
-    }
-
-    var ajax = {
-      url: '/person/find/list/simple',
-      data: makeData,
-      dataType: 'json',
-      delay: 250,
-      processResults: processResults
-    };
-
     var selectedPerson;
-
-    var selectBox = createSelectBox();
+    var selectBox;
+    selectBox = createSelectBox();
     selectBox.select2({
-      ajax: ajax,
+      data: data,
       placeholder: 'Select',
       templateResult: createTemplateResult,
       templateSelection: createTemplateSelection
