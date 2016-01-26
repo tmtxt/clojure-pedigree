@@ -67,7 +67,7 @@
         file-name (store-person-picture params)
         params (assoc params :picture file-name)
         person-data (params-to-person-data params)]
-    (person/add-person person-data)))
+    (person/add person-data)))
 
 (defn update-person-picture
   [params person]

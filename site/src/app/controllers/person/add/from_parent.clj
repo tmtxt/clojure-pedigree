@@ -28,7 +28,8 @@
 (defn- find-parents
   "Find parents entities from request, return [father mother]"
   [request]
-  (let [find-fn #(find-person-from-request request %)
+  (let [params (util/params request)
+        find-fn #(-> params % util/parse-int person/find-by-id :entity)
         father (find-fn :fatherId)
         mother (find-fn :motherId)]
     [father mother]))
@@ -45,8 +46,8 @@
           _ (validate-parents [father mother])
           person (-> request create-person-from-request :entity)]
       (cond
-        (nil? father) (prl/add-child-for-mother mother person 0)
-        (nil? mother) (prl/add-child-for-father father person 0)
-        :else (prl/add-child father mother person 0))
+        (nil? father) (prl/add-child-for-mother mother person)
+        (nil? mother) (prl/add-child-for-father father person)
+        :else (prl/add-child father mother person))
       (redirect (str "/person/detail/" (:id person))))
-    (catch Object _ (render/render-error request)))))
+    (catch Object res (render/render-error request)))))
