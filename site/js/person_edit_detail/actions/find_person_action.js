@@ -92,6 +92,10 @@ function createTemplateSelection(person) {
 function selectPerson(data) {
   return q.Promise(function(resolve, reject){
     var selectedPerson;
+    if (data.length !== 0) {
+      selectedPerson = data[0];
+    }
+
     var selectBox;
     selectBox = createSelectBox();
     selectBox.select2({

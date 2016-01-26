@@ -1,7 +1,7 @@
 function getPerson() {
   return {
     id: null,
-    fullName: "Not selected",
+    fullName: "Chưa chọn",
     picture: "/assets/img/userbasic.jpg",
     address: null,
     phoneNo: null,
