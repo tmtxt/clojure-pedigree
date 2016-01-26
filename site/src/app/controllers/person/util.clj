@@ -10,13 +10,12 @@
             [clojure.string :refer [blank?]]
             [slingshot.slingshot :refer [try+ throw+]]))
 
-(defn find-person-from-request [request param-name]
-  (let [param-name (keyword param-name)
-        params (util/params request)
-        param (get params param-name)
-        result (-> param util/parse-int (person/find-person-by-id :json-friendly true) :entity)
-        result (if (empty? result) nil result)]
-    result))
+(defn find-person-from-request
+  "Find person entity from request based on the param name"
+  [request param-name]
+  (let [person-id (->> param-name name (util/param request) util/parse-int)
+        entity (-> person-id person/find-by-id :entity)]
+    (if (empty? entity) nil entity)))
 
 (defn params-to-person-data
   [{full-name :name

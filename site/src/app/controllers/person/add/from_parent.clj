@@ -1,9 +1,11 @@
 (ns app.controllers.person.add.from-parent
   (:require [app.models.person :as person]
-            [app.controllers.person.add.render :as render]
-            [app.util.person :as person-util]
-            [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
-            [app.models.pedigree-relation :as prl]
+            [app.controllers.person.add.render :refer [render-add-page render-error]]
+            [app.controllers.person.util :refer [find-person-from-request
+                                                 create-person-from-request]]
+            [app.models.pedigree-relation :refer [add-child-for-mother
+                                                  add-child-for-father
+                                                  add-child]]
             [korma.db :refer [transaction rollback]]
             [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
@@ -14,12 +16,11 @@
             [app.models.marriage-relation :refer [find-partners]]))
 
 (defn process-get-request [request]
-  (if-let [parent (-> request util/params :parentId
-                      util/parse-int person/find-by-id :entity)]
+  (if-let [parent (find-person-from-request request :parentId)]
     (let [role (father-or-mother? parent)
           parent-partners (-> parent find-partners json-friendlify-all)
           parent (json-friendlify parent)]
-      (render/render-add-page request {:action "add"
+      (render-add-page request {:action "add"
                                        :from "parent"
                                        :parent {role parent}
                                        :parent-partners parent-partners}))
@@ -50,4 +51,7 @@
         (nil? mother) (prl/add-child-for-father father person)
         :else (prl/add-child father mother person))
       (redirect (str "/person/detail/" (:id person))))
-    (catch Object res (render/render-error request)))))
+    (catch Object res
+      (do
+        (rollback)
+        (render-error request))))))
