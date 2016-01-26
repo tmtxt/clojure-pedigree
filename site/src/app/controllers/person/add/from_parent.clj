@@ -7,20 +7,23 @@
             [korma.db :refer [transaction rollback]]
             [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
-            [ring.util.response :refer [redirect]]))
-
-(defn- render-page
-  "Render add page with the parent entity"
-  [request parent]
-  (let [parent-role (person-util/determine-father-mother-single parent)]
-    (render/render-add-page request {:action "add"
-                                     :from "parent"
-                                     :parent {parent-role parent}})))
+            [ring.util.response :refer [redirect]]
+            [app.controllers.person.display :refer [json-friendlify json-friendlify-all]]
+            [app.views.layout :refer [render-message]]
+            [app.controllers.pedigree-relation.role :refer [father-or-mother?]]
+            [app.models.marriage-relation :refer [find-partners]]))
 
 (defn process-get-request [request]
-  (if-let [parent (find-person-from-request request "parentId")]
-    (render-page request parent)
-    (render/render-add-page request)))
+  (if-let [parent (-> request util/params :parentId
+                      util/parse-int person/find-by-id :entity)]
+    (let [role (father-or-mother? parent)
+          parent-partners (-> parent find-partners json-friendlify-all)
+          parent (json-friendlify parent)]
+      (render/render-add-page request {:action "add"
+                                       :from "parent"
+                                       :parent {role parent}
+                                       :parent-partners parent-partners}))
+    (render-message request "Có lỗi xảy ra" :type :error)))
 
 (defn- find-parents
   "Find parents entities from request, return [father mother]"

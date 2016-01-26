@@ -6,6 +6,7 @@ var flux = require("flux");
 var statuses = window.statuses;
 var genders = window.genders;
 var parent = window.parent;
+var parentPartners = window.parentPartners;
 var partner = window.partner;
 var child = window.child;
 var person = window.person;
@@ -32,7 +33,8 @@ stores.init({
   child: child,
   partner: partner,
   parent: parent,
-  person: person
+  person: person,
+  parentPartners: parentPartners
 }, global);
 
 var actions = require('./actions/main.js');

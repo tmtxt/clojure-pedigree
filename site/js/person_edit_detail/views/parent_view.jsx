@@ -12,7 +12,8 @@ var ParentView = React.createClass({
   getInitialState: function() {
     return {
       father: ParentStore.getFather(),
-      mother: ParentStore.getMother()
+      mother: ParentStore.getMother(),
+      parentPartners: ParentStore.getPartners()
     };
   },
 
@@ -79,7 +80,7 @@ var ParentView = React.createClass({
                 </div>
               </div>
             </li>
-            <li>
+            <li className={this.state.parentPartners.length === 0 ? "hidden" : ""}>
               <input name="motherId" type="hidden" value={this.state.mother.id}/>
               <div className="parent-image people-image">
                 <img className="img-responsive img-rounded" alt="" src={this.state.mother.picture}/>

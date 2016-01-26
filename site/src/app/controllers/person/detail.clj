@@ -23,4 +23,4 @@
                       :father father
                       :mother mother
                       :partners partners}))
-    (layout/render-message request "Không tìm thấy thành viên")))
+    (layout/render-message request "Không tìm thấy thành viên" :type :error)))

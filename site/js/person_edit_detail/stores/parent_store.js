@@ -5,6 +5,7 @@ var util = require('./util.js');
 //
 function init(opts) {
   var parent = opts.parent;
+  var parentPartners = opts.parentPartners;
   var father;
   var mother;
 
@@ -12,11 +13,19 @@ function init(opts) {
     if(!!parent.father) {
       // add from father
       father = util.normalizePerson(parent.father);
-      mother = util.getPerson();
+      if (parentPartners.length !== 0) {
+        mother = util.normalizePerson(parentPartners[0]);
+      } else {
+        mother = util.getPerson();
+      }
     } else {
       // add from mother
       mother = util.normalizePerson(parent.mother);
-      father = util.getPerson();
+      if (parentPartners.length !== 0) {
+        father = util.normalizePerson(parentPartners[0]);
+      } else {
+        father = util.getPerson();
+      }
     }
   } else {
     father = util.getPerson();
@@ -24,6 +33,7 @@ function init(opts) {
   }
   this.father = father;
   this.mother = mother;
+  this.partners = parentPartners;
 
   return this;
 }
@@ -33,6 +43,7 @@ var store = {
   // data
   father: null,
   mother: null,
+  partners: [],
 
   // funcs
   init: init
@@ -48,6 +59,10 @@ store.getFather = function() {
 
 store.getMother = function() {
   return this.mother;
+};
+
+store.getPartners = function() {
+  return this.partners;
 };
 
 // Set Functions
