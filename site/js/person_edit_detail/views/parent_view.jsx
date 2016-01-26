@@ -57,10 +57,10 @@ var ParentView = React.createClass({
     return (
       <div>
         <div className="parent-title">
-          Parents
+          Thông tin Cha Mẹ
         </div>
         <div className="parent-help">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+          Chọn cha mẹ cho thành viên mới này.
         </div>
         <div className="parent-body">
           <ul>
@@ -71,12 +71,12 @@ var ParentView = React.createClass({
               </div>
               <div className="parent-info people-info">
                 <div className="parent-name people-name">
-                  <span>Father: </span>
+                  <span>Cha: </span>
                   <span>{this.state.father.fullName}</span>
                 </div>
                 <div className={!config.isFromFather() ? "" : "hidden"}>
-                  <a href="#" onClick={this.handleSelectFather}>Select</a>&nbsp;
-                  <a href="#" onClick={this.handleRemoveFather}>Remove</a>
+                  <a className="btn btn-primary btn-sm" href="#" onClick={this.handleSelectFather}>Thay đổi</a>&nbsp;
+                  <a className="btn btn-danger btn-sm" href="#" onClick={this.handleRemoveFather}>Xóa</a>
                 </div>
               </div>
             </li>
@@ -87,12 +87,12 @@ var ParentView = React.createClass({
               </div>
               <div className="parent-info people-info">
                 <div className="parent-name people-name">
-                  <span>Mother: </span>
+                  <span>Mẹ: </span>
                   <span>{this.state.mother.fullName}</span>
                 </div>
                 <div className={!config.isFromMother() ? "" : "hidden"}>
-                  <a href="#" onClick={this.handleSelectMother}>Select</a>&nbsp;
-                  <a href="#" onClick={this.handleRemoveMother}>Remove</a>
+                  <a className="btn btn-primary btn-sm" href="#" onClick={this.handleSelectMother}>Thay đổi</a>&nbsp;
+                  <a className="btn btn-danger btn-sm" href="#" onClick={this.handleRemoveMother}>Xóa</a>
                 </div>
               </div>
             </li>
