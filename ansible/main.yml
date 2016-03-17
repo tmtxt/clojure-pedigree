@@ -7,29 +7,26 @@
       user: name={{project_user}} shell=/bin/bash groups=docker append=yes
       sudo: yes
 
-# - hosts: giapha.truongtx.me
-#   roles:
-#     - ferm
-#   tasks:
-#     - include: tasks/vps.yml
-#     - name: generate ferm config file for project
-#       sudo: yes
-#       template: >-
-#         src=templates/ferm-input.conf
-#         dest=/etc/ferm/input/{{project_name}}.conf
-#       notify:
-#         - reload ferm
-#   handlers:
-#     - name: reload ferm
-#       sudo: yes
-#       command: ferm /etc/ferm/ferm.conf
+    - name: stop docker from messing iptables rules
+      sudo: yes
+      lineinfile: >-
+        dest=/etc/default/docker
+        line="DOCKER_OPTS=\"--dns 8.8.8.8 --dns 8.8.4.4 --iptables=false\""
+      notify:
+        - restart docker
+
+  handlers:
+    - name: restart docker
+      sudo: yes
+      service: name=docker state=restarted
+
+- hosts: giapha.truongtx.me
+  tasks:
+    - include: tasks/vps.yml
 
 - hosts: all
   tasks:
     - include: tasks/init.yml
-
-- hosts: all
-  tasks:
     - name: install packages
       sudo: yes
       apt: name={{item}}
@@ -37,10 +34,11 @@
         - git
         - nginx
 
+    - include: tasks/ufw.yml
     - include: tasks/config.yml
     - include: tasks/scripts.yml
     - include: tasks/schemup.yml
-    - include: tasks/frontend.yml
+    # - include: tasks/frontend.yml
     - include: tasks/neo4j.yml
     - include: tasks/web.yml
     - include: tasks/nginx.yml
