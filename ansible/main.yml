@@ -7,29 +7,13 @@
       user: name={{project_user}} shell=/bin/bash groups=docker append=yes
       sudo: yes
 
-# - hosts: giapha.truongtx.me
-#   roles:
-#     - ferm
-#   tasks:
-#     - include: tasks/vps.yml
-#     - name: generate ferm config file for project
-#       sudo: yes
-#       template: >-
-#         src=templates/ferm-input.conf
-#         dest=/etc/ferm/input/{{project_name}}.conf
-#       notify:
-#         - reload ferm
-#   handlers:
-#     - name: reload ferm
-#       sudo: yes
-#       command: ferm /etc/ferm/ferm.conf
+- hosts: giapha.truongtx.me
+  tasks:
+    - include: tasks/vps.yml
 
 - hosts: all
   tasks:
     - include: tasks/init.yml
-
-- hosts: all
-  tasks:
     - name: install packages
       sudo: yes
       apt: name={{item}}
