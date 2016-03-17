@@ -45,5 +45,5 @@
                             :handler cider-nrepl-handler)
   (println (str "nRepl server running on port " (config :nrepl-port))))
 
-(defn create-init-db []
-  (create-init-data))
+;; (defn create-init-db []
+;;   (create-init-data))

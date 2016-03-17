@@ -17,7 +17,8 @@
           father (json-friendlify father)
           mother (json-friendlify mother)
           partners (-> person find-partners json-friendlify-all)
-          person (json-friendlify person)]
+          person (json-friendlify person)
+          _ (clojure.pprint/pprint person)]
       (layout/render request "person/detail.html"
                      {:person person
                       :father father

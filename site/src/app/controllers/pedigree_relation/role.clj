@@ -9,3 +9,13 @@
                    "gay" :mother}
         gender (:gender entity)]
     (get roles-map gender :father)))
+
+(defn male-or-female?
+  "Determine whether this person entity should be treated as male for female"
+  [entity]
+  (let [roles-map {"male" :male
+                   "female" :female
+                   "gay" :female
+                   "les" :male}
+        gender (:gender entity)]
+    (get roles-map gender :male)))

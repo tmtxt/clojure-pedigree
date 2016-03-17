@@ -5,7 +5,9 @@
             [app.models.person.delete :as delete]
             [app.models.person.update :as update]
             [app.models.person.parent :as parent]
-            [app.models.person.json :as json]))
+            [app.models.person.json :as json]
+
+            [app.models.person.search :as search]))
 
 (def GENDERS_MAP
   {:male "male"
@@ -35,7 +37,7 @@
 ;;; {:success success-or-not
 ;;;  :entity  PersonEntity
 ;;;  :node    PersonNode}
-(def add-person add/add-person)
+(def add-person nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Functions for deleting person
@@ -43,7 +45,7 @@
 ;;; Delete one person from the system by its id
 ;;; Required params
 ;;;  id: the (pg) id of the person
-(def delete-person delete/delete-person)
+(def delete-person nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Functions for updating person
@@ -52,7 +54,7 @@
 ;;; Required params
 ;;;  id: the (pg) id of the person
 ;;;  person-data: person data map
-(def update-person update/update-person)
+(def update-person nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Functions for finding person(s)
@@ -81,14 +83,14 @@
 ;;; :include-node
 ;;; :include-partners
 ;;; :json-friendly
-(def find-person-by find/find-person-by)
+(def find-person-by nil)
 
 ;;; Find root person
 ;;; Keyword params
 ;;; :include-node
 ;;; :include-partners
 ;;; :json-friendly
-(def find-root find/find-root)
+(def find-root nil)
 
 ;;; Find person by id
 ;;; Required params
@@ -97,14 +99,14 @@
 ;;; :include-node
 ;;; :include-partners
 ;;; :json-friendly
-(def find-person-by-id find/find-person-by-id)
+(def find-person-by-id nil)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;; Find entity only
 
 ;;; Required Params
 ;;; full-name: string
-(def find-entity-by-full-name find/find-entity-by-full-name)
+(def find-entity-by-full-name nil)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;; Find node only
@@ -112,7 +114,7 @@
 ;;; Find node by person is
 ;;; Required Params
 ;;; id: int
-(def find-node-by-person-id find/find-node-by-person-id)
+(def find-node-by-person-id nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Find multiple persons
@@ -120,22 +122,22 @@
 ;;; Find all entities by the list of id
 ;;; Required Params
 ;;; ids: [int]
-(def find-entities-by-ids find/find-entities-by-ids)
+(def find-entities-by-ids nil)
 
 ;;; Find all entities by full name
 ;;; Required Params
 ;;; full-name: string
-(def find-entities-by-full-name find/find-entities-by-full-name)
+(def find-entities-by-full-name nil)
 
 ;;; Find all entities by genders
 ;;; Required Params
 ;;; genders: [string]
-(def find-entities-by-genders find/find-entities-by-genders)
+(def find-entities-by-genders nil)
 
 ;;; Find all partners entity of one entity
 ;;; Required Params
 ;;; entity: PersonEntity
-(def find-partners-of-entity find/find-partners-of-entity)
+(def find-partners-of-entity nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Util functions
@@ -143,12 +145,18 @@
 ;;; Count parent of one entity
 ;;; Required Params
 ;;; entity: PersonEntity
-(def count-parents parent/count-parents)
+(def count-parents nil)
 
 ;;; Whether this entity has enough parent?
 ;;; Required Params
 ;;; entity: PersonEntity
-(def enough-parents? parent/enough-parents?)
+(def enough-parents? nil)
 
 ;;; Convert Person Entity to Json friendly Entity
-(def json-friendlify json/json-friendlify)
+(def json-friendlify nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; NEW
+(def find-all-by-ids search/find-all-by-ids)
+(def find-by-id search/find-by-id)
+(def add add/add-person)
