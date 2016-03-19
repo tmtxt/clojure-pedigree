@@ -1,11 +1,8 @@
 /.vagrant/*
 /scripts/*
-/schema/db.json
 /a.sql
 /password
 *.tern-port
 /sass/bower
 *.DS_Store*
-/docker-compose.yml
-/docker-compose.prod.yml
 /cache

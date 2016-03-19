@@ -1,0 +1,74 @@
+websources:
+  build: ./images/sources
+  volumes:
+    - ./site:/usr/src/app
+
+neosources:
+  build: ./images/sources
+  volumes:
+    - ./neo:/usr/src/app
+
+server:
+  build: ./images/server
+  command: sh -c 'while true; do sleep 10000; done'
+  volumes:
+    - ./cache/.m2:/root/.m2
+  volumes_from:
+    - websources
+  env_file:
+    - docker.env
+  ports:
+    - "3000:3000"
+    - "7888:7888"
+  links:
+    - postgres:postgres
+    - neonode:neonode
+
+postgres:
+  build: ./images/postgres
+  environment:
+    POSTGRES_PASSWORD: password
+    POSTGRES_DB: pedigree
+  env_file:
+    - docker.env
+  ports:
+    - "5432:5432"
+
+schemup:
+  build: ./images/schemup
+  links:
+    - postgres
+  volumes:
+    - ./schema:/schema
+  working_dir: /schema
+  env_file:
+    - docker.env
+
+neo4j:
+  build: ./images/neo4j
+  ports:
+    - "7474:7474"
+  env_file:
+    - docker.env
+  environment:
+    NEO4J_AUTH: none
+
+frontend:
+  build: ./images/frontend
+  command: sh -c 'while true; do sleep 10000; done'
+  volumes_from:
+    - websources
+  env_file:
+    - docker.env
+
+neonode:
+  build: ./images/neonode
+  command: sh -c 'while true; do sleep 10000; done'
+  volumes_from:
+    - neosources
+  env_file:
+    - docker.env
+  ports:
+    - "3001:3000"
+  links:
+    - neo4j:neo4j
