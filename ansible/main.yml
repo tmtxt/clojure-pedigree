@@ -1,6 +1,10 @@
 ---
 - hosts: all
   tasks:
+    - name: create necessary directories
+      file: path={{ item }} state=directory
+      with_items: {{ out_dirs }}
+
     - name: build all images
       command: docker-compose build
       args:
@@ -8,3 +12,15 @@
 
     - include: tasks/schemup.yml
     - include: tasks/frontend.yml
+    - include: tasks/neo4j.yml
+    - include: tasks/web.yml
+
+    - name: kill all docker containers
+      command: docker-compose stop
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: run docker images for web service
+      command: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+      args:
+        chdir: "{{ project_dir }}"

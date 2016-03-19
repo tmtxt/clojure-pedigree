@@ -1,26 +1,13 @@
 ---
 - name: create scripts for neonode
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   template: >-
     src=templates/neo4j/{{ item }}
     dest={{ script_dir }}/{{ item }}
     mode=755
-    owner="{{ project_user }}"
   with_items:
     - neonode_npm_install.sh
 
 - name: install neonode dependencies
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   command: ./neonode_npm_install.sh
   args:
     chdir: "{{ script_dir }}"
-  changed_when: False
-
-- name: generate config file for neonode server
-  sudo: yes
-  sudo_user: "{{ project_user }}"
-  template: >-
-    src=templates/neo4j/system.js
-    dest={{ project_dir }}/neo/config/system.js

@@ -56,6 +56,8 @@ neo4j:
 frontend:
   build: ./images/frontend
   command: sh -c 'while true; do sleep 10000; done'
+  volumes:
+    - ./cache/.frontend_npm:/root/.npm
   volumes_from:
     - websources
   env_file:
@@ -64,6 +66,8 @@ frontend:
 neonode:
   build: ./images/neonode
   command: sh -c 'while true; do sleep 10000; done'
+  volumes:
+    - ./cache/.neonode_npm:/root/.npm
   volumes_from:
     - neosources
   env_file:

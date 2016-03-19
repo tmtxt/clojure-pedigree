@@ -1,8 +1,14 @@
 ---
+- name: create scripts for web
+  template: >-
+    src=templates/web/{{ item }}
+    dest={{ script_dir }}/{{ item }}
+    mode=755
+  with_items:
+    - web_lein_deps.sh
+
 - name: install leiningen dependencies
-  sudo: yes
-  sudo_user: "{{ project_user }}"
-  command: docker-compose run server lein deps
+  command: ./frontend_npm_install.sh
   args:
-    chdir: "{{ project_dir }}"
+    chdir: "{{ script_dir }}"
   changed_when: False
