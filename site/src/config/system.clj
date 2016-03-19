@@ -2,7 +2,6 @@
   (:require [environ.core :refer [env]]))
 
 (def config
-  {:ring-port (env :WEB_SERVER_PORT)
+  {:ring-port (Integer/parseInt (env :web-server-port))
    :nrepl-port 7888
-   :root-git-dir "/usr/src/root"
-   })
+   :root-git-dir "/usr/src/root"})

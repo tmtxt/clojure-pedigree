@@ -6,8 +6,8 @@
 (def db (postgres {:db "pedigree"
                    :user "postgres"
                    :password "password"
-                   :host (env :POSTGRES_HOST)
-                   :port (env :POSTGRES_PORT)
+                   :host (env :postgres-host)
+                   :port (env :postgres-port)
                    :delimiters ""}))
 
 (defdb app-db db)

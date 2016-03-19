@@ -3,5 +3,5 @@
             [korma.core]
             [environ.core :refer [env]]))
 
-(def neonode-host (env :NEONODE_HOST))
-(def neonode-port (env :NEONODE_PORT))
+(def neonode-host (env :neonode-host))
+(def neonode-port (env :neonode-port))
