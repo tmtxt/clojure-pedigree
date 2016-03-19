@@ -7,3 +7,4 @@
         chdir: "{{ project_dir }}"
 
     - include: tasks/schemup.yml
+    - include: tasks/frontend.yml

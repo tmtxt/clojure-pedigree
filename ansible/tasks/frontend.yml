@@ -1,36 +1,19 @@
 ---
 - name: create scripts for frontend
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   template: >-
     src=templates/web/{{ item }}
     dest={{ script_dir }}/{{ item }}
     mode=755
-    owner="{{ project_user }}"
   with_items:
     - frontend_npm_install.sh
     - gulp_prod.sh
 
-- name: start frontend container
-  sudo: yes
-  sudo_user: "{{ project_user }}"
-  command: docker-compose up -d frontend
-  args:
-    chdir: "{{ script_dir }}"
-  changed_when: False
-
 - name: install frontend dependencies
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   command: ./frontend_npm_install.sh
   args:
     chdir: "{{ script_dir }}"
-  changed_when: False
 
 - name: run gulp build
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   command: ./gulp_prod.sh
   args:
     chdir: "{{ script_dir }}"
-  changed_when: False
