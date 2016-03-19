@@ -3,7 +3,7 @@
   tasks:
     - name: create necessary directories
       file: path={{ item }} state=directory
-      with_items: {{ out_dirs }}
+      with_items: "{{ out_dirs }}"
 
     - name: build all images
       command: docker-compose build
