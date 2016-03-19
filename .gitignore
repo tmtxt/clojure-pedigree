@@ -6,3 +6,4 @@
 /sass/bower
 *.DS_Store*
 /cache
+*.retry

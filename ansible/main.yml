@@ -5,6 +5,18 @@
       file: path={{ item }} state=directory
       with_items: "{{ out_dirs }}"
 
+    - name: create attach script for containers
+      template: >-
+        src=templates/docker/attach_{{ item }}.sh
+        dest={{ script_dir }}/attach_{{ item }}.sh
+        mode=755
+      with_items:
+        - web_server
+        - schemup
+        - postgres
+        - frontend
+        - neonode
+
     - name: build all images
       command: docker-compose build
       args:
