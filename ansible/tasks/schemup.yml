@@ -1,31 +1,17 @@
 ---
 - name: start postgres container
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   command: docker-compose up -d postgres
   args:
     chdir: "{{ project_dir }}"
   changed_when: False
 
-- name: generate schemup db config file
-  sudo: yes
-  sudo_user: "{{ project_user }}"
-  template: >-
-    src=templates/schemup/db.json
-    dest={{ web_schemup_path }}/db.json
-
 - name: create script for running schemup
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   template: >-
     src=templates/schemup/schemup.sh
     dest={{ script_dir }}/schemup.sh
     mode=755
-    owner={{ project_user }}
 
 - name: run schemup
-  sudo: yes
-  sudo_user: "{{ project_user }}"
   command: ./schemup.sh
   args:
     chdir: "{{ script_dir }}"

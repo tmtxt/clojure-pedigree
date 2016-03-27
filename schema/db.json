@@ -1,0 +1,7 @@
+{
+	"database": "pedigree",
+	"user": "postgres",
+	"password": "password",
+	"host": "postgres",
+	"port": 5432
+}

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd {{ project_dir }}
-docker exec -it $(docker-compose ps | grep 'frontend' | awk '{print $1}') npm install --no-bin-links
+docker-compose run frontend npm install --no-bin-links
