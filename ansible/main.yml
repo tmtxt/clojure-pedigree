@@ -12,12 +12,16 @@
     - name: create necessary directories
       file: path={{ item }} state=directory
       with_items: "{{ out_dirs }}"
+      tags:
+        - always
 
     - name: create attach script for containers
       template: >-
         src=templates/docker/attach_{{ item }}.sh
         dest={{ script_dir }}/attach_{{ item }}.sh
         mode=755
+      tags:
+        - always
       with_items:
         - web_server
         - schemup
@@ -27,20 +31,37 @@
 
     - name: build all images
       command: docker-compose build
+      tags:
+        - always
       args:
         chdir: "{{ project_dir }}"
 
     - include: tasks/schemup.yml
+      tags:
+        - always
+
     - include: tasks/frontend.yml
+      tags:
+        - always
+
     - include: tasks/neo4j.yml
+      tags:
+        - always
+
     - include: tasks/web.yml
+      tags:
+        - always
 
     - name: kill all docker containers
       command: docker-compose stop
+      tags:
+        - always
       args:
         chdir: "{{ project_dir }}"
 
     - name: run docker images for web service
+      tags:
+        - always
       command: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
       args:
         chdir: "{{ project_dir }}"
