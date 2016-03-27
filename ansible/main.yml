@@ -1,6 +1,14 @@
 ---
 - hosts: all
   tasks:
+    - name: update project repo
+      git: >-
+        repo=https://github.com/tmtxt/clojure-pedigree.git
+        dest={{ project_dir }}
+        update=yes
+      tags:
+        - prod
+
     - name: create necessary directories
       file: path={{ item }} state=directory
       with_items: "{{ out_dirs }}"
