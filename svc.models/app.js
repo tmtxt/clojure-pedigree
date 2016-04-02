@@ -1,9 +1,11 @@
+'use strict';
+
 var koa = require('koa-router')();
 var app = require('koa')();
 var config = require('./config');
 var parser = require('koa-bodyparser');
 var json = require('koa-json');
-var winston = require('winston');
+var LogTrace = require('./logger');
 
 var persons = require('./routes/persons.js');
 
@@ -12,10 +14,9 @@ app.use(parser());
 app.use(json());
 
 app.use(function *(next){
-  var start = new Date;
+  var logTrace = new LogTrace();
   yield next;
-  var ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
+  logTrace.write();
 });
 
 // routes definition
