@@ -20,6 +20,8 @@ svc.models.run:
   env_file:
     - docker.env
   command: sh -c 'while true; do sleep 10000; done'
+  ports:
+    - "4000:80"
   links:
     - postgres:postgres
     - neonode:neonode
