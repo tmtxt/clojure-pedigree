@@ -8,6 +8,22 @@ neosources:
   volumes:
     - ./neo:/usr/src/app
 
+node.sources:
+  build: ./images/sources
+  volumes:
+    - ./neo:/usr/src/app
+
+svc.models.run:
+  build: ./images/svc.models.run
+  volumes:
+    - ./svc.models:/usr/src/app
+  env_file:
+    - docker.env
+  command: sh -c 'while true; do sleep 10000; done'
+  links:
+    - postgres:postgres
+    - neonode:neonode
+
 server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
