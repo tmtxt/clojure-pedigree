@@ -15,3 +15,4 @@ koa.use('/persons', persons.routes(), persons.allowedMethods());
 app.use(koa.routes());
 
 app.listen(config.serverPort);
+console.log(`Server listening on port ${config.serverPort}`);
