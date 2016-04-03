@@ -1,15 +1,30 @@
 var Sequelize = require('sequelize');
 var sequelize = require('./db.js');
 
+const aliveStatusValues = ['alive', 'dead', 'unknown'];
+const genderValues = ['male', 'female', 'gay', 'les', 'unknown'];
+
 module.exports = sequelize.define('person', {
   full_name: Sequelize.STRING,
   birth_date: Sequelize.DATE,
   death_date: Sequelize.DATE,
-  alive_status: Sequelize.STRING,
+  alive_status: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isIn: aliveStatusValues
+    }
+  },
   job: Sequelize.STRING,
   address: Sequelize.STRING,
   picture: Sequelize.STRING,
-  gender: Sequelize.STRING,
+  gender: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isIn: genderValues
+    }
+  },
   phone_no: Sequelize.STRING,
   summary: Sequelize.STRING
 }, {
@@ -28,6 +43,24 @@ module.exports = sequelize.define('person', {
     },
     phoneNo: function() {
       return this.getDataValue('phone_no');
+    }
+  },
+
+  setterMethods: {
+    fullName: function() {
+      this.setDataValue('full_name');
+    },
+    birthDate: function() {
+      this.setDataValue('birth_date');
+    },
+    deathDate: function() {
+      this.setDataValue('death_date');
+    },
+    aliveStatus: function() {
+      this.setDataValue('alive_status');
+    },
+    phoneNo: function() {
+      this.setDataValue('phone_no');
     }
   },
 

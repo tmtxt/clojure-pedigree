@@ -1,0 +1,8 @@
+#
+POST http://ar.dev:4000/add
+Content-Type: application/json
+
+{
+  "fullName": "truong xuan",
+  "gender": "haha"
+}
