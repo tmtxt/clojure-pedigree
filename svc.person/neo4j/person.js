@@ -17,7 +17,6 @@ exports.save = function(person, isRoot) {
 
   var promise = new Promise(function(resolve, reject){
     neo.save(data, 'person', function(err, node) {
-      console.log(err);
       if (err) {
         reject(err);
         return;

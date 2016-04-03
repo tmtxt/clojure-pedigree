@@ -28,6 +28,7 @@ module.exports = class KoaApi {
     var routes = this.routes;
     var logMiddleware = this.createLogMiddleware();
     var log = logger.createLoggerForService({fileName: serviceName});
+    logger.createLoggerForException({fileName: serviceName});
 
     this.app = app;
 
