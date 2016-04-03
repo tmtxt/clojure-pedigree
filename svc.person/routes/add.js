@@ -2,6 +2,15 @@
 
 const router = require('koa-router')();
 
+function* validateModel(person, logTrace) {
+  var err = yield person.validate();
+
+  if (err) {
+    logTrace.add('error', 'person.validate()', err);
+    throw 'Validation fail';
+  }
+}
+
 function* addHandler() {
   const logTrace = this.logTrace;
   const Person = this.pg.Person;
@@ -10,12 +19,7 @@ function* addHandler() {
 
   try {
     const person = Person.build(this.request.body);
-    var err = yield person.validate();
-
-    if (err) {
-      logTrace.add('error', 'person.validate()', err);
-      throw 'Validation fail';
-    }
+    yield validateModel(person, logTrace);
 
     yield person.save({transaction});
 
@@ -32,21 +36,6 @@ function* addHandler() {
     };
     return;
   }
-
-
-
-  if (err) {
-
-    this.body = {
-      success: false,
-      message: 'Validation fail'
-    };
-    return;
-  }
-
-  this.body = {
-    get: 'true'
-  };
 }
 
 router.post('/', addHandler);
