@@ -1,1 +1,1 @@
-exports.person = require('./person.js');
+exports.Person = require('./person.js');

@@ -8,7 +8,8 @@ var sequelize = new Sequelize(
   {
     dialect: 'postgres',
     host: config.postgresHost,
-    port: config.postgresPort
+    port: config.postgresPort,
+    freezeTableName: true
   }
 );
 
