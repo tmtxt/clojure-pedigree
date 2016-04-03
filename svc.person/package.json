@@ -13,8 +13,6 @@
     "koa-bodyparser": "^2.0.1",
     "koa-json": "^1.1.1",
     "koa-router": "^5.4.0",
-    "lodash": "^4.7.0",
-    "node-uuid": "^1.4.7",
-    "winston": "^2.2.0"
+    "lodash": "^4.7.0"
   }
 }
