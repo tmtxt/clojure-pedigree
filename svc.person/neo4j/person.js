@@ -2,6 +2,8 @@
 
 var neo = require('./db.js');
 
+const label = 'person';
+
 /**
  * Save person node to neo4j
  *
@@ -16,13 +18,43 @@ exports.save = function(person, isRoot) {
   };
 
   var promise = new Promise(function(resolve, reject){
-    neo.save(data, 'person', function(err, node) {
+    neo.save(data, label, function(err, node) {
       if (err) {
         reject(err);
         return;
       }
 
       resolve(node);
+    });
+  });
+
+  return promise;
+};
+
+/**
+ * Find person node by person id
+ *
+ * @param  {object} personId The person id
+ * @return {object} The person node
+ */
+exports.find = function(personId) {
+  var data = {
+    person_id: personId
+  };
+
+  var promise = new Promise(function(resolve, reject) {
+    neo.find(data, label, function(err, nodes){
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      if (nodes.length === 0) {
+        reject(`No person node with person id ${personId} found`);
+        return;
+      }
+
+      resolve(nodes[0]);
     });
   });
 
