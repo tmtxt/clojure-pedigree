@@ -2,6 +2,7 @@
 
 const router = require('koa-router')();
 
+// Validate Pg model
 function* validateModel(person, logTrace) {
   var err = yield person.validate();
 
@@ -11,6 +12,13 @@ function* validateModel(person, logTrace) {
   }
 }
 
+// Save pg model
+function* savePgModel(person, transaction, logTrace) {
+  yield person.save({transaction});
+  logTrace.add('info', 'savePgModel()', 'Temporary save pg model');
+}
+
+// Koa handler function
 function* addHandler() {
   const logTrace = this.logTrace;
   const Person = this.pg.Person;
@@ -20,16 +28,17 @@ function* addHandler() {
   try {
     const person = Person.build(this.request.body);
     yield validateModel(person, logTrace);
+    yield savePgModel(person, transaction, logTrace);
 
-    yield person.save({transaction});
-
-    transaction.commit();
+    yield transaction.commit();
+    logTrace.add('info', 'transaction.commit()');
     this.body = {
       success: true,
       message: 'Person inserted'
     };
   } catch (err) {
-    transaction.rollback();
+    yield transaction.rollback();
+    logTrace.add('error', 'transaction.rollback()');
     this.body = {
       success: false,
       message: err
