@@ -7,3 +7,4 @@
 *.DS_Store*
 /cache
 *.retry
+/logs/*

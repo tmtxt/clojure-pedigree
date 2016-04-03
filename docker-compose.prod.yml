@@ -7,3 +7,6 @@ neonode:
 
 frontend:
   command: node
+
+svc.models.run:
+  command: ["sh", "-c", "node app.js >> /logs/svc.models.run.logs 2>&1"]

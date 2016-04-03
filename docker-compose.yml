@@ -17,6 +17,7 @@ svc.models.run:
   build: ./images/svc.models.run
   volumes:
     - ./svc.models:/usr/src/app
+    - ./logs:/logs
   env_file:
     - docker.env
   command: sh -c 'while true; do sleep 10000; done'
