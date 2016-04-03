@@ -17,6 +17,7 @@ koa.api.base:
   build: ./images/koa.api
   volumes:
     - ./logs:/logs
+    - ./node.libs/pg.logger:/usr/local/lib/node_modules/pg.logger
 
 svc.person:
   build: ./images/koa.api

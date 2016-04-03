@@ -5,7 +5,7 @@ var app = require('koa')();
 var config = require('./config');
 var parser = require('koa-bodyparser');
 var json = require('koa-json');
-var LogTrace = require('./logger');
+var LogTrace = require('pg.logger');
 
 var persons = require('./routes/persons.js');
 
