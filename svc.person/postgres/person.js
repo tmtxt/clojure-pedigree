@@ -47,20 +47,20 @@ module.exports = sequelize.define('person', {
   },
 
   setterMethods: {
-    fullName: function() {
-      this.setDataValue('full_name');
+    fullName: function(v) {
+      this.setDataValue('full_name', v);
     },
-    birthDate: function() {
-      this.setDataValue('birth_date');
+    birthDate: function(v) {
+      this.setDataValue('birth_date', v);
     },
-    deathDate: function() {
-      this.setDataValue('death_date');
+    deathDate: function(v) {
+      this.setDataValue('death_date', v);
     },
-    aliveStatus: function() {
-      this.setDataValue('alive_status');
+    aliveStatus: function(v) {
+      this.setDataValue('alive_status', v);
     },
-    phoneNo: function() {
-      this.setDataValue('phone_no');
+    phoneNo: function(v) {
+      this.setDataValue('phone_no', v);
     }
   },
 

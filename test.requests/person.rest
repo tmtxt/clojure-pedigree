@@ -4,5 +4,5 @@ Content-Type: application/json
 
 {
   "fullName": "truong xuan",
-  "gender": "haha"
+  "gender": "male"
 }
