@@ -42,7 +42,7 @@
         dest={{ script_dir }}/{{ item }}
         mode=755
       with_items:
-        - svc.models_npm_install.sh
+        - npm_install.sh
       tags:
         - always
 

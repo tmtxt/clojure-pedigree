@@ -13,11 +13,17 @@ node.sources:
   volumes:
     - ./neo:/usr/src/app
 
-svc.models.run:
-  build: ./images/svc.models.run
+koa.api.base:
+  build: ./images/koa.api
   volumes:
-    - ./svc.models:/usr/src/app
     - ./logs:/logs
+
+svc.person:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.person:/usr/src/app
+  volumes_from:
+    - koa.api.base
   env_file:
     - docker.env
   command: sh -c 'while true; do sleep 10000; done'
