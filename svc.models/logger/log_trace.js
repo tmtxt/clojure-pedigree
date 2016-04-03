@@ -46,7 +46,7 @@ module.exports = class LogTrace {
     const logLevel = this.tryGetLevel('error') || this.tryGetLevel('warn') || 'info';
 
     let strings = logTraces.map((logTrace, idx) => {
-      return `[${idx + 1}] ${logTrace.logLevel.toUpperCase()} ${logTrace.logType} : ${logTrace.message}`;
+      return `[${idx + 1}] ${logTrace.logLevel.toUpperCase()} ${logTrace.logTitle} : ${logTrace.message}`;
     });
 
     _.assign(this.props, {

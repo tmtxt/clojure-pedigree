@@ -15,6 +15,7 @@ app.use(json());
 
 app.use(function *(next){
   var logTrace = new LogTrace();
+  this.logTrace = logTrace;
   yield next;
   logTrace.write();
 });
