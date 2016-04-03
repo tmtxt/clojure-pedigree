@@ -33,7 +33,7 @@ svc.person:
     - "4000:80"
   links:
     - postgres:postgres
-    - neonode:neonode
+    - neo4j:neo4j
 
 server:
   build: ./images/server
