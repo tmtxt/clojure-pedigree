@@ -50,11 +50,32 @@ exports.find = function(personId) {
       }
 
       if (nodes.length === 0) {
-        reject(`No person node with person id ${personId} found`);
+        resolve(null);
         return;
       }
 
       resolve(nodes[0]);
+    });
+  });
+
+  return promise;
+};
+
+/**
+ * Delete person node by person id
+ *
+ * @param  {object} node The person node
+ * @return {object} The person node
+ */
+exports.delete = function(node) {
+  var promise = new Promise(function(resolve, reject) {
+    neo.delete(node, true, function(err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve();
     });
   });
 
