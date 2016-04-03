@@ -1,8 +1,23 @@
+'use strict';
+
 var Sequelize = require('sequelize');
+const _ = require('lodash');
 var sequelize = require('./db.js');
 
 const aliveStatusValues = ['alive', 'dead', 'unknown'];
 const genderValues = ['male', 'female', 'gay', 'les', 'unknown'];
+const instanceProps = [
+  'fullName',
+  'birthDate',
+  'deathDate',
+  'aliveStatus',
+  'job',
+  'address',
+  'picture',
+  'gender',
+  'phoneNo',
+  'summary'
+];
 
 module.exports = sequelize.define('person', {
   full_name: Sequelize.STRING,
@@ -61,6 +76,12 @@ module.exports = sequelize.define('person', {
     },
     phoneNo: function(v) {
       this.setDataValue('phone_no', v);
+    }
+  },
+
+  instanceMethods: {
+    getData: function() {
+      return _.pick(this, instanceProps);
     }
   },
 

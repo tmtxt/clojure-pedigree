@@ -1,6 +1,7 @@
 'use strict';
 
 const router = require('koa-router')();
+const _ = require('lodash');
 
 // Validate Pg model
 function* validateModel(person, logTrace) {
@@ -45,7 +46,7 @@ function* addHandler() {
     this.body = {
       success: true,
       message: 'Person inserted',
-      data: person
+      data: person.getData()
     };
   } catch (err) {
     yield transaction.rollback();
