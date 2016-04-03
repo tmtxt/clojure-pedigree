@@ -6,3 +6,14 @@ Content-Type: application/json
   "fullName": "truong xuan 6",
   "gender": "male"
 }
+
+#
+#
+POST http://ar.dev:4000/delete
+Content-Type: application/json
+
+{
+  "personId": 11,
+  "fullName": "truong xuan 6",
+  "gender": "male"
+}

@@ -18,7 +18,9 @@ var context = {
 
 // routes
 var add = require('./routes/add.js');
+var deleteRoute = require('./routes/delete.js');
 koa.use('/add', add.routes(), add.allowedMethods());
+koa.use('/delete', deleteRoute.routes(), deleteRoute.allowedMethods());
 var routes = koa.routes();
 
 // create the app

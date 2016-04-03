@@ -1,7 +1,6 @@
 'use strict';
 
 const router = require('koa-router')();
-const _ = require('lodash');
 
 // Validate Pg model
 function* validateModel(person, logTrace) {
