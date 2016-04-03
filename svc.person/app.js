@@ -10,8 +10,10 @@ var port = config.serverPort;
 
 // context
 var postgres = require('./postgres');
+var neo4j = require('./neo4j');
 var context = {
-  pg: postgres
+  pg: postgres,
+  neo: neo4j
 };
 
 // routes
