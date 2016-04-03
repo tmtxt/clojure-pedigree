@@ -14,6 +14,9 @@ module.exports = class LogTrace {
     this.logTraces = [];
     this.startedAt = Date.now();
     this.props = props || {};
+    this.logTrace = logger.createLoggerForService({
+      fileName: props.svcName
+    });
   }
 
   /**
@@ -37,9 +40,9 @@ module.exports = class LogTrace {
   }
 
   /**
-   * Write log
+   * Write log with extra props
    */
-  write() {
+  write(props) {
     let logTraces = this.logTraces;
 
     const logLevel = this.tryGetLevel('error') || this.tryGetLevel('warn') || 'info';
@@ -50,9 +53,9 @@ module.exports = class LogTrace {
 
     _.assign(this.props, {
       processTime: `${Date.now() - this.startedAt} ms`
-    });
+    }, props);
 
-    return logger[logLevel](strings.join('\n'), this.props);
+    return this.logTrace[logLevel](strings.join('\n'), this.props);
   }
 
   /**

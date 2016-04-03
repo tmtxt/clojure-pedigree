@@ -2,15 +2,15 @@
 
 var router = require('koa-router')();
 
-router.get('/', function*(next) {
+function* add() {
   var logTrace = this.logTrace;
-  logTrace.add('info', 'start function', 'hello');
-  logTrace.add('info', 'next function', 'next next');
+  var Person = this.pg.Person;
 
   this.body = {
-    hello: 'abc'
+    aa: 'abc'
   };
-  logTrace.add('info', 'finish', 'already finish');
-});
+}
+
+router.get('/add', add);
 
 module.exports = router;
