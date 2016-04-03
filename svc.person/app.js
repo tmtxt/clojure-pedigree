@@ -16,6 +16,8 @@ var context = {
 
 // routes
 var persons = require('./routes/persons.js');
+var add = require('./routes/add.js');
+koa.use('/add', add.routes(), add.allowedMethods());
 koa.use('/person', persons.routes(), persons.allowedMethods());
 var routes = koa.routes();
 

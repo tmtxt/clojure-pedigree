@@ -78,6 +78,11 @@ module.exports = class KoaApi {
       let status = this.response.status;
       let request = _.pick(this.request, ['method', 'url', 'header', 'body']);
       let response = _.pick(this.response, ['message', 'header', 'body']);
+
+      if (status > 300) {
+        logTrace.add('error', 'Error in processing request', {status});
+      }
+
       logTrace.write({status, request, response});
     };
   }
