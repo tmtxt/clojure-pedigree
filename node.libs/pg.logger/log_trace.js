@@ -28,6 +28,10 @@ module.exports = class LogTrace {
    * @return {timestamp}
    */
   add(logLevel, logTitle, message) {
+    if (!message) {
+      message = '';
+    }
+
     if (_.isObject(message)) {
       message = JSON.stringify(message, null, 2);
     }
