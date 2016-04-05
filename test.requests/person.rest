@@ -18,9 +18,16 @@ Content-Type: application/json
 }
 
 #
-POST http://pd.dev:4000/find/root
+GET http://pd.dev:4000/find/root
 Content-Type: application/json
 
 {
+}
 
+#
+GET http://pd.dev:4000/find/byId
+Content-Type: application/json
+
+{
+  "personId": 15
 }
