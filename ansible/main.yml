@@ -36,6 +36,24 @@
       args:
         chdir: "{{ project_dir }}"
 
+    - name: create install scripts for services
+      template: >-
+        src=templates/install/{{ item }}
+        dest={{ script_dir }}/{{ item }}
+        mode=755
+      with_items:
+        - npm_install.sh
+      tags:
+        - always
+
+    - name: run install scripts for services
+      command: ./{{ item }}
+      tags: always
+      with_items:
+        - svc.models_npm_install.sh
+      args:
+        chdir: "{{ script_dir }}"
+
     - include: tasks/schemup.yml
       tags:
         - always

@@ -1,0 +1,33 @@
+#
+POST http://pd.dev:4000/add
+Content-Type: application/json
+
+{
+  "fullName": "truong xuan 6",
+  "gender": "male"
+}
+
+#
+POST http://pd.dev:4000/delete
+Content-Type: application/json
+
+{
+  "personId": 46,
+  "fullName": "truong xuan 6",
+  "gender": "male"
+}
+
+#
+GET http://pd.dev:4000/find/root
+Content-Type: application/json
+
+{
+}
+
+#
+GET http://pd.dev:4000/find/byId
+Content-Type: application/json
+
+{
+  "personId": 15
+}

@@ -8,6 +8,33 @@ neosources:
   volumes:
     - ./neo:/usr/src/app
 
+node.sources:
+  build: ./images/sources
+  volumes:
+    - ./neo:/usr/src/app
+
+koa.api.base:
+  build: ./images/koa.api
+  volumes:
+    - ./logs:/logs
+    - ./node.libs/pg.logger:/usr/local/lib/node_modules/pg.logger
+    - ./node.libs/pg.koa.api:/usr/local/lib/node_modules/pg.koa.api
+
+svc.person:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.person:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: sh -c 'while true; do sleep 10000; done'
+  ports:
+    - "4000:80"
+  links:
+    - postgres:postgres
+    - neo4j:neo4j
+
 server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
@@ -27,9 +54,6 @@ server:
 
 postgres:
   build: ./images/postgres
-  environment:
-    POSTGRES_PASSWORD: password
-    POSTGRES_DB: pedigree
   env_file:
     - docker.env
   ports:

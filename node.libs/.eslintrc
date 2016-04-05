@@ -1,0 +1,26 @@
+{
+  // I want to use babel-eslint for parsing!
+  "parser": "babel-eslint",
+  "extends": "eslint:recommended",
+  "env": {
+    // I write for browser
+    "browser": false,
+    // in CommonJS
+    "node": true,
+    "mocha": true
+  },
+  // To give you an idea how to override rule options:
+  "rules": {
+    "quotes": [2, "single"],
+    "eol-last": [0],
+    "no-mixed-requires": [0],
+    "no-underscore-dangle": [0],
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "no-loop-func": 1,
+    "valid-jsdoc": [2, {
+      "requireReturn": false,
+      "requireReturnDescription": false,
+      "requireParamDescription": false
+    }]
+  }
+}
