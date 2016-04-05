@@ -7,6 +7,7 @@ var sequelize = require('./db.js');
 const aliveStatusValues = ['alive', 'dead', 'unknown'];
 const genderValues = ['male', 'female', 'gay', 'les', 'unknown'];
 const instanceProps = [
+  'id',
   'fullName',
   'birthDate',
   'deathDate',
@@ -80,7 +81,10 @@ module.exports = sequelize.define('person', {
   },
 
   instanceMethods: {
-    getData: function() {
+    getData: function(fields) {
+      if (fields) {
+        return _.pick(this.fields);
+      }
       return _.pick(this, instanceProps);
     }
   },
