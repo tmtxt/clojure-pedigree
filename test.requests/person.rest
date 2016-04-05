@@ -1,5 +1,5 @@
 #
-POST http://ar.dev:4000/add
+POST http://pd.dev:4000/add
 Content-Type: application/json
 
 {
@@ -8,12 +8,19 @@ Content-Type: application/json
 }
 
 #
-#
-POST http://ar.dev:4000/delete
+POST http://pd.dev:4000/delete
 Content-Type: application/json
 
 {
-  "personId": 44,
+  "personId": 46,
   "fullName": "truong xuan 6",
   "gender": "male"
+}
+
+#
+POST http://pd.dev:4000/find/root
+Content-Type: application/json
+
+{
+
 }

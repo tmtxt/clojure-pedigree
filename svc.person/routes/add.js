@@ -21,7 +21,8 @@ function* savePgModel(person, transaction, logTrace) {
 // Add person node in neo4j
 function* addNode(person, isRoot, neoPerson, logTrace) {
   logTrace.add('info', 'addNode()', 'Saving person node to neo4j');
-  yield neoPerson.save(person, isRoot);
+  const node = yield neoPerson.save(person, isRoot);
+  return node;
 }
 
 // Koa handler function
@@ -38,14 +39,17 @@ function* addHandler() {
     const person = Person.build(personData);
     yield validateModel(person, logTrace);
     yield savePgModel(person, transaction, logTrace);
-    yield addNode(person, isRoot, neoPerson, logTrace);
+    let node = yield addNode(person, isRoot, neoPerson, logTrace);
 
     yield transaction.commit();
     logTrace.add('info', 'transaction.commit()');
     this.body = {
       success: true,
       message: 'Person inserted',
-      data: person.getData()
+      data: {
+        model: person.getData(),
+        node
+      }
     };
   } catch (err) {
     yield transaction.rollback();

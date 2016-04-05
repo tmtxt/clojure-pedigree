@@ -1,6 +1,7 @@
 'use strict';
 
 var neo = require('./db.js');
+var changeCase = require('change-case-object');
 
 const label = 'person';
 
@@ -13,9 +14,10 @@ const label = 'person';
  */
 exports.save = function(person, isRoot) {
   var data = {
-    person_id: person.id,
-    is_root: isRoot
+    personId: person.id,
+    isRoot: isRoot
   };
+  data = changeCase.snakeCase(data);
 
   var promise = new Promise(function(resolve, reject){
     neo.save(data, label, function(err, node) {
@@ -24,7 +26,7 @@ exports.save = function(person, isRoot) {
         return;
       }
 
-      resolve(node);
+      resolve(changeCase.camelCase(node));
     });
   });
 
@@ -39,8 +41,9 @@ exports.save = function(person, isRoot) {
  */
 exports.find = function(personId) {
   var data = {
-    person_id: personId
+    personId: personId
   };
+  data = changeCase.snakeCase(data);
 
   var promise = new Promise(function(resolve, reject) {
     neo.find(data, label, function(err, nodes){
@@ -54,7 +57,7 @@ exports.find = function(personId) {
         return;
       }
 
-      resolve(nodes[0]);
+      resolve(changeCase.camelCase(nodes[0]));
     });
   });
 
@@ -76,6 +79,33 @@ exports.delete = function(node) {
       }
 
       resolve();
+    });
+  });
+
+  return promise;
+};
+
+/**
+ * Find root node
+ *
+ * @return {object} The person node
+ */
+exports.findRoot = function() {
+  const promise = new Promise(function(resolve, reject) {
+    var data = changeCase.snakeCase({isRoot: true});
+
+    neo.find(data, 'person', function(err, persons){
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      if (persons.length === 0) {
+        resolve(null);
+        return;
+      }
+
+      resolve(changeCase.camelCase(persons[0]));
     });
   });
 

@@ -73,6 +73,7 @@ function* deleteHandler() {
       message
     };
   } catch (err) {
+    logTrace.add('error', 'Delete person fail', err);
     let message = err;
     this.body = {
       success: false,
