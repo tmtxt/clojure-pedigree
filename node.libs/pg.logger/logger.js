@@ -9,10 +9,11 @@ exports.createLoggerForService = function(opts) {
     transports: [
       new (winston.transports.Console)({
         level: 'info',
-        json: true,
-        stringify: true,
+        json: false,
+        stringify: false,
         timestamp: true,
-        colorize: true
+        colorize: true,
+        prettyPrint: true
       }),
       new (winston.transports.File)({
         level: 'info',
@@ -30,8 +31,8 @@ exports.createLoggerForException = function(opts) {
 
   return winston.handleExceptions([
     new (winston.transports.Console)({
-      level: 'info',
-      json: true,
+      level: 'error',
+      // json: true,
       stringify: true,
       timestamp: true,
       colorize: true
