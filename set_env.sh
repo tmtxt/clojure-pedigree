@@ -30,3 +30,8 @@ function aw {
 function asp {
     docker exec -it $(docker-compose ps | grep 'svc.person' | awk '{print $1}') bash
 }
+
+# attach svc web-server
+function asw {
+    docker exec -it $(docker-compose ps | grep 'svc.web-server' | awk '{print $1}') bash
+}

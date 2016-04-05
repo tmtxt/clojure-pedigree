@@ -1,0 +1,1 @@
+web: java $JVM_OPTS -cp target/uberjar/svc.web-server.jar clojure.main -m svc.web-server.core
