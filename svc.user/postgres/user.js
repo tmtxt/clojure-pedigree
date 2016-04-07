@@ -50,6 +50,14 @@ module.exports = sequelize.define('user', {
     }
   },
 
+  classMethods: {
+    findByUsername: function(username) {
+      return this.findOne({
+        where: {username}
+      });
+    }
+  },
+
   timestamps: false,
   tableName: 'tbl_user'
 });

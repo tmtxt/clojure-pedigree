@@ -12,3 +12,11 @@ Content-Type: application/json
     "roleName": "admin"
   }
 }
+
+#
+GET http://pd.dev:4002/user/find
+Content-Type: application/json
+
+{
+  "username": "tmtxt"
+}

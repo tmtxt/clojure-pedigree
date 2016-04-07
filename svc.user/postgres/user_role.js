@@ -10,7 +10,7 @@ const instanceProps = [
   'role_name'
 ];
 
-module.exports = sequelize.define('user', {
+module.exports = sequelize.define('userRole', {
   user_id: Sequelize.STRING,
   role_name: Sequelize.STRING
 }, {
@@ -38,6 +38,16 @@ module.exports = sequelize.define('user', {
         return _.pick(this.fields);
       }
       return _.pick(this, instanceProps);
+    }
+  },
+
+  classMethods: {
+    findByUserId: function(userId) {
+      return this.findOne({
+        where: {
+          user_id: userId
+        }
+      });
     }
   },
 
