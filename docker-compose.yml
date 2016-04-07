@@ -35,6 +35,21 @@ svc.person:
     - postgres:postgres
     - neo4j:neo4j
 
+svc.user:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.user:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: sh -c 'while true; do sleep 10000; done'
+  ports:
+    - "4002:80"
+  links:
+    - postgres:postgres
+    - neo4j:neo4j
+
 svc.web-server:
   build: ./images/luminus.server
   volumes:

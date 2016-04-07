@@ -31,6 +31,11 @@ function asp {
     docker exec -it $(docker-compose ps | grep 'svc.person' | awk '{print $1}') bash
 }
 
+# attach svc user
+function asu {
+    docker exec -it $(docker-compose ps | grep 'svc.user' | awk '{print $1}') bash
+}
+
 # attach svc web-server
 function asw {
     docker exec -it $(docker-compose ps | grep 'svc.web-server' | awk '{print $1}') bash
