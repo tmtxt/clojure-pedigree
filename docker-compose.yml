@@ -38,12 +38,13 @@ svc.person:
 svc.web-server:
   build: ./images/luminus.server
   volumes:
+    - ./cache/.m2:/root/.m2
     - ./svc.web-server:/usr/src/app
   env_file:
     - docker.env
   command: sh -c 'while true; do sleep 10000; done'
   ports:
-    - "4001:80"
+    - "4001:3000"
   links:
     - postgres:postgres
     - svc.person:svc.person
