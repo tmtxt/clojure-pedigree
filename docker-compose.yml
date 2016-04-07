@@ -48,6 +48,19 @@ svc.user:
     - "4002:80"
   links:
     - postgres:postgres
+
+svc.pedigree-relation:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.pedigree-relation:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: sh -c 'while true; do sleep 10000; done'
+  ports:
+    - "4003:80"
+  links:
     - neo4j:neo4j
 
 svc.web-server:

@@ -36,6 +36,11 @@ function asu {
     docker exec -it $(docker-compose ps | grep 'svc.user' | awk '{print $1}') bash
 }
 
+# attach svc pedigree relation
+function aspr {
+    docker exec -it $(docker-compose ps | grep 'svc.pedigree-relation' | awk '{print $1}') bash
+}
+
 # attach svc web-server
 function asw {
     docker exec -it $(docker-compose ps | grep 'svc.web-server' | awk '{print $1}') bash
