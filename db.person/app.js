@@ -30,5 +30,5 @@ new KoaApi({
   port,
   routes,
   context,
-  svcName: 'svc.person'
+  svcName: 'db.person'
 });

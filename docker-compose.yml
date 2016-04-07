@@ -20,10 +20,10 @@ koa.api.base:
     - ./node.libs/pg.logger:/usr/local/lib/node_modules/pg.logger
     - ./node.libs/pg.koa.api:/usr/local/lib/node_modules/pg.koa.api
 
-svc.person:
+db.person:
   build: ./images/koa.api
   volumes:
-    - ./svc.person:/usr/src/app
+    - ./db.person:/usr/src/app
   volumes_from:
     - koa.api.base
   env_file:
@@ -35,10 +35,10 @@ svc.person:
     - postgres:postgres
     - neo4j:neo4j
 
-svc.user:
+db.user:
   build: ./images/koa.api
   volumes:
-    - ./svc.user:/usr/src/app
+    - ./db.user:/usr/src/app
   volumes_from:
     - koa.api.base
   env_file:
@@ -49,10 +49,10 @@ svc.user:
   links:
     - postgres:postgres
 
-svc.pedigree-relation:
+db.pedigree-relation:
   build: ./images/koa.api
   volumes:
-    - ./svc.pedigree-relation:/usr/src/app
+    - ./db.pedigree-relation:/usr/src/app
   volumes_from:
     - koa.api.base
   env_file:

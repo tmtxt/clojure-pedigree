@@ -24,5 +24,5 @@ new KoaApi({
   port,
   routes,
   context,
-  svcName: 'svc.pedigree-relation'
+  svcName: 'db.pedigree-relation'
 });
