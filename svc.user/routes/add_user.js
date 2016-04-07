@@ -9,6 +9,6 @@ function* addHandler() {
   };
 }
 
-router.post('/', addHandler);
+router.post('/add', addHandler);
 
 module.exports = router;

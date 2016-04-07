@@ -15,8 +15,8 @@ var context = {
 };
 
 // routes
-var add = require('./routes/add.js');
-koa.use('/add', add.routes(), add.allowedMethods());
+var addUser = require('./routes/add_user.js');
+koa.use('/user', addUser.routes(), addUser.allowedMethods());
 var routes = koa.routes();
 
 // create the app
