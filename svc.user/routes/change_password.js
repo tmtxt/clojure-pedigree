@@ -7,9 +7,11 @@ function* requireDataMdw(next) {
   const logTrace = this.logTrace;
   const body = this.request.body;
   const username = body.username;
+  const oldPassword = body.oldPassword;
+  const newPassword = body.newPassword;
 
-  if (!username) {
-    let message = 'User data is required';
+  if (!username || !oldPassword || !newPassword) {
+    let message = 'Username, oldPassword and newPassword are required';
     logTrace.add('error', 'User data validation', message);
     this.body = {
       success: false,
@@ -23,15 +25,17 @@ function* requireDataMdw(next) {
 
 
 // Koa handler function
-function* findHandler() {
+function* changePasswordHandler() {
   const logTrace = this.logTrace;
   const User = this.pg.User;
-  const UserRole = this.pg.UserRole;
   const db = this.pg.db;
   const transaction = yield db.transaction();
   const username = this.request.body.username;
+  const oldPassword = this.request.body.oldPassword;
+  const newPassword = this.request.body.newPassword;
 
   try {
+    // Find user by user name
     logTrace.add('info', 'findByUsername()');
     const user = yield User.findByUsername(username);
     if (!user) {
@@ -40,18 +44,22 @@ function* findHandler() {
       throw new Error(message);
     }
 
-    const userRole = yield UserRole.findByUserId(user.id);
-    if (!userRole) {
-      let message = `Cannot find user role with user id ${user.id}`;
+    // Check if old password match
+    if (!user.isPasswordMatched(oldPassword)) {
+      let message = 'Old password does not match';
       logTrace.add('error', message);
       throw new Error(message);
     }
 
+    // Update password
+    logTrace.add('info', 'Update user\'s password');
+    user.password = newPassword;
+    yield user.save();
+
     const data = {
-      user: user.getData(),
-      userRole: userRole.getData()
+      user: user.getData()
     };
-    let message = `User with username ${username} found`;
+    let message = `Password updated successfully for user with username ${username}`;
     logTrace.add('info', message);
     this.body = {
       success: true,
@@ -68,6 +76,6 @@ function* findHandler() {
   }
 }
 
-router.get('/find', requireDataMdw, findHandler);
+router.post('/changePassword', requireDataMdw, changePasswordHandler);
 
 module.exports = router;

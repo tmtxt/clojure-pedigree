@@ -47,6 +47,9 @@ module.exports = sequelize.define('user', {
         return _.pick(this.fields);
       }
       return _.pick(this, instanceProps);
+    },
+    isPasswordMatched: function(password) {
+      return bcrypt.compareSync(password, this.getDataValue('password'));
     }
   },
 
