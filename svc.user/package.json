@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "koa-router": "^5.4.0",
     "lodash": "^4.7.0",
     "pg": "^4.5.2",

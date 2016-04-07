@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "user": {
     "fullName": "Tran Xuan Truong",
-    "username": "tmtxt",
+    "username": "tmtxt2",
     "password": "123456"
   },
   "userRole": {

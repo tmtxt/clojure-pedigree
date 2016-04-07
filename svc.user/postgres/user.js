@@ -1,8 +1,9 @@
 'use strict';
 
-var Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 const _ = require('lodash');
-var sequelize = require('./db.js');
+const sequelize = require('./db.js');
+const bcrypt = require('bcrypt-nodejs');
 
 const instanceProps = [
   'id',
@@ -15,8 +16,14 @@ const instanceProps = [
 module.exports = sequelize.define('user', {
   full_name: Sequelize.STRING,
   email: Sequelize.STRING,
-  password: Sequelize.STRING,
-  username: Sequelize.STRING
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 }, {
   getterMethods: {
     fullName: function() {
@@ -27,6 +34,10 @@ module.exports = sequelize.define('user', {
   setterMethods: {
     fullName: function(v) {
       this.setDataValue('full_name', v);
+    },
+    password: function(v) {
+      const hashedPassword = bcrypt.hashSync(v);
+      this.setDataValue('password', hashedPassword);
     }
   },
 
