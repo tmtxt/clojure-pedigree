@@ -6,3 +6,12 @@ Content-Type: application/json
   "fatherNodeId": 14,
   "childNodeId": 15
 }
+
+#
+POST http://pd.dev:4003/add/fromMother
+Content-Type: application/json
+
+{
+  "motherNodeId": 16,
+  "childNodeId": 17
+}
