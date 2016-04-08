@@ -17,8 +17,10 @@ var context = {
 // routes
 var addFromFather = require('./routes/add_from_father.js');
 var addFromMother = require('./routes/add_from_mother.js');
+var addFromBoth = require('./routes/add_from_both.js');
 koa.use('/add', addFromFather.routes(), addFromFather.allowedMethods());
 koa.use('/add', addFromMother.routes(), addFromMother.allowedMethods());
+koa.use('/add', addFromBoth.routes(), addFromBoth.allowedMethods());
 var routes = koa.routes();
 
 // create the app

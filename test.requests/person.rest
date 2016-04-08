@@ -3,7 +3,7 @@ POST http://pd.dev:4000/add
 Content-Type: application/json
 
 {
-  "fullName": "truong xuan 6",
+  "fullName": "child test",
   "gender": "male"
 }
 

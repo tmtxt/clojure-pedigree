@@ -15,3 +15,13 @@ Content-Type: application/json
   "motherNodeId": 16,
   "childNodeId": 17
 }
+
+#
+POST http://pd.dev:4003/add/fromBoth
+Content-Type: application/json
+
+{
+  "fatherNodeId": 18,
+  "motherNodeId": 19,
+  "childNodeId": 20
+}
