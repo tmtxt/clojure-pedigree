@@ -34,6 +34,7 @@ neo4j.storage:
   volumes:
     - /data
 
+# database-related microservices
 db.person:
   build: ./images/koa.api
   volumes:
@@ -90,6 +91,19 @@ db.marriage-relation:
     - "4004:80"
   links:
     - neo4j:neo4j
+
+# api logic service
+api.logic:
+  build: ./images/koa.api
+  volumes:
+    - ./api.logic:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: sh -c 'while true; do sleep 10000; done'
+  ports:
+    - "4005:80"
 
 server:
   build: ./images/server

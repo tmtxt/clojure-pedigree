@@ -45,3 +45,8 @@ function adpr {
 function admr {
     docker exec -it $(docker-compose ps | grep 'db.marriage-relation' | awk '{print $1}') bash
 }
+
+# attach svc marriage relation
+function aal {
+    docker exec -it $(docker-compose ps | grep 'api.logic' | awk '{print $1}') bash
+}
