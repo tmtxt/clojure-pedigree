@@ -4,6 +4,7 @@
 const neo = require('./db.js');
 const changeCase = require('change-case-object');
 const _ = require('lodash');
+const query = require('../query');
 
 // labels
 const husbandWifeLabel = 'husband_wife';
@@ -103,4 +104,22 @@ function* addMarriage(husbandNode, wifeNode, husbandWifeOrder, wifeHusbandOrder)
   };
 }
 
+// Find all partner nodes of this node
+function findPartners(personNode) {
+  const execution = function(resolve, reject) {
+    neo.query(query.findPartners, {id: personNode}, function(err, results){
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      results = _.map(results, (result) => changeCase.camelCase(result));
+      resolve(results);
+    });
+  };
+
+  return new Promise(execution);
+}
+
 exports.addMarriage = addMarriage;
+exports.findPartners = findPartners;

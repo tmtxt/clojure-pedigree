@@ -6,3 +6,12 @@ Content-Type: application/json
   "husbandNodeId": 14,
   "wifeNodeId": 15
 }
+
+#
+GET http://pd.dev:4004/find/partners
+Content-Type: application/json
+
+{
+  "personNodeId": 2
+}
+
