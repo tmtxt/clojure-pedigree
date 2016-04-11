@@ -1,0 +1,41 @@
+#
+POST http://pd.dev:4002/user/add
+Content-Type: application/json
+
+{
+  "user": {
+    "fullName": "Tran Xuan Truong",
+    "username": "tmtxt2",
+    "password": "123456"
+  },
+  "userRole": {
+    "roleName": "admin"
+  }
+}
+
+#
+GET http://pd.dev:4002/user/find
+Content-Type: application/json
+
+{
+  "username": "tmtxt"
+}
+
+#
+POST http://pd.dev:4002/user/changePassword
+Content-Type: application/json
+
+{
+  "username": "tmtxt2",
+  "oldPassword": "hahaha",
+  "newPassword": "fuckyou"
+}
+
+#
+POST http://pd.dev:4002/user/auth
+Content-Type: application/json
+
+{
+  "username": "tmtxt2",
+  "password": "fuckyou"
+}

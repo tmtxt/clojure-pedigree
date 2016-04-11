@@ -1,0 +1,44 @@
+#
+POST http://pd.dev:4003/add/fromFather
+Content-Type: application/json
+
+{
+  "fatherNodeId": 14,
+  "childNodeId": 15
+}
+
+#
+POST http://pd.dev:4003/add/fromMother
+Content-Type: application/json
+
+{
+  "motherNodeId": 16,
+  "childNodeId": 17
+}
+
+#
+POST http://pd.dev:4003/add/fromBoth
+Content-Type: application/json
+
+{
+  "fatherNodeId": 18,
+  "motherNodeId": 19,
+  "childNodeId": 20
+}
+
+#
+GET http://pd.dev:4003/count/parents
+Content-Type: application/json
+
+{
+  "personNodeId": 20
+}
+
+#
+GET http://pd.dev:4003/find/parents
+Content-Type: application/json
+
+{
+  "personNodeId": 13
+}
+

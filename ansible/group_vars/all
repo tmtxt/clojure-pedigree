@@ -3,14 +3,14 @@
 project_dir: /Users/personal/clojure-pedigree
 schemup_dir: "{{project_dir}}/schema"
 script_dir: "{{ project_dir }}/scripts"
-cache_dir: "{{ project_dir }}/cache"
+cache_dir: "{{ project_dir }}/.cache"
+data_dir: "{{ project_dir }}/.data"
 person_image_dir: "{{project_dir}}/site/resources/public/person-image"
 out_dirs:
   - "{{ script_dir }}"
   - "{{ cache_dir }}"
-  - "{{ cache_dir }}/.m2"
-  - "{{ cache_dir }}/.frontend_npm"
-  - "{{ cache_dir }}/.neonode_npm"
+  - "{{ cache_dir }}/m2"
+  - "{{ cache_dir }}/npm"
   - "{{person_image_dir}}"
   - "{{person_image_dir}}/original"
   - "{{person_image_dir}}/small"
