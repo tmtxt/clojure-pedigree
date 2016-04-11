@@ -1,2 +1,2 @@
 exports.db = require('./db.js');
-exports.pedigreeRelation = require('./pedigree_relation.js');
+exports.marriageRelation = require('./marriage_relation.js');
