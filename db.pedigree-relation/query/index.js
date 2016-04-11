@@ -5,5 +5,6 @@ function readQuery(query) {
 }
 
 module.exports = {
-  'countParents': readQuery('count_parents')
+  countParents: readQuery('count_parents'),
+  findParents: readQuery('find_parents')
 };

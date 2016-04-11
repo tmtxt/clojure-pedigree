@@ -4,23 +4,22 @@ const router = require('koa-router')();
 const util = require('./util.js');
 
 // Koa handler function
-function* countHandler() {
+function* findHandler() {
   const logTrace = this.logTrace;
   const pedigreeRelation = this.neo.pedigreeRelation;
   const body = this.request.body;
   const personNodeId = body.personNodeId;
 
   try {
-    const count = yield pedigreeRelation.countParents(personNodeId);
+    const parentNodes = yield pedigreeRelation.findParents(personNodeId);
 
-    logTrace.add('info', 'pedigreeRelation.countParents()', 'Success');
+    logTrace.add('info', 'pedigreeRelation.findParents()', 'Success');
     this.body = {
       success: true,
-      message: `This node has ${count} parents`,
-      data: count
+      data: parentNodes
     };
   } catch (err) {
-    logTrace.add('error', 'pedigreeRelation.countParents()', err);
+    logTrace.add('error', 'pedigreeRelation.findParents()', err);
     this.body = {
       success: false,
       message: err
@@ -29,6 +28,6 @@ function* countHandler() {
   }
 }
 
-router.get('/parents', util.requirePersonNodeIdMdw, countHandler);
+router.get('/parents', util.requirePersonNodeIdMdw, findHandler);
 
 module.exports = router;

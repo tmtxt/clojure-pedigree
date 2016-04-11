@@ -111,7 +111,7 @@ function countParents(personNodeId) {
   return new Promise(function(resolve, reject){
     neo.query(query.countParents, {id: personNodeId}, function(err, results){
       if (err) {
-        reject();
+        reject(err);
         return;
       }
 
@@ -124,7 +124,27 @@ function countParents(personNodeId) {
   });
 }
 
+// Find parents node
+function findParents(personNodeId) {
+  function execute(resolve, reject) {
+    neo.query(query.findParents, {id: personNodeId}, function(err, results){
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      results = _.map(results, function(result){
+        return changeCase.camelCase(result);
+      });
+      resolve(results);
+    });
+  }
+
+  return new Promise(execute);
+}
+
 exports.addChildForFather = addChildForFather;
 exports.addChildForMother = addChildForMother;
 exports.addChildForParent = addChildForParent;
 exports.countParents = countParents;
+exports.findParents = findParents;
