@@ -40,3 +40,8 @@ function adu {
 function adpr {
     docker exec -it $(docker-compose ps | grep 'db.pedigree-relation' | awk '{print $1}') bash
 }
+
+# attach svc marriage relation
+function admr {
+    docker exec -it $(docker-compose ps | grep 'db.marriage-relation' | awk '{print $1}') bash
+}
