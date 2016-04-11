@@ -5,7 +5,8 @@ const router = require('koa-router')();
 // Koa handler function
 function* indexHandler() {
   this.body = {
-    message: 'hello'
+    message: 'hello',
+    success: true
   };
 }
 
