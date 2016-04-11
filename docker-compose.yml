@@ -18,6 +18,7 @@ koa.api.base:
   image: busybox
   volumes:
     - ./logs:/logs
+    - ./.cache/npm:/root/.npm
     - ./node.libs/pg.logger:/usr/local/lib/node_modules/pg.logger
     - ./node.libs/pg.koa.api:/usr/local/lib/node_modules/pg.koa.api
 
@@ -94,7 +95,7 @@ server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - ./.cache/.m2:/root/.m2
+    - ./.cache/m2:/root/.m2
     - .:/usr/src/root
   volumes_from:
     - websources
@@ -141,7 +142,7 @@ frontend:
   build: ./images/frontend
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - ./.cache/.frontend_npm:/root/.npm
+    - ./.cache/npm:/root/.npm
   volumes_from:
     - websources
   env_file:
@@ -151,7 +152,7 @@ neonode:
   build: ./images/neonode
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - ./.cache/.neonode_npm:/root/.npm
+    - ./.cache/npm:/root/.npm
   volumes_from:
     - neosources
   env_file:
