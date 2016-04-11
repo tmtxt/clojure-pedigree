@@ -105,6 +105,25 @@ api.logic:
   ports:
     - "4005:80"
 
+# logging-related containers
+svc.fluentd:
+  build: ./images/fluentd
+  volumes:
+    - ./logs:/var/log
+  links:
+    - svc.elasticsearch:svc.elasticsearch
+
+svc.elasticsearch:
+  build: ./images/elasticsearch
+
+svc.kibana:
+  build: ./images/kibana
+  links:
+    - svc.elasticsearch:elasticsearch
+  ports:
+    - 5601:5601
+
+#####
 server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
