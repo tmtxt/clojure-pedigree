@@ -13,12 +13,25 @@ node.sources:
   volumes:
     - ./neo:/usr/src/app
 
+# base image for koa api services
 koa.api.base:
-  build: ./images/koa.api
+  image: busybox
   volumes:
     - ./logs:/logs
     - ./node.libs/pg.logger:/usr/local/lib/node_modules/pg.logger
     - ./node.libs/pg.koa.api:/usr/local/lib/node_modules/pg.koa.api
+
+# base image for postgres storage
+postgres.storage:
+  image: busybox
+  volumes:
+    - /var/lib/postgresql/data
+
+# base image for neo4j storage
+neo4j.storage:
+  image: busybox
+  volumes:
+    - /data
 
 db.person:
   build: ./images/koa.api
@@ -100,6 +113,8 @@ postgres:
     - docker.env
   ports:
     - "5432:5432"
+  volumes_from:
+    - postgres.storage
 
 schemup:
   build: ./images/schemup
@@ -119,6 +134,8 @@ neo4j:
     - docker.env
   environment:
     NEO4J_AUTH: none
+  volumes_from:
+    - neo4j.storage
 
 frontend:
   build: ./images/frontend
