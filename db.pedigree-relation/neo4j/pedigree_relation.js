@@ -4,6 +4,7 @@
 const neo = require('./db.js');
 const changeCase = require('change-case-object');
 const _ = require('lodash');
+const query = require('../query');
 
 // labels
 const fatherChildLabel = 'father_child';
@@ -105,6 +106,25 @@ function* addChildForParent(fatherNode, motherNode, childNode, fatherChildOrder,
   };
 }
 
+// Count how many parents this node has
+function countParents(personNodeId) {
+  return new Promise(function(resolve, reject){
+    neo.query(query.countParents, {id: personNodeId}, function(err, results){
+      if (err) {
+        reject();
+        return;
+      }
+
+      let count = 0;
+      if (results.length !== 0) {
+        count = results[0].count;
+      }
+      resolve(count);
+    });
+  });
+}
+
 exports.addChildForFather = addChildForFather;
 exports.addChildForMother = addChildForMother;
 exports.addChildForParent = addChildForParent;
+exports.countParents = countParents;

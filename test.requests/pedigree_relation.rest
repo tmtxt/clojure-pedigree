@@ -25,3 +25,11 @@ Content-Type: application/json
   "motherNodeId": 19,
   "childNodeId": 20
 }
+
+#
+GET http://pd.dev:4003/count/parents
+Content-Type: application/json
+
+{
+  "personNodeId": 20
+}
