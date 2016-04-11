@@ -5,6 +5,7 @@
 *.tern-port
 /sass/bower
 *.DS_Store*
-/cache
+/.cache
+/.data
 *.retry
 /logs/*

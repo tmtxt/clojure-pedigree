@@ -63,11 +63,25 @@ db.pedigree-relation:
   links:
     - neo4j:neo4j
 
+db.marriage-relation:
+  build: ./images/koa.api
+  volumes:
+    - ./db.marriage-relation:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: sh -c 'while true; do sleep 10000; done'
+  ports:
+    - "4004:80"
+  links:
+    - neo4j:neo4j
+
 server:
   build: ./images/server
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - ./cache/.m2:/root/.m2
+    - ./.cache/.m2:/root/.m2
     - .:/usr/src/root
   volumes_from:
     - websources
@@ -110,7 +124,7 @@ frontend:
   build: ./images/frontend
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - ./cache/.frontend_npm:/root/.npm
+    - ./.cache/.frontend_npm:/root/.npm
   volumes_from:
     - websources
   env_file:
@@ -120,7 +134,7 @@ neonode:
   build: ./images/neonode
   command: sh -c 'while true; do sleep 10000; done'
   volumes:
-    - ./cache/.neonode_npm:/root/.npm
+    - ./.cache/.neonode_npm:/root/.npm
   volumes_from:
     - neosources
   env_file:
