@@ -84,7 +84,7 @@ module.exports = class KoaApi {
         logTrace.add('error', 'Error in processing request', {status});
       }
 
-      logTrace.write({status, request, response});
+      logTrace.write({status, request, response, serviceName});
     };
   }
 };
