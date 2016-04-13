@@ -1,7 +1,7 @@
 'use strict';
 
-var LogTrace = require('pg.logger').LogTrace;
-var logger = require('pg.logger').logger;
+var LogTrace = require('pd.logger').LogTrace;
+var logger = require('pd.logger').logger;
 var uuid = require('node-uuid');
 var _ = require('lodash');
 
