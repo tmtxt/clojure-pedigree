@@ -12,9 +12,9 @@ var port = config.serverPort;
 var context = {};
 
 // routes
-var index = require('./routes/index.js');
-koa.use('/user', index.routes(), index.allowedMethods());
-var routes = koa.routes();
+const user = require('./routes/user.js');
+koa.use('/user', user.routes(), user.allowedMethods());
+const routes = koa.routes();
 
 // create the app
 new KoaApi({

@@ -9,6 +9,7 @@ RUN npm install -g koa-json@1.1.1
 RUN npm install -g koa-router@5.4.0
 RUN npm install -g pg-native@1.10.0
 RUN npm install -g change-case-object@2.0.0
+RUN npm install -g request@2.71.0
 
 WORKDIR /usr/src/app
 COPY bashrc /root/.bashrc

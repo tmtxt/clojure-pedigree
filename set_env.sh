@@ -27,26 +27,26 @@ function aw {
 }
 
 # attach svc person
-function adp {
-    docker exec -it $(docker-compose ps | grep 'db.person' | awk '{print $1}') bash
+function asp {
+    docker exec -it $(docker-compose ps | grep 'svc.person' | awk '{print $1}') bash
 }
 
 # attach svc user
-function adu {
-    docker exec -it $(docker-compose ps | grep 'db.user' | awk '{print $1}') bash
+function asu {
+    docker exec -it $(docker-compose ps | grep 'svc.user' | awk '{print $1}') bash
 }
 
 # attach svc pedigree relation
-function adpr {
-    docker exec -it $(docker-compose ps | grep 'db.pedigree-relation' | awk '{print $1}') bash
+function aspr {
+    docker exec -it $(docker-compose ps | grep 'svc.pedigree-relation' | awk '{print $1}') bash
 }
 
 # attach svc marriage relation
-function admr {
-    docker exec -it $(docker-compose ps | grep 'db.marriage-relation' | awk '{print $1}') bash
+function asmr {
+    docker exec -it $(docker-compose ps | grep 'svc.marriage-relation' | awk '{print $1}') bash
 }
 
 # attach svc marriage relation
-function aal {
+function asal {
     docker exec -it $(docker-compose ps | grep 'api.logic' | awk '{print $1}') bash
 }
