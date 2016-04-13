@@ -104,6 +104,8 @@ api.logic:
   command: sh -c 'while true; do sleep 10000; done'
   ports:
     - "4005:80"
+  links:
+    - svc.user:svc.user
 
 # logging-related containers
 svc.fluentd:

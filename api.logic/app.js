@@ -2,14 +2,17 @@
 
 // libs
 var koa = require('koa-router')();
-var KoaApi = require('pg.koa.api');
+var KoaApi = require('pd.koa.api');
 
 // config
 var config = require('./config');
 var port = config.serverPort;
 
 // context
-var context = {};
+var services = require('./services');
+var context = {
+  services: services
+};
 
 // routes
 const user = require('./routes/user.js');

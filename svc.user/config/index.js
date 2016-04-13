@@ -1,5 +1,5 @@
 module.exports = {
-  serverPort: process.env.DB_USER_PORT,
+  serverPort: process.env.SVC_USER_PORT,
 
   postgresHost: process.env.POSTGRES_HOST,
   postgresPort: process.env.POSTGRES_PORT,
