@@ -44,6 +44,15 @@ module.exports = class Service{
       throw result.error;
     }
 
-    return result.body;
+    const statusCode = result.response.statusCode;
+    if(_.parseInt(statusCode) < 200 || _.parseInt(statusCode) > 400) {
+      throw result.response;
+    }
+
+    if(!result.body.success) {
+      throw result.body;
+    }
+
+    return _.pick(result.body, ['message', 'data']);
   }
 };

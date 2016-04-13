@@ -7,12 +7,18 @@ function* authenticateHandler() {
   const logTrace = this.logTrace;
   const svcUser = this.services.user;
 
-  const data = yield svcUser.authenticate('admin', 'admin');
-
-  this.body = {
-    data,
-    success: true
-  };
+  try {
+    const data = yield svcUser.authenticate('admin', 'admin1');
+    this.body = {
+      success: true,
+      message: data.message
+    };
+  } catch (err) {
+    this.body = {
+      success: false,
+      message: err
+    };
+  }
 }
 
 router.post('/authenticate', authenticateHandler);
