@@ -142,7 +142,7 @@ server:
   links:
     - postgres:postgres
     - neonode:neonode
-    - api.logic:api.logic
+    - svc.user:svc.user
 
 postgres:
   build: ./images/postgres
