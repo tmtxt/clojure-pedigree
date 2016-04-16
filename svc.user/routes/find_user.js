@@ -27,8 +27,6 @@ function* findHandler() {
   const logTrace = this.logTrace;
   const User = this.pg.User;
   const UserRole = this.pg.UserRole;
-  const db = this.pg.db;
-  const transaction = yield db.transaction();
   const username = this.request.body.username;
 
   try {
@@ -59,7 +57,6 @@ function* findHandler() {
       data
     };
   } catch(err) {
-    yield transaction.rollback();
     logTrace.add('error', `Cannot find user with username ${username}`, err);
     this.body = {
       success: false,

@@ -27,8 +27,6 @@ function* requireDataMdw(next) {
 function* authHandler() {
   const logTrace = this.logTrace;
   const User = this.pg.User;
-  const db = this.pg.db;
-  const transaction = yield db.transaction();
   const username = this.request.body.username;
   const password = this.request.body.password;
 
@@ -56,7 +54,6 @@ function* authHandler() {
       message
     };
   } catch(err) {
-    yield transaction.rollback();
     logTrace.add('error', `Auth not successful for user with username ${username}`, err);
     this.body = {
       success: false,

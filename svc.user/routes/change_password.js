@@ -29,7 +29,6 @@ function* changePasswordHandler() {
   const logTrace = this.logTrace;
   const User = this.pg.User;
   const db = this.pg.db;
-  const transaction = yield db.transaction();
   const username = this.request.body.username;
   const oldPassword = this.request.body.oldPassword;
   const newPassword = this.request.body.newPassword;
@@ -67,7 +66,6 @@ function* changePasswordHandler() {
       data
     };
   } catch(err) {
-    yield transaction.rollback();
     logTrace.add('error', `Cannot find user with username ${username}`, err);
     this.body = {
       success: false,
