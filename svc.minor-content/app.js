@@ -10,18 +10,14 @@ var port = config.serverPort;
 
 // context
 var postgres = require('./postgres');
-var neo4j = require('./neo4j');
 var context = {
-  pg: postgres,
-  neo: neo4j
+  pg: postgres
 };
 
 // routes
 var add = require('./routes/add.js');
-var deleteRoute = require('./routes/delete.js');
 var find = require('./routes/find.js');
 koa.use('/add', add.routes(), add.allowedMethods());
-koa.use('/delete', deleteRoute.routes(), deleteRoute.allowedMethods());
 koa.use('/find', find.routes(), find.allowedMethods());
 var routes = koa.routes();
 
@@ -30,5 +26,5 @@ new KoaApi({
   port,
   routes,
   context,
-  svcName: 'svc.person'
+  svcName: 'svc.minor-content'
 });
