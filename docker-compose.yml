@@ -19,8 +19,8 @@ koa.api.base:
   volumes:
     - ./logs:/logs
     - ./.cache/npm:/root/.npm
-    - ./node.libs/pg.logger:/usr/local/lib/node_modules/pg.logger
-    - ./node.libs/pg.koa.api:/usr/local/lib/node_modules/pg.koa.api
+    - ./node.libs/pd.logger:/usr/local/lib/node_modules/pd.logger
+    - ./node.libs/pd.koa.api:/usr/local/lib/node_modules/pd.koa.api
 
 # base image for postgres storage
 postgres.storage:
@@ -35,10 +35,10 @@ neo4j.storage:
     - /data
 
 # database-related microservices
-db.person:
+svc.person:
   build: ./images/koa.api
   volumes:
-    - ./db.person:/usr/src/app
+    - ./svc.person:/usr/src/app
   volumes_from:
     - koa.api.base
   env_file:
@@ -50,10 +50,10 @@ db.person:
     - postgres:postgres
     - neo4j:neo4j
 
-db.user:
+svc.user:
   build: ./images/koa.api
   volumes:
-    - ./db.user:/usr/src/app
+    - ./svc.user:/usr/src/app
   volumes_from:
     - koa.api.base
   env_file:
@@ -64,10 +64,10 @@ db.user:
   links:
     - postgres:postgres
 
-db.pedigree-relation:
+svc.pedigree-relation:
   build: ./images/koa.api
   volumes:
-    - ./db.pedigree-relation:/usr/src/app
+    - ./svc.pedigree-relation:/usr/src/app
   volumes_from:
     - koa.api.base
   env_file:
@@ -78,10 +78,10 @@ db.pedigree-relation:
   links:
     - neo4j:neo4j
 
-db.marriage-relation:
+svc.marriage-relation:
   build: ./images/koa.api
   volumes:
-    - ./db.marriage-relation:/usr/src/app
+    - ./svc.marriage-relation:/usr/src/app
   volumes_from:
     - koa.api.base
   env_file:
@@ -104,24 +104,26 @@ api.logic:
   command: sh -c 'while true; do sleep 10000; done'
   ports:
     - "4005:80"
+  links:
+    - svc.user:svc.user
 
 # logging-related containers
-svc.fluentd:
-  build: ./images/fluentd
-  volumes:
-    - ./logs:/var/log
-  links:
-    - svc.elasticsearch:svc.elasticsearch
+# svc.fluentd:
+#   build: ./images/fluentd
+#   volumes:
+#     - ./logs:/var/log
+#   links:
+#     - svc.elasticsearch:svc.elasticsearch
 
-svc.elasticsearch:
-  build: ./images/elasticsearch
+# svc.elasticsearch:
+#   build: ./images/elasticsearch
 
-svc.kibana:
-  build: ./images/kibana
-  links:
-    - svc.elasticsearch:elasticsearch
-  ports:
-    - 5601:5601
+# svc.kibana:
+#   build: ./images/kibana
+#   links:
+#     - svc.elasticsearch:elasticsearch
+#   ports:
+#     - 5601:5601
 
 #####
 server:
@@ -140,6 +142,7 @@ server:
   links:
     - postgres:postgres
     - neonode:neonode
+    - svc.user:svc.user
 
 postgres:
   build: ./images/postgres

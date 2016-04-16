@@ -2,13 +2,15 @@
   (:require [compojure.core :refer :all]
             [app.views.layout :as layout]
             [app.util.main :as util]
+            [app.logic.user :as user]
             [app.util.security :as security]
             [ring.util.response :refer [response redirect content-type]]
             [buddy.auth :refer [authenticated?]]
             [config.main :refer [config]]
             [app.i18n.main :refer [make-t make-page-tran]]
             [config.main :refer [config]]
-            [app.models.minor-content :refer [find-content]]))
+            [app.models.minor-content :refer [find-content]]
+            [slingshot.slingshot :refer [try+]]))
 
 (def preface-key (:preface-key config))
 (def tree-desc-key (:tree-description-key config))
@@ -26,18 +28,21 @@
   (layout/render request "home/login.html"))
 
 (defn login-authenticate [request]
-  (let [username (util/param request "username")
-        password (util/param request "password")
-        user-info (security/authen-user username password)
-        t (make-t request)]
-    (if user-info
-      (let [session (:session request)
-            updated-session (assoc session
-                                   :identity (:id user-info)
-                                   :user-info user-info
-                                   :locale (:locale user-info))]
-        (-> (redirect "/welcome") (assoc :session updated-session)))
-      (layout/render request "home/login.html" {:message (t :login/invalid-error)}))))
+  (try+
+   (let [params (util/params request)
+         username (:username params)
+         password (:password params)
+         user-info (-> (user/authenticate username password)
+                       (assoc :authenticated true))]
+     (let [session (:session request)
+           updated-session (assoc session
+                                  :identity (:id user-info)
+                                  :user-info user-info
+                                  :locale (:locale user-info))]
+       (-> (redirect "/welcome") (assoc :session updated-session))))
+   (catch Object _
+     (layout/render request "home/login.html"
+                    {:message "Tên đăng nhập hoặc mật khẩu không đúng"}))))
 
 ;;; logout
 (defn logout [request]

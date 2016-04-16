@@ -10,7 +10,9 @@ const instanceProps = [
   'fullName',
   'email',
   'password',
-  'username'
+  'username',
+  'language',
+  'locale'
 ];
 
 module.exports = sequelize.define('user', {
@@ -23,11 +25,15 @@ module.exports = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
     allowNull: false
-  }
+  },
+  language: Sequelize.STRING
 }, {
   getterMethods: {
     fullName: function() {
       return this.getDataValue('full_name');
+    },
+    locale: function() {
+      return this.getDataValue('language');
     }
   },
 
@@ -38,6 +44,9 @@ module.exports = sequelize.define('user', {
     password: function(v) {
       const hashedPassword = bcrypt.hashSync(v);
       this.setDataValue('password', hashedPassword);
+    },
+    locale: function(v) {
+      this.setDataValue('language', v);
     }
   },
 

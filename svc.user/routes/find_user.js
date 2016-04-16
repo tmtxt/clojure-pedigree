@@ -7,11 +7,10 @@ function* requireDataMdw(next) {
   const logTrace = this.logTrace;
   const body = this.request.body;
   const username = body.username;
-  const password = body.password;
 
-  if (!username || !password) {
-    let message = 'Username and password are required';
-    logTrace.add('error', 'Data validation', message);
+  if (!username) {
+    let message = 'User data is required';
+    logTrace.add('error', 'User data validation', message);
     this.body = {
       success: false,
       message
@@ -24,16 +23,13 @@ function* requireDataMdw(next) {
 
 
 // Koa handler function
-function* authHandler() {
+function* findHandler() {
   const logTrace = this.logTrace;
   const User = this.pg.User;
-  const db = this.pg.db;
-  const transaction = yield db.transaction();
+  const UserRole = this.pg.UserRole;
   const username = this.request.body.username;
-  const password = this.request.body.password;
 
   try {
-    // Find user name by id
     logTrace.add('info', 'findByUsername()');
     const user = yield User.findByUsername(username);
     if (!user) {
@@ -42,22 +38,26 @@ function* authHandler() {
       throw new Error(message);
     }
 
-    // Check if password match
-    if (!user.isPasswordMatched(password)) {
-      let message = 'Password does not match';
+    const userRole = yield UserRole.findByUserId(user.id);
+    if (!userRole) {
+      let message = `Cannot find user role with user id ${user.id}`;
       logTrace.add('error', message);
       throw new Error(message);
     }
 
-    let message = `Auth successful for user with username ${username}`;
+    const data = {
+      user: user.getData(),
+      userRole: userRole.getData()
+    };
+    let message = `User with username ${username} found`;
     logTrace.add('info', message);
     this.body = {
       success: true,
-      message
+      message,
+      data
     };
   } catch(err) {
-    yield transaction.rollback();
-    logTrace.add('error', `Auth not successful for user with username ${username}`, err);
+    logTrace.add('error', `Cannot find user with username ${username}`, err);
     this.body = {
       success: false,
       message: err.message
@@ -65,6 +65,6 @@ function* authHandler() {
   }
 }
 
-router.post('/auth', requireDataMdw, authHandler);
+router.get('/find', requireDataMdw, findHandler);
 
 module.exports = router;

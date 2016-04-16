@@ -1,7 +1,7 @@
 'use strict';
 
-var LogTrace = require('pg.logger').LogTrace;
-var logger = require('pg.logger').logger;
+var LogTrace = require('pd.logger').LogTrace;
+var logger = require('pd.logger').logger;
 var uuid = require('node-uuid');
 var _ = require('lodash');
 
@@ -84,7 +84,7 @@ module.exports = class KoaApi {
         logTrace.add('error', 'Error in processing request', {status});
       }
 
-      logTrace.write({status, request, response});
+      logTrace.write({status, request, response, serviceName});
     };
   }
 };

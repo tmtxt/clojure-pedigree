@@ -2,7 +2,7 @@
 
 // libs
 var koa = require('koa-router')();
-var KoaApi = require('pg.koa.api');
+var KoaApi = require('pd.koa.api');
 
 // config
 var config = require('./config');
