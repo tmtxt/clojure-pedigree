@@ -1,5 +1,6 @@
 (ns app.controllers.home
   (:require [compojure.core :refer :all]
+            [app.views.main :as view]
             [app.views.layout :as layout]
             [app.util.main :as util]
             [app.logic.user :as user]
@@ -50,7 +51,7 @@
       (assoc :session {})))
 
 (defn welcome [request]
-  (layout/render request "home/welcome.html"))
+  (view/render-template request "home/welcome.html"))
 
 (defn message [request]
   (layout/render-message request "hello" :redirect "/tree/view/" :text "Cây gia phả"))
