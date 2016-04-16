@@ -5,3 +5,24 @@ Content-Type: application/json
 {
   "key": "preface"
 }
+
+#
+POST http://pd.dev:4006/add
+Content-Type: application/json
+
+{
+  "key": "preface2",
+  "value": "hello"
+}
+
+#
+POST http://pd.dev:4006/add
+Content-Type: application/json
+
+{
+  "key": "preface3",
+  "value": {
+    "content": "hello",
+    "text": "abc"
+  }
+}

@@ -6,12 +6,12 @@ const router = require('koa-router')();
 function* validateMdw(next) {
   const logTrace = this.logTrace;
   const body = this.request.body;
-  const husbandNodeId = body.husbandNodeId;
-  const wifeNodeId = body.wifeNodeId;
+  const key = body.key;
+  const value = body.value;
 
-  if (!husbandNodeId || !wifeNodeId) {
-    let message = 'husbandNodeId and wifeNodeId are required';
-    logTrace.add('error', 'Validate husbandNodeId and wifeNodeId', message);
+  if (!key || !value) {
+    let message = 'Minor content key and value are required';
+    logTrace.add('error', 'Validate minor content key and value', message);
     this.body = {
       success: false,
       message
@@ -25,26 +25,27 @@ function* validateMdw(next) {
 // Koa handler function
 function* addHandler() {
   const logTrace = this.logTrace;
-  const marriageRelation = this.neo.marriageRelation;
   const body = this.request.body;
-  const husbandNodeId = body.husbandNodeId;
-  const wifeNodeId = body.wifeNodeId;
-  const husbandWifeOrder = body.husbandWifeOrder;
-  const wifeHusbandOrder = body.wifeHusbandOrder;
+  const key = body.key;
+  const value = body.value;
+  const MinorContent = this.pg.MinorContent;
 
   try {
-    const rels = yield marriageRelation.addMarriage(
-      husbandNodeId, wifeNodeId, husbandWifeOrder, wifeHusbandOrder
-    );
+    const data = {key, value};
+    logTrace.add('info', 'MinorContent.build()', data);
+    const minorContent = MinorContent.build(data);
 
-    logTrace.add('info', 'marriageRelation.addMarriage()', 'Success');
+    logTrace.add('info', 'minorContent.save()');
+    yield minorContent.save();
+
+    logTrace.add('info', 'minorContent.save()', 'Success');
     this.body = {
       success: true,
-      message: 'Marriage relation created',
-      data: rels
+      message: 'Minor content created',
+      data: minorContent
     };
   } catch (err) {
-    logTrace.add('error', 'marriageRelation.addMarriage()', err);
+    logTrace.add('error', 'minorContent.save()', err);
     this.body = {
       success: false,
       message: err

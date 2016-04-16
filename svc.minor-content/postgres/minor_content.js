@@ -15,8 +15,17 @@ module.exports = sequelize.define('user', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  value: Sequelize.STRING
+  value: Sequelize.JSONB
 }, {
+  setterMethods: {
+    value: function(v) {
+      if (!_.isObject(v)) {
+        v = {content: v};
+      }
+      this.setDataValue('value', v);
+    }
+  },
+
   instanceMethods: {
     getData: function(fields) {
       if (fields) {
