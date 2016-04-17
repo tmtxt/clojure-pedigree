@@ -26,5 +26,5 @@ new KoaApi({
   port,
   routes,
   context,
-  svcName: 'db.marriage-relation'
+  svcName: 'svc.marriage-relation'
 });

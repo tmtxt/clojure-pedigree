@@ -36,6 +36,11 @@ function asu {
     docker exec -it $(docker-compose ps | grep 'svc.user' | awk '{print $1}') bash
 }
 
+# attach minor content
+function asmc {
+    docker exec -it $(docker-compose ps | grep 'svc.minor-content' | awk '{print $1}') bash
+}
+
 # attach svc pedigree relation
 function aspr {
     docker exec -it $(docker-compose ps | grep 'svc.pedigree-relation' | awk '{print $1}') bash

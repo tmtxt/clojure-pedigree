@@ -92,6 +92,20 @@ svc.marriage-relation:
   links:
     - neo4j:neo4j
 
+svc.minor-content:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.minor-content:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: sh -c 'while true; do sleep 10000; done'
+  ports:
+    - "4006:80"
+  links:
+    - postgres:postgres
+
 # api logic service
 api.logic:
   build: ./images/koa.api
