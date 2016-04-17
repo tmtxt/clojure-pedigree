@@ -23,7 +23,7 @@ function* validateMdw(next) {
 }
 
 // Koa handler function
-function* addHandler() {
+function* updateHandler() {
   const logTrace = this.logTrace;
   const body = this.request.body;
   const key = body.key;
@@ -31,10 +31,15 @@ function* addHandler() {
   const MinorContent = this.pg.MinorContent;
 
   try {
-    const data = {key, value};
-    logTrace.add('info', 'MinorContent.build()', data);
-    const minorContent = MinorContent.build(data);
+    logTrace.add('info', 'MinorContent.findByKey()', key);
+    const minorContent = yield MinorContent.findByKey(key);
 
+    if (!minorContent) {
+      logTrace.add('error', 'MinorContent.findByKey()', 'Cannot find');
+      throw `Cannot find minor content value with key ${key}`;
+    }
+
+    minorContent.value = value;
     logTrace.add('info', 'minorContent.save()');
     yield minorContent.save();
 
@@ -45,7 +50,7 @@ function* addHandler() {
       data: minorContent.getData()
     };
   } catch (err) {
-    logTrace.add('error', 'minorContent.save()', err);
+    logTrace.add('error', 'updateHandler()', err);
     this.body = {
       success: false,
       message: err
@@ -54,6 +59,6 @@ function* addHandler() {
   }
 }
 
-router.post('/', validateMdw, addHandler);
+router.post('/', validateMdw, updateHandler);
 
 module.exports = router;

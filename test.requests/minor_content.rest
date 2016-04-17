@@ -26,3 +26,15 @@ Content-Type: application/json
     "text": "abc"
   }
 }
+
+#
+POST http://pd.dev:4006/update
+Content-Type: application/json
+
+{
+  "key": "preface3",
+  "value": {
+    "content": "hello222",
+    "text": "abc"
+  }
+}

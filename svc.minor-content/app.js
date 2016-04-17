@@ -17,8 +17,10 @@ var context = {
 // routes
 var add = require('./routes/add.js');
 var find = require('./routes/find.js');
+var update = require('./routes/update.js');
 koa.use('/add', add.routes(), add.allowedMethods());
 koa.use('/find', find.routes(), find.allowedMethods());
+koa.use('/update', update.routes(), update.allowedMethods());
 var routes = koa.routes();
 
 // create the app

@@ -40,7 +40,7 @@ function* findHandler() {
     this.body = {
       success: true,
       message: 'Minor content found',
-      data: minorContent
+      data: minorContent.getData()
     };
   } catch (err) {
     logTrace.add('error', 'MinorContent.findByKey()', err);
