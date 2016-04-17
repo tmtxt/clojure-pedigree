@@ -10,7 +10,8 @@ echo "$(docker-machine ip test) pd.dev" | sudo tee -a /etc/hosts
 eval "$(docker-machine env test)" OR $(docker-machine env test)
 
 # aliases
-alias dcu="docker-compose up -d"
+alias dcu="docker-compose up"
+alias dcud="docker-compose up -d"
 alias dcp="docker-compose ps"
 alias dcr="docker-compose rm"
 alias dcl="docker-compose logs"

@@ -43,7 +43,7 @@ svc.person:
     - koa.api.base
   env_file:
     - docker.env
-  command: sh -c 'while true; do sleep 10000; done'
+  command: nodemon --legacy-watch app.js
   ports:
     - "4000:80"
   links:
@@ -58,7 +58,7 @@ svc.user:
     - koa.api.base
   env_file:
     - docker.env
-  command: sh -c 'while true; do sleep 10000; done'
+  command: nodemon --legacy-watch app.js
   ports:
     - "4002:80"
   links:
@@ -72,7 +72,7 @@ svc.pedigree-relation:
     - koa.api.base
   env_file:
     - docker.env
-  command: sh -c 'while true; do sleep 10000; done'
+  command: nodemon --legacy-watch app.js
   ports:
     - "4003:80"
   links:
@@ -86,7 +86,7 @@ svc.marriage-relation:
     - koa.api.base
   env_file:
     - docker.env
-  command: sh -c 'while true; do sleep 10000; done'
+  command: nodemon --legacy-watch app.js
   ports:
     - "4004:80"
   links:
@@ -100,26 +100,11 @@ svc.minor-content:
     - koa.api.base
   env_file:
     - docker.env
-  command: sh -c 'while true; do sleep 10000; done'
+  command: nodemon --legacy-watch app.js
   ports:
     - "4006:80"
   links:
     - postgres:postgres
-
-# api logic service
-api.logic:
-  build: ./images/koa.api
-  volumes:
-    - ./api.logic:/usr/src/app
-  volumes_from:
-    - koa.api.base
-  env_file:
-    - docker.env
-  command: sh -c 'while true; do sleep 10000; done'
-  ports:
-    - "4005:80"
-  links:
-    - svc.user:svc.user
 
 # logging-related containers
 # svc.fluentd:
@@ -200,7 +185,7 @@ frontend:
 
 neonode:
   build: ./images/neonode
-  command: sh -c 'while true; do sleep 10000; done'
+  command: nodemon --legacy-watch app.js
   volumes:
     - ./.cache/npm:/root/.npm
   volumes_from:
