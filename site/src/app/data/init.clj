@@ -6,8 +6,8 @@
             [app.models.marriage-relation :as mrl]
             [app.models.pedigree-relation :as prl]
             [app.data.sample :as sample]
-            [config.main :refer [config]]
-            [app.models.minor-content :refer [find-content add-content]]))
+            [app.logic.preface-content :as preface]
+            [app.logic.tree-desc-content :as tree-desc]))
 
 (defn create-init-user []
   (when (db-util/table-empty? user-model/user)
@@ -77,12 +77,10 @@
 (def lorem "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
 
 (defn create-minor-content []
-  (let [keys [:preface-key :tree-description-key]
-        keys (map #(% config) keys)
-        keys (doseq [key keys]
-               (when-not (find-content key)
-                   (add-content key {:content lorem})))]
-    ))
+  (when (empty? (-> (preface/get) (:content)))
+    (preface/add lorem))
+  (when (empty? (-> (tree-desc/get) (:content)))
+    (tree-desc/add lorem)))
 
 (defn create-init-data []
   (create-minor-content)

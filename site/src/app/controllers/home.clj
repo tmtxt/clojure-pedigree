@@ -3,32 +3,23 @@
             [app.views.main :as view]
             [app.views.layout :as layout]
             [app.util.main :as util]
-            [app.logic.user :as user]
             [app.util.security :as security]
-            [ring.util.response :refer [response redirect content-type]]
-            [buddy.auth :refer [authenticated?]]
-            [config.main :refer [config]]
-            [app.i18n.main :refer [make-t make-page-tran]]
-            [config.main :refer [config]]
-            [app.models.minor-content :refer [find-content]]
-            [slingshot.slingshot :refer [try+]]))
+            [ring.util.response :refer [redirect]]
+            [slingshot.slingshot :refer [try+]]
+            [app.logic.preface-content :as preface]
+            [app.logic.tree-desc-content :as tree-desc]
+            [app.logic.user :as user]))
 
-(def preface-key (:preface-key config))
-(def tree-desc-key (:tree-description-key config))
+(defn home "Render index page" [request]
+  (view/render-template request
+                        "home/index.html"
+                        {:preface (-> (preface/get) (:content))
+                         :tree-desc (-> (tree-desc/get) :content)}))
 
-;;; index
-(defn home [request]
-  (layout/render request
-                 "home/index.html"
-                 {:preface (-> preface-key find-content :content)
-                  :tree-desc (-> tree-desc-key find-content :content)}
-                 (make-page-tran request :page-index)))
+(defn login-render "Render login page" [request]
+  (view/render-template request "home/login.html"))
 
-;;; login
-(defn login-render [request]
-  (layout/render request "home/login.html"))
-
-(defn login-authenticate [request]
+(defn login-authenticate "Process login" [request]
   (try+
    (let [params (util/params request)
          username (:username params)
