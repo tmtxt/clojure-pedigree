@@ -1,22 +1,12 @@
 (ns app.util.security
   (:require [crypto.password.bcrypt :as crypto]
-            [app.models.user :as user-model]
-            [app.models.user-role :as user-role-model]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.accessrules :refer (error)]
             [slingshot.slingshot :refer [try+ throw+]]
             [app.util.pg :as db-util]))
 
-(defn authen-user
-  "Authenticate the input username and password. Return user entity if authenticated, otherwise, return nil"
-  [username password]
-  (let [user (user-model/find-by-username username)]
-    (if (and user (crypto/check password (:password user)))
-      (assoc user
-             :role (:role-name user)
-             :authenticated true
-             :locale (:language user))
-      nil)))
+(def USER_ROLE_NAME_USER "user")
+(def USER_ROLE_NAME_ADMIN "admin")
 
 (defn unauthorized-handler [request value]
   {:status 403
@@ -34,6 +24,6 @@
     true))
 
 (defn admin-access [request]
-  (if (= (get-in request [:session :user-info :role] nil) user-role-model/USER_ROLE_NAME_ADMIN)
+  (if (= (get-in request [:session :user-info :role] nil) USER_ROLE_NAME_ADMIN)
     true
     (error "For admin only")))

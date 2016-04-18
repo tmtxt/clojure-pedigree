@@ -18,7 +18,22 @@
   (try+
    (call :svc-user "/user/changePassword" :post
          {:username username
-          :oldPassword old-password
-          :newPassword new-password})
+          :old-password old-password
+          :new-password new-password})
    true
    (catch Object _ false)))
+
+(defn empty? []
+  (try+
+   (-> (call :svc-user "/user/empty" :get {})
+       (:data))
+   (catch Object _ true)))
+
+(defn add [user role]
+  (try+
+   (->> {:user user
+         :user-role
+         {:role-name role}}
+        (call :svc-user "/user/add" :post)
+        (:data))
+   (catch Object _ nil)))
