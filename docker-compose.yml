@@ -142,6 +142,7 @@ server:
     - postgres:postgres
     - neonode:neonode
     - svc.user:svc.user
+    - svc.person:svc.person
     - svc.minor-content:svc.minor-content
 
 postgres:
