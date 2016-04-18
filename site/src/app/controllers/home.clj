@@ -11,16 +11,15 @@
             [app.i18n.main :refer [make-t make-page-tran]]
             [config.main :refer [config]]
             [app.models.minor-content :refer [find-content]]
-            [slingshot.slingshot :refer [try+]]))
+            [slingshot.slingshot :refer [try+]]
+            [app.logic.preface-content :as preface]))
 
-(def preface-key (:preface-key config))
 (def tree-desc-key (:tree-description-key config))
 
-;;; index
-(defn home [request]
+(defn home "Render index page" [request]
   (layout/render request
                  "home/index.html"
-                 {:preface (-> preface-key find-content :content)
+                 {:preface (-> (preface/get) (:content))
                   :tree-desc (-> tree-desc-key find-content :content)}
                  (make-page-tran request :page-index)))
 
