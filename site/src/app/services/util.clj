@@ -2,6 +2,8 @@
   (:require [config.services :refer :all]
             [clj-http.client :as client]
             [clojure.data.json :as json]
+            [camel-snake-kebab.core :refer [->camelCaseString ->kebab-case-keyword]]
+            [camel-snake-kebab.extras :refer [transform-keys]]
             [slingshot.slingshot :refer [throw+]]))
 
 (def methods
@@ -19,14 +21,14 @@
 
 (defn- get-params "Construct the params to send" [data]
   {:content-type :json
-   :body (json/write-str data)})
+   :body (json/write-str data :key-fn ->camelCaseString)})
 
 (defn- send-request "Send the request to api logic server" [method url params]
   (let [func (get methods method client/get)]
     (->> params (func url) :body)))
 
 (defn- parse-result "Parse the final result" [body]
-  (let [result (json/read-str body :key-fn keyword)]
+  (let [result (json/read-str body :key-fn ->kebab-case-keyword)]
     (when (not (result :success))
       (throw+ result))
     result))

@@ -33,3 +33,28 @@
         (parser/render-file params)
         (response)
         (content-type "text/html; charset=utf-8"))))
+
+(def alert-type {:success "success"
+                 :info "warning"
+                 :warning "danger"
+                 :danger "danger"
+                 :error "danger"})
+
+(def alert-title {:success "Thành công"
+                  :info "Thông báo"
+                  :warning "Thông tin"
+                  :danger "Lỗi"
+                  :error "Lỗi"})
+
+(defn render-message [request message & {:keys [type redirect text]
+                                         :or {type :info
+                                              redirect nil
+                                              text nil}}]
+  (let [class (get alert-type type "warning")
+        title (get alert-title type "Thông tin")]
+    (render-template request "layouts/message.html" {:message message
+                                                     :message-page true
+                                                     :class class
+                                                     :title title
+                                                     :redirect redirect
+                                                     :text text})))

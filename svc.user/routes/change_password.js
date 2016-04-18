@@ -28,7 +28,6 @@ function* requireDataMdw(next) {
 function* changePasswordHandler() {
   const logTrace = this.logTrace;
   const User = this.pg.User;
-  const db = this.pg.db;
   const username = this.request.body.username;
   const oldPassword = this.request.body.oldPassword;
   const newPassword = this.request.body.newPassword;

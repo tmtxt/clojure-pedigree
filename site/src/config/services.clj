@@ -1,8 +1,8 @@
 (ns config.services
   (:require [environ.core :refer [env]]))
 
-(def svc-user-host (env :svc-user-host))
-(def svc-user-port (env :svc-user-port))
+(def svc-user-host "svc.user")
+(def svc-user-port "80")
 
-(def svc-minor-content-host (env :svc-minor-content-host))
-(def svc-minor-content-port (env :svc-minor-content-port))
+(def svc-minor-content-host "svc.minor-content")
+(def svc-minor-content-port "80")

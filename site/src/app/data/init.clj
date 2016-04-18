@@ -1,21 +1,21 @@
 (ns app.data.init
-  (:require [app.models.user :as user-model]
-            [app.models.person :as person-model]
+  (:require [app.models.person :as person-model]
             [app.util.pg :as db-util]
             [korma.db :as kd]
             [app.models.marriage-relation :as mrl]
             [app.models.pedigree-relation :as prl]
             [app.data.sample :as sample]
             [app.logic.preface-content :as preface]
-            [app.logic.tree-desc-content :as tree-desc]))
+            [app.logic.tree-desc-content :as tree-desc]
+            [app.logic.user :as user]))
 
 (defn create-init-user []
-  (when (db-util/table-empty? user-model/user)
-    (user-model/add-user {:username "admin"
-                          :full_name "Admin"
-                          :email "admin@example.com"
-                          :password "admin"}
-                         :role :admin)))
+  (when (user/empty?)
+    (user/add {:username "admin"
+               :full-name "Admin"
+               :email "admin@example.com"
+               :password "admin"}
+              :admin)))
 
 (defn create-init-person
   "Create new persons when the app starts if there is no person presented yet"
