@@ -1,5 +1,6 @@
 (ns app.controllers.admin.profile
   (:require [app.views.layout :refer [render render-message]]
+            [app.views.main :as view]
             [app.util.main :as util]
             [app.models.user :as user-model]
             [slingshot.slingshot :refer [try+ throw+]]
@@ -32,7 +33,7 @@
     errors))
 
 (defn change-password-render [request]
-  (render request "admin/change_password.html"))
+  (view/render-template request "admin/change_password.html"))
 
 (defn change-password-process [request]
   (try+

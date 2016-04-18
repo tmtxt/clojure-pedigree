@@ -6,8 +6,8 @@ var sequelize = require('./db.js');
 
 const instanceProps = [
   'id',
-  'user_id',
-  'role_name'
+  'userId',
+  'roleName'
 ];
 
 module.exports = sequelize.define('userRole', {

@@ -11,5 +11,14 @@
 (defn find-user [username]
   (try+
    (-> (call :svc-user "/user/find" :get {:username username})
-       (get-in [:data :user]))
+       (get-in [:data]))
    (catch Object _ nil)))
+
+(defn change-password [username old-password new-password]
+  (try+
+   (call :svc-user "/user/changePassword" :post
+         {:username username
+          :oldPassword old-password
+          :newPassword new-password})
+   true
+   (catch Object _ false)))
