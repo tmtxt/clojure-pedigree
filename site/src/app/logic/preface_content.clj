@@ -7,3 +7,6 @@
 
 (defn get "Get preface content" []
   (svc-minor-content/find key))
+
+(defn update "Update preface content" [content]
+  (svc-minor-content/update key {:content content}))

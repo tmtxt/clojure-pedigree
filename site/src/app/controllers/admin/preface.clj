@@ -7,20 +7,16 @@
             [config.main :refer [config]]
             [app.logic.preface-content :as preface]))
 
-(def preface-key (:preface-key config))
-
 (defn preface-render [request & [message type]]
   (let [content (preface/get)
         content (if message (assoc content :message message) content)
         content (if type (assoc content :message-type type) content)]
-    (clojure.pprint/pprint content)
     (render request "admin/preface.html" content)))
 
 (defn preface-process [request]
-  (let [preface (util/param request "preface-content" "")
-        content {:content preface}
-        result (update-content preface-key content)]
-    (if (= result 1)
-      (render request "admin/preface.html" {:content preface
+  (let [content (util/param request "preface-content" "")
+        result (preface/update content)]
+    (if result
+      (render request "admin/preface.html" {:content content
                                             :message "Cập nhật thành công"})
       (preface-render request "Cập nhật không thành công" "error"))))
