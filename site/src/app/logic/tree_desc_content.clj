@@ -8,5 +8,5 @@
 (defn get "Get tree description content" []
   (svc-minor-content/find key))
 
-(defn update "Update tree description content" [content]
-  (svc-minor-content/update key {:content content}))
+(defn update "Update tree description content" [description]
+  (svc-minor-content/update key {:content description}))

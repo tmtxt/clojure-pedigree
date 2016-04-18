@@ -3,13 +3,13 @@
             [app.util.main :as util]
             [app.logic.preface-content :as preface]))
 
-(defn preface-render [request & [message type]]
+(defn preface-render "Process get request" [request & [message type]]
   (let [content (preface/get)
         content (if message (assoc content :message message) content)
         content (if type (assoc content :message-type type) content)]
     (view/render-template request "admin/preface.html" content)))
 
-(defn preface-process [request]
+(defn preface-process "Process post request" [request]
   (let [content (util/param request "preface-content" "")
         result (preface/update content)]
     (if result
