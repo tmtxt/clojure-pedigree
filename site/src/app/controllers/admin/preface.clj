@@ -4,14 +4,16 @@
             [slingshot.slingshot :refer [try+ throw+]]
             [validateur.validation :as vl]
             [app.models.minor-content :refer [find-content update-content]]
-            [config.main :refer [config]]))
+            [config.main :refer [config]]
+            [app.logic.preface-content :as preface]))
 
 (def preface-key (:preface-key config))
 
 (defn preface-render [request & [message type]]
-  (let [content (find-content preface-key)
+  (let [content (preface/get)
         content (if message (assoc content :message message) content)
         content (if type (assoc content :message-type type) content)]
+    (clojure.pprint/pprint content)
     (render request "admin/preface.html" content)))
 
 (defn preface-process [request]

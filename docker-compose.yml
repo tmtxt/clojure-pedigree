@@ -142,6 +142,7 @@ server:
     - postgres:postgres
     - neonode:neonode
     - svc.user:svc.user
+    - svc.minor-content:svc.minor-content
 
 postgres:
   build: ./images/postgres
