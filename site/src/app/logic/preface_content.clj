@@ -10,3 +10,6 @@
 
 (defn update "Update preface content" [content]
   (svc-minor-content/update key {:content content}))
+
+(defn add "Add preface content" [content]
+  (svc-minor-content/add key {:content content}))

@@ -5,7 +5,6 @@
             [app.util.main :as util]
             [app.util.security :as security]
             [ring.util.response :refer [redirect]]
-            [app.models.minor-content :refer [find-content]]
             [slingshot.slingshot :refer [try+]]
             [app.logic.preface-content :as preface]
             [app.logic.tree-desc-content :as tree-desc]

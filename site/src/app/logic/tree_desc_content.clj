@@ -10,3 +10,6 @@
 
 (defn update "Update tree description content" [description]
   (svc-minor-content/update key {:content description}))
+
+(defn add "Add tree desc content" [content]
+  (svc-minor-content/add key {:content content}))

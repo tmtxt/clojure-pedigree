@@ -15,3 +15,11 @@
         (call :svc-minor-content "/update" :post))
    true
    (catch Object _ false)))
+
+(defn add [key value]
+  (try+
+   (->> {:key key
+         :value value}
+        (call :svc-minor-content "/add" :post))
+   true
+   (catch Object _ false)))
