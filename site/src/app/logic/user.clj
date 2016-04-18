@@ -30,6 +30,9 @@
   (if (authenticated? request) (get-in request [:session :user-info]) {:authenticated false})
   )
 
+(defn valid-password? [username password]
+  (svc-user/authenticate username password))
+
 (defn change-password
   "Change user's password"
   [username old-password new-password]
