@@ -39,3 +39,6 @@ Content-Type: application/json
   "username": "tmtxt2",
   "password": "fuckyou"
 }
+
+#
+GET http://pd.dev:4002/user/empty
