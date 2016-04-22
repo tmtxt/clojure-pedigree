@@ -8,15 +8,15 @@
             [digest :refer [sha-256]]
             [me.raynes.fs :refer [extension]]
             [clojure.string :refer [blank?]]
-            [slingshot.slingshot :refer [try+ throw+]]))
+            [slingshot.slingshot :refer [try+ throw+]]
+            [app.logic.person :as person-logic]))
 
 (defn find-person-from-request [request param-name]
-  (let [param-name (keyword param-name)
-        params (util/params request)
-        param (get params param-name)
-        result (-> param util/parse-int (person/find-person-by-id :json-friendly true) :entity)
-        result (if (empty? result) nil result)]
-    result))
+  (let [param-name (keyword param-name)]
+    (-> (util/params request)
+        (get param-name)
+        (person-logic/find-by-id)
+        (:entity))))
 
 (defn params-to-person-data
   [{full-name :name
