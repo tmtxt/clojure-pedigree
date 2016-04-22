@@ -7,7 +7,8 @@
             [korma.db :refer [transaction rollback]]
             [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
-            [ring.util.response :refer [redirect]]))
+            [ring.util.response :refer [redirect]]
+            [app.views.main :as view]))
 
 (defn- render-page
   "Render add page with the parent entity"
@@ -20,7 +21,7 @@
 (defn process-get-request [request]
   (if-let [parent (find-person-from-request request "parentId")]
     (render-page request parent)
-    (render/render-add-page request)))
+    (view/render-message request "Không tìm thấy cha mẹ")))
 
 (defn- find-parents
   "Find parents entities from request, return [father mother]"
