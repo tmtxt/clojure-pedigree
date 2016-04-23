@@ -25,9 +25,10 @@ Content-Type: application/json
 }
 
 #
-GET http://pd.dev:4000/find/byId
+GET http://pd.dev:4000/detect/parentRole/single
 Content-Type: application/json
 
 {
-  "personId": 1
+  "name": "Truong",
+  "gender": "female"
 }
