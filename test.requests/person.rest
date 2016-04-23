@@ -23,12 +23,3 @@ Content-Type: application/json
 
 {
 }
-
-#
-GET http://pd.dev:4000/detect/parentRole/single
-Content-Type: application/json
-
-{
-  "name": "Truong",
-  "gender": "female"
-}

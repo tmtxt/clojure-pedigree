@@ -16,7 +16,9 @@
    :svc-minor-content {:host svc-minor-content-host
                        :port svc-minor-content-port}
    :svc-person {:host svc-person-host
-                :port svc-person-port}})
+                :port svc-person-port}
+   :svc-pedigree-relation {:host svc-pedigree-relation-host
+                           :port svc-pedigree-relation-port}})
 
 (defn- get-url "Construct the url" [host port url]
   (str "http://" host ":" port url))

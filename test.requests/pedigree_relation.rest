@@ -42,3 +42,11 @@ Content-Type: application/json
   "personNodeId": 13
 }
 
+#
+GET http://pd.dev:4003/detect/parentRole/single
+Content-Type: application/json
+
+{
+  "name": "Truong",
+  "gender": "female"
+}

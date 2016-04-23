@@ -9,3 +9,6 @@
 
 (def svc-person-host "svc.person")
 (def svc-person-port "80")
+
+(def svc-pedigree-relation-host "svc.pedigree-relation")
+(def svc-pedigree-relation-port "80")

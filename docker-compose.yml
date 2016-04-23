@@ -144,6 +144,8 @@ server:
     - svc.user:svc.user
     - svc.person:svc.person
     - svc.minor-content:svc.minor-content
+    - svc.pedigree-relation:svc.pedigree-relation
+    - svc.marriage-relation:svc.marriage-relation
 
 postgres:
   build: ./images/postgres
