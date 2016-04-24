@@ -12,3 +12,6 @@
 
 (def svc-pedigree-relation-host "svc.pedigree-relation")
 (def svc-pedigree-relation-port "80")
+
+(def svc-image-host "svc.image")
+(def svc-image-port "80")
