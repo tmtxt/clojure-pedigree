@@ -36,7 +36,7 @@ module.exports = class KoaApi {
     // global middleware
     app.use(parser());
     app.use(json());
-    app.use(multer());
+    app.use(multer({limits: '10mb'}));
     app.use(logMiddleware);
 
     // extra context
