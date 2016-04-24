@@ -12,8 +12,8 @@ var port = config.serverPort;
 var context = {};
 
 // routes
-var count = require('./routes/count.js');
-koa.use('/user', count.routes(), count.allowedMethods());
+var add = require('./routes/add.js');
+koa.use('/add', add.routes(), add.allowedMethods());
 var routes = koa.routes();
 
 // create the app

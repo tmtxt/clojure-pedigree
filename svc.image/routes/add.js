@@ -4,7 +4,7 @@ const router = require('koa-router')();
 
 
 // Koa handler function
-function* emptyHandler() {
+function* addHandler() {
   const logTrace = this.logTrace;
   const User = this.pg.User;
 
@@ -23,6 +23,6 @@ function* emptyHandler() {
   };
 }
 
-router.get('/empty', emptyHandler);
+router.get('/', addHandler);
 
 module.exports = router;

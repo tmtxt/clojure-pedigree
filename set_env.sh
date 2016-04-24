@@ -37,6 +37,11 @@ function asu {
     docker exec -it $(docker-compose ps | grep 'svc.user' | awk '{print $1}') bash
 }
 
+# attach svc image
+function asi {
+    docker exec -it $(docker-compose ps | grep 'svc.image' | awk '{print $1}') bash
+}
+
 # attach minor content
 function asmc {
     docker exec -it $(docker-compose ps | grep 'svc.minor-content' | awk '{print $1}') bash

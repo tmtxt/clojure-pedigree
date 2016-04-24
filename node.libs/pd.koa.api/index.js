@@ -22,6 +22,7 @@ module.exports = class KoaApi {
     var app = require('koa')();
     var parser = require('koa-bodyparser');
     var json = require('koa-json');
+    var multer = require('koa-multer');
     var extraCtx = this.context;
     var serviceName = this.serviceName;
     var port = this.port;
@@ -35,6 +36,7 @@ module.exports = class KoaApi {
     // global middleware
     app.use(parser());
     app.use(json());
+    app.use(multer());
     app.use(logMiddleware);
 
     // extra context
