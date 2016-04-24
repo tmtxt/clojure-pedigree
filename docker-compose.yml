@@ -106,6 +106,20 @@ svc.minor-content:
   links:
     - postgres:postgres
 
+svc.image:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.image:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: nodemon --legacy-watch app.js
+  ports:
+    - "4007:80"
+  links:
+    - postgres:postgres
+
 # logging-related containers
 # svc.fluentd:
 #   build: ./images/fluentd
@@ -146,6 +160,7 @@ server:
     - svc.minor-content:svc.minor-content
     - svc.pedigree-relation:svc.pedigree-relation
     - svc.marriage-relation:svc.marriage-relation
+    - svc.image:svc.image
 
 postgres:
   build: ./images/postgres
