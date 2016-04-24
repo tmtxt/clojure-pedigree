@@ -52,8 +52,9 @@ function copyFile(tmpPath, type, logTrace) {
     // calculate new name
     const newName = uuid.v4();
     const ext = detectExt(tmpPath);
+    const fullName = `${newName}${ext}`;
     const imageDir = config.imageDir;
-    const newPath = `${imageDir}/${type}/original/${newName}${ext}`;
+    const newPath = `${imageDir}/${type}/original/${fullName}`;
 
     logTrace.add('info', 'Start copying file', `${tmpPath} => ${newPath}`);
 
@@ -61,7 +62,7 @@ function copyFile(tmpPath, type, logTrace) {
     readStream.on('error', (err) => reject(err));
     const writeStream = fs.createWriteStream(newPath);
     writeStream.on('error', (err) => reject(err));
-    writeStream.on('finish', () => resolve(newPath));
+    writeStream.on('finish', () => resolve(fullName));
     readStream.pipe(writeStream);
   });
 
@@ -75,13 +76,13 @@ function* addHandler() {
   const type = this.request.body.type;
 
   try {
-    const imagePath = yield copyFile(tmpPath, type, logTrace);
+    const imageName = yield copyFile(tmpPath, type, logTrace);
 
     logTrace.add('info', 'Add image file success');
     this.body = {
       success: true,
       data: {
-        imagePath
+        imageName
       }
     };
   } catch (err) {
