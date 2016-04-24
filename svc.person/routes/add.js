@@ -47,7 +47,7 @@ function* addHandler() {
       success: true,
       message: 'Person inserted',
       data: {
-        model: person.getData(),
+        entity: person.getData(),
         node
       }
     };

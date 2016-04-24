@@ -35,13 +35,14 @@
   "Create person from request"
   [request]
   (if-let [person (create-person-from-request request)]
-    (:entity person)
+    person
     (throw+ "cannot create person")))
 
 (defn process-post-request [request]
   (try+
    (let [[father mother] (find-parents request)
-         person (create-person request)]
+         person (-> (create-person request))]
      (add-person/from-parent person father mother)
-     (redirect (str "/person/detail/" (get-in person :entity :id))))
-   (catch Object err (render/error-page request))))
+     (redirect (str "/person/detail/" (person :id))))
+   (catch Object err (println err) ;; (render/error-page request)
+          )))

@@ -30,8 +30,8 @@
     summary :history}]
 
   {:full-name full-name
-   ;; :birth-date birth-date
-   ;; :death-date death-date
+   :birth-date birth-date
+   :death-date death-date
    :alive-status status
    :address address
    ;; :picture picture
@@ -73,9 +73,9 @@
   (let [params (util/params request)
         ;; file-name (store-person-picture params)
         ;; params (assoc params :picture file-name)
-        person-data (params-to-person-data params)]
-    (println person-data)
-    (person-logic/add person-data)))
+        person-data (params-to-person-data params)
+        person (person-logic/add person-data)]
+    (:entity person)))
 
 (defn update-person-picture
   [params person]

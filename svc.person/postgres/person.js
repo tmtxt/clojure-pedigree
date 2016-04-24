@@ -3,6 +3,7 @@
 var Sequelize = require('sequelize');
 const _ = require('lodash');
 var sequelize = require('./db.js');
+const moment = require('moment');
 
 const aliveStatusValues = ['alive', 'dead', 'unknown'];
 const genderValues = ['male', 'female', 'gay', 'les', 'unknown'];
@@ -19,6 +20,23 @@ const instanceProps = [
   'phoneNo',
   'summary'
 ];
+
+function makeDateValue(v) {
+  // timestamp
+  if (_.isNumber(v)) {
+    return new Date(v);
+  }
+
+  if (_.isString(v)) {
+    let format = 'DD/MM/YYYY';
+    let date = moment(v, format);
+    if (date.isValid()) {
+      return new Date(date.valueOf());
+    }
+  }
+
+  return null;
+}
 
 module.exports = sequelize.define('person', {
   full_name: Sequelize.STRING,
@@ -67,10 +85,10 @@ module.exports = sequelize.define('person', {
       this.setDataValue('full_name', v);
     },
     birthDate: function(v) {
-      this.setDataValue('birth_date', v);
+      this.setDataValue('birth_date', makeDateValue(v));
     },
     deathDate: function(v) {
-      this.setDataValue('death_date', v);
+      this.setDataValue('death_date', makeDateValue(v));
     },
     aliveStatus: function(v) {
       this.setDataValue('alive_status', v);
