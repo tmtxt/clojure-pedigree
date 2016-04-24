@@ -2,19 +2,20 @@
   (:require [app.controllers.person.add.render :as render]
             [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
             [slingshot.slingshot :refer [try+ throw+]]
-            [clojure.algo.monads :refer :all]
             [app.logic.pedigree-relation :as pedigree-relation]
             [app.logic.add-person :as add-person]
             [ring.util.response :refer [redirect]]))
 
 (defn process-get-request [request]
-  (domonad maybe-m
-           [parent   (find-person-from-request request "parentId")
-            role     (pedigree-relation/detect-parent-role-single parent)
-            role-key (keyword role)]
-           (render/add-page request {:action "add"
-                                     :from "parent"
-                                     :parent {role-key parent}})))
+  (try+
+   (let [parent (find-person-from-request request "parentId")
+         _      (when-not parent (throw+ "parent empty"))
+         role   (-> (pedigree-relation/detect-parent-role-single parent)
+                    (keyword))]
+     (render/add-page request {:action "add"
+                               :from "parent"
+                               :parent {role parent}}))
+   (catch Object _ (render/error-page request))))
 
 (defn- find-parents
   "Find parents entities from request, return [father mother]"

@@ -20,4 +20,4 @@
                         {:name "ext" :content (get content-types (:content-type file) ".jpg")}])
        (:data)
        (:image-name))
-   (catch Object err (println err))))
+   (catch Object _ nil)))
