@@ -8,26 +8,20 @@
             [app.models.pedigree-relation :as prl]
             [app.views.layout :refer [render-message]]
             [slingshot.slingshot :refer [try+ throw+]]
-            [ring.util.response :refer [redirect]]))
+            [ring.util.response :refer [redirect]]
+            [app.logic.pedigree-relation :as pedigree-relation]))
 
 (defn process-get-request [request]
   (try+
    (let [child (find-person-from-request request "childId")
-         _     (when-not child (throw+ "child empty"))
-         ])
-   (catch Object _ (render/error-page request)))
-  (let [child (find-person-from-request request "childId")]
-    (cond
-      (not child)
-      (render-message request "Có lỗi xảy ra" :type :error)
-
-      (-> child person/enough-parents?)
-      (render-message request "Thành viên này đã có đủ cha mẹ" :type :error)
-
-      :else
-      (render/render-add-page request {:action "add"
-                                       :from "child"
-                                       :child child}))))
+         _     (when-not child (throw+ 1))
+         _     (when (pedigree-relation/enough-parents? child)
+                 (throw+ "Thành viên đã có đủ cha mẹ"))]
+     (render/add-page request {:action "add"
+                               :from "child"
+                               :child child}))
+   (catch string? mes (render/error-page request mes))
+   (catch Object _ (render/error-page request))))
 
 (defn- find-child
   "Find child entity from the request"

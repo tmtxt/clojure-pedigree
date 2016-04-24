@@ -67,5 +67,6 @@
 
 (defn error-page
   "Render error page after add"
-  [request]
-  (view/render-message request "Có lỗi xảy ra" :type :error))
+  [request & [message]]
+  (if message (view/render-message request message :type :error)
+      (view/render-message request "Có lỗi xảy ra" :type :error)))
