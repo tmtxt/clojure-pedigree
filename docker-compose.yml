@@ -110,6 +110,7 @@ svc.image:
   build: ./images/koa.api
   volumes:
     - ./svc.image:/usr/src/app
+    - ./data/images:/data
   volumes_from:
     - koa.api.base
   env_file:
@@ -145,6 +146,7 @@ server:
   volumes:
     - ./.cache/m2:/root/.m2
     - .:/usr/src/root
+    - ./data:/data
   volumes_from:
     - websources
   env_file:

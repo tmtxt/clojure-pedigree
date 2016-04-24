@@ -4,7 +4,8 @@
             [slingshot.slingshot :refer [try+ throw+]]
             [clojure.algo.monads :refer :all]
             [app.logic.pedigree-relation :as pedigree-relation]
-            [app.logic.add-person :as add-person]))
+            [app.logic.add-person :as add-person]
+            [ring.util.response :refer [redirect]]))
 
 (defn process-get-request [request]
   (domonad maybe-m
