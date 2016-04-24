@@ -18,7 +18,7 @@
    :unknown "unknown"})
 
 (def genders-display "The genders map to display"
-  {"male" "Name"
+  {"male" "Nam"
    "female" "Nữ"
    "gay" "Gay"
    "les" "Les"
