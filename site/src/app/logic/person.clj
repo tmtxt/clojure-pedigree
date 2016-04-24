@@ -4,3 +4,6 @@
 
 (defn find-by-id "Find person entity by id" [id]
   (svc-person/find-by-id id))
+
+(defn add [person]
+  (svc-person/add person))
