@@ -20,6 +20,7 @@ const instanceProps = [
   'phoneNo',
   'summary'
 ];
+const defaultPersonPicture = '/assets/img/userbasic.jpg';
 
 function makeDateValue(v) {
   // timestamp
@@ -77,6 +78,18 @@ module.exports = sequelize.define('person', {
     },
     phoneNo: function() {
       return this.getDataValue('phone_no');
+    },
+    picture: function() {
+      const fileName = this.getDataValue('picture');
+      if (_.isNil(fileName)) {
+        return defaultPersonPicture;
+      }
+
+      if (_.startsWith(fileName, '/assets')) {
+        return fileName;
+      }
+
+      return `/data/images/person/original/${fileName}`;
     }
   },
 

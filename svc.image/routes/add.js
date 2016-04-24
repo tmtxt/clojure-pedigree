@@ -37,7 +37,11 @@ function* validateMdw(next) {
   yield next;
 }
 
-function detectExt(tmpPath) {
+function detectExt(tmpPath, extension) {
+  if (extension) {
+    return extension;
+  }
+
   const ext = path.extname(tmpPath);
 
   if (_.trim(ext) === '') {
@@ -47,11 +51,11 @@ function detectExt(tmpPath) {
   return ext;
 }
 
-function copyFile(tmpPath, type, logTrace) {
+function copyFile(tmpPath, type, extension, logTrace) {
   const promise = new Promise(function(resolve, reject){
     // calculate new name
     const newName = uuid.v4();
-    const ext = detectExt(tmpPath);
+    const ext = detectExt(tmpPath, extension);
     const fullName = `${newName}${ext}`;
     const imageDir = config.imageDir;
     const newPath = `${imageDir}/${type}/original/${fullName}`;
@@ -74,9 +78,10 @@ function* addHandler() {
   const logTrace = this.logTrace;
   const tmpPath = this.req.files.image.path;
   const type = this.request.body.type;
+  const ext = _.get(this, ['request', 'body', 'ext']);
 
   try {
-    const imageName = yield copyFile(tmpPath, type, logTrace);
+    const imageName = yield copyFile(tmpPath, type, ext, logTrace);
 
     logTrace.add('info', 'Add image file success');
     this.body = {

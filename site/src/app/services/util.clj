@@ -56,7 +56,6 @@
   [service uri method & [data]]
   (let [data (if data data {})
         host (get-in services-map [service :host])
-
         port (get-in services-map [service :port])
         url (get-url host port uri)
         params {:multipart data}

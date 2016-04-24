@@ -2,9 +2,22 @@
   (:require [app.services.util :refer [call-multipart]]
             [slingshot.slingshot :refer [try+ throw+]]))
 
-(defn add [path type]
+(def content-types
+  {"image/png" ".png"
+   "image/jpg" ".jpg"
+   "image/jpeg" ".jpg"})
+
+(defn- create-file [file]
+  (if (string? file)
+    (clojure.java.io/file file)
+    (clojure.java.io/file (.getPath (:tempfile file)))))
+
+(defn add [file type]
   (try+
-   (call-multipart :svc-image "/add" :post
-                   [{:name "image" :content (clojure.java.io/file path)}
-                    {:name "type" :content type}])
+   (-> (call-multipart :svc-image "/add" :post
+                       [{:name "image" :content (create-file file)}
+                        {:name "type" :content type}
+                        {:name "ext" :content (get content-types (:content-type file) ".jpg")}])
+       (:data)
+       (:image-name))
    (catch Object err (println err))))
