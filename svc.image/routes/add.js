@@ -3,6 +3,9 @@
 const router = require('koa-router')();
 const uuid = require('node-uuid');
 const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
+const config = require('../config');
 
 const types = ['person'];
 
@@ -34,27 +37,60 @@ function* validateMdw(next) {
   yield next;
 }
 
+function detectExt(tmpPath) {
+  const ext = path.extname(tmpPath);
+
+  if (_.trim(ext) === '') {
+    return '.jpg';
+  }
+
+  return ext;
+}
+
+function copyFile(tmpPath, type, logTrace) {
+  const promise = new Promise(function(resolve, reject){
+    // calculate new name
+    const newName = uuid.v4();
+    const ext = detectExt(tmpPath);
+    const imageDir = config.imageDir;
+    const newPath = `${imageDir}/${type}/original/${newName}${ext}`;
+
+    logTrace.add('info', 'Start copying file', `${tmpPath} => ${newPath}`);
+
+    const readStream = fs.createReadStream(tmpPath);
+    readStream.on('error', (err) => reject(err));
+    const writeStream = fs.createWriteStream(newPath);
+    writeStream.on('error', (err) => reject(err));
+    writeStream.on('finish', () => resolve(newPath));
+    readStream.pipe(writeStream);
+  });
+
+  return promise;
+}
+
 // Koa handler function
 function* addHandler() {
   const logTrace = this.logTrace;
-  // const User = this.pg.User;
+  const tmpPath = this.req.files.image.path;
+  const type = this.request.body.type;
 
-  // logTrace.add('info', 'User.count()');
-  // const count = yield User.count();
+  try {
+    const imagePath = yield copyFile(tmpPath, type, logTrace);
 
-  // let message = `Found ${count} users`;
-  // logTrace.add('info', message);
-
-  // const empty = count == 0;
-
-  // this.body = {
-  //   success: true,
-  //   message,
-  //   data: empty
-  // };
-  this.body = {
-    success: true
-  };
+    logTrace.add('info', 'Add image file success');
+    this.body = {
+      success: true,
+      data: {
+        imagePath
+      }
+    };
+  } catch (err) {
+    logTrace.add('error', 'Add image file fail', err);
+    this.body = {
+      success: false,
+      message: err
+    };
+  }
 }
 
 router.post('/', validateMdw, addHandler);
