@@ -32,3 +32,10 @@
      (-> (call :svc-pedigree-relation "/add/fromBoth" :post data)
          (:data)))
    (catch Object _ nil)))
+
+(defn count-parents [person-node]
+  (try+
+   (->> {:person-node-id (:id person-node)}
+        (call :svc-pedigree-relation "/count/parents" :get)
+        (:data))
+   (catch Object _ 0)))

@@ -11,6 +11,11 @@
             [ring.util.response :refer [redirect]]))
 
 (defn process-get-request [request]
+  (try+
+   (let [child (find-person-from-request request "childId")
+         _     (when-not child (throw+ "child empty"))
+         ])
+   (catch Object _ (render/error-page request)))
   (let [child (find-person-from-request request "childId")]
     (cond
       (not child)
