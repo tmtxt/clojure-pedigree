@@ -10,7 +10,8 @@
             [ring.util.response :refer [redirect]]
             [app.views.main :as view]
             [clojure.algo.monads :refer :all]
-            [app.logic.pedigree-relation :as pedigree-relation]))
+            [app.logic.pedigree-relation :as pedigree-relation]
+            [app.logic.add-person :as add-person]))
 
 (defn process-get-request [request]
   (domonad maybe-m
@@ -24,25 +25,23 @@
 (defn- find-parents
   "Find parents entities from request, return [father mother]"
   [request]
-  (let [find-fn #(find-person-from-request request %)
-        father (find-fn :fatherId)
-        mother (find-fn :motherId)]
+  (let [father (find-person-from-request request "fatherId")
+        mother (find-person-from-request request "motherId")
+        parents [father mother]]
+    (when (every? nil? parents) (throw+ "nil all"))
     [father mother]))
 
-(defn- validate-parents
-  "Validate parent entities"
-  [parents]
-  (when (every? nil? parents) (throw+ "nil all")))
+(defn- create-person
+  "Create person from request"
+  [request]
+  (if-let [person (create-person-from-request request)]
+    (:entity person)
+    (throw+ "cannot create person")))
 
 (defn process-post-request [request]
-  (transaction
-   (try+
-    (let [[father mother] (find-parents request)
-          _ (validate-parents [father mother])
-          person (-> request create-person-from-request :entity)]
-      (cond
-        (nil? father) (prl/add-child-for-mother mother person 0)
-        (nil? mother) (prl/add-child-for-father father person 0)
-        :else (prl/add-child father mother person 0))
-      (redirect (str "/person/detail/" (:id person))))
-    (catch Object _ (render/render-error request)))))
+  (try+
+   (let [[father mother] (find-parents request)
+         person (create-person request)]
+     (add-person/from-parent person father mother)
+     (redirect (str "/person/detail/" (get-in person :entity :id))))
+   (catch Object err (render/error-page request))))

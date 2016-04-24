@@ -30,11 +30,11 @@
     summary :history}]
 
   {:full-name full-name
-   :birth-date birth-date
-   :death-date death-date
+   ;; :birth-date birth-date
+   ;; :death-date death-date
    :alive-status status
    :address address
-   :picture picture
+   ;; :picture picture
    :gender gender
    :phone-no phone
    :summary summary})
@@ -62,12 +62,20 @@
    (catch nil? _ nil)
    (catch #(instance? String %) res res)))
 
+;; (defn create-person-from-request [request]
+;;   (let [params (util/params request)
+;;         file-name (store-person-picture params)
+;;         params (assoc params :picture file-name)
+;;         person-data (params-to-person-data params)]
+;;     (person/add-person person-data)))
+
 (defn create-person-from-request [request]
   (let [params (util/params request)
-        file-name (store-person-picture params)
-        params (assoc params :picture file-name)
+        ;; file-name (store-person-picture params)
+        ;; params (assoc params :picture file-name)
         person-data (params-to-person-data params)]
-    (person/add-person person-data)))
+    (println person-data)
+    (person-logic/add person-data)))
 
 (defn update-person-picture
   [params person]
