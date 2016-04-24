@@ -1,12 +1,6 @@
 (ns app.controllers.person.add.from-child
-  (:require [app.neo4j.main :as neo4j]
-            [app.controllers.person.add.render :as render]
-            [app.util.person :as person-util]
-            [app.models.person :as person]
-            [korma.db :refer [transaction]]
+  (:require [app.controllers.person.add.render :as render]
             [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
-            [app.models.pedigree-relation :as prl]
-            [app.views.layout :refer [render-message]]
             [slingshot.slingshot :refer [try+ throw+]]
             [ring.util.response :refer [redirect]]
             [app.logic.pedigree-relation :as pedigree-relation]
@@ -44,7 +38,6 @@
   (let [rels (if (= parent-role :father)
                (add-person/from-parent child person nil)
                (add-person/from-parent child nil person))
-        _ (println rels)
         {father-child :father-child
          mother-child :mother-child} rels]
     (when (every? nil? [father-child mother-child])
