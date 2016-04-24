@@ -12,10 +12,7 @@
             parent-id   (:id parent)
             parent-node (-> (svc-person/find-by-id parent-id)
                             (:node))]
-           (do
-             (println person-node)
-             (println parent-node)
-             (func person-node parent-node))))
+           (func person-node parent-node)))
 
 (defn from-parent
   "Add person from father and mother"

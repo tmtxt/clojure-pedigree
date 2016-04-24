@@ -1,14 +1,7 @@
 (ns app.controllers.person.add.from-parent
-  (:require [app.models.person :as person]
-            [app.controllers.person.add.render :as render]
-            [app.util.person :as person-util]
+  (:require [app.controllers.person.add.render :as render]
             [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
-            [app.models.pedigree-relation :as prl]
-            [korma.db :refer [transaction rollback]]
-            [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
-            [ring.util.response :refer [redirect]]
-            [app.views.main :as view]
             [clojure.algo.monads :refer :all]
             [app.logic.pedigree-relation :as pedigree-relation]
             [app.logic.add-person :as add-person]))
