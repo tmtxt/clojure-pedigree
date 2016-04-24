@@ -3,7 +3,9 @@
             [clojure.data.json :as json]
             [app.views.layout :as layout]
             [korma.db :refer [rollback]]
-            [app.views.layout :refer [render-message]]))
+            [app.views.layout :refer [render-message]]
+            [app.definition.person :as definition]
+            [app.views.main :as view]))
 
 (def default-opts
   {:parent {}
@@ -40,3 +42,30 @@
   [request]
   (rollback)
   (render-message request "Có lỗi xảy ra" :type :error))
+
+(defn add-page "Render add page" [request & [opts]]
+  (let [{parent :parent
+         partner :partner
+         child :child
+         from :from
+         action :action} opts
+        statuses (json/write-str definition/statuses-display)
+        genders  (json/write-str definition/genders-display)
+        parent   (json/write-str parent)
+        child    (json/write-str child)
+        partner  (json/write-str partner)]
+    (view/render-template request
+                          "person/edit_detail.html"
+                          {:from from
+                           :parent parent
+                           :partner partner
+                           :child child
+                           :statuses statuses
+                           :genders genders
+                           :person {}
+                           :action action})))
+
+(defn error-page
+  "Render error page after add"
+  [request]
+  (view/render-message request "Có lỗi xảy ra" :type :error))

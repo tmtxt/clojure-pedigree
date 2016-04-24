@@ -17,9 +17,9 @@
            [parent   (find-person-from-request request "parentId")
             role     (pedigree-relation/detect-parent-role-single parent)
             role-key (keyword role)]
-           (render/render-add-page request {:action "add"
-                                            :from "parent"
-                                            :parent {role-key parent}})))
+           (render/add-page request {:action "add"
+                                     :from "parent"
+                                     :parent {role-key parent}})))
 
 (defn- find-parents
   "Find parents entities from request, return [father mother]"
