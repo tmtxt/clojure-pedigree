@@ -8,20 +8,18 @@
             [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
             [ring.util.response :refer [redirect]]
-            [app.views.main :as view]))
-
-(defn- render-page
-  "Render add page with the parent entity"
-  [request parent]
-  (let [parent-role (person-util/determine-father-mother-single parent)]
-    (render/render-add-page request {:action "add"
-                                     :from "parent"
-                                     :parent {parent-role parent}})))
+            [app.views.main :as view]
+            [clojure.algo.monads :refer :all]
+            [app.logic.pedigree-relation :as pedigree-relation]))
 
 (defn process-get-request [request]
-  (if-let [parent (find-person-from-request request "parentId")]
-    (render-page request parent)
-    (view/render-message request "Không tìm thấy cha mẹ")))
+  (domonad maybe-m
+           [parent   (find-person-from-request request "parentId")
+            role     (pedigree-relation/detect-parent-role-single parent)
+            role-key (keyword role)]
+           (render/render-add-page request {:action "add"
+                                            :from "parent"
+                                            :parent {role-key parent}})))
 
 (defn- find-parents
   "Find parents entities from request, return [father mother]"
