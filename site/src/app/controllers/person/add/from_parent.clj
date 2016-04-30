@@ -1,50 +1,34 @@
 (ns app.controllers.person.add.from-parent
   (:require [app.controllers.person.add.render :as render]
-            [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
+            [app.controllers.person.util :refer [find-person create-person]]
             [slingshot.slingshot :refer [try+ throw+]]
-            [app.logic.pedigree-relation :as pedigree-relation]
-            [app.logic.add-person :as add-person]
-            [ring.util.response :refer [redirect]]))
+            [ring.util.response :refer [redirect]]
+            [app.services.pedigree-relation :as svc-pr]))
 
 (defn process-get-request [request]
   (try+
-   (let [parent (find-person-from-request request "parentId")
-         _      (when-not parent (throw+ "parent empty"))
-         role   (-> (pedigree-relation/detect-parent-role-single parent)
-                    (keyword))]
+   (let [{parent :entity} (find-person request "parentId")
+         _                (when-not parent (throw+ "parent empty"))
+         role             (-> (svc-pr/detect-parent-role-single parent)
+                              (keyword))]
      (render/add-page request {:action "add"
                                :from "parent"
                                :parent {role parent}}))
    (catch Object _ (render/error-page request))))
 
-(defn- find-parents
-  "Find parents entities from request, return [father mother]"
-  [request]
-  (let [father (find-person-from-request request "fatherId")
-        mother (find-person-from-request request "motherId")
-        parents [father mother]]
-    (when (every? nil? parents) (throw+ "nil all"))
-    [father mother]))
-
-(defn- create-person
-  "Create person from request"
-  [request]
-  (if-let [person (create-person-from-request request)]
-    person
-    (throw+ "cannot create person")))
-
-(defn- create-relation
-  "Create relation between child and parents"
-  [person father mother]
-  (let [rels (add-person/from-parent person father mother)
-        {father-child :father-child
-         mother-child :mother-child} rels]
-    (when (every? nil? [father-child mother-child]) (throw+ "cannot create relation"))))
+(defn- add-parent [request key person-node func]
+  (try+
+   (let [{parent-node :node} (find-person request key)
+         rel                 (func person-node parent-node)]
+     rel)
+   (catch Object _ nil)))
 
 (defn process-post-request [request]
   (try+
-   (let [[father mother] (find-parents request)
-         person (-> (create-person request))]
-     (create-relation person father mother)
-     (redirect (str "/person/detail/" (person :id))))
-   (catch Object _ (render/error-page request))))
+   (let [{person-node   :node
+          person-entity :entity} (create-person request)
+         father-rel (add-parent request "fatherId" person-node svc-pr/add-from-father)
+         mother-rel (add-parent request "motherId" person-node svc-pr/add-from-mother)]
+     (when (every? nil? [father-rel mother-rel]) (throw+ "nil all"))
+     (redirect (str "/person/detail/" (person-node :id))))
+   (catch Object res (println res))))

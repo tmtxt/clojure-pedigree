@@ -1,17 +1,8 @@
 (ns app.controllers.person.add.from-partner
-  (:require [app.models.person :as person]
-            [app.controllers.person.add.render :as render]
-            [app.util.person :as person-util]
-            [app.util.main :as util]
-            [app.controllers.person.util :refer
-             [create-person-from-request find-person-from-request find-person create-person]]
-            [app.models.marriage-relation :as mrl]
-            [korma.db :refer [transaction]]
+  (:require [app.controllers.person.util :refer [find-person create-person]]
             [slingshot.slingshot :refer [try+ throw+]]
-            [app.views.layout :refer [render-message]]
             [ring.util.response :refer [redirect]]
-            [app.services.marriage-relation :as svc-mr]
-            [app.services.person :as svc-person]))
+            [app.services.marriage-relation :as svc-mr]))
 
 (defn process-get-request [request]
   (try+
