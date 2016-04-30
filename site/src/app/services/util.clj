@@ -19,6 +19,8 @@
                 :port svc-person-port}
    :svc-pedigree-relation {:host svc-pedigree-relation-host
                            :port svc-pedigree-relation-port}
+   :svc-marriage-relation {:host svc-marriage-relation-host
+                           :port svc-marriage-relation-port}
    :svc-image {:host svc-image-host
                :port svc-image-port}})
 
@@ -39,6 +41,12 @@
       (throw+ result))
     result))
 
+(defn- get-result "Parse the final result" [body]
+  (let [result (json/read-str body :key-fn ->kebab-case-keyword)]
+    (when (not (result :success))
+      (throw+ result))
+    (:data result)))
+
 (defn call
   "Function for sending rest request"
   [service uri method & [data]]
@@ -49,6 +57,18 @@
         params (get-params data)
         response (send-request method url params)
         result (parse-result response)]
+    result))
+
+(defn call-json
+  "Function for sending rest request"
+  [service uri method & [data]]
+  (let [data (if data data {})
+        host (get-in services-map [service :host])
+        port (get-in services-map [service :port])
+        url (get-url host port uri)
+        params (get-params data)
+        response (send-request method url params)
+        result (get-result response)]
     result))
 
 (defn call-multipart

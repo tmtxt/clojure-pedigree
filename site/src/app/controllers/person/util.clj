@@ -65,3 +65,18 @@
      ;; (store-person-picture params)
      )
    (catch Object pic pic)))
+
+(defn find-person "Find person from request" [request param-name]
+  (let [param-name (keyword param-name)
+        person     (-> (util/params request)
+                       (get param-name)
+                       (person-logic/find-by-id))]
+    (when-not (:entity person) (throw+ "person not found"))
+    person))
+
+(defn create-person "Create person from request" [request]
+  (let [params      (util/params request)
+        person-data (params-to-person-data params)
+        person      (person-logic/add person-data)]
+    (when-not (:entity person) (throw+ "cannot create person"))
+    person))
