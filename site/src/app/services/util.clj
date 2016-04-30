@@ -14,7 +14,15 @@
   {:svc-user {:host svc-user-host
               :port svc-user-port}
    :svc-minor-content {:host svc-minor-content-host
-                       :port svc-minor-content-port}})
+                       :port svc-minor-content-port}
+   :svc-person {:host svc-person-host
+                :port svc-person-port}
+   :svc-pedigree-relation {:host svc-pedigree-relation-host
+                           :port svc-pedigree-relation-port}
+   :svc-marriage-relation {:host svc-marriage-relation-host
+                           :port svc-marriage-relation-port}
+   :svc-image {:host svc-image-host
+               :port svc-image-port}})
 
 (defn- get-url "Construct the url" [host port url]
   (str "http://" host ":" port url))
@@ -33,14 +41,44 @@
       (throw+ result))
     result))
 
+(defn- get-result "Parse the final result" [body]
+  (let [result (json/read-str body :key-fn ->kebab-case-keyword)]
+    (when (not (result :success))
+      (throw+ result))
+    (:data result)))
+
 (defn call
-  "Function for sending rest request to api logic server"
+  "Function for sending rest request"
   [service uri method & [data]]
   (let [data (if data data {})
         host (get-in services-map [service :host])
         port (get-in services-map [service :port])
         url (get-url host port uri)
         params (get-params data)
+        response (send-request method url params)
+        result (parse-result response)]
+    result))
+
+(defn call-json
+  "Function for sending rest request"
+  [service uri method & [data]]
+  (let [data (if data data {})
+        host (get-in services-map [service :host])
+        port (get-in services-map [service :port])
+        url (get-url host port uri)
+        params (get-params data)
+        response (send-request method url params)
+        result (get-result response)]
+    result))
+
+(defn call-multipart
+  "Function for sending rest request with multipart form data"
+  [service uri method & [data]]
+  (let [data (if data data {})
+        host (get-in services-map [service :host])
+        port (get-in services-map [service :port])
+        url (get-url host port uri)
+        params {:multipart data}
         response (send-request method url params)
         result (parse-result response)]
     result))

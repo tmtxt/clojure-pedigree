@@ -1,44 +1,33 @@
 (ns app.controllers.person.add.from-child
-  (:require [app.neo4j.main :as neo4j]
-            [app.controllers.person.add.render :as render]
-            [app.util.person :as person-util]
-            [app.models.person :as person]
-            [korma.db :refer [transaction]]
-            [app.controllers.person.util :refer [find-person-from-request create-person-from-request]]
-            [app.models.pedigree-relation :as prl]
-            [app.views.layout :refer [render-message]]
+  (:require [app.controllers.person.add.render :as render]
+            [app.controllers.person.util :refer [find-person create-person]]
             [slingshot.slingshot :refer [try+ throw+]]
-            [ring.util.response :refer [redirect]]))
+            [ring.util.response :refer [redirect]]
+            [app.services.pedigree-relation :as svc-pr]))
 
 (defn process-get-request [request]
-  (let [child (find-person-from-request request "childId")]
-    (cond
-      (not child)
-      (render-message request "Có lỗi xảy ra" :type :error)
-
-      (-> child person/enough-parents?)
-      (render-message request "Thành viên này đã có đủ cha mẹ" :type :error)
-
-      :else
-      (render/render-add-page request {:action "add"
-                                       :from "child"
-                                       :child child}))))
-
-(defn- find-child
-  "Find child entity from the request"
-  [request]
-  (if-let [child (find-person-from-request request :childId)]
-    child
-    (throw+ "child not found")))
+  (try+
+   (let [{child-node :node
+          child      :entity} (find-person request "childId")
+         _  (when-not child (throw+ 1))
+         _  (when (= (svc-pr/count-parents child-node) 2)
+              (throw+ "Thành viên đã có đủ cha mẹ"))]
+     (render/add-page request {:action "add"
+                               :from "child"
+                               :child child}))
+   (catch string? mes (render/error-page request mes))
+   (catch Object _ (render/error-page request))))
 
 (defn process-post-request [request]
-  (transaction
-   (try+
-    (let [child (find-child request)
-          person (-> request create-person-from-request :entity)
-          parent-role (person-util/determine-father-mother-single person)]
-      (if (= parent-role :father)
-        (prl/add-child-for-father person child)
-        (prl/add-child-for-mother person child))
-      (->> (:id person) (str "/person/detail/") redirect))
-    (catch Object _ (render/render-error request)))))
+  (try+
+   (let [{child-node   :node
+          child-entity :entity} (find-person request "childId")
+         {person-node   :node
+          person-entity :entity} (create-person request)
+         parent-role (-> (svc-pr/detect-parent-role-single person-entity)
+                         (keyword))]
+     (if (= parent-role :father)
+       (svc-pr/add-from-father child-node person-node)
+       (svc-pr/add-from-mother child-node person-node))
+     (redirect (str "/person/detail/" (person-entity :id))))
+   (catch Object _ (render/error-page request))))

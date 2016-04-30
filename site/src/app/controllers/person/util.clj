@@ -8,15 +8,16 @@
             [digest :refer [sha-256]]
             [me.raynes.fs :refer [extension]]
             [clojure.string :refer [blank?]]
-            [slingshot.slingshot :refer [try+ throw+]]))
+            [slingshot.slingshot :refer [try+ throw+]]
+            [app.logic.person :as person-logic]))
 
 (defn find-person-from-request [request param-name]
-  (let [param-name (keyword param-name)
-        params (util/params request)
-        param (get params param-name)
-        result (-> param util/parse-int (person/find-person-by-id :json-friendly true) :entity)
-        result (if (empty? result) nil result)]
-    result))
+
+  (let [param-name (keyword param-name)]
+    (-> (util/params request)
+        (get param-name)
+        (person-logic/find-by-id)
+        (:entity))))
 
 (defn params-to-person-data
   [{full-name :name
@@ -28,7 +29,6 @@
     picture :picture
     address :address
     summary :history}]
-
   {:full-name full-name
    :birth-date birth-date
    :death-date death-date
@@ -45,29 +45,11 @@
         time-string (time-format/unparse time-formatter now)]
     (sha-256 time-string)))
 
-(defn store-person-picture [{{temp-file :tempfile original-name :filename} :picture}]
-  (try+
-   (when (nil? original-name) (throw+ nil))
-   (when (blank? original-name) (throw+ nil))
-   (let [file-name (generate-random-name)
-         ext (extension original-name)
-         file-name (str file-name ext)]
-     (io/copy temp-file (io/file "resources"
-                                 "public"
-                                 "person-image"
-                                 "original"
-                                 file-name))
-     (throw+ (str "/person-image/original/" file-name)))
-
-   (catch nil? _ nil)
-   (catch #(instance? String %) res res)))
-
 (defn create-person-from-request [request]
   (let [params (util/params request)
-        file-name (store-person-picture params)
-        params (assoc params :picture file-name)
-        person-data (params-to-person-data params)]
-    (person/add-person person-data)))
+        person-data (params-to-person-data params)
+        person (person-logic/add person-data)]
+    (:entity person)))
 
 (defn update-person-picture
   [params person]
@@ -80,5 +62,21 @@
      (when (-> picture (.contains "person-image"))
        (io/delete-file (io/file (str "resources/public" picture))))
      ;; store the new file
-     (store-person-picture params))
+     ;; (store-person-picture params)
+     )
    (catch Object pic pic)))
+
+(defn find-person "Find person from request" [request param-name]
+  (let [param-name (keyword param-name)
+        person     (-> (util/params request)
+                       (get param-name)
+                       (person-logic/find-by-id))]
+    (when-not (:entity person) (throw+ "person not found"))
+    person))
+
+(defn create-person "Create person from request" [request]
+  (let [params      (util/params request)
+        person-data (params-to-person-data params)
+        person      (person-logic/add person-data)]
+    (when-not (:entity person) (throw+ "cannot create person"))
+    person))

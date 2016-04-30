@@ -51,6 +51,7 @@ function* findRootHandler() {
 function* findByIdHandler() {
   var logTrace = this.logTrace;
   var personId = this.request.body.personId;
+  personId = parseInt(personId);
   var pgPerson = this.pg.Person;
   var neoPerson = this.neo.person;
 
@@ -70,7 +71,7 @@ function* findByIdHandler() {
     this.body = {
       success: true,
       data: {
-        model: model.getData(),
+        entity: model.getData(),
         node
       }
     };

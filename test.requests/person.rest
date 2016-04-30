@@ -3,8 +3,9 @@ POST http://pd.dev:4000/add
 Content-Type: application/json
 
 {
-  "fullName": "wife",
-  "gender": "male"
+  "fullName": "mother",
+  "gender": "male",
+  "birthDate": "05/04/1992"
 }
 
 #
@@ -22,12 +23,4 @@ GET http://pd.dev:4000/find/root
 Content-Type: application/json
 
 {
-}
-
-#
-GET http://pd.dev:4000/find/byId
-Content-Type: application/json
-
-{
-  "personId": 15
 }

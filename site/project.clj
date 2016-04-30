@@ -23,6 +23,7 @@
                  [org.clojure/tools.logging "0.3.1"]
                  [org.clojure/clojurescript "0.0-3165"]
                  [slingshot "0.12.2"]
+                 [org.clojure/algo.monads "0.1.5"]
                  [crypto-password "0.1.3"]
                  [weasel "0.7.0"]
                  [cider/cider-nrepl "0.10.0"]

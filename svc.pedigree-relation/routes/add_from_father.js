@@ -1,6 +1,7 @@
 'use strict';
 
 const router = require('koa-router')();
+const _ = require('lodash');
 
 // Middleware for validating data
 function* validateMdw(next) {
@@ -9,7 +10,7 @@ function* validateMdw(next) {
   const fatherNodeId = body.fatherNodeId;
   const childNodeId = body.childNodeId;
 
-  if (!fatherNodeId || !childNodeId) {
+  if (_.isNil(fatherNodeId) || _.isNil(childNodeId)) {
     let message = 'Father node id and child node id are required';
     logTrace.add('error', 'Validate father node id and child node id', message);
     this.body = {

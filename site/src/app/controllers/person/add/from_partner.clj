@@ -1,37 +1,31 @@
 (ns app.controllers.person.add.from-partner
-  (:require [app.models.person :as person]
-            [app.controllers.person.add.render :as render]
-            [app.util.person :as person-util]
-            [app.controllers.person.util :as controller-util]
-            [app.models.marriage-relation :as mrl]
-            [korma.db :refer [transaction]]
+  (:require [app.controllers.person.util :refer [find-person create-person]]
             [slingshot.slingshot :refer [try+ throw+]]
-            [app.views.layout :refer [render-message]]
-            [ring.util.response :refer [redirect]]))
+            [ring.util.response :refer [redirect]]
+            [app.services.marriage-relation :as svc-mr]
+            [app.controllers.person.add.render :as render]))
 
 (defn process-get-request [request]
-  (if-let [partner (controller-util/find-person-from-request request "partnerId")]
-    (let [partner-role (person-util/determine-partner-role-single partner)]
-      (render/render-add-page request {:action "add"
-                                       :from "partner"
-                                       :partner {partner-role partner}}))
-    (render-message request "Có lỗi xảy ra" :type :error)))
-
-(defn- find-partner
-  "Find the partner entity from the request"
-  [request]
-  (if-let [partner (controller-util/find-person-from-request request :partnerId)]
-    partner
-    (throw+ "partner not found")))
+  (try+
+   (let [{partner :entity} (find-person request "partnerId")
+         _                 (when (not partner) (throw+ "partner id nil"))
+         role              (svc-mr/detect-partner-role-single partner)]
+     (render/add-page request {:action "add"
+                               :from "partner"
+                               :partner {role partner}}))
+   (catch Object _ (render/error-page request))))
 
 (defn process-post-request [request]
-  (transaction
-   (try+
-    (let [partner (find-partner request)
-          person (-> request controller-util/create-person-from-request :entity)
-          partner-role (person-util/determine-partner-role-single person)]
-      (if (= partner-role :husband)
-        (mrl/add-marriage partner person)
-        (mrl/add-marriage person partner))
-      (->> (:id person) (str "/person/detail/") redirect))
-    (catch Object _ (render/render-error request)))))
+  (try+
+   (let [{partner-node   :node
+          partner-entity :entity} (find-person request "partnerId")
+         {person-node   :node
+          person-entity :entity}  (create-person request)
+         partner-role             (svc-mr/detect-partner-role-single partner-entity)]
+     (if (= partner-role "husband")
+       (svc-mr/add-relation partner-node person-node)
+       (svc-mr/add-relation person-node  partner-node))
+     (->> (:id person-entity)
+          (str "/person/detail/")
+          redirect))
+   (catch Object _ (render/error-page request))))

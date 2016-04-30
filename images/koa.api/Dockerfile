@@ -10,6 +10,7 @@ RUN npm install -g koa-router@5.4.0
 RUN npm install -g pg-native@1.10.0
 RUN npm install -g change-case-object@2.0.0
 RUN npm install -g request@2.71.0
+RUN npm install -g koa-multer@0.0.2
 
 WORKDIR /usr/src/app
 COPY bashrc /root/.bashrc
