@@ -16,8 +16,5 @@
                     :child-node-id (:id person-node)}))
 
 (defn count-parents [person-node]
-  (try+
-   (->> {:person-node-id (:id person-node)}
-        (call :svc-pedigree-relation "/count/parents" :get)
-        (:data))
-   (catch Object _ 0)))
+  (call-json :svc-pedigree-relation "/count/parents"
+             :get {:person-node-id (:id person-node)}))
