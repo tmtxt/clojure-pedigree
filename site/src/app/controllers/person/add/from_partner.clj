@@ -2,7 +2,8 @@
   (:require [app.controllers.person.util :refer [find-person create-person]]
             [slingshot.slingshot :refer [try+ throw+]]
             [ring.util.response :refer [redirect]]
-            [app.services.marriage-relation :as svc-mr]))
+            [app.services.marriage-relation :as svc-mr]
+            [app.controllers.person.add.render :as render]))
 
 (defn process-get-request [request]
   (try+
