@@ -17,6 +17,10 @@ alias dcr="docker-compose rm"
 alias dcl="docker-compose logs"
 alias dcb="docker-compose build"
 
+function attach {
+    docker exec -it $(docker-compose ps | grep "$1" | awk '{print $1}') bash
+}
+
 # attach neonode
 function an {
     docker exec -it $(docker-compose ps | grep 'neonode' | awk '{print $1}') bash
@@ -57,7 +61,7 @@ function asmr {
     docker exec -it $(docker-compose ps | grep 'svc.marriage-relation' | awk '{print $1}') bash
 }
 
-# attach svc marriage relation
-function asal {
-    docker exec -it $(docker-compose ps | grep 'api.logic' | awk '{print $1}') bash
+function run.web {
+    docker-compose kill server
+    docker-compose up server
 }

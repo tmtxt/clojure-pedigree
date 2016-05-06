@@ -142,7 +142,7 @@ svc.image:
 #####
 server:
   build: ./images/server
-  command: sh -c 'while true; do sleep 10000; done'
+  command: lein run
   volumes:
     - ./.cache/m2:/root/.m2
     - .:/usr/src/root
