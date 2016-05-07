@@ -1,6 +1,11 @@
 #
 GET http://pd.dev:3000/health
+Content-Type: application/json
+correlation-id: e57e6f68-56e7-4f53-86f7-221edddae46d
 
 {
   "hello": "def"
 }
+
+#
+GET http://pd.dev:3000/
