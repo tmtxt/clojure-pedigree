@@ -10,6 +10,7 @@
                  [clj-http "2.0.0"]
                  [selmer "0.8.2"]
                  [io.aviso/pretty "0.1.26"]
+                 [cheshire "5.6.1"]
                  [lib-noir "0.9.9"]
                  [clj-jgit "0.8.8"]
                  [com.taoensso/timbre "4.3.1"]

@@ -2,7 +2,11 @@
   (:require [slingshot.slingshot :refer [try+ throw+]]
             [taoensso.timbre :as timbre]
             [clojure.data.json :as json]
-            [taoensso.timbre.appenders.core :as appenders]))
+            [taoensso.timbre.appenders.core :as appenders]
+            [cheshire.core :refer [encode]]
+            [cheshire.generate :refer [add-encoder encode-str]]))
+
+(add-encoder org.eclipse.jetty.server.HttpInput encode-str)
 
 (defn- json-output-fn
   "Jsonify output function for file appender"
@@ -12,13 +16,7 @@
                                        :level     level
                                        :hostname  @hostname_}))
                       @vargs_)
-        json-messages (map (fn [v] (json/write-str
-                                   v
-                                   :value-fn
-                                   (fn [key value]
-                                     (.toString value)
-                                     )))
-                           messages)]
+        json-messages (map #(encode %) messages)]
     (clojure.string/join "\n" json-messages)))
 
 (def println-config
@@ -26,9 +24,9 @@
 
 (def spit-config
   {:level :debug
-   ;; :appenders {:spit (merge (appenders/spit-appender {:fname "/logs/svc.web.log"})
-   ;;                          {:output-fn json-output-fn})}
-   :appenders {:spit (appenders/spit-appender {:fname "/logs/svc.web.log"})}
+   :appenders {:spit (merge (appenders/spit-appender {:fname "/logs/svc.web.log"})
+                            {:output-fn json-output-fn})}
+   ;; :appenders {:spit (appenders/spit-appender {:fname "/logs/svc.web.log"})}
    :timestamp-opts {:pattern "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
                     :locale :jvm-default
                     :timezone :utc}})
@@ -58,4 +56,4 @@
   (timbre/with-config spit-config
     (let [level (keyword level)
           func (get LEVEL_MAPS level #(timbre/info %))]
-      (func data ""))))
+      (func data {}))))
