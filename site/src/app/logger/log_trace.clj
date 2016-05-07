@@ -86,7 +86,13 @@
 
 (defn end "End the log trace session and write log" []
   (let [log-data *log-data*
-        log-data (update log-data :message process-messages)]
+
+        level    (detect-log-level log-data)
+        status   (get-in log-data [:response :status])
+
+        log-data (update log-data :message process-messages)
+        log-data (assoc  log-data :level   level)
+        log-data (assoc  log-data :status  status)]
     (clojure.pprint/pprint log-data)))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]
