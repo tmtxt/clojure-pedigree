@@ -3,6 +3,7 @@
             [clj-uuid :as uuid]
             [app.util.main :as util]
             [clj-time.core :as t]
+            [clj-time.coerce :as c]
             [com.rpl.specter :refer [select ALL]]
             [io.aviso.exception :as aviso-ex]
             [clojure.string :refer [upper-case join]]))
@@ -32,6 +33,7 @@
                      :title "Start processing request"
                      :data ""}]
    :serviceName    "web.server"
+   :startedAt      (c/to-long (t/now))
    :request        (filter-request     request)
    :correlationId  (get-correlation-id request)})
 
@@ -84,15 +86,24 @@
                     (:data entry)))]
     (->> messages (map-indexed func) (join "\n"))))
 
+(defn- calculate-process-time "Calculate the process time of this request in ms" [log-data]
+  (let [started-at   (get log-data :startedAt)
+        finished-at  (c/to-long (t/now))
+        process-time (- finished-at started-at)]
+    (str process-time " ms")))
+
 (defn end "End the log trace session and write log" []
   (let [log-data *log-data*
 
-        level    (detect-log-level log-data)
+        level    (detect-log-level       log-data)
+        time     (calculate-process-time log-data)
         status   (get-in log-data [:response :status])
 
         log-data (update log-data :message process-messages)
-        log-data (assoc  log-data :level   level)
-        log-data (assoc  log-data :status  status)]
+        log-data (dissoc log-data :startedAt)
+        log-data (assoc  log-data :level       level)
+        log-data (assoc  log-data :status      status)
+        log-data (assoc  log-data :processTime time)]
     (clojure.pprint/pprint log-data)))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]
