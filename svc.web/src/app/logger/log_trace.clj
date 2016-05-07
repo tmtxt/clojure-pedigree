@@ -97,14 +97,22 @@
   (let [correlation-id (get log-data :correlationId)
         request        (get log-data :request)
         process-time   (get log-data :processTime)
-        response       (get log-data :response)]
+        response       (get log-data :response)
+        messages       (get log-data :message)]
     (logger/write-console level "Correlation Id: " correlation-id)
     (logger/write-console level "Request: \n" (with-out-str (clojure.pprint/pprint request)))
+    (logger/write-console level "Steps" "")
+    (doseq [[idx message] (map-indexed vector messages)]
+      (logger/write-console
+       level
+       (str "[" idx "]" " " (get message :title))
+       (get message :data)))
     (logger/write-console level "Response: \n" (with-out-str (clojure.pprint/pprint response)))
-    (logger/write-console level "Process time: " process-time)
-    ))
+    (logger/write-console level "Process time: " process-time)))
 
-(defn- write-file "Process log data and write to file" [log-data])
+(defn- write-file "Process log data and write to file" [log-data level]
+  (let [log-data (update log-data :message process-messages)]
+    (logger/write-file level log-data)))
 
 (defn end "End the log trace session and write log" []
   (let [log-data *log-data*
@@ -113,13 +121,12 @@
         time     (calculate-process-time log-data)
         status   (get-in log-data [:response :status])
 
-        ;; log-data (update log-data :message process-messages)
         log-data (dissoc log-data :startedAt)
         log-data (assoc  log-data :level       level)
         log-data (assoc  log-data :status      status)
         log-data (assoc  log-data :processTime time)]
     (write-console log-data level)
-    ;; (logger/write level log-data)
+    (write-file    log-data level)
     (set! *log-data* {})))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]

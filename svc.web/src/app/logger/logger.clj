@@ -26,8 +26,9 @@
 
 (def spit-config
   {:level :debug
-   :appenders {:spit (merge (appenders/spit-appender {:fname "/logs/svc.web.log"})
-                            {:output-fn json-output-fn})}
+   ;; :appenders {:spit (merge (appenders/spit-appender {:fname "/logs/svc.web.log"})
+   ;;                          {:output-fn json-output-fn})}
+   :appenders {:spit (appenders/spit-appender {:fname "/logs/svc.web.log"})}
    :timestamp-opts {:pattern "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
                     :locale :jvm-default
                     :timezone :utc}})
@@ -47,7 +48,7 @@
         func (get LEVEL_MAPS level #(timbre/info %))]
     (func data)))
 
-(defn write-console "Write log data to console" [level title data]
+(defn write-console "Write log data to console" [level title & [data]]
   (timbre/with-merged-config println-config
     (let [level (keyword level)
           func (get LEVEL_MAPS level #(timbre/info %))]
@@ -55,4 +56,6 @@
 
 (defn write-file "Write log data to file" [level data]
   (timbre/with-config spit-config
-    (write level data)))
+    (let [level (keyword level)
+          func (get LEVEL_MAPS level #(timbre/info %))]
+      (func data ""))))
