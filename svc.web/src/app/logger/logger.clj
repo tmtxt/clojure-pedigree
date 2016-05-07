@@ -34,22 +34,24 @@
 
 ;;; have to wrap the macro in a function...
 (def LEVEL_MAPS
-  {:trace  #(timbre/trace %)
-   :debug  #(timbre/debug %)
-   :info   #(timbre/info %)
-   :warn   #(timbre/warn %)
-   :error  #(timbre/error %)
-   :fatal  #(timbre/fatal %)
-   :report #(timbre/report %)})
+  {:trace  #(timbre/trace %1 %2)
+   :debug  #(timbre/debug %1 %2)
+   :info   #(timbre/info %1 %2)
+   :warn   #(timbre/warn %1 %2)
+   :error  #(timbre/error %1 %2)
+   :fatal  #(timbre/fatal %1 %2)
+   :report #(timbre/report %1 %2)})
 
 (defn- write "Write log file" [level data]
   (let [level (keyword level)
         func (get LEVEL_MAPS level #(timbre/info %))]
     (func data)))
 
-(defn write-console "Write log data to console" [level data]
+(defn write-console "Write log data to console" [level title data]
   (timbre/with-merged-config println-config
-    (write level data)))
+    (let [level (keyword level)
+          func (get LEVEL_MAPS level #(timbre/info %))]
+      (func title data))))
 
 (defn write-file "Write log data to file" [level data]
   (timbre/with-config spit-config
