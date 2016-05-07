@@ -58,10 +58,22 @@
   [response]
   (assoc *log-data* :response response))
 
-(defn add [level message & [data]]
-  (let [log-data (get *log-data* :message [])
-        log-data (conj log-data message)]
-    (set! *log-data* (assoc *log-data* :message log-data))))
+(defn- process-data "Pretty format the data" [data]
+  (cond
+    (nil? data)                  ""
+    (instance? Exception data)   (aviso-ex/format-exception data)
+    (some #(% data) [seq? map?]) (with-out-str (clojure.pprint/pprint data))
+    :else                        (.toString data)
+    ))
+
+(defn add "Add new entry to the log trace" [level message & [data]]
+  (let [level     (-> level keyword name)
+        data      (process-data data)
+        log-entry {:level level
+                   :mgs   message
+                   :data  data}
+        log-data  (update *log-data* :message conj log-entry)]
+    (set! *log-data* log-data)))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]
   (add :error "Uncaught exception" ex)
