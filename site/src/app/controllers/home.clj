@@ -49,8 +49,7 @@
   (layout/render-message request "hello" :redirect "/tree/view/" :text "Cây gia phả"))
 
 (defn health-check [request]
-  (log-trace/add :info "test" {:data "test"})
-  "ok2")
+  "ok")
 
 (defroutes home-routes
   (GET "/" [] home)

@@ -3,7 +3,8 @@
             [clj-uuid :as uuid]
             [app.util.main :as util]
             [clj-time.core :as t]
-            [com.rpl.specter :refer [select ALL]]))
+            [com.rpl.specter :refer [select ALL]]
+            [io.aviso.exception :as aviso-ex]))
 
 ;;; The var that contains all the logging information for this request
 (def ^:dynamic *log-data*)
@@ -43,29 +44,51 @@
     level))
 
 (defn- filter-response "Filter the response object for necessary keys" [response]
-  ;; remove body if too long
-  (let [content-type (get-in response [:headers "Content-Type"] "")
-        exclude      (some #(.contains content-type %) EXCLUDED-RESPONSE-CONTENT-TYPES)
-        body         (if exclude "Not included" (get response :body))
-        response     (assoc response :body body)]
-    response))
+  (cond
+    (string? response) response
+    (map? response)    (let [content-type (get-in response [:headers "Content-Type"] "")
+                             exclude      (some #(.contains content-type %) EXCLUDED-RESPONSE-CONTENT-TYPES)
+                             body         (if exclude "Not included" (get response :body))
+                             response     (assoc response :body body)]
+                         response)
+    :else              (.toString response)))
 
 (defn- make-post-request-data
   "Create the default log data from the response, used before finish processing the request"
   [response]
   (assoc *log-data* :response response))
 
+(defn add [level message & [data]]
+  (let [log-data (get *log-data* :message [])
+        log-data (conj log-data message)]
+    (set! *log-data* (assoc *log-data* :message log-data))))
+
+(defn- handle-exception "Handle uncaught exception in request handler" [ex]
+  (add :error "Uncaught exception" ex)
+  (add :info  "Request ends")
+  (let [response {:body    "Có lỗi xảy ra"
+                  :status  400,
+                  :headers {"Content-Type" "text/plain; charset=utf-8"}}
+        log-data (make-post-request-data response)]
+    (set! *log-data* log-data)
+    (clojure.pprint/pprint *log-data*)
+    response))
+
+(defn- handle-no-exception "Handle for the case no exception is thrown" [response]
+  (when (map? response)
+    (let [status (get response :status 200)]
+      (when (> status 300)
+        (add :error "Server response with error" status))))
+  (add :info "Request ends")
+  (let [log-data (make-post-request-data response)]
+    (set! *log-data* log-data))
+  (clojure.pprint/pprint *log-data*)
+  response)
+
 (defn wrap-log-trace [handler]
   (fn [request]
     (binding [*log-data* (make-pre-request-data request)]
       (try+
        (let [response (handler request)]
-         (set! *log-data* (make-post-request-data response))
-         (clojure.pprint/pprint *log-data*)
-         response)
-       (catch Object _ "error")))))
-
-(defn add [level message data]
-  (let [log-data (get *log-data* :message [])
-        log-data (conj log-data message)]
-    (set! *log-data* (assoc *log-data* :message log-data))))
+         (handle-no-exception response))
+       (catch Object ex (handle-exception ex))))))
