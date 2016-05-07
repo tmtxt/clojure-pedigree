@@ -26,42 +26,11 @@ function an {
     docker exec -it $(docker-compose ps | grep 'neonode' | awk '{print $1}') bash
 }
 
-# attach web server
-function aw {
-    docker exec -it $(docker-compose ps | grep 'server' | awk '{print $1}') bash
+function kill_and_run {
+    docker-compose kill $1
+    docker-compose up $1
 }
 
-# attach svc person
-function asp {
-    docker exec -it $(docker-compose ps | grep 'svc.person' | awk '{print $1}') bash
-}
-
-# attach svc user
-function asu {
-    docker exec -it $(docker-compose ps | grep 'svc.user' | awk '{print $1}') bash
-}
-
-# attach svc image
-function asi {
-    docker exec -it $(docker-compose ps | grep 'svc.image' | awk '{print $1}') bash
-}
-
-# attach minor content
-function asmc {
-    docker exec -it $(docker-compose ps | grep 'svc.minor-content' | awk '{print $1}') bash
-}
-
-# attach svc pedigree relation
-function aspr {
-    docker exec -it $(docker-compose ps | grep 'svc.pedigree-relation' | awk '{print $1}') bash
-}
-
-# attach svc marriage relation
-function asmr {
-    docker exec -it $(docker-compose ps | grep 'svc.marriage-relation' | awk '{print $1}') bash
-}
-
-function run.web {
-    docker-compose kill server
-    docker-compose up server
+function svc.web {
+    kill_and_run "svc.web"
 }

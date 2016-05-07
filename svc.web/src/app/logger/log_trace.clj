@@ -32,7 +32,7 @@
   {:message        [{:level "info"
                      :title "Start processing request"
                      :data ""}]
-   :serviceName    "web.server"
+   :serviceName    "svc.web"
    :startedAt      (c/to-long (t/now))
    :request        (filter-request     request)
    :correlationId  (get-correlation-id request)})
