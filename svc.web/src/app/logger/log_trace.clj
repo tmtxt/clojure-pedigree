@@ -6,7 +6,8 @@
             [clj-time.coerce :as c]
             [com.rpl.specter :refer [select ALL]]
             [io.aviso.exception :as aviso-ex]
-            [clojure.string :refer [upper-case join]]))
+            [clojure.string :refer [upper-case join]]
+            [app.logger.logger :as logger]))
 
 ;;; The var that contains all the logging information for this request
 (def ^:dynamic *log-data*)
@@ -104,7 +105,8 @@
         log-data (assoc  log-data :level       level)
         log-data (assoc  log-data :status      status)
         log-data (assoc  log-data :processTime time)]
-    (clojure.pprint/pprint log-data)))
+    (logger/write level log-data)
+    (set! *log-data* {})))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]
   (add :error "Uncaught exception" ex)

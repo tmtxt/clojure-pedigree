@@ -133,6 +133,7 @@ svc.web:
     - .:/usr/src/root
     - ./data:/data
     - ./svc.web:/usr/src/app
+    - ./logs:/logs
   env_file:
     - docker.env
   ports:
