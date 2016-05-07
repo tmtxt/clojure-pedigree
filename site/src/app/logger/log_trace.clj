@@ -4,7 +4,8 @@
             [app.util.main :as util]
             [clj-time.core :as t]
             [com.rpl.specter :refer [select ALL]]
-            [io.aviso.exception :as aviso-ex]))
+            [io.aviso.exception :as aviso-ex]
+            [clojure.string :refer [upper-case join]]))
 
 ;;; The var that contains all the logging information for this request
 (def ^:dynamic *log-data*)
@@ -28,7 +29,7 @@
   "Create the default log data from the request, used when start processing the request"
   [request]
   {:message        [{:level "info"
-                     :mgs "Start processing request"
+                     :title "Start processing request"
                      :data ""}]
    :serviceName    "web.server"
    :request        (filter-request     request)
@@ -66,14 +67,27 @@
     :else                        (.toString data)
     ))
 
-(defn add "Add new entry to the log trace" [level message & [data]]
+(defn add "Add new entry to the log trace" [level title & [data]]
   (let [level     (-> level keyword name)
         data      (process-data data)
         log-entry {:level level
-                   :mgs   message
+                   :title title
                    :data  data}
         log-data  (update *log-data* :message conj log-entry)]
     (set! *log-data* log-data)))
+
+(defn- process-messages "Concat all the message entries to one big message" [messages]
+  (let [func (fn [idx entry]
+               (str "[" (+ idx 1) "]" " "
+                    (-> entry :level upper-case) " "
+                    (:title entry) " "
+                    (:data entry)))]
+    (->> messages (map-indexed func) (join "\n"))))
+
+(defn end "End the log trace session and write log" []
+  (let [log-data *log-data*
+        log-data (update log-data :message process-messages)]
+    (clojure.pprint/pprint log-data)))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]
   (add :error "Uncaught exception" ex)
@@ -83,7 +97,7 @@
                   :headers {"Content-Type" "text/plain; charset=utf-8"}}
         log-data (make-post-request-data response)]
     (set! *log-data* log-data)
-    (clojure.pprint/pprint *log-data*)
+    (end)
     response))
 
 (defn- handle-no-exception "Handle for the case no exception is thrown" [response]
@@ -94,7 +108,7 @@
   (add :info "Request ends")
   (let [log-data (make-post-request-data response)]
     (set! *log-data* log-data))
-  (clojure.pprint/pprint *log-data*)
+  (end)
   response)
 
 (defn wrap-log-trace [handler]
