@@ -126,7 +126,7 @@
         log-data (assoc  log-data :status      status)
         log-data (assoc  log-data :processTime time)]
     (write-console log-data level)
-    (write-file    log-data level)
+    ;; (write-file    log-data level)
     (set! *log-data* {})))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]

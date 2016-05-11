@@ -107,22 +107,22 @@ svc.image:
     - postgres:postgres
 
 # logging-related containers
-svc.fluentd:
-  build: ./images/fluentd
-  volumes:
-    - ./logs:/var/log
-  links:
-    - svc.elasticsearch:svc.elasticsearch
+# svc.fluentd:
+#   build: ./images/fluentd
+#   volumes:
+#     - ./logs:/var/log
+#   links:
+#     - svc.elasticsearch:svc.elasticsearch
 
-svc.elasticsearch:
-  build: ./images/elasticsearch
+# svc.elasticsearch:
+#   build: ./images/elasticsearch
 
-svc.kibana:
-  build: ./images/kibana
-  links:
-    - svc.elasticsearch:elasticsearch
-  ports:
-    - 5601:5601
+# svc.kibana:
+#   build: ./images/kibana
+#   links:
+#     - svc.elasticsearch:elasticsearch
+#   ports:
+#     - 5601:5601
 
 #####
 svc.web:
