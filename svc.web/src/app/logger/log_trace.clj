@@ -65,7 +65,7 @@
 (defn- process-data "Pretty format the data" [data]
   (cond
     (nil? data)                  ""
-    (instance? Exception data)   (aviso-ex/format-exception data)
+    (instance? Exception data)   (binding [aviso-ex/*fonts* {}] (aviso-ex/format-exception data))
     (some #(% data) [seq? map?]) (with-out-str (clojure.pprint/pprint data))
     :else                        (.toString data)
     ))
@@ -132,9 +132,7 @@
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]
   (add :error "Uncaught exception" ex)
   (add :info  "Request ends")
-  (let [response {:body    "Có lỗi xảy ra"
-                  :status  400,
-                  :headers {"Content-Type" "text/plain; charset=utf-8"}}
+  (let [response (ring.util.response/response {:message "Có lỗi xảy ra"})
         log-data (make-post-request-data response)]
     (set! *log-data* log-data)
     (end)
