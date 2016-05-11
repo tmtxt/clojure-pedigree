@@ -57,7 +57,7 @@ module.exports = class KoaApi {
       var correlationId = _.get(ctx, ['request', 'header', 'correlationId']) || uuid.v4();
       var props = {
         correlationId,
-        svcName: serviceName
+        serviceName
       };
       var logTrace = new LogTrace(props);
 
@@ -84,7 +84,7 @@ module.exports = class KoaApi {
         logTrace.add('error', 'Error in processing request', {status});
       }
 
-      logTrace.write({status, request, response, serviceName});
+      logTrace.write({status, request, response});
     };
   }
 };

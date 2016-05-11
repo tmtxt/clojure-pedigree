@@ -1,18 +1,3 @@
-websources:
-  build: ./images/sources
-  volumes:
-    - ./site:/usr/src/app
-
-neosources:
-  build: ./images/sources
-  volumes:
-    - ./neo:/usr/src/app
-
-node.sources:
-  build: ./images/sources
-  volumes:
-    - ./neo:/usr/src/app
-
 # base image for koa api services
 koa.api.base:
   image: busybox
@@ -140,15 +125,15 @@ svc.image:
 #     - 5601:5601
 
 #####
-server:
+svc.web:
   build: ./images/server
-  command: sh -c 'while true; do sleep 10000; done'
+  command: lein run
   volumes:
     - ./.cache/m2:/root/.m2
     - .:/usr/src/root
     - ./data:/data
-  volumes_from:
-    - websources
+    - ./svc.web:/usr/src/app
+    - ./logs:/logs
   env_file:
     - docker.env
   ports:
@@ -194,23 +179,22 @@ neo4j:
   volumes_from:
     - neo4j.storage
 
-frontend:
-  build: ./images/frontend
-  command: sh -c 'while true; do sleep 10000; done'
-  volumes:
-    - ./.cache/npm:/root/.npm
-  volumes_from:
-    - websources
-  env_file:
-    - docker.env
+# frontend:
+#   build: ./images/frontend
+#   command: sh -c 'while true; do sleep 10000; done'
+#   volumes:
+#     - ./.cache/npm:/root/.npm
+#   volumes_from:
+#     - websources
+#   env_file:
+#     - docker.env
 
 neonode:
   build: ./images/neonode
   command: nodemon --legacy-watch app.js
   volumes:
     - ./.cache/npm:/root/.npm
-  volumes_from:
-    - neosources
+    - ./neo:/usr/src/app
   env_file:
     - docker.env
   ports:

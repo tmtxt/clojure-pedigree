@@ -1,11 +1,9 @@
 (ns app.handler
-  (:require [compojure.core :refer [defroutes routes]]
+  (:require [compojure.core :refer [defroutes routes wrap-routes]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.file-info :refer [wrap-file-info]]
             [ring.middleware.session.memory :refer [memory-store]]
             [ring.middleware.json :refer [wrap-json-response]]
-            [hiccup.middleware :refer [wrap-base-url]]
-            [compojure.handler :as handler]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [compojure.route :as route]
@@ -21,7 +19,9 @@
             [buddy.auth.middleware :refer [wrap-authentication]]
             [buddy.auth.accessrules :refer [wrap-access-rules]]
             [noir.validation :as validation]
-            [app.util.security :as security]))
+            [app.util.security :as security]
+
+            [app.logger.log-trace :as log-trace]))
 
 (defn init []
   (println "app is starting"))
@@ -42,7 +42,8 @@
                           person-rules))
 
 (def app
-  (-> (routes home-routes
+  (-> (routes (-> home-routes
+                  (wrap-routes log-trace/wrap-log-trace))
               person-routes
               admin-routes
               tree-routes

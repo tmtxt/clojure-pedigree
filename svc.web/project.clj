@@ -9,8 +9,12 @@
                  [ring/ring-json "0.4.0"]
                  [clj-http "2.0.0"]
                  [selmer "0.8.2"]
+                 [io.aviso/pretty "0.1.26"]
+                 [cheshire "5.6.1"]
                  [lib-noir "0.9.9"]
                  [clj-jgit "0.8.8"]
+                 [com.taoensso/timbre "4.3.1"]
+                 [danlentz/clj-uuid "0.1.6"]
                  [com.novemberain/validateur "2.4.2"]
                  [com.taoensso/tower "3.0.2"]
                  [korma "0.4.2"]
@@ -38,7 +42,6 @@
 
   :plugins [[lein-ring "0.8.12"]
             [lein-environ "1.0.0"]
-            [lein-cljsbuild "1.0.4"]
             [lein-ancient "0.6.7"]]
 
   :ring {:handler app.handler/app
@@ -47,29 +50,8 @@
 
   :main core.runner
 
-  :cljsbuild
-  {:builds {:dev
-            {:source-paths ["cljs"]
-             :incremental true
-             :compiler {:output-to "resources/public/cljs/main.js"
-                        :source-map "resources/public/cljs/main.js.map"
-                        :output-dir "resources/public/cljs"
-                        :warnings true
-                        :optimizations :whitespace
-                        :pretty-print true}}
-
-            :production
-            {:source-paths ["cljs"]
-             :incremental true
-             :compiler {:output-to "resources/public/cljs/main.js"
-                        :externs ["cljs/externs.js"]
-                        :optimizations :advanced
-                        :pretty-print false}}}}
-
   :profiles
-  {:uberjar {:aot :all}
-
-   :production
+  {:production
    {:ring {:open-browser? false, :stacktraces? false, :auto-reload? false}
     :env {:profile "production"}}
 

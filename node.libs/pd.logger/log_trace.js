@@ -15,7 +15,7 @@ module.exports = class LogTrace {
     this.startedAt = Date.now();
     this.props = props || {};
     this.logTrace = logger.createLoggerForService({
-      fileName: props.svcName
+      fileName: props.serviceName
     });
   }
 
