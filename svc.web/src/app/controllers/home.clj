@@ -6,16 +6,15 @@
             [app.util.security :as security]
             [ring.util.response :refer [redirect]]
             [slingshot.slingshot :refer [try+]]
-            [app.logic.preface-content :as preface]
-            [app.logic.tree-desc-content :as tree-desc]
+            [app.helper.minor-content :as minor-content]
             [app.logic.user :as user]
             [app.logger.log-trace :as log-trace]))
 
 (defn home "Render index page" [request]
   (view/render-template request
                         "home/index.html"
-                        {:preface (-> (preface/get) (:content))
-                         :tree-desc (-> (tree-desc/get) :content)}))
+                        {:preface (-> (minor-content/get-preface) (:content))
+                         :tree-desc (-> (minor-content/get-tree-description) :content)}))
 
 (defn login-render "Render login page" [request]
   (view/render-template request "home/login.html"))
