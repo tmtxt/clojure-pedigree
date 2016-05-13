@@ -3,8 +3,9 @@
             [app.services.minor-content :as svc-minor-content]
             [config.main :refer [config]]))
 
-(def ^:private preface-key (:preface-key config))
-(def ^:private tree-description-key (:tree-description-key config))
+(def ^:private preface-key (get-in config [:minor-content :preface-key]))
+(def ^:private tree-description-key
+  (get-in config [:minor-content :tree-description-key]))
 
 (defn- get-content "Get minor content" [key]
   (-> key

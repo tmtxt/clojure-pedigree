@@ -16,15 +16,17 @@
   ;; rather than having its own copy. When the root binding
   ;; changes, the server picks it up without having to restart.
   (-> #'app
-    ; Makes static assets in $PROJECT_DIR/resources/public/ available.
-    (wrap-file "resources")
-    ; Content-Type, Content-Length, and Last Modified headers for files in body
-    (wrap-file-info)))
+                                        ; Makes static assets in $PROJECT_DIR/resources/public/ available.
+      (wrap-file "resources")
+                                        ; Content-Type, Content-Length, and Last Modified headers for files in body
+      (wrap-file-info)))
 
 (defn start-server
   "used for starting the server in development mode from REPL"
   [& [port]]
-  (let [port (if port (Integer/parseInt port) (config :ring-port))]
+  (let [port (if port (Integer/parseInt port) (-> config
+                                                  (get-in [:services :svc-web :ring-port])
+                                                  (Integer/parseInt)))]
     (reset! server
             (serve (get-handler)
                    {:port port
@@ -40,7 +42,9 @@
   (reset! server nil))
 
 (defn start-repl []
-  (repl-server/start-server :port (config :nrepl-port)
+  (repl-server/start-server :port (-> config
+                                      (get-in [:services :svc-web :nrepl-port])
+                                      (Integer/parseInt))
                             :bind "0.0.0.0"
                             :handler cider-nrepl-handler)
   (println (str "nRepl server running on port " (config :nrepl-port))))
