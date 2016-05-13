@@ -18,7 +18,7 @@
                  [com.novemberain/validateur "2.4.2"]
                  [com.taoensso/tower "3.0.2"]
                  [korma "0.4.2"]
-                 [environ "1.0.1"]
+                 [environ "1.0.3"]
                  [org.clojure/data.json "0.2.6"]
                  [clj-time "0.11.0"]
                  [camel-snake-kebab "0.3.2"]
@@ -41,7 +41,7 @@
                                               com.sun.jmx/jmxri]]]
 
   :plugins [[lein-ring "0.8.12"]
-            [lein-environ "1.0.0"]
+            [lein-environ "1.0.3"]
             [lein-ancient "0.6.7"]]
 
   :ring {:handler app.handler/app

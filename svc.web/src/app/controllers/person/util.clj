@@ -2,7 +2,6 @@
   (:require [app.util.main :as util]
             [app.models.person :as person]
             [clojure.java.io :as io]
-            [config.main :refer [config]]
             [clj-time.core :as time]
             [clj-time.format :as time-format]
             [digest :refer [sha-256]]
