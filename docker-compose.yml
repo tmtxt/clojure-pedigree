@@ -135,6 +135,8 @@ svc.api-tree:
   links:
     - svc.tree:svc.tree
     - svc.person:svc.person
+    - svc.pedigree-relation:svc.pedigree-relation
+    - svc.marriage-relation:svc.marriage-relation
 
 #####
 svc.web:
