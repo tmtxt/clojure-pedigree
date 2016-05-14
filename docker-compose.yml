@@ -106,24 +106,6 @@ svc.image:
   links:
     - postgres:postgres
 
-# logging-related containers
-# svc.fluentd:
-#   build: ./images/fluentd
-#   volumes:
-#     - ./logs:/var/log
-#   links:
-#     - svc.elasticsearch:svc.elasticsearch
-
-# svc.elasticsearch:
-#   build: ./images/elasticsearch
-
-# svc.kibana:
-#   build: ./images/kibana
-#   links:
-#     - svc.elasticsearch:elasticsearch
-#   ports:
-#     - 5601:5601
-
 #####
 svc.web:
   build: ./images/server
@@ -201,3 +183,21 @@ neonode:
     - "3001:3000"
   links:
     - neo4j:neo4j
+
+# logging-related containers
+log.fluentd:
+  build: ./images/fluentd
+  volumes:
+    - ./logs:/var/log
+  links:
+    - log.elasticsearch:log.elasticsearch
+
+log.elasticsearch:
+  build: ./images/elasticsearch
+
+log.kibana:
+  build: ./images/kibana
+  links:
+    - log.elasticsearch:elasticsearch
+  ports:
+    - 5601:5601

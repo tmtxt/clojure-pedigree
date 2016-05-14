@@ -44,9 +44,12 @@
 (def app
   (-> (routes (-> home-routes
                   (wrap-routes log-trace/wrap-log-trace))
-              person-routes
-              admin-routes
-              tree-routes
+              (-> person-routes
+                  (wrap-routes log-trace/wrap-log-trace))
+              (-> admin-routes
+                  (wrap-routes log-trace/wrap-log-trace))
+              (-> tree-routes
+                  (wrap-routes log-trace/wrap-log-trace))
               app-routes)
       (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})
       (wrap-authentication authentication-backend)
