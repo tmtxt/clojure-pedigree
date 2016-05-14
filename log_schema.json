@@ -10,9 +10,9 @@
         "content-type": "application\/json",
         "host": "pd.dev:4000"
       },
-      "params": {
-
-      }
+      "route-params": "{}"
+      "form-params": "{}"
+      "query-params": "{}"
       "body": "",
       "url": "\/find\/root",
       "method": "GET"
