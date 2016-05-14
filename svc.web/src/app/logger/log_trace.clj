@@ -1,5 +1,6 @@
 (ns app.logger.log-trace
   (:require [slingshot.slingshot :refer [try+ throw+]]
+            [app.logger.log-trace.steps :refer [add-step]]
             [app.logger.log-trace.request
              :refer [process-data]
              :rename {process-data process-request-data}]
@@ -48,21 +49,9 @@
   [response]
   (assoc *log-data* :response (process-response-data response)))
 
-(defn- process-data "Pretty format the data" [data]
-  (cond
-    (nil? data)                  ""
-    (instance? Exception data)   (binding [aviso-ex/*fonts* {}] (aviso-ex/format-exception data))
-    (some #(% data) [seq? map?]) (with-out-str (clojure.pprint/pprint data))
-    :else                        (.toString data)
-    ))
-
 (defn add "Add new entry to the log trace" [level title & [data]]
-  (let [level     (-> level keyword name)
-        data      (process-data data)
-        log-entry {:level level
-                   :title title
-                   :data  data}
-        log-data  (update *log-data* :message conj log-entry)]
+  (let [steps    (add-step (:message *log-data*) level title data)
+        log-data (assoc *log-data* :message steps)]
     (set! *log-data* log-data)))
 
 (defn- process-messages "Concat all the message entries to one big message" [messages]

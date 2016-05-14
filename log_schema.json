@@ -6,10 +6,7 @@
   "correlationId": "49fedbdf-7c7f-4d74-8c60-7fb71bf28e41",
   "httpData": {
     "request": {
-      "header": {
-        "content-type": "application\/json",
-        "host": "pd.dev:4000"
-      },
+      "header": "{}",
       "route-params": "{}"
       "form-params": "{}"
       "query-params": "{}"
@@ -18,9 +15,7 @@
       "method": "GET"
     },
     "response": {
-      "header":{
-        "content-type":"application/json; charset=utf-8"
-      },
+      "header": "{}",
       "message": "",
       "body": ""
     },
