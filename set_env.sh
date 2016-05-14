@@ -34,3 +34,7 @@ function kill_and_run {
 function svc.web {
     kill_and_run "svc.web"
 }
+
+function svc.person {
+    kill_and_run "svc.person"
+}

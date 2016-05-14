@@ -65,26 +65,67 @@ module.exports = class KoaApi {
       ctx.logTrace = logTrace;
 
       // wrap next handler to handle uncaught exception
+      const requestData = processRequestLogData(this.request);
       try {
         yield next;
       } catch (err) {
         let status = this.response.status;
-        let request = _.pick(this.request, ['method', 'url', 'header', 'body']);
-        let response = _.pick(this.response, ['message', 'header', 'body']);
+        let responseData = processResponseLogData(this.response);
         logTrace.add('error', 'Error in processing request', err);
-        logTrace.write({status, request, response});
+        logTrace.write({status, request: requestData, response: responseData});
         throw err;
       }
 
       let status = this.response.status;
-      let request = _.pick(this.request, ['method', 'url', 'header', 'body']);
-      let response = _.pick(this.response, ['message', 'header', 'body']);
+      let responseData = processResponseLogData(this.response);
 
       if (status > 300) {
         logTrace.add('error', 'Error in processing request', {status});
       }
 
-      logTrace.write({status, request, response});
+      logTrace.write({
+        httpData: {
+          status, request: requestData, response: responseData
+        }
+      });
     };
   }
 };
+
+
+/**
+ * Transform the request data to the right log data schema
+ * @param {object} request
+ * @returns {object}
+ */
+function processRequestLogData(request) {
+  var data = {
+    header: _.pick(request.header, ['content-type', 'host', 'params']),
+    params: request.params,
+    body:   JSON.stringify(request.body),
+    url:    request.url,
+    method: request.method
+  };
+
+  return data;
+}
+
+
+/**
+ * Transform the response data to the right log data schema
+ * @param {object} response
+ * @returns {object}
+ */
+function processResponseLogData(response) {
+  var data = {
+    header:  response.header,
+    message: response.message,
+    body:    null
+  };
+
+  if (_.isObject(data.body)) {
+    data.body = JSON.stringify(data.body);
+  }
+
+  return data;
+}

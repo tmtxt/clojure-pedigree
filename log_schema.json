@@ -1,0 +1,29 @@
+{
+  "timestamp": "2016-05-08T13:58:15.842Z",
+  "message": "[1] INFO neoPerson.findRoot() : \n[2] INFO pgPerson.findOne() : \n[3] INFO Root node found : ",
+  "level": "info",
+  "serviceName": "svc.person",
+  "correlationId": "49fedbdf-7c7f-4d74-8c60-7fb71bf28e41",
+  "httpData": {
+    "request": {
+      "header": {
+        "content-type": "application\/json",
+        "host": "pd.dev:4000"
+      },
+      "params": {
+
+      }
+      "body": "",
+      "url": "\/find\/root",
+      "method": "GET"
+    },
+    "response": {
+      "header":{
+        "content-type":"application/json; charset=utf-8"
+      },
+      "message": "",
+      "body": ""
+    },
+    "status": 200
+  }
+}
