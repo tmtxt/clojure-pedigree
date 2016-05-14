@@ -23,10 +23,12 @@
          request        :request
          response       :response
          process-time   :processTime
+         service-name   :serviceName
          messages       :message}       log-data
         messages (process-messages messages)
         log-data {:correlationId correlation-id
                   :message (clojure.string/join "\n" messages)
+                  :serviceName service-name
                   :httpData
                   {:request     request
                    :response    response
