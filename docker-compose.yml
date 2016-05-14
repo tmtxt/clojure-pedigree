@@ -120,6 +120,20 @@ svc.tree:
   links:
     - neo4j:neo4j
 
+svc.api-tree:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.api-tree:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: nodemon --legacy-watch app.js
+  ports:
+    - "4011:80"
+  links:
+    - svc.tree:svc.tree
+
 #####
 svc.web:
   build: ./images/server
@@ -144,7 +158,7 @@ svc.web:
     - svc.pedigree-relation:svc.pedigree-relation
     - svc.marriage-relation:svc.marriage-relation
     - svc.image:svc.image
-    - svc.tree:svc.tree
+    - svc.api-tree:svc.api-tree
 
 postgres:
   build: ./images/postgres

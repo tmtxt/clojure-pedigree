@@ -44,8 +44,8 @@
     {:host "svc.image"
      :port "80"}
 
-    :svc-tree
-    {:host "svc.tree"
+    :svc-api-tree
+    {:host "svc.api-tree"
      :port "80"}}
 
    :logs

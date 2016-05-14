@@ -1,6 +1,0 @@
-#
-POST http://pd.dev:4005/user/authenticate
-Content-Type: application/json
-
-{
-}

@@ -18,5 +18,11 @@
      :info info
      :marriage partners-info}))
 
+(defn- query-tree "Query tree data from neo4j" [root-node-id depth]
+  (let [results (svc-tree/get-tree root-node-id depth)]
+    results))
+
 (defn get-tree [person-id depth]
-  )
+  (let [root-tree (get-root)]
+
+    ))
