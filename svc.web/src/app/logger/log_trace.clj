@@ -69,23 +69,6 @@
         process-time (- finished-at started-at)]
     (str process-time " ms")))
 
-(defn- write-console "Process log data and write to console" [log-data level]
-  (let [correlation-id (get log-data :correlationId)
-        request        (get log-data :request)
-        process-time   (get log-data :processTime)
-        response       (get log-data :response)
-        messages       (get log-data :message)]
-    (logger/write-console level "Correlation Id: " correlation-id)
-    (logger/write-console level "Request: \n" (with-out-str (clojure.pprint/pprint request)))
-    (logger/write-console level "Steps" "")
-    (doseq [[idx message] (map-indexed vector messages)]
-      (logger/write-console
-       level
-       (str "[" idx "]" " " (get message :title))
-       (get message :data)))
-    (logger/write-console level "Response: \n" (with-out-str (clojure.pprint/pprint response)))
-    (logger/write-console level "Process time: " process-time)))
-
 (defn- write-file "Process log data and write to file" [log-data level]
   (let [log-data (update log-data :message process-messages)]
     (logger/write-file level log-data)))

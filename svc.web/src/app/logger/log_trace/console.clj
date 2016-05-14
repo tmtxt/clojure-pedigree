@@ -42,5 +42,4 @@
     (logger/write-console level body "")
 
     ;; other information
-    (logger/write-console level "Process time: " process-time)
-    ))
+    (logger/write-console level "Process time: " process-time)))

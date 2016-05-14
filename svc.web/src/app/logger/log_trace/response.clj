@@ -3,13 +3,14 @@
             [cheshire.core :refer [encode]]
             [wharf.core :refer [transform-keys]]))
 
-(def exclude-body-content-types (config :exclude-body-content-types))
+(def exclude-body-content-types
+  (get-in config [:logs :exclude-body-content-types]))
 
 (defn- stringify "JSON Stringify the input object" [obj]
   (encode obj {:pretty true}))
 
 (defn- filter-body "Process the response object to create the body" [response]
-  (let [content-type (get-in response [:headers :content-type] "")
+  (let [content-type (get-in response [:headers "Content-Type"] "")
         exclude      (some #(.contains content-type %) exclude-body-content-types)
         body         (if exclude "Too long, excluded!" (get response :body))
         body         (if (string? body) body (stringify body))]
