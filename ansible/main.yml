@@ -1,85 +1,57 @@
 ---
 - hosts: all
   tasks:
-    - name: update project repo
-      git: >-
-        repo=https://github.com/tmtxt/clojure-pedigree.git
-        dest={{ project_dir }}
-        update=yes
-      tags:
-        - prod
-
     - name: create necessary directories
       file: path={{ item }} state=directory
       with_items: "{{ out_dirs }}"
-      tags:
-        - always
-
-    - name: create attach script for containers
-      template: >-
-        src=templates/docker/attach_{{ item }}.sh
-        dest={{ script_dir }}/attach_{{ item }}.sh
-        mode=755
-      tags:
-        - always
-      with_items:
-        - web_server
-        - schemup
-        - postgres
-        - frontend
-        - neonode
 
     - name: build all images
       command: docker-compose build
-      tags:
-        - always
       args:
         chdir: "{{ project_dir }}"
 
-    - name: create install scripts for services
-      template: >-
-        src=templates/install/{{ item }}
-        dest={{ script_dir }}/{{ item }}
-        mode=755
+    - name: run install node dependencies for services
+      command: docker-compose run {{ item }} npm install --no-bin-links
       with_items:
-        - npm_install.sh
-      tags:
-        - always
-
-    - name: run install scripts for services
-      command: ./{{ item }}
-      tags: always
-      with_items:
-        - svc.models_npm_install.sh
+        - svc.person
+        - svc.user
+        - svc.pedigree-relation
+        - svc.marriage-relation
+        - svc.minor-content
+        - svc.image
+        - frontend
       args:
-        chdir: "{{ script_dir }}"
+        chdir: "{{ project_dir }}"
 
-    - include: tasks/schemup.yml
-      tags:
-        - always
+    - name: run install lein dependencies for services
+      command: docker-compose run {{ item }} lein deps
+      args:
+        chdir: "{{ project_dir }}"
+      with_items:
+        - svc.web
 
-    - include: tasks/frontend.yml
-      tags:
-        - always
+    - name: run schemup
+      command: docker-compose run schemup schemup commit
+      register: schemup_result
+      changed_when: schemup_result.stdout.find('Creating') != -1 or schemup_result.stderr.find('Upgrading') != -1
+      ignore_errors: True
+      until: not schemup_result|failed
+      retries: 20
+      delay: 5
+      args:
+        chdir: "{{ project_dir }}"
 
-    - include: tasks/neo4j.yml
-      tags:
-        - always
-
-    - include: tasks/web.yml
-      tags:
-        - always
+    - name: run gulp build
+      command: docker-compose run frontend gulp prod
+      args:
+        chdir: "{{ project_dir }}"
 
     - name: kill all docker containers
       command: docker-compose stop
-      tags:
-        - always
       args:
         chdir: "{{ project_dir }}"
 
     - name: run docker images for web service
-      tags:
-        - always
-      command: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+      command: docker-compose up -d
       args:
         chdir: "{{ project_dir }}"

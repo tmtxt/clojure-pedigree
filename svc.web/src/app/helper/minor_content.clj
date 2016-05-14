@@ -26,3 +26,26 @@
 
 (defn update-tree-description "Update tree description content" [value]
   (update-content tree-description-key value))
+
+(defn- content-empty? "Check if the minor content is empty" [key]
+  (try+
+   (let [content (:content (get-content key))]
+     (if (empty? content)
+       true
+       false))
+   (catch Object _ true)))
+
+(defn preface-empty? "Check if preface is empty" []
+  (content-empty? preface-key))
+
+(defn tree-description-empty? "Check if tree description is empty" []
+  (content-empty? tree-description-key))
+
+(defn- add-content "Add minor content" [key value]
+  (svc-minor-content/add key value))
+
+(defn add-preface "Add preface" [value]
+  (add-content preface-key value))
+
+(defn add-tree-description "Add tree description" [value]
+  (add-content tree-description-key value))

@@ -161,15 +161,14 @@ neo4j:
   volumes_from:
     - neo4j.storage
 
-# frontend:
-#   build: ./images/frontend
-#   command: sh -c 'while true; do sleep 10000; done'
-#   volumes:
-#     - ./.cache/npm:/root/.npm
-#   volumes_from:
-#     - websources
-#   env_file:
-#     - docker.env
+frontend:
+  build: ./images/frontend
+  command: sh -c 'while true; do sleep 10000; done'
+  volumes:
+    - ./.cache/npm:/root/.npm
+    - ./svc.web:/usr/src/app
+  env_file:
+    - docker.env
 
 neonode:
   build: ./images/neonode

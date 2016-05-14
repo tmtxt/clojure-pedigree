@@ -13,9 +13,8 @@
               :value value}))
 
 (defn add [key value]
-  (try+
-   (->> {:key key
-         :value value}
-        (call :svc-minor-content "/add" :post))
-   true
-   (catch Object _ false)))
+  (call-json :svc-minor-content
+             "/add"
+             :post
+             {:key   key
+              :value value}))

@@ -3,7 +3,7 @@
 
 (defn -main
   [& args]
-  ;; (server/create-init-db)
+  (server/create-init-db)
   (server/start-server)
   (server/start-repl)
   )
