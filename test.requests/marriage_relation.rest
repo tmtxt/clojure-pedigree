@@ -3,8 +3,8 @@ POST http://pd.dev:4004/add
 Content-Type: application/json
 
 {
-  "husbandNodeId": 14,
-  "wifeNodeId": 15
+  "husbandNodeId": 2,
+  "wifeNodeId": 5
 }
 
 #

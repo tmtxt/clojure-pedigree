@@ -13,7 +13,14 @@ function* findById(personId, logTrace) {
   return yield send('person', '/find/byId', 'get', body, logTrace);
 }
 
+
+function* findByIds(personIds, logTrace) {
+  const body = {personIds};
+  return yield send('person', '/find/byIds', 'get', body, logTrace);
+}
+
 module.exports = {
   findRoot,
-  findById
+  findById,
+  findByIds
 };

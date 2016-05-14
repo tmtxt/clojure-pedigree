@@ -1,6 +1,36 @@
 'use strict';
 
+const _ = require('lodash');
+
 const svcPerson = require('pd.services').person;
+const svcMarriageRelation = require('pd.services').marriageRelation;
+
+
+/**
+ * Find all partner entities of this person node id
+ * @param {int} personNodeId
+ * @param {LogTrace} logTrace
+ * @returns {array}
+ */
+function* findMarriageEntities(personNodeId, logTrace) {
+  // find marriage nodes
+  logTrace.add('info', 'findMarriageEntities()', 'Find all partner nodes');
+  const nodes = yield svcMarriageRelation.findPartnerNodes(personNodeId, logTrace);
+
+  // get the marriage person ids
+  const marriagePersonIds = _.map(nodes, (node) => node.partnerId);
+
+  // find all the marriage person
+  logTrace.add('info', 'findMarriageEntities()', 'Find all persons by ids');
+  const partners = yield svcPerson.findByIds(marriagePersonIds, logTrace);
+
+  // filter the key
+  const result = _.map(partners, function(partner){
+    return partner.entity;
+  });
+
+  return result;
+}
 
 
 /**
@@ -29,7 +59,15 @@ function* findRoot(personId, logTrace) {
     throw new Error('Cannot find root');
   }
 
-  return root;
+  const rootNode = root.node;
+  const rootInfo = root.entity;
+  const rootMarriages = yield findMarriageEntities(rootNode.id, logTrace);
+
+  return {
+    node: rootNode,
+    info: rootInfo,
+    marriage: rootMarriages
+  };
 }
 
 
