@@ -12,8 +12,8 @@ POST http://pd.dev:4003/add/fromMother
 Content-Type: application/json
 
 {
-  "motherNodeId": 16,
-  "childNodeId": 17
+  "motherNodeId": 4,
+  "childNodeId": 3
 }
 
 #
@@ -21,9 +21,9 @@ POST http://pd.dev:4003/add/fromBoth
 Content-Type: application/json
 
 {
-  "fatherNodeId": 18,
-  "motherNodeId": 19,
-  "childNodeId": 20
+  "fatherNodeId": 3,
+  "motherNodeId": 6,
+  "childNodeId": 9
 }
 
 #

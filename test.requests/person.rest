@@ -3,8 +3,8 @@ POST http://pd.dev:4000/add
 Content-Type: application/json
 
 {
-  "fullName": "root wife 2",
-  "gender": "male",
+  "fullName": "f2",
+  "gender": "female",
   "birthDate": "05/04/1992",
   "aliveStatus": "dead"
 }
@@ -14,9 +14,7 @@ POST http://pd.dev:4000/delete
 Content-Type: application/json
 
 {
-  "personId": 46,
-  "fullName": "truong xuan 6",
-  "gender": "male"
+  "personId": 3
 }
 
 #

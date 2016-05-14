@@ -71,6 +71,33 @@ function* findRoot(personId, logTrace) {
 }
 
 
+/**
+ * Find all person entities by ids, optionally return as object with keys are the ids
+ * opts.returnObject: return as object, otherwise, return as array
+ * @param {array} personIds
+ * @param {object} opts
+ * @param {LogTrace} logTrace
+ * @returns {array|object}
+ */
+function* findEntitiesByIds (personIds, opts, logTrace) {
+  opts = opts || {};
+
+  // find all the person first
+  let persons = yield svcPerson.findByIds(personIds, logTrace);
+  persons = _.map(persons, (person) => person.entity);
+
+  if (opts.returnObject) {
+    return _.reduce(persons, function(obj, person){
+      obj[person.id] = person;
+      return obj;
+    }, {});
+  }
+
+  return persons;
+}
+
+
 module.exports = {
-  findRoot
+  findRoot,
+  findEntitiesByIds
 };
