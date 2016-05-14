@@ -2,6 +2,7 @@
 
 const svcTree = require('pd.services').tree;
 
+const PersonController = require('./person.js');
 
 /**
  * Construct tree data
@@ -12,10 +13,12 @@ const svcTree = require('pd.services').tree;
  * @return {object}
  */
 function* getTree(personId, depth, logTrace) {
-  // The tree structure that neo4j query returns
-  const neoTree = yield svcTree.getTree(personId, depth, logTrace);
+  const root = yield PersonController.findRoot(personId, logTrace);
 
-  return neoTree;
+  // The tree structure that neo4j query returns
+  // const neoTree = yield svcTree.getTree(personId, depth, logTrace);
+
+  return root;
 }
 
 module.exports = {

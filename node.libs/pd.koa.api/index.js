@@ -54,7 +54,11 @@ module.exports = class KoaApi {
     return function* (next) {
       // create log trace object
       var ctx = this;
-      var correlationId = _.get(ctx, ['request', 'header', 'correlationId']) || uuid.v4();
+
+      var correlationId = _.get(ctx, ['request', 'header', 'correlationId'])
+            || _.get(ctx, ['request', 'header', 'correlationid'])
+            || _.get(ctx, ['request', 'header', 'correlation-id'])
+            || uuid.v4();
       var props = {
         correlationId,
         serviceName

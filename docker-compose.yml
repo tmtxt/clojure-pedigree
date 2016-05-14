@@ -134,6 +134,7 @@ svc.api-tree:
     - "4011:80"
   links:
     - svc.tree:svc.tree
+    - svc.person:svc.person
 
 #####
 svc.web:

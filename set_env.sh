@@ -42,3 +42,7 @@ function svc.person {
 function svc.tree {
     kill_and_run "svc.tree"
 }
+
+function svc.api-tree {
+    kill_and_run "svc.api-tree"
+}

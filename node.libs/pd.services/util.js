@@ -44,11 +44,12 @@ function makeUrl(serviceName, uri) {
 
 /**
  * Send http request to other service
+ * TODO logTrace
  * @param {string} serviceName
  * @param {string} uri
  * @param {string} method
  * @param {string} body
- * @param {object} logTrace
+ * @param {LogTrace} logTrace
  * @return {Promise}
  */
 function send(serviceName, uri, method, body, logTrace) {
