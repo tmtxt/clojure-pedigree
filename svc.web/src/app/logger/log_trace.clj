@@ -56,14 +56,6 @@
         log-data (assoc *log-data* :message steps)]
     (set! *log-data* log-data)))
 
-(defn- process-messages "Concat all the message entries to one big message" [messages]
-  (let [func (fn [idx entry]
-               (str "[" (+ idx 1) "]" " "
-                    (-> entry :level upper-case) " "
-                    (:title entry) " "
-                    (:data entry)))]
-    (->> messages (map-indexed func) (join "\n"))))
-
 (defn- calculate-process-time "Calculate the process time of this request in ms" [log-data]
   (let [started-at   (get log-data :startedAt)
         finished-at  (c/to-long (t/now))
