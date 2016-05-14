@@ -6,6 +6,7 @@ koa.api.base:
     - ./.cache/npm:/root/.npm
     - ./node.libs/pd.logger:/usr/local/lib/node_modules/pd.logger
     - ./node.libs/pd.koa.api:/usr/local/lib/node_modules/pd.koa.api
+    - ./node.libs/pd.services:/usr/local/lib/node_modules/pd.services
 
 # base image for postgres storage
 postgres.storage:

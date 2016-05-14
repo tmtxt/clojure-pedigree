@@ -14,6 +14,7 @@ module.exports = class LogTrace {
     this.logTraces = [];
     this.startedAt = Date.now();
     this.props = props || {};
+    this.correlationId = this.props.correlationId;
     this.logTrace = logger.createLoggerForService({
       fileName: props.serviceName
     });
