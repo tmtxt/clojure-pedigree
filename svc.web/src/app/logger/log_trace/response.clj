@@ -16,11 +16,13 @@
     body))
 
 (defn- process-map-response [response]
-  (let [response (transform-keys (comp keyword clojure.string/lower-case) response)
-        body     (filter-body   response)
-        response (assoc response :body body)]
-    response
-    ))
+  (let [body     (filter-body   response)
+        header   (:headers response)
+        response (-> response
+                     (assoc  :body body)
+                     (dissoc :headers)
+                     (assoc  :header header))]
+    response))
 
 (defn- process-string-response [response]
   {:body response})

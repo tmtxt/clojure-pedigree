@@ -7,6 +7,7 @@
             [app.logger.log-trace.response
              :refer [process-data]
              :rename {process-data process-response-data}]
+            [app.logger.log-trace.console :as console]
             [clj-uuid :as uuid]
             [app.util.main :as util]
             [clj-time.core :as t]
@@ -100,7 +101,7 @@
         log-data (assoc  log-data :level       level)
         log-data (assoc  log-data :status      status)
         log-data (assoc  log-data :processTime time)]
-    (write-console log-data level)
+    (console/write log-data)
     ;; (write-file    log-data level)
     (set! *log-data* {})))
 
