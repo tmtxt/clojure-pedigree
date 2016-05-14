@@ -120,6 +120,16 @@ module.exports = sequelize.define('person', {
     }
   },
 
+  classMethods: {
+    findByIds: function(ids){
+      return this.findAll({
+        where: {
+          id: ids
+        }
+      });
+    }
+  },
+
   timestamps: false,
   tableName: 'tbl_person'
 });

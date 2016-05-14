@@ -28,6 +28,22 @@ Content-Type: application/json
 }
 
 #
+GET http://pd.dev:4000/find/byId
+Content-Type: application/json
+
+{
+  "personId": 4
+}
+
+#
+GET http://pd.dev:4000/find/byIds
+Content-Type: application/json
+
+{
+  "personIds": [2, 3, 4]
+}
+
+#
 GET http://pd.dev:4000/count
 Content-Type: application/json
 
