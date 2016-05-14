@@ -19,6 +19,7 @@
         - svc.marriage-relation
         - svc.minor-content
         - svc.image
+        - svc.tree
         - frontend
       args:
         chdir: "{{ project_dir }}"

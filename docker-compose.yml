@@ -106,6 +106,20 @@ svc.image:
   links:
     - postgres:postgres
 
+svc.tree:
+  build: ./images/koa.api
+  volumes:
+    - ./svc.tree:/usr/src/app
+  volumes_from:
+    - koa.api.base
+  env_file:
+    - docker.env
+  command: nodemon --legacy-watch app.js
+  ports:
+    - "4010:80"
+  links:
+    - neo4j:neo4j
+
 #####
 svc.web:
   build: ./images/server
