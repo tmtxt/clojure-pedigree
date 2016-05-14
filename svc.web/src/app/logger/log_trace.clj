@@ -1,5 +1,11 @@
 (ns app.logger.log-trace
   (:require [slingshot.slingshot :refer [try+ throw+]]
+            [app.logger.log-trace.request
+             :refer [process-data]
+             :rename {process-data process-request-data}]
+            [app.logger.log-trace.response
+             :refer [process-data]
+             :rename {process-data process-response-data}]
             [clj-uuid :as uuid]
             [app.util.main :as util]
             [clj-time.core :as t]
@@ -12,20 +18,10 @@
 ;;; The var that contains all the logging information for this request
 (def ^:dynamic *log-data*)
 
-(def EXCLUDED-RESPONSE-CONTENT-TYPES
-  ["text/html"])
-
 (defn- get-correlation-id "Get correlationId from request object" [request]
   (get-in request
           [:headers "correlation-id"]
           (.toString (uuid/v4))))
-
-(defn- filter-request "Filter the request object for necessary keys" [request]
-  (-> request
-      (update-in   [:headers] dissoc "accept-charset")
-      (select-keys [:params :route-params :form-params :query-params
-                    :content-type :uri :server-name :query-string
-                    :headers :body])))
 
 (defn- make-pre-request-data
   "Create the default log data from the request, used when start processing the request"
@@ -35,7 +31,7 @@
                      :data ""}]
    :serviceName    "svc.web"
    :startedAt      (c/to-long (t/now))
-   :request        (filter-request     request)
+   :request        (process-request-data request)
    :correlationId  (get-correlation-id request)})
 
 (defn- detect-log-level
@@ -47,20 +43,10 @@
         level     (first (select [ALL #(not (nil? %))] levels))]
     level))
 
-(defn- filter-response "Filter the response object for necessary keys" [response]
-  (cond
-    (string? response) response
-    (map? response)    (let [content-type (get-in response [:headers "Content-Type"] "")
-                             exclude      (some #(.contains content-type %) EXCLUDED-RESPONSE-CONTENT-TYPES)
-                             body         (if exclude "Not included" (get response :body))
-                             response     (assoc response :body body)]
-                         response)
-    :else              (.toString response)))
-
 (defn- make-post-request-data
   "Create the default log data from the response, used before finish processing the request"
   [response]
-  (assoc *log-data* :response response))
+  (assoc *log-data* :response (process-response-data response)))
 
 (defn- process-data "Pretty format the data" [data]
   (cond

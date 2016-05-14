@@ -44,5 +44,8 @@
     {:host (get env :svc-image-host "svc.image")
      :port (get env :svc-image-port "80")}}
 
-   ;; un-categorised
+   :logs
+   {:exclude-body-content-types ["text/html"]}
+
+   ;; un-categorised, will be deleted later
    :default-person-image "/assets/img/userbasic.jpg"})

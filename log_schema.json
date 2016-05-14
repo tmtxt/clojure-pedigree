@@ -24,6 +24,7 @@
       "message": "",
       "body": ""
     },
-    "status": 200
+    "status": 200,
+    "processTime": "11 ms"
   }
 }

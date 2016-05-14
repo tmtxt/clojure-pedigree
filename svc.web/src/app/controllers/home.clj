@@ -61,7 +61,8 @@
 
   (GET "/welcome" [] welcome)
   (GET "/message" [] message)
-  (GET "/health" [] health-check))
+  (GET "/health" [] health-check)
+  (POST "/health" [] health-check))
 
 (def home-rules [{:uri "/login"
                   :handler security/anonymous-access

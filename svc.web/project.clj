@@ -27,6 +27,7 @@
                  [org.clojure/tools.logging "0.3.1"]
                  [org.clojure/clojurescript "0.0-3165"]
                  [slingshot "0.12.2"]
+                 [wharf "0.2.0-SNAPSHOT"]
                  [org.clojure/algo.monads "0.1.5"]
                  [crypto-password "0.1.3"]
                  [weasel "0.7.0"]
