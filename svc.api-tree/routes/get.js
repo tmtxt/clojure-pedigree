@@ -1,16 +1,21 @@
 'use strict';
 
 const router = require('koa-router')();
-const svcTree = require('pd.services').tree;
+
+const TreeController = require('../controllers/tree.js');
 
 // Koa handler function
 function* getHandler() {
   const logTrace = this.logTrace;
+  const body = this.request.body;
+  const personId = body.personId;
+  const depth = body.depth;
 
-  const tree = yield svcTree.getTree(2, 5, logTrace);
+  const tree = yield TreeController.getTree(personId, depth, logTrace);
 
   this.body = {
-    tree
+    success: true,
+    data: tree
   };
 }
 

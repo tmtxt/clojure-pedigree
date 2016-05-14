@@ -71,7 +71,12 @@ function send(serviceName, uri, method, body, logTrace) {
         return;
       }
 
-      resolve(body);
+      const success = body.success;
+      if (!success) {
+        reject(body);
+      }
+
+      resolve(body.data);
     });
   });
 

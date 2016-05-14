@@ -3,5 +3,5 @@ GET http://pd.dev:4011/get/tree
 Content-Type: application/json
 
 {
-  "rootNodeId": 2
+  "personId": 2
 }
