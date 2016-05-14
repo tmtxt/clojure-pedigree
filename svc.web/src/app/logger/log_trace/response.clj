@@ -16,14 +16,19 @@
         body         (if (string? body) body (stringify body))]
     body))
 
+(defn- filter-header "Process the response object to create the header" [response]
+  (let [{header :headers} response]
+    (stringify header)))
+
 (defn- process-map-response [response]
   (let [body     (filter-body   response)
-        header   (:headers response)
-        response (-> response
-                     (assoc  :body body)
-                     (dissoc :headers)
-                     (assoc  :header header))]
-    response))
+        header   (filter-header response)
+        {status  :status
+         message :message} response]
+    {:body    body
+     :header  header
+     :status  status
+     :message message}))
 
 (defn- process-string-response [response]
   {:body response})
