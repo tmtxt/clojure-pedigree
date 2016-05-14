@@ -8,6 +8,7 @@
              :refer [process-data]
              :rename {process-data process-response-data}]
             [app.logger.log-trace.console :as console]
+            [app.logger.log-trace.file :as file]
             [clj-uuid :as uuid]
             [app.util.main :as util]
             [clj-time.core :as t]
@@ -69,10 +70,6 @@
         process-time (- finished-at started-at)]
     (str process-time " ms")))
 
-(defn- write-file "Process log data and write to file" [log-data level]
-  (let [log-data (update log-data :message process-messages)]
-    (logger/write-file level log-data)))
-
 (defn end "End the log trace session and write log" []
   (let [log-data *log-data*
 
@@ -85,7 +82,7 @@
         log-data (assoc  log-data :status      status)
         log-data (assoc  log-data :processTime time)]
     (console/write log-data)
-    ;; (write-file    log-data level)
+    (file/write    log-data)
     (set! *log-data* {})))
 
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]

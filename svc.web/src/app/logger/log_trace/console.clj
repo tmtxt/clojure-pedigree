@@ -1,5 +1,14 @@
 (ns app.logger.log-trace.console
-  (:require [app.logger.logger :as logger]))
+  (:require [app.logger.logger :as logger]
+            [io.aviso.exception :as aviso-ex]))
+
+(defn- process-data "Pretty format the data" [data]
+  (cond
+    (nil? data)                  ""
+    (instance? Exception data)   (aviso-ex/format-exception data)
+    (some #(% data) [seq? map?]) (with-out-str (clojure.pprint/pprint data))
+    :else                        (.toString data)
+    ))
 
 (defn write "Write the log-data to console" [log-data]
   (let [{correlation-id :correlationId
@@ -29,8 +38,8 @@
     (doseq [[idx message] (map-indexed vector messages)]
       (logger/write-console
        level
-       (str "[" idx "]" " " (get message :title))
-       (get message :data)))
+       (str "[" (+ 1 idx) "]" " " (get message :title))
+       (process-data (get message :data))))
 
     ;; write response
     (logger/write-console level "RESPONSE:" "")
