@@ -100,9 +100,9 @@ module.exports = class KoaApi {
  */
 function processRequestLogData(request) {
   var data = {
-    header: _.pick(request.header, ['content-type', 'host', 'params']),
-    params: request.params,
-    body:   JSON.stringify(request.body),
+    header: JSON.stringify(_.pick(request.header, ['content-type', 'host', 'params']), null, 2),
+    params: JSON.stringify(request.params, null, 2),
+    body:   JSON.stringify(request.body, null, 2),
     url:    request.url,
     method: request.method
   };
@@ -118,13 +118,13 @@ function processRequestLogData(request) {
  */
 function processResponseLogData(response) {
   var data = {
-    header:  response.header,
+    header:  JSON.stringify(response.header, null, 2),
     message: response.message,
     body:    null
   };
 
   if (_.isObject(data.body)) {
-    data.body = JSON.stringify(data.body);
+    data.body = JSON.stringify(data.body, null, 2);
   }
 
   return data;
