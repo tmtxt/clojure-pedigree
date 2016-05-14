@@ -3,10 +3,11 @@ POST http://pd.dev:4000/add
 Content-Type: application/json
 
 {
-  "fullName": "mother",
+  "fullName": "child",
   "gender": "male",
   "birthDate": "05/04/1992",
-  "aliveStatus": "dead"
+  "aliveStatus": "dead",
+  "isRoot": false
 }
 
 #

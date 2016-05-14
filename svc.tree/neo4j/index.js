@@ -1,2 +1,2 @@
 exports.db = require('./db.js');
-exports.marriageRelation = require('./marriage_relation.js');
+exports.tree = require('./tree.js');

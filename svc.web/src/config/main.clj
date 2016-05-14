@@ -21,28 +21,32 @@
      :root-git-dir "/usr/src/root"}
 
     :svc-user
-    {:host (get env :svc-user-host "svc.user")
-     :port (get env :svc-user-port "80")}
+    {:host "svc.user"
+     :port "80"}
 
     :svc-minor-content
-    {:host (get env :svc-minor-content-host "svc.minor-content")
-     :port (get env :svc-minor-content-port "80")}
+    {:host "svc.minor-content"
+     :port "80"}
 
     :svc-person
-    {:host (get env :svc-person-host "svc.person")
-     :port (get env :svc-person-port "80")}
+    {:host "svc.person"
+     :port "80"}
 
     :svc-pedigree-relation
-    {:host (get env :svc-pedigree-relation-host "svc.pedigree-relation")
-     :port (get env :svc-pedigree-relation-port "80")}
+    {:host "svc.pedigree-relation"
+     :port "80"}
 
     :svc-marriage-relation
-    {:host (get env :svc-marriage-relation-host "svc.marriage-relation")
-     :port (get env :svc-marriage-relation-port "80")}
+    {:host "svc.marriage-relation"
+     :port "80"}
 
     :svc-image
-    {:host (get env :svc-image-host "svc.image")
-     :port (get env :svc-image-port "80")}}
+    {:host "svc.image"
+     :port "80"}
+
+    :svc-tree
+    {:host "svc.tree"
+     :port "80"}}
 
    :logs
    {:exclude-body-content-types ["text/html"]}

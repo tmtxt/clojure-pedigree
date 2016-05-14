@@ -16,7 +16,7 @@ var context = {
 
 // routes
 var get = require('./routes/get.js');
-koa.use('/', get.routes(), get.allowedMethods());
+koa.use('/get', get.routes(), get.allowedMethods());
 var routes = koa.routes();
 
 // create the app

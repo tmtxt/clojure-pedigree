@@ -11,3 +11,7 @@
               :wife-node-id (:id wife-node)
               :husband-wife-order husband-wife-order
               :wife-husband-order wife-husband-order}))
+
+(defn find-partner-node [person-node-id]
+  (call-json :svc-marriage-relation "/find/partners" :get
+             {:person-node-id person-node-id}))

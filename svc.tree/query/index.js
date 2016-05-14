@@ -5,5 +5,5 @@ function readQuery(query) {
 }
 
 module.exports = {
-  findPartners: readQuery('find_partners')
+  getTree: readQuery('get_tree')
 };

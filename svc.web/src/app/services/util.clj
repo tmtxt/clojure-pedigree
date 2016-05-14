@@ -1,5 +1,5 @@
 (ns app.services.util
-  (:require [config.services :refer :all]
+  (:require [config.main :refer [config]]
             [clj-http.client :as client]
             [clojure.data.json :as json]
             [camel-snake-kebab.core :refer [->camelCaseString ->kebab-case-keyword]]
@@ -10,19 +10,7 @@
   {:get client/get
    :post client/post})
 
-(def services-map
-  {:svc-user {:host svc-user-host
-              :port svc-user-port}
-   :svc-minor-content {:host svc-minor-content-host
-                       :port svc-minor-content-port}
-   :svc-person {:host svc-person-host
-                :port svc-person-port}
-   :svc-pedigree-relation {:host svc-pedigree-relation-host
-                           :port svc-pedigree-relation-port}
-   :svc-marriage-relation {:host svc-marriage-relation-host
-                           :port svc-marriage-relation-port}
-   :svc-image {:host svc-image-host
-               :port svc-image-port}})
+(def services-map (config :services))
 
 (defn- get-url "Construct the url" [host port url]
   (str "http://" host ":" port url))

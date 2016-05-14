@@ -144,6 +144,7 @@ svc.web:
     - svc.pedigree-relation:svc.pedigree-relation
     - svc.marriage-relation:svc.marriage-relation
     - svc.image:svc.image
+    - svc.tree:svc.tree
 
 postgres:
   build: ./images/postgres

@@ -3,8 +3,8 @@ POST http://pd.dev:4003/add/fromFather
 Content-Type: application/json
 
 {
-  "fatherNodeId": 14,
-  "childNodeId": 15
+  "fatherNodeId": 2,
+  "childNodeId": 3
 }
 
 #

@@ -38,3 +38,7 @@ function svc.web {
 function svc.person {
     kill_and_run "svc.person"
 }
+
+function svc.tree {
+    kill_and_run "svc.tree"
+}

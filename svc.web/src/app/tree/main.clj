@@ -2,14 +2,16 @@
   (:require [app.models.person :as person]
             [app.tree.db :as tree-db]
             [com.rpl.specter :refer :all]
-            [slingshot.slingshot :refer [try+ throw+]]))
+            [slingshot.slingshot :refer [try+ throw+]]
+            [app.services.tree :as svc-tree]
+            [app.services.person :as svc-person]))
 
 (def ^{:private true} default-depth 5)
 
 (defn- query-tree
   "Query tree using Neo4j"
   [root-id depth]
-  (let [results (tree-db/query-tree root-id depth)
+  (let [results (svc-tree/get-tree root-id depth)
         results (map (fn [{path :path marriage :marriage depth :depth last-order :last_order last-parent :last_parent}]
                        [path depth marriage last-order last-parent])
                      results)]
@@ -94,7 +96,7 @@
            depth default-depth}}]
   (let [depth (if (nil? depth) default-depth depth)
         find-root (if (nil? person-id)
-                    (person/find-root :include-node true :include-partners true :json-friendly true)
+                    (svc-person/find-root)
                     (find-root person-id))
         root-node (:node find-root)
         root-node (assoc root-node :info (:entity find-root))

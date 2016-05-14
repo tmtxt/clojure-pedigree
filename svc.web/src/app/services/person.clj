@@ -3,16 +3,10 @@
             [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn find-by-id [person-id]
-  (try+
-   (-> (call :svc-person "/find/byId" :get {:person-id person-id})
-       (:data))
-   (catch Object _ nil)))
+  (call-json :svc-person "/find/byId" :get {:person-id person-id}))
 
 (defn find-root []
-  (try+
-   (-> (call :svc-person "/find/root" :get {})
-       (:data))
-   (catch Object _ nil)))
+  (call-json :svc-person "/find/root" :get {}))
 
 (defn add [person]
   (call-json :svc-person "/add" :post person))
