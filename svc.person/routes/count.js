@@ -6,12 +6,12 @@ const router = require('koa-router')();
 // Koa handler function
 function* countHandler() {
   const logTrace = this.logTrace;
-  const User = this.pg.User;
+  const Person = this.pg.Person;
 
-  logTrace.add('info', 'User.count()');
-  const count = yield User.count();
+  logTrace.add('info', 'Person.count()');
+  const count = yield Person.count();
 
-  let message = `Found ${count} users`;
+  let message = `Found ${count} persons`;
   logTrace.add('info', message);
 
   this.body = {
@@ -21,6 +21,6 @@ function* countHandler() {
   };
 }
 
-router.get('/count', countHandler);
+router.get('/', countHandler);
 
 module.exports = router;

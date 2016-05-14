@@ -47,7 +47,7 @@ module.exports = sequelize.define('person', {
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
-      isIn: aliveStatusValues
+      isIn: [aliveStatusValues]
     }
   },
   job: Sequelize.STRING,
@@ -57,7 +57,7 @@ module.exports = sequelize.define('person', {
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
-      isIn: genderValues
+      isIn: [genderValues]
     }
   },
   phone_no: Sequelize.STRING,

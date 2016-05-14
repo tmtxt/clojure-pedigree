@@ -1,5 +1,5 @@
 (ns app.services.person
-  (:require [app.services.util :refer [call]]
+  (:require [app.services.util :refer [call call-json]]
             [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn find-by-id [person-id]
@@ -15,7 +15,7 @@
    (catch Object _ nil)))
 
 (defn add [person]
-  (try+
-   (-> (call :svc-person "/add" :post person)
-       (:data))
-   (catch Object _ nil)))
+  (call-json :svc-person "/add" :post person))
+
+(defn count []
+  (call-json :svc-person "/count" :get {}))

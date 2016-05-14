@@ -1,5 +1,5 @@
 (ns app.services.user
-  (:require [app.services.util :refer [call]]
+  (:require [app.services.util :refer [call call-json]]
             [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn authenticate [username password]
@@ -30,10 +30,9 @@
    (catch Object _ true)))
 
 (defn add [user role]
-  (try+
-   (->> {:user user
-         :user-role
-         {:role-name role}}
-        (call :svc-user "/user/add" :post)
-        (:data))
-   (catch Object _ nil)))
+  (call-json :svc-user "/user/add" :post {:user user
+                                          :user-role
+                                          {:role-name role}}))
+
+(defn count "Count total users" []
+  (call-json :svc-user "/user/count" :get {}))
