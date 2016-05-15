@@ -4,20 +4,16 @@
             [ring.util.response :refer [response]]
             [clojure.data.json :as json]
             [app.views.layout :refer [render]]
-            [app.util.main :as util]))
+            [app.util.main :as util]
+            [app.services.api-tree :as api-tree]))
 
 (defn get-tree-data [request]
-  (let [params (util/params request)
-        person-id (-> params :personId util/parse-int)
-        depth (-> params :depth util/parse-int)]
-    (response (tree/get-tree :person-id person-id :depth depth))))
-
-(defn get-tree [request]
-  (response (tree/get-tree)))
-
-(defn get-tree-from-person [request]
-  (let [person-id (->> "personId" (util/param request) util/parse-int)]
-    (response (tree/get-tree :person-id person-id))))
+  (response (api-tree/get-tree 4 5))
+  ;; (let [params (util/params request)
+  ;;       person-id (-> params :personId util/parse-int)
+  ;;       depth (-> params :depth util/parse-int)]
+  ;;   )
+  )
 
 (defn tree-page
   ;; render layout page for pedigree tree

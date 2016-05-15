@@ -60,7 +60,7 @@ function* findRoot(personId, logTrace) {
   }
 
   const rootNode = root.node;
-  const rootInfo = root.entity;
+  const rootInfo = root.model;
   const rootMarriages = yield findMarriageEntities(rootNode.id, logTrace);
 
   return {
