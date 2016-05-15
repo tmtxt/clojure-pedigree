@@ -54,21 +54,22 @@ function* getTree(personId, depth, logTrace) {
   // each row in "rows" contain the path (person id to that person
   // loop through each row, for each row, walk the the path and append to the "children" array prop
   // of its parent
-  // note: all the rows are sorted by depth order, so this is okay to skip for check here
-  // TODO change to reduce
+  // note: all the rows are sorted by depth order, so this is okay to skip for check "children"
+  // array null
   const rows = neoTree;
   const tree = root;
+
   for(let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    let path = ['children'];
+    const path = ['children'];
 
     for(let j = 1; j < row.path.length; j++) {
-      let currentId = row.path[j];
-      let continueLoop = j < row.path.length - 1;
-      let children = _.get(tree, path);
+      const currentId = row.path[j];
+      const continueLoop = j < row.path.length - 1;
+      const children = _.get(tree, path);
       if (continueLoop) {
         // find the person in the child array
-        let idx = _.findIndex(children, {id: currentId});
+        const idx = _.findIndex(children, {id: currentId});
         path.push(idx);
         path.push('children');
       } else {
