@@ -73,8 +73,15 @@ function* getTree(personId, depth, logTrace) {
         path.push('children');
       } else {
         // last id in the path, create the person
-        let person = _.cloneDeep(personsByIds[currentId]);
+        const person = _.cloneDeep(personsByIds[currentId]);
         person.children = [];
+        // append the marriage info
+        const marriage = _.map(row.marriage, function(personId){
+          const person = _.cloneDeep(personsByIds[personId]);
+          return person;
+        });
+        person.marriage = marriage;
+        // add to its parent's children array
         children.push(person);
       }
     }
