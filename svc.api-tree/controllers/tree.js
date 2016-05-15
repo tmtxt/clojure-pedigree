@@ -44,13 +44,43 @@ function extractIds(rows) {
 function* getTree(personId, depth, logTrace) {
   // find root person with marriage information
   const root = yield PersonController.findRoot(personId, logTrace);
+  root.children = [];
 
   // The tree structure that neo4j query returns
   const neoTree = yield svcTree.getTree(root.node.id, depth, logTrace);
   const ids = extractIds(neoTree);
   const personsByIds = yield PersonController.findEntitiesByIds(ids, {returnObject: true}, logTrace);
 
-  return personsByIds;
+  // each row in "rows" contain the path (person id to that person
+  // loop through each row, for each row, walk the the path and append to the "children" array prop
+  // of its parent
+  // note: all the rows are sorted by depth order, so this is okay to skip for check here
+  // TODO change to reduce
+  const rows = neoTree;
+  const tree = root;
+  for(let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    let path = ['children'];
+
+    for(let j = 1; j < row.path.length; j++) {
+      let currentId = row.path[j];
+      let continueLoop = j < row.path.length - 1;
+      let children = _.get(tree, path);
+      if (continueLoop) {
+        // find the person in the child array
+        let idx = _.findIndex(children, {id: currentId});
+        path.push(idx);
+        path.push('children');
+      } else {
+        // last id in the path, create the person
+        let person = _.cloneDeep(personsByIds[currentId]);
+        person.children = [];
+        children.push(person);
+      }
+    }
+  }
+
+  return tree;
 }
 
 module.exports = {
