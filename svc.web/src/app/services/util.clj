@@ -4,7 +4,8 @@
             [clojure.data.json :as json]
             [camel-snake-kebab.core :refer [->camelCaseString ->kebab-case-keyword]]
             [camel-snake-kebab.extras :refer [transform-keys]]
-            [slingshot.slingshot :refer [throw+]]))
+            [slingshot.slingshot :refer [throw+]]
+            [app.logger.log-trace :as log-trace]))
 
 (def methods
   {:get client/get
@@ -17,7 +18,8 @@
 
 (defn- get-params "Construct the params to send" [data]
   {:content-type :json
-   :body (json/write-str data :key-fn ->camelCaseString)})
+   :body (json/write-str data :key-fn ->camelCaseString)
+   :headers {:correlationId (log-trace/get-id)}})
 
 (defn- send-request "Send the request to api logic server" [method url params]
   (let [func (get methods method client/get)]
@@ -32,7 +34,10 @@
 (defn- get-result "Parse the final result" [body]
   (let [result (json/read-str body :key-fn ->kebab-case-keyword)]
     (when (not (result :success))
-      (throw+ result))
+      (do
+        (log-trace/add :info "(app.services.util.get-result)"
+                       (str "Error in calling to service"))
+        (throw+ result)))
     (:data result)))
 
 (defn call
@@ -50,6 +55,8 @@
 (defn call-json
   "Function for sending rest request"
   [service uri method & [data]]
+  (log-trace/add :info "(app.services.util.call-json)"
+                 (str "Start calling to service " service))
   (let [data (if data data {})
         host (get-in services-map [service :host])
         port (get-in services-map [service :port])
@@ -57,6 +64,8 @@
         params (get-params data)
         response (send-request method url params)
         result (get-result response)]
+    (log-trace/add :info "(app.services.util.call-json)"
+                   (str "Finished calling to service " service))
     result))
 
 (defn call-multipart

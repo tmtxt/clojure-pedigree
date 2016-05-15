@@ -104,3 +104,6 @@
        (let [response (handler request)]
          (handle-no-exception response))
        (catch Object ex (handle-exception ex))))))
+
+(defn get-id "Get correlation id of the current request session" []
+  (get *log-data* :correlationId (.toString (uuid/v4))))

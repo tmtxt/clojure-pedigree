@@ -13,7 +13,7 @@
 (defn- process-messages [messages]
   (for [[idx message] (map-indexed vector messages)]
     (let [{:keys [title data]} message]
-      (str "[" (+ idx 1) "]" " " title (process-data data))
+      (str "[" (+ idx 1) "]" " " title " - " (process-data data))
       )))
 
 (defn write "Write the log-data to file" [log-data]
