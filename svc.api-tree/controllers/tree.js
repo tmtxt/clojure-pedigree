@@ -70,6 +70,10 @@ function* getTree(personId, depth, logTrace) {
       if (continueLoop) {
         // find the person in the child array
         const idx = _.findIndex(children, {id: currentId});
+        const child = children[idx];
+        if (!child.children) {
+          child.children = [];
+        }
         path.push(idx);
         path.push('children');
       } else {
@@ -83,7 +87,6 @@ function* getTree(personId, depth, logTrace) {
         const personData = {
           id: person.id,
           info: person,
-          children: [],
           marriage
         };
         // add to its parent's children array
