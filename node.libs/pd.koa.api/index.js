@@ -124,7 +124,7 @@ function processResponseLogData(response) {
   var data = {
     header:  JSON.stringify(response.header, null, 2),
     message: response.message,
-    body:    null
+    body:    response.body
   };
 
   if (_.isObject(data.body)) {

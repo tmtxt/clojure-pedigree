@@ -66,17 +66,21 @@ function send(serviceName, uri, method, body, logTrace) {
   };
 
   const promise = new Promise(function(resolve, reject){
+    logTrace.add('info', 'pd.services.send()', `Start sending request to service ${serviceName}`);
     request(options, function(err, res, body){
       if (err) {
+        logTrace.add('error', `Error in calling to service ${serviceName}`, err);
         reject(err);
         return;
       }
 
       const success = body.success;
       if (!success) {
+        logTrace.add('error', `Error in calling to service ${serviceName}`);
         reject(body);
       }
 
+      logTrace.add('info', `Finished calling to service ${serviceName}`);
       resolve(body.data);
     });
   });

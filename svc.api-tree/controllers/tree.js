@@ -59,6 +59,7 @@ function* getTree(personId, depth, logTrace) {
   const rows = neoTree;
   const tree = root;
 
+  logTrace.add('info', 'getTree()', 'Start constructing tree structure');
   for(let i = 0; i < rows.length; i++) {
     const row = rows[i];
     const path = ['children'];
