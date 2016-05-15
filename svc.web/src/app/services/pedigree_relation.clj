@@ -18,3 +18,6 @@
 (defn count-parents [person-node]
   (call-json :svc-pedigree-relation "/count/parents"
              :get {:person-node-id (:id person-node)}))
+
+(defn find-parents [person-node-id]
+  (call-json :svc-pedigree-relation "/find/parents" :get {:person-node-id person-node-id}))

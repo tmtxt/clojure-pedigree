@@ -19,7 +19,7 @@
             [app.logger.logger :as logger]))
 
 ;;; The var that contains all the logging information for this request
-(def ^:dynamic *log-data*)
+(def ^:dynamic *log-data* {})
 
 (defn- get-correlation-id "Get correlationId from request object" [request]
   (get-in request

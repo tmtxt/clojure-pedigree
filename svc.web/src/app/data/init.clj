@@ -25,7 +25,8 @@
     (minor-content/add-tree-description lorem)))
 
 (defn create-init-data []
-  (create-minor-content)
-  (create-init-user)
-  (create-init-person)
-  (println "Sample data inserted"))
+  (binding [app.logger.log-trace/*log-data* {}]
+    (create-minor-content)
+    (create-init-user)
+    (create-init-person)
+    (println "Sample data inserted")))

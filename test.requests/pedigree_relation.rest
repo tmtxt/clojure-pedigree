@@ -39,7 +39,7 @@ GET http://pd.dev:4003/find/parents
 Content-Type: application/json
 
 {
-  "personNodeId": 13
+  "personNodeId": 3
 }
 
 #
