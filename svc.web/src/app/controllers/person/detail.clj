@@ -1,13 +1,10 @@
 (ns app.controllers.person.detail
-  (:require [korma.db :as kd]
-            [app.views.layout :as layout]
-            [app.models.person :as person]
+  (:require [app.views.layout :as layout]
             [app.util.main :as util]
             [app.services.person :as svc-person]
             [slingshot.slingshot :refer [throw+]]
             [app.services.pedigree-relation :as svc-pr]
-            [app.services.marriage-relation :as svc-mr]
-            [app.controllers.person.util :as controller-util]))
+            [app.services.marriage-relation :as svc-mr]))
 
 (defn- find-person "Find the person entity and node" [request]
   (-> request
