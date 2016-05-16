@@ -44,7 +44,7 @@ function* findMarriageEntities(personNodeId, logTrace) {
 function* findRoot(personId, logTrace) {
   // find root person first
   let root;
-  if (personId) {
+  if (!_.isNil(personId)) {
     logTrace.add('info', 'findRoot()', 'personId exist, find using personId');
     root = yield svcPerson.findById(personId, logTrace);
   }
@@ -60,7 +60,7 @@ function* findRoot(personId, logTrace) {
   }
 
   const rootNode = root.node;
-  const rootInfo = root.model;
+  const rootInfo = root.model || root.entity;
   const rootMarriages = yield findMarriageEntities(rootNode.id, logTrace);
 
   return {

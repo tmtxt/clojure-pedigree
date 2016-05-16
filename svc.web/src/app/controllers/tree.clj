@@ -1,50 +1,63 @@
 (ns app.controllers.tree
   (:require [compojure.core :refer :all]
-            [app.tree.main :as tree]
             [ring.util.response :refer [response]]
             [clojure.data.json :as json]
-            [app.views.layout :refer [render]]
+            [app.views.main :refer [render-template]]
             [app.util.main :as util]
             [app.services.api-tree :as api-tree]))
 
 (defn get-tree-data [request]
-  (response (api-tree/get-tree 4 5))
-  ;; (let [params (util/params request)
-  ;;       person-id (-> params :personId util/parse-int)
-  ;;       depth (-> params :depth util/parse-int)]
-  ;;   )
-  )
+  (let [
+        ;; extract person id and depth
+        params                       (util/params request)
+        {id :personId depth :depth}  params
+
+        ;; parse int
+        args  (map util/parse-int [id depth])
+
+        ;; get tree data from api-tree
+        tree  (apply api-tree/get-tree args)
+        ]
+    (response tree)))
 
 (defn tree-page
-  ;; render layout page for pedigree tree
+  "Render layout page for pedigree tree page"
   [request & {:keys [person-id depth]
-              :or {person-id nil
-                   depth nil}}]
+              :or   {person-id nil
+                     depth nil}}]
   (let [person-id (json/write-str person-id)
-        depth (json/write-str depth)]
-    (render request "tree/tree.html"
-            {:personId person-id
-             :depth depth})))
+        depth     (json/write-str depth)]
+    (render-template request "tree/tree.html"
+                     {:personId  person-id
+                      :depth     depth})))
 
 (defn view-tree [request]
-  (let [params (util/params request)
-        person-id (:personId params)
-        depth (:depth params)]
+  (let [
+        ;; extract the person id and depth
+        params                              (util/params request)
+        {person-id :personId depth :depth}  params
+        ]
     (cond
-      (every? nil? [person-id depth]) (tree-page request)
-      (not-every? nil? [person-id depth]) (tree-page request :person-id person-id :depth depth)
-      (not (nil? person-id)) (tree-page request :person-id person-id)
-      :else (tree-page request :depth depth))))
+      ;; no person id or depth provided
+      (every? nil? [person-id depth])
+      (tree-page request)
 
-(defn view-from-person [request]
-  (let [person-id (util/param request "personId")]
-    (tree-page request person-id)))
+      ;; both person id and depth are provided
+      (not-every? nil? [person-id depth])
+      (tree-page request :person-id person-id :depth depth)
+
+      ;; only person id provided
+      (not (nil? person-id))
+      (tree-page request :person-id person-id)
+
+      ;; only depth provided
+      :else
+      (tree-page request :depth depth))))
 
 (def tree-routes
   (context
    "/tree" []
    (GET "/data" [] get-tree-data)
-
    (GET "/view/" [] view-tree)
    (GET "/view/person/:personId" [] view-tree)
    (GET "/view/depth/:depth" [] view-tree)
