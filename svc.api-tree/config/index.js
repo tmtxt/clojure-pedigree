@@ -1,3 +1,3 @@
 module.exports = {
-  serverPort: process.env.SVC_API_TREE_PORT
+  serverPort: process.env.MS_SVC_API_TREE_PORT
 };

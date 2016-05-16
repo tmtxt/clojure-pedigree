@@ -16,37 +16,37 @@
 
    :services
    {:svc-web
-    {:ring-port (get env :svc-web-ring-port 3000)
-     :nrepl-port (get env :svc-web-nrepl-port 7888)
+    {:ring-port (get env :ms-svc-web-ring-port 3000)
+     :nrepl-port (get env :ms-svc-web-nrepl-port 7888)
      :root-git-dir "/usr/src/root"}
 
     :svc-user
-    {:host "svc.user"
-     :port "80"}
+    {:host (get env :ms-svc-user-host)
+     :port (get env :ms-svc-user-port)}
 
     :svc-minor-content
-    {:host "svc.minor-content"
-     :port "80"}
+    {:host (get env :ms-svc-minor-content-host)
+     :port (get env :ms-svc-minor-content-port)}
 
     :svc-person
-    {:host "svc.person"
-     :port "80"}
+    {:host (get env :ms-svc-person-host)
+     :port (get env :ms-svc-person-port)}
 
     :svc-pedigree-relation
-    {:host "svc.pedigree-relation"
-     :port "80"}
+    {:host (get env :ms-svc-pedigree-relation-host)
+     :port (get env :ms-svc-pedigree-relation-port)}
 
     :svc-marriage-relation
-    {:host "svc.marriage-relation"
-     :port "80"}
+    {:host (get env :ms-svc-marriage-relation-host)
+     :port (get env :ms-svc-marriage-relation-port)}
 
     :svc-image
-    {:host "svc.image"
-     :port "80"}
+    {:host (get env :ms-svc-image-host)
+     :port (get env :ms-svc-image-port)}
 
     :svc-api-tree
-    {:host "svc.api-tree"
-     :port "80"}}
+    {:host (get env :ms-svc-api-tree-host)
+     :port (get env :ms-svc-api-tree-port)}}
 
    :logs
    {:exclude-body-content-types ["text/html"]}
