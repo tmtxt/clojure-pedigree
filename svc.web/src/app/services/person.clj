@@ -12,3 +12,9 @@
 
 (defn count []
   (call-json :svc-person "/count" :get {}))
+
+(defn find-by-name [name]
+  (call-json :svc-person "/find/byName" {:name name}))
+
+(defn find-by-genders [genders]
+  (call-json :svc-person "/find/byGenders" {:genders genders}))

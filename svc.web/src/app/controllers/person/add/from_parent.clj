@@ -7,10 +7,15 @@
 
 (defn process-get-request [request]
   (try+
-   (let [{parent :entity} (find-person request "parentId")
+   (let [
+         ;; find parent from request
+         {parent :entity} (find-person request "parentId")
          _                (when-not parent (throw+ "parent empty"))
-         role             (-> (svc-pr/detect-parent-role-single parent)
-                              (keyword))]
+
+         ;; detect the role of this parent
+         role (-> (svc-pr/detect-parent-role-single parent)
+                  (keyword))
+         ]
      (render/add-page request {:action "add"
                                :from "parent"
                                :parent {role parent}}))
@@ -18,8 +23,13 @@
 
 (defn- add-parent [request key person-node func]
   (try+
-   (let [{parent-node :node} (find-person request key)
-         rel                 (func person-node parent-node)]
+   (let [
+         ;; find parent from request
+         {parent-node :node} (find-person request key)
+
+         ;; create relation
+         rel (func person-node parent-node)
+         ]
      rel)
    (catch Object _ nil)))
 
@@ -31,4 +41,4 @@
          mother-rel (add-parent request "motherId" person-node svc-pr/add-from-mother)]
      (when (every? nil? [father-rel mother-rel]) (throw+ "nil all"))
      (redirect (str "/person/detail/" (person-node :id))))
-   (catch Object res (println res))))
+   (catch Object res (render/error-page request))))
