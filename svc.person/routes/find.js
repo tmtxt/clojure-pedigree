@@ -124,7 +124,7 @@ function* findByIdsHandler() {
   function* findNode(model, neoPerson) {
     const node = yield neoPerson.find(model.id);
     if (!node) {
-      throw new Error(`Cannot find node with id person id ${model.id}`);
+      throw new Error(`Cannot find node with person id ${model.id}`);
     }
     return { node, entity: model.getData() };
   }
@@ -141,8 +141,50 @@ function* findByIdsHandler() {
 }
 
 
+/**
+ * Find all person by name using iLIKE
+ *
+ * GET /find/byName
+ * {
+ * name: 'some name'
+ * }
+ */
+function* findByNameHandler() {
+  const logTrace = this.logTrace;
+  const pgPerson = this.pg.Person;
+  const neoPerson = this.neo.person;
+  const name = this.request.body.name;
+
+  // find all the entities using name
+  logTrace.add('info', 'findByNameHandler()', 'Find models by name');
+  const models = yield pgPerson.findByName(name);
+
+  // find all the node parallelly
+  function* findNode(model) {
+    const node = yield neoPerson.find(model.id);
+    if (!node) {
+      throw new Error(`Cannot find node with with person id ${model.id}`);
+    }
+
+    return { node, entity: model.getData() };
+  }
+  logTrace.add('info', 'findByNameHandler()', 'Find nodes by person id');
+  const tasks = _.map(models, function(model){
+    return findNode(model, neoPerson);
+  });
+  const result = yield tasks;
+
+  logTrace.add('info', 'findByNameHandler()', 'Done!');
+  this.body = {
+    success: true,
+    data: result
+  };
+}
+
+
 router.get('/root', findRootHandler);
 router.get('/byId', util.requireIdMdw, findByIdHandler);
 router.get('/byIds', findByIdsHandler);
+router.get('/byName', findByNameHandler);
 
 module.exports = router;

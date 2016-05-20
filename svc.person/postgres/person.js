@@ -127,6 +127,16 @@ module.exports = sequelize.define('person', {
           id: ids
         }
       });
+    },
+
+    findByName: function(name) {
+      return this.findAll({
+        where: {
+          full_name: {
+            $iLike: `%${name}%`
+          }
+        }
+      });
     }
   },
 

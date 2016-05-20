@@ -46,3 +46,11 @@ Content-Type: application/json
 
 {
 }
+
+#
+GET http://pd.dev:4000/find/byName
+Content-Type: application/json
+
+{
+  "name": "root"
+}
