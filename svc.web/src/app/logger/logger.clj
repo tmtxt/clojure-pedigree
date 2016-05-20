@@ -3,10 +3,7 @@
             [taoensso.timbre :as timbre]
             [clojure.data.json :as json]
             [taoensso.timbre.appenders.core :as appenders]
-            [cheshire.core :refer [encode]]
-            [cheshire.generate :refer [add-encoder encode-str]]))
-
-(add-encoder org.eclipse.jetty.server.HttpInput encode-str)
+            [cheshire.core :refer [encode]]))
 
 (defn- json-output-fn
   "Jsonify output function for file appender"

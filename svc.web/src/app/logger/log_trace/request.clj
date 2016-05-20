@@ -1,5 +1,16 @@
 (ns app.logger.log-trace.request
-  (:require [cheshire.core :refer [encode]]))
+  (:require [cheshire.core :refer [encode]]
+            [cheshire.generate :refer [add-encoder encode-str encode-map]]))
+
+(add-encoder org.eclipse.jetty.server.HttpInput encode-str)
+(add-encoder
+ java.io.File
+ (fn [file json-gen]
+   (encode-map
+    {:absolute-path (.getAbsolutePath file)
+     :name          (.getName file)
+     :to-string     (.toString file)}
+    json-gen)))
 
 (defn- process-headers [headers]
   (-> headers

@@ -42,7 +42,7 @@
           ;; map the messages to list of step strings
           steps (for [[idx message] (map-indexed vector messages)]
                   (str "[" (+ 1 idx) "]" " "
-                       (get message :title) " "
+                       (get message :title) " - "
                        (process-data (get message :data))))
 
           ;; join them by new line
