@@ -17,38 +17,49 @@
          response       :response
          process-time   :processTime
          messages       :message}       log-data
-        {:keys [params route-params form-params query-params query-string server-name]} request
+        {:keys [params route-params form-params query-params query-string server-name uri]} request
         header-request (:header request)
         {:keys [message body]} response
         header-response (:header response)]
+
+    ;; a separator
     (logger/write-console level "--------------------------------------------------------------------------------" "")
 
     ;; write request information
-    (logger/write-console level "REQUEST:" "")
-    (logger/write-console level "Header: " header-request)
-    (logger/write-console level "Params: " params)
-    (logger/write-console level "Route params: " route-params)
-    (logger/write-console level "Form params: " form-params)
-    (logger/write-console level "Query params: " query-params)
-    (logger/write-console level "Query string: " query-string)
-    (logger/write-console level "Server name: " server-name)
+    (logger/write-console
+     level "REQUEST:"
+     (str "\n"
+          "Header: " header-request "\n"
+          "Params: " params "\n"
+          "Route params: " route-params "\n"
+          "Form params: " form-params "\n"
+          "Query params: " query-params "\n"
+          "Server name: " server-name "\n"
+          "Uri: " uri "\n"))
 
     ;; write steps
-    (logger/write-console level "STEPS" "")
-    (doseq [[idx message] (map-indexed vector messages)]
+    (let [
+          ;; map the messages to list of step strings
+          steps (for [[idx message] (map-indexed vector messages)]
+                  (str "[" (+ 1 idx) "]" " "
+                       (get message :title) " "
+                       (process-data (get message :data))))
+
+          ;; join them by new line
+          steps (clojure.string/join "\n" steps)
+          ]
       (logger/write-console
        level
-       (str "[" (+ 1 idx) "]" " " (get message :title))
-       (process-data (get message :data))))
+       "STEPS:"
+       (str "\n" steps "\n")))
 
     ;; write response
-    (logger/write-console level "RESPONSE:" "")
-    (logger/write-console level "Header:" "")
-    (logger/write-console level header-response "")
-    (logger/write-console level "Message:" "")
-    (logger/write-console level message "")
-    (logger/write-console level "Body:" "")
-    (logger/write-console level body "")
+    (logger/write-console
+     level "RESPONSE:"
+     (str "\n"
+          "Header: " header-response "\n"
+          "Message: " message "\n"
+          "Body: " body "\n"))
 
     ;; other information
-    (logger/write-console level "Process time: " process-time)))
+    (logger/write-console level "PROCESS TIME:" process-time)))

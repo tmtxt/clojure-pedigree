@@ -17,4 +17,5 @@
      :form-params  (stringify form-params)
      :query-params (stringify query-params)
      :query-string query-string
-     :server-name  server-name}))
+     :server-name  server-name
+     :uri          uri}))
