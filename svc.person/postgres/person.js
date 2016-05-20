@@ -89,7 +89,7 @@ module.exports = sequelize.define('person', {
         return fileName;
       }
 
-      return `/data/images/person/original/${fileName}`;
+      return `/images/person/original/${fileName}`;
     }
   },
 
