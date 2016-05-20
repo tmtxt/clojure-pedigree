@@ -54,3 +54,11 @@ Content-Type: application/json
 {
   "name": "root"
 }
+
+#
+GET http://pd.dev:4000/find/byGenders
+Content-Type: application/json
+
+{
+  "genders": ["unknown"]
+}

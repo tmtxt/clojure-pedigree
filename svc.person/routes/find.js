@@ -182,9 +182,51 @@ function* findByNameHandler() {
 }
 
 
+/**
+ * Find all person by gender using IN
+ *
+ * GET /find/byGenders
+ * {
+ * genders: ['male', 'female']
+ * }
+ */
+function* findByGendersHandler() {
+  const logTrace = this.logTrace;
+  const pgPerson = this.pg.Person;
+  const neoPerson = this.neo.person;
+  const genders = this.request.body.genders;
+
+  // find all the entities using name
+  logTrace.add('info', 'findByGendersHandler()', 'Find models by genders');
+  const models = yield pgPerson.findByGenders(genders);
+
+  // find all the node parallelly
+  function* findNode(model) {
+    const node = yield neoPerson.find(model.id);
+    if (!node) {
+      throw new Error(`Cannot find node with with person id ${model.id}`);
+    }
+
+    return { node, entity: model.getData() };
+  }
+  logTrace.add('info', 'findByGendersHandler()', 'Find nodes by person id');
+  const tasks = _.map(models, function(model){
+    return findNode(model, neoPerson);
+  });
+  const result = yield tasks;
+
+  logTrace.add('info', 'findByGendersHandler()', 'Done!');
+  this.body = {
+    success: true,
+    data: result
+  };
+}
+
+
 router.get('/root', findRootHandler);
 router.get('/byId', util.requireIdMdw, findByIdHandler);
 router.get('/byIds', findByIdsHandler);
 router.get('/byName', findByNameHandler);
+router.get('/byGenders', findByGendersHandler);
 
 module.exports = router;

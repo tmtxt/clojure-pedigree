@@ -137,6 +137,20 @@ module.exports = sequelize.define('person', {
           }
         }
       });
+    },
+
+    findByGenders: function(genders) {
+      return this.findAll({
+        where: {
+          gender: {
+            $in: genders
+          }
+        }
+      });
+    },
+
+    findByGender: function(gender) {
+      return this.findByGenders([gender]);
     }
   },
 
