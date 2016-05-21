@@ -5,8 +5,10 @@ const winston = require('winston');
 exports.createLoggerForService = function(opts) {
   var fileName = opts.fileName || 'default.log';
 
-  return new (winston.Logger)({
-    transports: [
+  const transports = [];
+
+  if (process.env.LOG_CONSOLE == 'true') {
+    transports.push(
       new (winston.transports.Console)({
         level: 'info',
         json: false,
@@ -14,7 +16,12 @@ exports.createLoggerForService = function(opts) {
         timestamp: true,
         colorize: true,
         prettyPrint: true
-      }),
+      })
+    );
+  }
+
+  if (process.env.LOG_FILE == 'true') {
+    transports.push(
       new (winston.transports.File)({
         level: 'info',
         json: true,
@@ -22,7 +29,11 @@ exports.createLoggerForService = function(opts) {
         timestamp: true,
         filename: `/logs/${fileName}.log`
       })
-    ]
+    );
+  }
+
+  return new (winston.Logger)({
+    transports
   });
 };
 
