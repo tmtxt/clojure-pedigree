@@ -57,6 +57,6 @@
          mother-rel (add-parent request "motherId" person-node svc-pr/add-from-mother)]
 
      (when (every? nil? [father-rel mother-rel]) (throw+ "nil all"))
-     (redirect (str "/person/detail/" (person-node :id))))
+     (redirect (str "/person/detail/" (person-entity :id))))
 
    (catch Object res (render/error-page request))))
