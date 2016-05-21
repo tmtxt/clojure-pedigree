@@ -7,6 +7,7 @@ alias dcp="docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps"
 alias dcr="docker-compose -f docker-compose.yml -f docker-compose.prod.yml rm"
 alias dcl="docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs -f"
 alias dcb="docker-compose -f docker-compose.yml -f docker-compose.prod.yml build"
+alias dck="docker-compose -f docker-compose.yml -f docker-compose.prod.yml kill"
 
 function attach {
     docker exec -it $(docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps | grep "$1" | awk '{print $1}') /bin/bash
