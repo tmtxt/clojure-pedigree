@@ -41,7 +41,9 @@ var PersonModal = React.createClass({
                     <td colSpan="2">
                       <a href={"/person/detail/" + this.props.id} className="btn btn-success">Chi tiết</a>
                       <a href={"/tree/view/person/" + this.props.id} className="btn btn-success">Xem cây gia phả</a>
-                      <a href={"/person/edit/" + this.props.id} className="btn btn-success">Chỉnh sửa</a>
+                      {this.props.isAuthenticated ?
+                       <a href={"/person/edit/" + this.props.id} className="btn btn-success">Chỉnh sửa</a>
+                       : null }
                     </td>
                   </tr>
                 </table>
