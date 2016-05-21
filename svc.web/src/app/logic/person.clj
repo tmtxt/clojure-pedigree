@@ -10,6 +10,8 @@
 (defn- store-image [person]
   (domonad maybe-m
            [picture   (:picture person)
+            size      (:size picture)
+            not-0     (if (= size 0) nil true)
             file-name (svc-image/add picture "person")]
            file-name))
 
