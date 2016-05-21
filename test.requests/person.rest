@@ -62,3 +62,13 @@ Content-Type: application/json
 {
   "genders": ["unknown"]
 }
+
+#
+POST http://pd.dev:4000/update
+Content-Type: application/json
+
+{
+  "id": 7,
+  "fullName": "f2",
+  "gender": "female"
+}
