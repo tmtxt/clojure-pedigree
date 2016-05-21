@@ -42,18 +42,19 @@
   [request]
   (rollback)
   (render-message request "Có lỗi xảy ra" :type :error))
-
 (defn add-page "Render add page" [request & [opts]]
-  (let [{parent :parent
+  (let [{parent  :parent
          partner :partner
-         child :child
-         from :from
-         action :action} opts
+         child   :child
+         from    :from
+         action  :action
+         person  :person} opts
         statuses (json/write-str definition/statuses-display)
         genders  (json/write-str definition/genders-display)
         parent   (json/write-str parent)
         child    (json/write-str child)
-        partner  (json/write-str partner)]
+        partner  (json/write-str partner)
+        person   (json/write-str (if person person {}))]
     (view/render-template request
                           "person/edit_detail.html"
                           {:from from
@@ -62,7 +63,7 @@
                            :child child
                            :statuses statuses
                            :genders genders
-                           :person {}
+                           :person person
                            :action action})))
 
 (defn error-page
