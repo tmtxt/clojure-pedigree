@@ -4,7 +4,6 @@
         [ring.middleware file-info file])
   (:require [clojure.tools.nrepl.server :as repl-server]
             [config.main :refer [config]]
-            [config.db]
             [cider.nrepl :refer [cider-nrepl-handler]]
             [app.data.init :refer [create-init-data]]))
 
