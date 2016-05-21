@@ -1,0 +1,11 @@
+svc.web:
+  command: sh -c 'while true; do sleep 10000; done'
+
+backup:
+  build: ./images/backup
+  volumes:
+    - ./backup:/backup
+  volumes_from:
+    - postgres.storage
+    - neo4j.storage
+    - svc.web

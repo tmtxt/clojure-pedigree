@@ -31,7 +31,7 @@
 
 (defroutes app-routes
   (route/resources "/")
-  (route/files "/images" {:root "/data/images"})
+  (route/files "/images" {:root "/app-data/images"})
   (route/not-found "Not Found"))
 
 (def authentication-backend (session-backend))

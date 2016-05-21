@@ -46,3 +46,11 @@ function svc.tree {
 function svc.api-tree {
     kill_and_run "svc.api-tree"
 }
+
+function backup {
+    docker-compose -f docker-compose.yml -f docker-compose.backup.yml run backup /backup.sh
+}
+
+function restore {
+    docker-compose -f docker-compose.yml -f docker-compose.backup.yml run backup /restore.sh
+}

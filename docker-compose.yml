@@ -145,7 +145,7 @@ svc.web:
   volumes:
     - ./.cache/m2:/root/.m2
     - .:/usr/src/root
-    - ./data:/data
+    - ./data:/app-data
     - ./svc.web:/usr/src/app
     - ./logs:/logs
   env_file:
@@ -196,7 +196,7 @@ neo4j:
 
 frontend:
   build: ./images/frontend
-  command: sh -c 'while true; do sleep 10000; done'
+  command: node
   volumes:
     - ./.cache/npm:/root/.npm
     - ./svc.web:/usr/src/app

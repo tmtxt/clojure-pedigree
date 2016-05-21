@@ -5,7 +5,7 @@ alias dcu="docker-compose -f docker-compose.yml -f docker-compose.prod.yml up"
 alias dcud="docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
 alias dcp="docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps"
 alias dcr="docker-compose -f docker-compose.yml -f docker-compose.prod.yml rm"
-alias dcl="docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs"
+alias dcl="docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs -f"
 alias dcb="docker-compose -f docker-compose.yml -f docker-compose.prod.yml build"
 
 function attach {
@@ -31,4 +31,12 @@ function svc.tree {
 
 function svc.api-tree {
     kill_and_run "svc.api-tree"
+}
+
+function backup {
+    docker-compose -f docker-compose.yml -f docker-compose.backup.yml run backup /backup.sh
+}
+
+function restore {
+    docker-compose -f docker-compose.yml -f docker-compose.backup.yml run backup /restore.sh
 }
