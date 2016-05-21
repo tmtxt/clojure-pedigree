@@ -3,7 +3,14 @@
             [taoensso.timbre :as timbre]
             [clojure.data.json :as json]
             [taoensso.timbre.appenders.core :as appenders]
-            [cheshire.core :refer [encode]]))
+            [cheshire.core :refer [encode]]
+            [environ.core :refer [env]]))
+
+(def CONSOLE_ENABLE?
+  (if (= (:log-console env) "true") true false))
+
+(def FILE_ENABLE?
+  (if (= (:log-file env) "true") true false))
 
 (defn- json-output-fn
   "Jsonify output function for file appender"
@@ -17,31 +24,18 @@
     (clojure.string/join "\n" json-messages)))
 
 (def println-config
-  {:level :trace})
+  {:level :trace
+   :appenders {:println {:enabled? CONSOLE_ENABLE?}}
+   })
 
 (def spit-config
   {:level :debug
    :appenders {:spit (merge (appenders/spit-appender {:fname "/logs/svc.web.log"})
-                            {:output-fn json-output-fn})}
-   ;; :appenders {:spit (appenders/spit-appender {:fname "/logs/svc.web.log"})}
+                            {:output-fn json-output-fn
+                             :enabled? FILE_ENABLE?})}
    :timestamp-opts {:pattern "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
                     :locale :jvm-default
                     :timezone :utc}})
-
-;;; have to wrap the macro in a function...
-(def LEVEL_MAPS
-  {:trace  #(timbre/trace %1 %2)
-   :debug  #(timbre/debug %1 %2)
-   :info   #(timbre/info %1 %2)
-   :warn   #(timbre/warn %1 %2)
-   :error  #(timbre/error %1 %2)
-   :fatal  #(timbre/fatal %1 %2)
-   :report #(timbre/report %1 %2)})
-
-(defn- write "Write log file" [level data]
-  (let [level (keyword level)
-        func (get LEVEL_MAPS level #(timbre/info %))]
-    (func data)))
 
 (defn write-console "Write log data to console" [level title & [data]]
   (let [funcs {:trace  #(timbre/trace %1 %2)

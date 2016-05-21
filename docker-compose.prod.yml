@@ -39,6 +39,6 @@ svc.api-tree:
     - docker.prod.env
 
 svc.web:
-  command: node app.js
+  command: lein with-profile production run
   env_file:
     - docker.prod.env

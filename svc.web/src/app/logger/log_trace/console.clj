@@ -23,7 +23,13 @@
         header-response (:header response)]
 
     ;; a separator
-    (logger/write-console level "--------------------------------------------------------------------------------" "")
+    (logger/write-console
+     level
+     "--------------------------------------------------------------------------------"
+     "")
+
+    ;; request id
+    (logger/write-console level "CORRELATION ID:" correlation-id)
 
     ;; write request information
     (logger/write-console

@@ -53,6 +53,6 @@
         chdir: "{{ project_dir }}"
 
     - name: run docker images for web service
-      command: docker-compose up -d
+      command: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
       args:
         chdir: "{{ project_dir }}"
