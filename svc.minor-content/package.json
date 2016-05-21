@@ -11,6 +11,7 @@
   "dependencies": {
     "koa-router": "^5.4.0",
     "lodash": "^4.7.0",
+    "sequelize": "^3.23.2",
     "seraph": "^0.14.2"
   }
 }
