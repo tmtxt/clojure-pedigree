@@ -6,7 +6,6 @@ cache_dir: "{{ project_dir }}/.cache"
 data_dir: "{{ project_dir }}/data"
 backup_dir: "{{ project_dir }}/backup"
 out_dirs:
-  - "{{ script_dir }}"
   - "{{ cache_dir }}"
   - "{{ backup_dir }}"
   - "{{ data_dir }}"
