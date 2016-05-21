@@ -1,6 +1,7 @@
 'use strict';
 
 const router = require('koa-router')();
+const _ = require('lodash');
 
 // Middleware for validating data
 function* validateMdw(next) {
@@ -9,7 +10,7 @@ function* validateMdw(next) {
   const key = body.key;
   const value = body.value;
 
-  if (!key || !value) {
+  if (_.isNil(key) || _.isNil(value)) {
     let message = 'Minor content key and value are required';
     logTrace.add('error', 'Validate minor content key and value', message);
     this.body = {
