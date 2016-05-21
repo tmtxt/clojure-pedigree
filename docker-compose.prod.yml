@@ -1,12 +1,44 @@
-# Extend the default docker-compose file to add command for auto run containers
-server:
-  command: lein with-profile production run
-
-neonode:
+svc.person:
   command: node app.js
+  env_file:
+    - docker.prod.env
 
-frontend:
-  command: node
+svc.user:
+  command: node app.js
+  env_file:
+    - docker.prod.env
 
-svc.models.run:
-  command: ["sh", "-c", "node app.js >> /logs/svc.models.run.logs 2>&1"]
+svc.pedigree-relation:
+  command: node app.js
+  env_file:
+    - docker.prod.env
+
+svc.marriage-relation:
+  command: node app.js
+  env_file:
+    - docker.prod.env
+
+svc.minor-content:
+  command: node app.js
+  env_file:
+    - docker.prod.env
+
+svc.image:
+  command: node app.js
+  env_file:
+    - docker.prod.env
+
+svc.tree:
+  command: node app.js
+  env_file:
+    - docker.prod.env
+
+svc.api-tree:
+  command: node app.js
+  env_file:
+    - docker.prod.env
+
+svc.web:
+  command: node app.js
+  env_file:
+    - docker.prod.env
