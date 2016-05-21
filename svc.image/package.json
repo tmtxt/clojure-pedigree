@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "koa-router": "^5.4.0",
-    "lodash": "^4.7.0"
+    "lodash": "^4.7.0",
+    "thunkify": "^2.1.2"
   }
 }

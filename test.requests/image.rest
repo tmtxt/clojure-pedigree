@@ -1,0 +1,8 @@
+#
+POST http://pd.dev:4007/delete
+Content-Type: application/json
+
+{
+  "type": "person",
+  "name": "a1fc9d38-420d-47e4-a154-59f936ff168f.jpg"
+}

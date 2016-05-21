@@ -1,21 +1,23 @@
 'use strict';
 
 // libs
-var koa = require('koa-router')();
-var KoaApi = require('pd.koa.api');
-var multer = require('koa-multer');
+const koa = require('koa-router')();
+const KoaApi = require('pd.koa.api');
+const multer = require('koa-multer');
 
 // config
-var config = require('./config');
-var port = config.serverPort;
+const config = require('./config');
+const port = config.serverPort;
 
 // context
-var context = {};
+const context = {};
 
 // routes
-var add = require('./routes/add.js');
+const add = require('./routes/add.js');
+const deleteImage = require('./routes/delete.js');
 koa.use('/add', multer({limits: '10mb'}), add.routes(), add.allowedMethods());
-var routes = koa.routes();
+koa.use('/delete', deleteImage.routes(), deleteImage.allowedMethods());
+const routes = koa.routes();
 
 // create the app
 new KoaApi({
