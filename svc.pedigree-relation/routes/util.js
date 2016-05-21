@@ -7,7 +7,7 @@ function* requirePersonNodeIdMdw(next) {
   const body = this.request.body;
   const personNodeId = body.personNodeId;
 
-  if (!_.isNil(personNodeId)) {
+  if (_.isNil(personNodeId)) {
     let message = 'personNodeId is required';
     logTrace.add('error', 'Validate personNodeId', message);
     this.body = {
