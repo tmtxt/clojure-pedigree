@@ -4,10 +4,10 @@
 sudo sed -i "/\b\(pd.dev\)\b/d" /etc/hosts
 
 # insert the new ip
-echo "$(docker-machine ip test) pd.dev" | sudo tee -a /etc/hosts
+echo "$(docker-machine ip pd) pd.dev" | sudo tee -a /etc/hosts
 
 # set env variables
-eval "$(docker-machine env test)" OR $(docker-machine env test)
+eval "$(docker-machine env pd)" OR $(docker-machine env pd)
 
 # aliases
 alias dcu="docker-compose up"
