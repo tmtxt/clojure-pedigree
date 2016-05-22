@@ -11,7 +11,8 @@ var PictureAction;
 var Col1View = React.createClass({
   getInitialState: function() {
     return {
-      imageLink: PersonStore.getPerson().picture
+      imageLink: PersonStore.getPerson().picture,
+      replacePicture: PersonStore.getPerson()['replace-picture']
     };
   },
 
@@ -25,7 +26,8 @@ var Col1View = React.createClass({
 
   pictureChanged: function() {
     this.setState({
-      imageLink: PersonStore.getPerson().picture
+      imageLink: PersonStore.getPerson().picture,
+      replacePicture: PersonStore.getPerson()['replace-picture']
     });
   },
 
@@ -46,6 +48,7 @@ var Col1View = React.createClass({
           <img className="img-responsive img-thumbnail" alt="" src={this.state.imageLink}/>
           <input ref="pictureInput" name="picture"
                  type="file" accept="image/*" className="hidden js-picture-input"/>
+          <input name="replace-picture" type="hidden" value={this.state.replacePicture}/>
         </div>
         <div className="col-1-buttons">
           <button onClick={this.handleSelectImage}

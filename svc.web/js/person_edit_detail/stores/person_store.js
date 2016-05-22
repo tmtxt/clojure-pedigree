@@ -12,6 +12,7 @@ function init(opts) {
     person = util.getPerson();
     person.fullName = "";
   }
+  person['replace-picture'] = 'false';
   this.person = person;
 
   return this;
@@ -35,11 +36,13 @@ store.getPerson = function() {
 // Update Functions
 store.setPicture = function(link) {
   this.person.picture = link;
+  this.person['replace-picture'] = 'true';
   this.trigger('change');
 };
 
 store.removePicture = function() {
   this.person.picture = "/assets/img/userbasic.jpg";
+  this.person['replace-picture'] = 'true';
   this.trigger('change');
 };
 

@@ -19,7 +19,8 @@
     phone :phone
     picture :picture
     address :address
-    summary :history}]
+    summary :history
+    replace-picture :replace-picture}]
   {:full-name full-name
    :birth-date birth-date
    :death-date death-date
@@ -28,7 +29,8 @@
    :picture picture
    :gender gender
    :phone-no phone
-   :summary summary})
+   :summary summary
+   :replace-picture replace-picture})
 
 (defn find-person "Find person from request" [request param-name]
   (let [param-name (keyword param-name)

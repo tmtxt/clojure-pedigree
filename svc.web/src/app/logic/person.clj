@@ -20,12 +20,18 @@
        (assoc person :picture)
        (svc-person/add)))
 
+(defn- is-replaced? [replace?]
+  (cond
+    (not replace?) false
+    (= replace? "false") false
+    :else true))
+
 (defn- process-image [old-person new-person]
   (try+
    (let [{picture  :picture
           replace? :replace-picture} new-person
 
-         _ (when (not replace?) (throw+ (dissoc new-person :picture)))
+         _ (when (not (is-replaced? replace?)) (throw+ (dissoc new-person :picture)))
 
          _ (svc-image/delete (:picture old-person) "person")
 
