@@ -10,6 +10,9 @@
 (defn add [person]
   (call-json :svc-person "/add" :post person))
 
+(defn update [person]
+  (call-json :svc-person "/update" :post person))
+
 (defn count []
   (call-json :svc-person "/count" :get {}))
 

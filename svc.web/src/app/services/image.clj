@@ -1,5 +1,5 @@
 (ns app.services.image
-  (:require [app.services.util :refer [call-multipart]]
+  (:require [app.services.util :refer [call-multipart call-json]]
             [slingshot.slingshot :refer [try+ throw+]]))
 
 (def content-types
@@ -21,3 +21,8 @@
        (:data)
        (:image-name))
    (catch Object _ nil)))
+
+(defn delete [file-name type]
+  (call-json :svc-image "/delete" :post
+             {:name file-name
+              :type type}))
