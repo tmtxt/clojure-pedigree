@@ -22,3 +22,6 @@
 
 (defn find-by-genders [genders]
   (call-json :svc-person "/find/byGenders" {:genders genders}))
+
+(defn delete [person-id]
+  (call-json :svc-person "/delete" :post {:person-id person-id}))

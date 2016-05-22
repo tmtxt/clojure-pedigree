@@ -2,13 +2,17 @@
   (:require [app.logger.logger :as logger]
             [io.aviso.exception :as aviso-ex]))
 
-(defn- process-data "Pretty format the data" [data]
+(defn- process-datum "Pretty format the data" [datum]
   (cond
-    (nil? data)                  ""
-    (instance? Exception data)   (binding [aviso-ex/*fonts* {}] (aviso-ex/format-exception data))
-    (some #(% data) [seq? map?]) (with-out-str (clojure.pprint/pprint data))
-    :else                        (.toString data)
+    (nil? datum)                  ""
+    (instance? Exception datum)   (binding [aviso-ex/*fonts* {}] (aviso-ex/format-exception datum))
+    (some #(% datum) [seq? map?]) (with-out-str (clojure.pprint/pprint datum))
+    :else                        (.toString datum)
     ))
+
+(defn- process-data "Pretty format the data" [data]
+  (let [data (map #(process-datum %) data)]
+    (clojure.string/join " " data)))
 
 (defn- process-messages [messages]
   (for [[idx message] (map-indexed vector messages)]

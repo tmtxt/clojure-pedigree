@@ -51,7 +51,7 @@
   [response]
   (assoc *log-data* :response (process-response-data response)))
 
-(defn add "Add new entry to the log trace" [level title & [data]]
+(defn add "Add new entry to the log trace" [level title & data]
   (let [steps    (add-step (:message *log-data*) level title data)
         log-data (assoc *log-data* :message steps)]
     (set! *log-data* log-data)))

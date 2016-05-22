@@ -1,6 +1,5 @@
 (ns app.controllers.person.add.render
-  (:require [app.util.person :as person-util]
-            [clojure.data.json :as json]
+  (:require [clojure.data.json :as json]
             [app.definition.person :as definition]
             [app.views.main :as view]))
 

@@ -4,7 +4,8 @@
             [app.services.person :as svc-person]
             [slingshot.slingshot :refer [throw+]]
             [app.services.pedigree-relation :as svc-pr]
-            [app.services.marriage-relation :as svc-mr]))
+            [app.services.marriage-relation :as svc-mr]
+            [app.logger.log-trace :as log-trace]))
 
 (defn- find-person "Find the person entity and node" [request]
   (-> request
@@ -39,9 +40,12 @@
         person-info (find-person request)
         _ (when (not person-info) (throw+ "No person found"))
 
-        ;; find parents
+        ;; extract person
         {node   :node
          entity :entity}  person-info
+        _ (log-trace/add :info "(show-detail)" "Person id" (:id entity))
+
+        ;; find parents
         parents           (find-parent-entities node)
         {father :father
          mother :mother}  parents

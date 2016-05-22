@@ -1,7 +1,5 @@
 (ns app.controllers.person.find
-  (:require [app.neo4j.main :as neo4j]
-            [app.models.person :as person]
-            [app.util.person :as person-util]
+  (:require [app.models.person :as person]
             [ring.util.response :refer [response]]
             [app.util.main :as util]
             [app.services.person :as svc-person]
