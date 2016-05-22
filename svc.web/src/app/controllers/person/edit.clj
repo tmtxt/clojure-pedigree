@@ -1,58 +1,58 @@
 (ns app.controllers.person.edit
-  (:require [korma.db :as kd]
-            [app.util.person :as person-util]
-            [app.views.layout :as layout]
-            [app.util.main :as util]
-            [clojure.data.json :as json]
-            [app.controllers.person.util :as controller-util]
+  (:require [app.util.main :as util]
+            [app.controllers.person.util :refer [find-person params-to-person-data]]
             [app.controllers.person.add.render :as render]
-            [app.models.person :as person-model]
-            [app.util.pg :as db-util]
-            [clj-time.format :as f]
-            [clj-time.coerce :as c]
             [slingshot.slingshot :refer [try+ throw+]]
-            [ring.util.response :refer [redirect]]))
+            [ring.util.response :refer [redirect]]
+            [app.logger.log-trace :as log-trace]
+            [app.services.person :as svc-person]
+            [app.definition.person :as person-def]
+            [app.controllers.person.add.render :as render]
+            [app.logic.person :refer [update-person]]))
 
 (defn handle-get-request [request]
-  (let [person-id (util/param request "personId")
-        person-result (-> person-id util/parse-int person-model/find-person-by-id)
-        person-entity (:entity person-result)]
-    (when person-entity
-      (layout/render
-       request
-       "person/edit_detail.html"
-       {:from "none"
-        :person (-> person-entity
-                    (person-model/json-friendlify :fields [:birth-date :death-date :created-at]
-                                                  :keep-nil true)
-                    json/write-str)
-        :parent (-> {} person-util/filter-parent-keys json/write-str)
-        :partner (-> {} person-util/filter-partner-keys json/write-str)
-        :child (-> {} person-util/filter-person-keys json/write-str)
-        :statuses (-> request person-util/status-display json/write-str)
-        :genders (-> request person-util/gender-display json/write-str)
-        :action "edit"}
-       ))))
+  (try+
+   (let [;; get the person id from the request
+         person-id (-> request (util/param "personId") (util/parse-int))
+         _ (log-trace/add :info "(handle-get-request)" (str "Person id " person-id))
 
-(defn- find-person
-  "Find the person to edit from the request"
-  [request]
-  (if-let [person (controller-util/find-person-from-request request "personid")]
-    person
-    (throw+ "person not found")))
+         ;; find the person entity
+         person-entity (-> person-id svc-person/find-by-id :entity)]
+
+     ;; if cannot find person
+     (when (not person-entity)
+       (do
+         (log-trace/add :error "(handle-get-request)" (str "Cannot find person with id " person-id))
+         (throw+ (str "Cannot find person with id " person-id))))
+
+     ;; render edit page using same layout with add page
+     (render/add-page
+      request
+      {:from     "none"
+       :person    person-entity
+       :parent    {}
+       :partner   {}
+       :child     {}
+       :action    "edit"}))
+   (catch Object _ (render/error-page request))))
 
 (defn handle-post-request [request]
-  (kd/transaction
-   (try+
-    (let [person (find-person request)
-          params (util/params request)
-          file-name (controller-util/update-person-picture params person)
-          params (assoc params :picture file-name)
-          person-data (controller-util/params-to-person-data params)
-          person-id (:id person)
-          result (person-model/update-person person-id person-data)
-          success (:success result)]
-      (if success
-        (->> person-id (str "/person/detail/") redirect)
-        (throw+ "error")))
-    (catch Object _ (render/render-error request)))))
+  (try+
+   (let [;; find person from request
+         person (find-person request "personid")
+         old-person (:entity person)
+         _ (log-trace/add :info "handle-post-request" (str "Found person with id " (:id old-person)))
+
+         ;; person data
+         params (util/params request)
+         new-person (params-to-person-data params)
+
+         ;; person id
+         person-id  (:personid params)
+         new-person (assoc new-person :id person-id)
+
+         ;; update
+         _ (update-person old-person new-person)
+         ]
+     (->> person-id (str "/person/detail/") redirect))
+   (catch Object _ (render/error-page request))))
