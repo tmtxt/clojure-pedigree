@@ -1,6 +1,6 @@
 (ns app.controllers.person.detail
-  (:require [app.views.layout :as layout]
-            [app.util.main :as util]
+  (:require [app.util.main :as util]
+            [app.views.main :as view]
             [app.services.person :as svc-person]
             [slingshot.slingshot :refer [throw+]]
             [app.services.pedigree-relation :as svc-pr]
@@ -49,9 +49,8 @@
         ;; find partners
         partners (find-partner-entities node)
         ]
-    (layout/render request "person/detail.html"
-                   {:person entity
-                    :father father
-                    :mother mother
-                    :partners partners}
-                   )))
+    (view/render-template request "person/detail.html"
+                          {:person entity
+                           :father father
+                           :mother mother
+                           :partners partners})))

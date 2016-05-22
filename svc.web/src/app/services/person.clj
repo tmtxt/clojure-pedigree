@@ -1,4 +1,5 @@
 (ns app.services.person
+  (:refer-clojure :exclude [count update])
   (:require [app.services.util :refer [call call-json]]))
 
 (defn find-by-id [person-id]

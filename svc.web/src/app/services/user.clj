@@ -1,4 +1,5 @@
 (ns app.services.user
+  (:refer-clojure :exclude [empty? count])
   (:require [app.services.util :refer [call call-json]]
             [slingshot.slingshot :refer [try+ throw+]]))
 

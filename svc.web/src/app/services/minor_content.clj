@@ -1,4 +1,5 @@
 (ns app.services.minor-content
+  (:refer-clojure :exclude [find update])
   (:require [app.services.util :refer [call call-json]]
             [slingshot.slingshot :refer [try+ throw+]]))
 

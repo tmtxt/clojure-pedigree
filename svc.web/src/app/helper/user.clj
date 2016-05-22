@@ -1,4 +1,5 @@
 (ns app.helper.user
+  (:refer-clojure :exclude [empty?])
   (:require [app.services.user :as svc-user]
             [slingshot.slingshot :refer [throw+]]
             [environ.core :refer [env]]

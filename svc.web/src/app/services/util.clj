@@ -1,4 +1,5 @@
 (ns app.services.util
+  (:refer-clojure :exclude [methods])
   (:require [config.main :refer [config]]
             [clj-http.client :as client]
             [clojure.data.json :as json]

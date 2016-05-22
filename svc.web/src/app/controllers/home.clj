@@ -1,7 +1,6 @@
 (ns app.controllers.home
   (:require [compojure.core :refer :all]
             [app.views.main :as view]
-            [app.views.layout :as layout]
             [app.util.main :as util]
             [app.util.security :as security]
             [ring.util.response :refer [redirect]]
@@ -33,8 +32,9 @@
                                   :locale (:locale user-info))]
        (-> (redirect "/welcome") (assoc :session updated-session))))
    (catch Object _
-     (layout/render request "home/login.html"
-                    {:message "Tên đăng nhập hoặc mật khẩu không đúng"}))))
+     (view/render-template request
+                           "home/login.html"
+                           {:message "Tên đăng nhập hoặc mật khẩu không đúng"}))))
 
 ;;; logout
 (defn logout [request]
@@ -45,7 +45,7 @@
   (view/render-template request "home/welcome.html"))
 
 (defn message [request]
-  (layout/render-message request "hello" :redirect "/tree/view/" :text "Cây gia phả"))
+  (view/render-message request "hello" :redirect "/tree/view/" :text "Cây gia phả"))
 
 (defn health-check [request]
   (throw (Exception. "a"))

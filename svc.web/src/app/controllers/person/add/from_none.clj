@@ -2,4 +2,4 @@
   (:require [app.controllers.person.add.render :as render]))
 
 (defn process-get-request [request]
-  (render/render-add-page request))
+  (render/add-page request))

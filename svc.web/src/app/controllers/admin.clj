@@ -1,15 +1,15 @@
 (ns app.controllers.admin
   (:require [compojure.core :refer :all]
             [environ.core :refer [env]]
-            [app.views.layout :refer [render]]
             [app.util.security :refer [user-access admin-access]]
 
             [app.controllers.admin.profile :as profile]
             [app.controllers.admin.preface :as preface]
-            [app.controllers.admin.tree-description :as tree-description]))
+            [app.controllers.admin.tree-description :as tree-description]
+            [app.views.main :as view]))
 
 (defn view-index [request]
-  (render request "admin/index.html"))
+  (view/render-template request "admin/index.html"))
 
 (def admin-routes
   (context
