@@ -3,6 +3,7 @@
 const router = require('koa-router')();
 const _ = require('lodash');
 const fs = require('fs');
+const path = require('path');
 const thunkify = require('thunkify');
 
 const config = require('../config');
@@ -43,10 +44,10 @@ function* validateMdw(next) {
 function* deleteHandler() {
   const logTrace = this.logTrace;
   const type = this.request.body.type;
-  const name = this.request.body.name;
-  const unlink = thunkify(fs.unlink);
+  const name = path.basename(this.request.body.name);
   const imagePath = `${imageDir}/${type}/original/${name}`;
 
+  const unlink = thunkify(fs.unlink);
   yield unlink(imagePath);
   logTrace.add('info', `${type} image ${name} deleted`);
 
