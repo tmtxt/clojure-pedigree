@@ -2,7 +2,7 @@
   (:require [selmer.parser :as parser]
             [ring.util.response :refer [content-type response]]
             [compojure.response :refer [Renderable]]
-            [app.logic.user :refer [get-user-from-request]]
+            [app.helper.user :refer [get-user-from-request]]
             [config.main :refer [config]]
             [app.views.version :refer [version]]))
 

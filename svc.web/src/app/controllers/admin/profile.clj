@@ -2,7 +2,7 @@
   (:require [app.views.main :as view]
             [app.util.main :as util]
             [slingshot.slingshot :refer [try+ throw+]]
-            [app.logic.user :as user-logic]))
+            [app.helper.user :as user-logic]))
 
 (defn- present [value]
   (not (or (not value) (empty? value))))

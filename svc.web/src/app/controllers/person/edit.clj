@@ -8,7 +8,7 @@
             [app.services.person :as svc-person]
             [app.definition.person :as person-def]
             [app.controllers.person.add.render :as render]
-            [app.logic.person :refer [update-person]]))
+            [app.helper.person :refer [update-person]]))
 
 (defn handle-get-request [request]
   (try+

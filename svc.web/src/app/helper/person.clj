@@ -1,4 +1,4 @@
-(ns app.logic.person
+(ns app.helper.person
   (:require [app.services.person :as svc-person]
             [app.services.image :as svc-image]
             [slingshot.slingshot :refer [try+ throw+]]

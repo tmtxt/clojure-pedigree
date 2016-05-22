@@ -7,7 +7,7 @@
             [ring.util.response :refer [redirect]]
             [slingshot.slingshot :refer [try+]]
             [app.helper.minor-content :as minor-content]
-            [app.logic.user :as user]
+            [app.helper.user :as user]
             [app.logger.log-trace :as log-trace]))
 
 (defn home "Render index page" [request]

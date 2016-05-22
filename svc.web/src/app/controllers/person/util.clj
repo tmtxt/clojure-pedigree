@@ -8,7 +8,7 @@
             [me.raynes.fs :refer [extension]]
             [clojure.string :refer [blank?]]
             [slingshot.slingshot :refer [try+ throw+]]
-            [app.logic.person :as person-logic]))
+            [app.helper.person :as person-logic]))
 
 (defn params-to-person-data
   [{full-name :name
