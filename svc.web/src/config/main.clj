@@ -1,6 +1,5 @@
 (ns config.main
-  (:require [config.system :as system]
-            [environ.core :refer [env]]))
+  (:require [environ.core :refer [env]]))
 
 (def config
   {:site
@@ -49,7 +48,4 @@
      :port (get env :ms-svc-api-tree-port)}}
 
    :logs
-   {:exclude-body-content-types ["text/html"]}
-
-   ;; un-categorised, will be deleted later
-   :default-person-image "/assets/img/userbasic.jpg"})
+   {:exclude-body-content-types ["text/html"]}})

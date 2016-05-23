@@ -1,9 +1,7 @@
 (ns app.util.security
-  (:require [crypto.password.bcrypt :as crypto]
-            [buddy.auth :refer [authenticated?]]
+  (:require [buddy.auth :refer [authenticated?]]
             [buddy.auth.accessrules :refer (error)]
-            [slingshot.slingshot :refer [try+ throw+]]
-            [app.util.pg :as db-util]))
+            [slingshot.slingshot :refer [try+ throw+]]))
 
 (def USER_ROLE_NAME_USER "user")
 (def USER_ROLE_NAME_ADMIN "admin")
