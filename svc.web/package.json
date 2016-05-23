@@ -50,7 +50,8 @@
     "flux": "global:Flux",
     "microevent": "global:MicroEvent",
     "EventEmitter": "global:EventEmitter",
-    "markdown": "global:markdown"
+    "markdown": "global:markdown",
+    "moment": "global:moment"
   },
   "dependencies": {}
 }

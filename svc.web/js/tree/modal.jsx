@@ -1,9 +1,16 @@
 // Libs
 var React = require("react");
 var jquery = require("jquery");
+var moment = require("moment");
 
 // Modal object
 var PersonModal = React.createClass({
+  formatTime: function(timeString) {
+    var time = moment(timeString);
+    time = time.format("DD/MM/YYYY");
+    return time;
+  },
+
   render: function() {
     return (
       <div className="modal fade person-info-modal js-person-info-modal" tabIndex="-1" role="dialog">
@@ -34,7 +41,7 @@ var PersonModal = React.createClass({
                       Ngày Sinh
                     </td>
                     <td>
-                      {this.props["birth-date"] ? this.props["birth-date"] : "Không rõ"}
+                      {this.props["birth-date"] ? this.formatTime(this.props["birth-date"]) : "Không rõ"}
                     </td>
                   </tr>
                   <tr>
