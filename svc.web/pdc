@@ -1,6 +1,0 @@
-# -*- mode: sh -*-
-#!/usr/bin/env bash
-
-command=$1
-shift
-lein run -m command.$command "$@"
