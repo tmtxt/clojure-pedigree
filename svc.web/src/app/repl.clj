@@ -33,20 +33,20 @@
                     :auto-reload? true
                     :destroy destroy
                     :open-browser? false
-                    :join true}))
-    (println (str "You can view the site at http://localhost:" port))))
+                    :join true}))))
 
 (defn stop-server []
   (.stop @server)
   (reset! server nil))
 
 (defn start-repl []
-  (repl-server/start-server :port (-> config
-                                      (get-in [:services :svc-web :nrepl-port])
-                                      (Integer/parseInt))
-                            :bind "0.0.0.0"
-                            :handler cider-nrepl-handler)
-  (println (str "nRepl server running on port " (config :nrepl-port))))
+  (let [repl-port (-> config
+                      (get-in [:services :svc-web :nrepl-port])
+                      (Integer/parseInt))]
+    (repl-server/start-server :port repl-port
+                              :bind "0.0.0.0"
+                              :handler cider-nrepl-handler)
+    (println (str "nRepl server running on port " repl-port))))
 
 (defn create-init-db []
   (create-init-data))

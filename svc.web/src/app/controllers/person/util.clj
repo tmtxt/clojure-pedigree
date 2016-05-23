@@ -1,12 +1,5 @@
 (ns app.controllers.person.util
   (:require [app.util.main :as util]
-            [app.models.person :as person]
-            [clojure.java.io :as io]
-            [clj-time.core :as time]
-            [clj-time.format :as time-format]
-            [digest :refer [sha-256]]
-            [me.raynes.fs :refer [extension]]
-            [clojure.string :refer [blank?]]
             [slingshot.slingshot :refer [try+ throw+]]
             [app.helper.person :as person-logic]))
 

@@ -1,6 +1,5 @@
 (ns app.controllers.person.find
-  (:require [app.models.person :as person]
-            [ring.util.response :refer [response]]
+  (:require [ring.util.response :refer [response]]
             [app.util.main :as util]
             [app.services.person :as svc-person]
             [app.services.marriage-relation :as svc-mr]
