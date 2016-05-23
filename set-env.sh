@@ -21,11 +21,6 @@ function attach {
     docker exec -it $(docker-compose ps | grep "$1" | awk '{print $1}') bash
 }
 
-# attach neonode
-function an {
-    docker exec -it $(docker-compose ps | grep 'neonode' | awk '{print $1}') bash
-}
-
 function kill_and_run {
     docker-compose kill $1
     docker-compose up $1

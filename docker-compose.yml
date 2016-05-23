@@ -155,7 +155,6 @@ svc.web:
     - "7888:7888"
   links:
     - postgres:postgres
-    - neonode:neonode
     - svc.user:svc.user
     - svc.person:svc.person
     - svc.minor-content:svc.minor-content
@@ -202,19 +201,6 @@ frontend:
     - ./svc.web:/usr/src/app
   env_file:
     - docker.env
-
-neonode:
-  build: ./images/neonode
-  command: nodemon --legacy-watch app.js
-  volumes:
-    - ./.cache/npm:/root/.npm
-    - ./neo:/usr/src/app
-  env_file:
-    - docker.env
-  ports:
-    - "3001:3000"
-  links:
-    - neo4j:neo4j
 
 # logging-related containers
 log.fluentd:
