@@ -14,11 +14,9 @@
             [app.controllers.tree :refer [tree-routes]]
 
             [ring.middleware.session :refer [wrap-session]]
-            [noir.session :as session]
             [buddy.auth.backends.session :refer [session-backend]]
             [buddy.auth.middleware :refer [wrap-authentication]]
             [buddy.auth.accessrules :refer [wrap-access-rules]]
-            [noir.validation :as validation]
             [app.util.security :as security]
 
             [app.logger.log-trace :as log-trace]))

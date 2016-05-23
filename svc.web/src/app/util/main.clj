@@ -1,5 +1,4 @@
 (ns app.util.main
-  (:import [org.postgresql.util PGobject])
   (:require [slingshot.slingshot :refer [try+ throw+]]))
 
 (defn param "Get the param from the request"
