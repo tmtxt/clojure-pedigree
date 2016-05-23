@@ -7,6 +7,7 @@
             [app.views.version :refer [version]]))
 
 (parser/set-resource-path! (clojure.java.io/resource "templates"))
+(parser/cache-off!)
 
 (def layout-text
   {:homepage "Trang chủ"

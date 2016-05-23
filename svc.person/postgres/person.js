@@ -21,6 +21,18 @@ const instanceProps = [
   'summary'
 ];
 const defaultPersonPicture = '/assets/img/userbasic.jpg';
+const gendersDisplay = {
+  'male': 'Nam',
+  'female': 'Nữ',
+  'gay': 'Gay',
+  'les': 'Les',
+  'unknown': 'Không rõ'
+};
+const aliveStatusesDisplay = {
+  'alive': 'Còn sống',
+  'dead': 'Đã mất',
+  'unknown': 'Không rõ'
+};
 
 function makeDateValue(v) {
   // timestamp
@@ -112,7 +124,24 @@ module.exports = sequelize.define('person', {
   },
 
   instanceMethods: {
-    getData: function(fields) {
+    getData: function(opts) {
+      opts = opts || {};
+      const fields = opts.fields;
+      const readable = opts.readable;
+
+      if (readable) {
+        this.gender = _.get(gendersDisplay, this.gender, 'Không rõ');
+        this.aliveStatus = _.get(aliveStatusesDisplay, this.aliveStatus, 'Không rõ');
+        const birthDate = moment(this.birthDate);
+        if (birthDate.isValid()) {
+          this.setDataValue('birth_date', birthDate.format('DD/MM/YYYY'));
+        }
+        const deathDate = moment(this.deathDate);
+        if (deathDate.isValid()) {
+          this.setDataValue('death_date', deathDate.format('DD/MM/YYYY'));
+        }
+      }
+
       if (fields) {
         return _.pick(this.fields);
       }

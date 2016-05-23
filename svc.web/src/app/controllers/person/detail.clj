@@ -12,7 +12,7 @@
       util/params
       :personId
       util/parse-int
-      svc-person/find-by-id))
+      (svc-person/find-by-id :readable true)))
 
 (defn- parent-type "Detect parent type" [type]
   (get {"mother_child" :mother} type :father))

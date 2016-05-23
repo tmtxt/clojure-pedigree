@@ -13,6 +13,7 @@ function* findRootHandler() {
   const logTrace = this.logTrace;
   const neoPerson = this.neo.person;
   const pgPerson = this.pg.Person;
+  const readable = _.get(this, ['request', 'body', 'readable']);
 
   try {
     logTrace.add('info', 'neoPerson.findRoot()');
@@ -37,7 +38,7 @@ function* findRootHandler() {
     }
 
     let data = {
-      model: model.getData(),
+      model: model.getData({readable}),
       node: root
     };
     logTrace.add('info', 'Root node found');
@@ -60,11 +61,12 @@ function* findRootHandler() {
  * @throws {Error}
  */
 function* findByIdHandler() {
-  var logTrace = this.logTrace;
+  const logTrace = this.logTrace;
   var personId = this.request.body.personId;
   personId = parseInt(personId);
-  var pgPerson = this.pg.Person;
-  var neoPerson = this.neo.person;
+  const pgPerson = this.pg.Person;
+  const neoPerson = this.neo.person;
+  const readable = this.request.body.readable;
 
   try {
     logTrace.add('info', 'pgPerson.findById()');
@@ -82,7 +84,7 @@ function* findByIdHandler() {
     this.body = {
       success: true,
       data: {
-        entity: model.getData(),
+        entity: model.getData({readable}),
         node
       }
     };
@@ -108,6 +110,7 @@ function* findByIdsHandler() {
   const logTrace = this.logTrace;
   const pgPerson = this.pg.Person;
   const neoPerson = this.neo.person;
+  const readable = this.request.body.readable;
 
   let personIds = this.request.body.personIds;
   personIds = _.map(personIds, function(id){
@@ -126,7 +129,7 @@ function* findByIdsHandler() {
     if (!node) {
       throw new Error(`Cannot find node with person id ${model.id}`);
     }
-    return { node, entity: model.getData() };
+    return { node, entity: model.getData({readable}) };
   }
   const tasks = _.map(models, function(model){
     return findNode(model, neoPerson);
@@ -154,6 +157,7 @@ function* findByNameHandler() {
   const pgPerson = this.pg.Person;
   const neoPerson = this.neo.person;
   const name = this.request.body.name;
+  const readable = this.request.body.readable;
 
   // find all the entities using name
   logTrace.add('info', 'findByNameHandler()', 'Find models by name');
@@ -166,7 +170,7 @@ function* findByNameHandler() {
       throw new Error(`Cannot find node with with person id ${model.id}`);
     }
 
-    return { node, entity: model.getData() };
+    return { node, entity: model.getData({readable}) };
   }
   logTrace.add('info', 'findByNameHandler()', 'Find nodes by person id');
   const tasks = _.map(models, function(model){
@@ -195,6 +199,7 @@ function* findByGendersHandler() {
   const pgPerson = this.pg.Person;
   const neoPerson = this.neo.person;
   const genders = this.request.body.genders;
+  const readable = this.request.body.readable;
 
   // find all the entities using name
   logTrace.add('info', 'findByGendersHandler()', 'Find models by genders');
@@ -207,7 +212,7 @@ function* findByGendersHandler() {
       throw new Error(`Cannot find node with with person id ${model.id}`);
     }
 
-    return { node, entity: model.getData() };
+    return { node, entity: model.getData({readable}) };
   }
   logTrace.add('info', 'findByGendersHandler()', 'Find nodes by person id');
   const tasks = _.map(models, function(model){

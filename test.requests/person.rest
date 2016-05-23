@@ -22,6 +22,7 @@ GET http://pd.dev:4000/find/root
 Content-Type: application/json
 
 {
+  "readable": true
 }
 
 #
