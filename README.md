@@ -105,4 +105,5 @@ svc.web_1 | nRepl server running on port 7888
 
 # Further readings
 
-[docs](docs)
+- [Structure](docs/structure.md)
+
