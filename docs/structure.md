@@ -27,7 +27,7 @@ that, Docker seems like the only best solution for now.
 - `svc.api-tree`: api logic flow for constructing tree data, including calls to svc.tree, svc.person,
   svc.pedigree-relation and svc.marriage-relation. This can be in the same code base with `svc.web`
   since it's the logic flow of the application. However, I feel it's too difficult and too ugly to
-  write Clojure code for this (or I didn't write in the correct way, so I added an extract layer here).
+  write Clojure code for this (or I didn't write in the correct way, so I added an extra layer here).
 
 ### Log containers
 

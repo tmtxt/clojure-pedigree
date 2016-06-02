@@ -38,7 +38,7 @@ $ . ./set-env.sh          # dev env
 $ . ./set-env.prod.sh     # prod env
 ```
 
-- Run the provision script (build docker images, install dependencies, migration database, build
+- Run the provision script (build docker images, install dependencies, migrate database, build
   frontend files), require Ansible for this
 
 ```
