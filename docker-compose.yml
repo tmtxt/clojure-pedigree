@@ -144,7 +144,6 @@ svc.web:
   command: lein run
   volumes:
     - ./.cache/m2:/root/.m2
-    - .:/usr/src/root
     - ./data:/app-data
     - ./svc.web:/usr/src/app
     - ./logs:/logs

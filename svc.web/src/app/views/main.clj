@@ -4,7 +4,7 @@
             [compojure.response :refer [Renderable]]
             [app.helper.user :refer [get-user-from-request]]
             [config.main :refer [config]]
-            [app.views.version :refer [version]]))
+            [clj-uuid :as uuid]))
 
 (parser/set-resource-path! (clojure.java.io/resource "templates"))
 (parser/cache-off!)
@@ -25,7 +25,7 @@
   {:layout layout-text
    :params (if params params {})
    :user (get-user-from-request request)
-   :version (str "?version=" version)
+   :version (str "?version=" (.toString (uuid/v4)))
    :config config})
 
 (defn render-template [request template-name & [params]]

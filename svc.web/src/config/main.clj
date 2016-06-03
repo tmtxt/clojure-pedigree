@@ -16,8 +16,7 @@
    :services
    {:svc-web
     {:ring-port (get env :ms-svc-web-ring-port 3000)
-     :nrepl-port (get env :ms-svc-web-nrepl-port 7888)
-     :root-git-dir "/usr/src/root"}
+     :nrepl-port (get env :ms-svc-web-nrepl-port 7888)}
 
     :svc-user
     {:host (get env :ms-svc-user-host)

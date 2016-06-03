@@ -11,7 +11,6 @@
                  [selmer "0.8.2"]
                  [io.aviso/pretty "0.1.26"]
                  [cheshire "5.6.1"]
-                 [clj-jgit "0.8.8"]
                  [com.taoensso/timbre "4.3.1"]
                  [danlentz/clj-uuid "0.1.6"]
                  [environ "1.0.3"]
