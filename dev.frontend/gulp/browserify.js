@@ -11,6 +11,7 @@ var plumber = require('gulp-plumber');
 var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var path = require('path');
+const rename = require('gulp-rename');
 
 // error handler
 var browserifyError = require('./error.js').browserifyError;
@@ -70,18 +71,19 @@ function createBundler(mode) {
 
 // bundle
 function bundle(source, bundler, mode) {
-  var outputDir;
-  if (source == './js/pages/*/index.js') {
-    outputDir = './resources/public/js';
-  } else {
-    outputDir = './resources/public/js/' + path.basename(path.dirname(source));
-  }
-
   return gulp.src(source)
     .pipe(plumber({errorHandler: browserifyError}))
     .pipe(bundler)
     .pipe(gulpif(mode === "prod", uglify({mangle: false})))
-    .pipe(gulp.dest(outputDir));
+    .pipe(rename(function(p){
+      if (p.dirname == '.') {
+        p.basename = path.basename(path.dirname(source));
+      } else {
+        p.basename = p.dirname;
+        p.dirname = '.';
+      }
+    }))
+    .pipe(gulp.dest('/data/js/'));
 }
 
 // browserify task
