@@ -201,6 +201,15 @@ frontend:
   env_file:
     - docker.env
 
+dev.frontend:
+  build: ./images/frontend
+  command: sh -c 'while true; do sleep 10000; done'
+  volumes:
+    - ./.cache/npm:/root/.npm
+    - ./dev.frontend:/usr/src/app
+  env_file:
+    - docker.env
+
 # logging-related containers
 log.fluentd:
   build: ./images/fluentd

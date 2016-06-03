@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/tmtxt/clojure-pedigree",
   "devDependencies": {
-    "bower": "^1.6.5",
     "browserify": "^12.0.1",
     "browserify-shim": "^3.8.11",
     "git-rev": "^0.2.1",
