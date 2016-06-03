@@ -82,7 +82,7 @@ function bundle(source, bundler, mode) {
         p.dirname = '.';
       }
     }))
-    .pipe(gulp.dest('/data/js/'));
+    .pipe(gulp.dest('/dist/frontend/js/'));
 }
 
 // browserify task

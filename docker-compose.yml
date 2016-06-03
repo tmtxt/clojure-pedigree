@@ -207,6 +207,7 @@ dev.frontend:
   volumes:
     - ./.cache/npm:/root/.npm
     - ./dev.frontend:/usr/src/app
+    - ./data:/dist
   env_file:
     - docker.env
 

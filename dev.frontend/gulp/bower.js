@@ -10,5 +10,5 @@ gulp.task('bower', function(cb){
 
 gulp.task('copy', ['bower'], function(){
   return gulp.src('./bower/**/*')
-    .pipe(gulp.dest('/data/bower'));
+    .pipe(gulp.dest('/dist/frontend/bower'));
 });

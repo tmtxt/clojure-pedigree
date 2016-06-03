@@ -17,7 +17,7 @@ function sassDev() {
     .pipe(sass())
     .pipe(prefixer())
     .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest('./resources/public/css'));
+    .pipe(gulp.dest('/dist/frontend/css/'));
 }
 
 function sassProd() {
@@ -26,7 +26,7 @@ function sassProd() {
     .pipe(sass())
     .pipe(prefixer())
     .pipe(minify())
-    .pipe(gulp.dest('./resources/public/css'));
+    .pipe(gulp.dest('/dist/frontend/css/'));
 }
 
 gulp.task('sass-dev', function(){
