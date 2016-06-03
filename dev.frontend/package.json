@@ -14,16 +14,14 @@
     "browserify-shim": "3.8.12",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.0",
-    "gulp-if": "^2.0.1",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.5.3",
-    "gulp-util": "^3.0.7",
+    "gulp-if": "2.0.1",
+    "gulp-plumber": "1.1.0",
+    "gulp-rename": "1.2.2",
+    "gulp-uglify": "1.5.3",
+    "gulp-util": "3.0.7",
     "lodash": "4.13.1",
-    "node-notifier": "^4.6.0",
-    "reactify": "^1.1.1",
-    "through": "^2.0.1",
-    "watchify": "^3.7.0"
+    "through": "2.0.1",
+    "watchify": "3.7.0"
   },
   "browserify-shim": {
     "jquery": "global:$",
