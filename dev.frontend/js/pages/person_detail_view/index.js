@@ -1,1 +1,3 @@
-console.log('hello');
+require('util.js');
+
+console.log('helloaaa');

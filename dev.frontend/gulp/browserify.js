@@ -19,7 +19,7 @@ var browserifyError = require('./error.js').browserifyError;
 // browserify config
 var browserifyConfig = {
   basedir: '.',
-  paths: './js'
+  paths: './js/global'
 };
 
 // create browserify transform
