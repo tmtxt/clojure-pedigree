@@ -1,4 +1,4 @@
-FROM node:4.1.2
+FROM node:4.4.5
 RUN npm install -g nodemon
 RUN npm install -g lodash@4.7.0
 RUN npm install -g node-uuid@1.4.7
