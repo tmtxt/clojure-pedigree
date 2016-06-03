@@ -10,6 +10,7 @@ var shimify = require('browserify-shim');
 var plumber = require('gulp-plumber');
 var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
+var path = require('path');
 
 // error handler
 var browserifyError = require('./error.js').browserifyError;
@@ -25,8 +26,6 @@ var cached = {};
 function createBundler(mode) {
   var bundler = through2.obj(function(file, env, next){
     var bundleFunc = function(err, res){
-      console.log(err);
-      console.log(res);
       file.contents = res;
       next(null, file);
     };
@@ -43,7 +42,9 @@ function createBundler(mode) {
         return;
       }
       b = browserify(filename, _.extend(browserifyConfig, {cache: {}, packageCache: {}, debug: true}));
-      b.plugin(watchify);
+      b.plugin(watchify, {
+        poll: true
+      });
       cached[file.path] = b;
     }
 
@@ -69,11 +70,18 @@ function createBundler(mode) {
 
 // bundle
 function bundle(source, bundler, mode) {
+  var outputDir;
+  if (source == './js/pages/*/index.js') {
+    outputDir = './resources/public/js';
+  } else {
+    outputDir = './resources/public/js/' + path.basename(path.dirname(source));
+  }
+
   return gulp.src(source)
     .pipe(plumber({errorHandler: browserifyError}))
     .pipe(bundler)
     .pipe(gulpif(mode === "prod", uglify({mangle: false})))
-    .pipe(gulp.dest('./resources/public/js'));
+    .pipe(gulp.dest(outputDir));
 }
 
 // browserify task
@@ -82,9 +90,9 @@ gulp.task('js-dev', function(){
 });
 
 gulp.task('js-prod', function(){
-  return bundle('./js/*.js', createBundler("prod"), "prod");
+  return bundle('./js/pages/*/index.js', createBundler("prod"), "prod");
 });
 
 gulp.task('js-watch', function(){
-  return bundle('./js/*.js', createBundler("watch"), 'watch');
+  return bundle('./js/pages/*/index.js', createBundler("watch"), 'watch');
 });
