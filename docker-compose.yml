@@ -22,7 +22,7 @@ neo4j.storage:
 
 # database-related microservices
 svc.person:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.person:/usr/src/app
   volumes_from:
@@ -37,7 +37,7 @@ svc.person:
     - neo4j:neo4j
 
 svc.user:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.user:/usr/src/app
   volumes_from:
@@ -51,7 +51,7 @@ svc.user:
     - postgres:postgres
 
 svc.pedigree-relation:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.pedigree-relation:/usr/src/app
   volumes_from:
@@ -65,7 +65,7 @@ svc.pedigree-relation:
     - neo4j:neo4j
 
 svc.marriage-relation:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.marriage-relation:/usr/src/app
   volumes_from:
@@ -79,7 +79,7 @@ svc.marriage-relation:
     - neo4j:neo4j
 
 svc.minor-content:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.minor-content:/usr/src/app
   volumes_from:
@@ -93,7 +93,7 @@ svc.minor-content:
     - postgres:postgres
 
 svc.image:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.image:/usr/src/app
     - ./data/images:/data
@@ -108,7 +108,7 @@ svc.image:
     - postgres:postgres
 
 svc.tree:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.tree:/usr/src/app
   volumes_from:
@@ -122,7 +122,7 @@ svc.tree:
     - neo4j:neo4j
 
 svc.api-tree:
-  build: ./images/koa.api
+  build: ./images/koa.api.base
   volumes:
     - ./svc.api-tree:/usr/src/app
   volumes_from:
@@ -140,7 +140,7 @@ svc.api-tree:
 
 #####
 svc.web:
-  build: ./images/server
+  build: ./images/clojure.base
   command: lein run
   volumes:
     - ./.cache/m2:/root/.m2
