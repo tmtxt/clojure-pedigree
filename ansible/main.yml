@@ -20,7 +20,7 @@
         - svc.minor-content
         - svc.image
         - svc.tree
-        - frontend
+        - dev.frontend
       args:
         chdir: "{{ project_dir }}"
 
@@ -43,7 +43,10 @@
         chdir: "{{ project_dir }}"
 
     - name: run gulp build
-      command: docker-compose run frontend gulp prod
+      command: docker-compose run dev.frontend {{ item }}
+      with_items:
+        - gulp setup
+        - gulp prod
       args:
         chdir: "{{ project_dir }}"
 
