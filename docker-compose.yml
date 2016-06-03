@@ -164,7 +164,7 @@ svc.web:
     - svc.api-tree:svc.api-tree
 
 postgres:
-  build: ./images/postgres
+  image: postgres:9.4.5
   env_file:
     - docker.env
   ports:
@@ -183,7 +183,7 @@ schemup:
     - docker.env
 
 neo4j:
-  build: ./images/neo4j
+  image: neo4j:2.3.1
   ports:
     - "7474:7474"
   env_file:
@@ -211,10 +211,10 @@ log.fluentd:
     - log.elasticsearch:log.elasticsearch
 
 log.elasticsearch:
-  build: ./images/elasticsearch
+  image: elasticsearch:2.3.1
 
 log.kibana:
-  build: ./images/kibana
+  image: kibana:4.5.0
   links:
     - log.elasticsearch:elasticsearch
   ports:
