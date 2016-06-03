@@ -8,6 +8,10 @@ alias dcr="docker-compose -f docker-compose.yml -f docker-compose.prod.yml rm"
 alias dcl="docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs -f"
 alias dcb="docker-compose -f docker-compose.yml -f docker-compose.prod.yml build"
 alias dck="docker-compose -f docker-compose.yml -f docker-compose.prod.yml kill"
+alias gs="docker-compose run dev.frontend gulp setup"
+alias gd="docker-compose run dev.frontend gulp dev"
+alias gp="docker-compose run dev.frontend gulp prod"
+alias gw="docker-compose run dev.frontend gulp watch"
 
 function attach {
     docker exec -it $(docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps | grep "$1" | awk '{print $1}') /bin/bash

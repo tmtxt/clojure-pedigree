@@ -16,6 +16,10 @@ alias dcp="docker-compose ps"
 alias dcr="docker-compose rm"
 alias dcl="docker-compose logs"
 alias dcb="docker-compose build"
+alias gs="docker-compose run dev.frontend gulp setup"
+alias gd="docker-compose run dev.frontend gulp dev"
+alias gp="docker-compose run dev.frontend gulp prod"
+alias gw="docker-compose run dev.frontend gulp watch"
 
 function attach {
     docker exec -it $(docker-compose ps | grep "$1" | awk '{print $1}') bash
