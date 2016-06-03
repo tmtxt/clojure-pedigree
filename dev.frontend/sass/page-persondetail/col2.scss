@@ -1,0 +1,41 @@
+.page-persondetail {
+  .persondetail-col-2 {
+    flex: 3 3 0;
+    padding-right: 20px;
+
+    /* profile header */
+    .profile-header {
+      @include persondetail-title;
+    }
+
+    /* profile body */
+    .profile-body {
+      padding-top: 10px;
+
+      /* row */
+      .profile-body-row {
+        @include flex(row nowrap);
+        align-items: center;
+        height: 50px;
+        border-bottom: 1px solid $grey;
+
+        .profile-body-left {
+          flex: 1 1 0;
+          color: $brown;
+          font-weight: bold;
+        }
+
+        .profile-body-right {
+          flex: 3 3 0;
+        }
+      }
+    }
+
+    .history-header {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      color: $brown;
+      font-weight: bold;
+    }
+  }
+}

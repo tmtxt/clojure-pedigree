@@ -1,0 +1,157 @@
+/* banner */
+.site-header {
+  .header-banner {
+    height: $banner-height;
+    background-image: url('/assets/img/banner.png');
+    padding: 0;
+  }
+
+  .header-banner {
+    .header-site-name {
+      font-size: 60px;
+      color: $brownred;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .header-site-headline {
+      color: $brownred;
+      font-size: 24px;
+    }
+  }
+
+  .header-banner {
+    .container {
+      height: $banner-height;
+      @include flex(column);
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+/* nav */
+.site-header {
+  .header-content {
+    @include flex(row nowrap);
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: $screen-xs-max) {
+      @include flex(column nowrap);
+    }
+  }
+
+  .header-content--left,
+  .header-content--right {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .header-content--left {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    justify-content: flex-start;
+    @include flex(row nowrap);
+  }
+
+  .header-content--right {
+    flex: 2 0 auto;
+    align-self: flex-end;
+    justify-content: flex-end;
+    @include flex(row nowrap);
+  }
+
+  @media (max-width: $screen-xs-max) {
+    .header-content--left,
+    .header-content--right {
+      flex: 1 0 auto;
+      align-self: center;
+      @include flex(column nowrap);
+    }
+  }
+
+  // disable list style
+  .header-menu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    > li {
+      display: block;
+      > a {
+        display: block;
+        color: white;
+        &:hover,
+        &:focus,
+        &:active {
+          color: rgba($white, 0.5);
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    .header-menu {
+      > li {
+        > a {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  // provie colorful style
+  .header-content--left {
+    &.header-menu {
+      > li {
+        flex: 0 0 auto;
+        padding: 15px 25px 13px 0;
+        > a {
+          color: $brown;
+        }
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  .header-content--right {
+    &.header-menu {
+      > li {
+        flex: 0 0 auto;
+        padding: 15px 0 13px 25px;
+        > a {
+          /* font-size: $font-size-h5; */
+          color: $brown;
+        }
+      }
+    }
+  }
+
+  // adjust margin
+  .header-content{
+    margin: 0 -15px;
+  }
+
+  /* user info (login, logout) */
+  .header-content {
+    .header-user {
+      a {
+        display: inline;
+      }
+    }
+  }
+
+  .header-nav {
+    background-color: $yellow;
+    @include border-vertical;
+  }
+
+  .header-menu {
+    li {
+      font-size: 17px;
+      font-weight: bolder;
+    }
+  }
+}

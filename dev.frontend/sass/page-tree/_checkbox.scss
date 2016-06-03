@@ -1,0 +1,39 @@
+.tree-page {
+  input[type=checkbox].controls-checkbox {
+    position:absolute;
+    z-index:-1000;
+    left:-1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height:1px;
+    width:1px;
+    margin:-1px;
+    padding:0;
+    border: 0;
+  }
+
+  input[type=checkbox].controls-checkbox + label.controls-label {
+    height: 34px;
+    display: inline-block;
+    line-height: 34px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+  }
+
+  label.controls-label {
+    font-size: 15px;
+    padding-left: 40px;
+    margin-bottom: 0;
+  }
+
+  input[type=checkbox].controls-checkbox:checked + label.controls-label {
+    background-position: 0 -34px;
+  }
+
+  label.controls-label {
+    background-image:url(/assets/img/treecheck.png);
+    user-select: none;
+  }
+}

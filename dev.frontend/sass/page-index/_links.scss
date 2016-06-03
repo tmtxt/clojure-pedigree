@@ -1,0 +1,17 @@
+/* post links block */
+.page-index {
+  .post-links {
+    ul.post-links-list {
+      > li {
+        padding-bottom: 10px;
+
+        div.post-links-title {
+          a {
+            color: $brown;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}

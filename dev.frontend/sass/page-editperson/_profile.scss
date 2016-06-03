@@ -1,0 +1,62 @@
+.page-editperson {
+  /* profile column general */
+  .editperson-body {
+    .editperson-col-2 {
+      flex: 3 3 0;
+      padding-right: 20px;
+    }
+  }
+
+  /* profile header */
+  .editperson-body {
+    .editperson-col-2 {
+      .profile-header {
+        @include editperson-title;
+      }
+    }
+  }
+
+  /* profile body */
+  .editperson-body {
+    .editperson-col-2 {
+      .profile-body {
+        padding-top: 10px;
+
+        /* row */
+        .profile-body-row {
+          @include flex(row nowrap);
+          align-items: center;
+          padding-bottom: 10px;
+
+          .profile-body-left {
+            flex: 1 0 0;
+            color : $brown;
+            font-weight: bold;
+          }
+
+          .profile-body-right {
+            flex: 3 3 0;
+          }
+        }
+      }
+    }
+  }
+
+  /* history header */
+  .editperson-body {
+    .editperson-col-2 {
+      .history-header {
+        @include editperson-title;
+      }
+    }
+  }
+
+  /* history body */
+  .editperson-body {
+    .editperson-col-2 {
+      .history-body {
+        padding-top: 10px;
+      }
+    }
+  }
+}

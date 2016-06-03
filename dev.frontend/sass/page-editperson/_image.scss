@@ -1,0 +1,26 @@
+/* image selection part */
+.page-editperson {
+  .editperson-body {
+    .editperson-col-1 {
+      flex: 1 1 0;
+      padding-right: 20px;
+
+      /* image */
+      .col-1-img {
+        width: 100%;
+        padding-bottom: 20px;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      /* buttons */
+      .col-1-buttons {
+        @include flex(row nowrap);
+        align-items: center;
+        justify-content: space-around;
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+/* flex */
+@mixin flex($value) {
+  display: flex;
+  flex-flow: $value;
+}
+
+@mixin border-vertical {
+  border-top: 2px solid $brownred;
+  border-bottom: 2px solid $brownred;
+}

@@ -1,0 +1,21 @@
+.page-persondetail {
+  .persondetail-col-3 {
+    flex: 2 2 0;
+
+    .persondetail-parents {
+      .parent-title {
+        @include persondetail-title;
+      }
+
+      .parent-help {
+        padding-top: 10px;
+      }
+
+      .parent-body {
+        ul {
+          @include persondetail-people-list;
+        }
+      }
+    }
+  }
+}

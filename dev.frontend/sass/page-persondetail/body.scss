@@ -1,0 +1,10 @@
+@import "./col1.scss";
+@import "./col2.scss";
+@import "./col3.scss";
+
+.page-persondetail {
+  .persondetail-body {
+    width: 100%;
+    @include flex(row nowrap);
+  }
+}

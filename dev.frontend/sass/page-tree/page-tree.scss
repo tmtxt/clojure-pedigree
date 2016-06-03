@@ -1,0 +1,59 @@
+/* Tree page */
+
+@import "./_checkbox.scss";
+
+/* Tree graph (SVG) element */
+.tree-page {
+  @include svg-tree-graph;
+
+  /* initial size */
+  #js-tree-container {
+    height: 1000px;
+  }
+
+  .controls-container {
+    @include flex(row nowrap);
+
+    label {
+      color: $brown;
+    }
+
+    div.controls-depth-container {
+      @include flex(row nowrap);
+      align-items: center;
+      margin-left: 10px;
+
+      input {
+        margin-right: 5px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  /* user info modal */
+  .person-info-modal {
+    .modal-body {
+      .person-info-right {
+        .table {
+          tr:first-child {
+            td {
+              border-top: 0px;
+            }
+          }
+
+          .btn {
+            margin-right: 5px;
+          }
+
+          .person-info-label {
+            font-weight: bold;
+            color: $brown;
+          }
+        }
+      }
+    }
+  }
+}

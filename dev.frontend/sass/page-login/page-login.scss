@@ -1,0 +1,15 @@
+.page-login {
+  @include flex(column nowrap);
+  align-items: center;
+  justify-content: center;
+}
+
+.page-login {
+  .login-panel {
+    width: 40%;
+  }
+
+  .login-message {
+    width: 40%;
+  }
+}
