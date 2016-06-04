@@ -203,7 +203,6 @@ frontend:
 
 dev.frontend:
   build: ./images/frontend
-  command: sh -c 'while true; do sleep 10000; done'
   volumes:
     - ./.cache/npm:/root/.npm
     - ./dev.frontend:/usr/src/app
