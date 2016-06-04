@@ -58,3 +58,6 @@
                            :father father
                            :mother mother
                            :partners partners})))
+
+(defn show-detail [request]
+  (view/render-page "person_detail_view"))

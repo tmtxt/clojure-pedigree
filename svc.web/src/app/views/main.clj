@@ -59,3 +59,9 @@
                                                      :title title
                                                      :redirect redirect
                                                      :text text})))
+
+(defn render-page "Render an empty page with script" [name]
+  (-> (parser/render-file "main.html" {:name    name
+                                       :version (str "?version=" (.toString (uuid/v4)))})
+      (response)
+      (content-type "text/html; charset=utf-8")))
