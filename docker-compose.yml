@@ -203,6 +203,8 @@ frontend:
 
 dev.frontend:
   build: ./images/frontend
+  tty: true
+  stdin_open: true
   volumes:
     - ./.cache/npm:/root/.npm
     - ./dev.frontend:/usr/src/app

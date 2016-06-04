@@ -11,6 +11,7 @@ const gulpif = require('gulp-if');
 const uglify = require('gulp-uglify');
 const path = require('path');
 const rename = require('gulp-rename');
+const babelify = require('babelify');
 
 // error handler
 const browserifyError = require('./error.js').browserifyError;
@@ -58,7 +59,7 @@ function createBundler(mode) {
     }
 
     // transform
-    // b.transform(babelify);
+    b.transform(babelify);
     b.transform(shimify);
 
     b.bundle(bundleFunc);
