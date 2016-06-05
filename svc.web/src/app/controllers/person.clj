@@ -22,12 +22,9 @@
            (GET "/delete/:personId"          [] delete-person/handle-get-request)))
 
 (def person-rules
-  (if (-> :profile env (= "dev"))
-    [{:pattern #"^/person/sfkjdslkjfldjfs.*"
-      :handler admin-access}]
-    [{:pattern #"^/person/add.*"
-      :handler admin-access}
-     {:pattern #"^/person/edit.*"
-      :handler admin-access}
-     {:pattern #"^/person/delete.*"
-      :handler admin-access}]))
+  [{:pattern #"^/person/add.*"
+    :handler admin-access}
+   {:pattern #"^/person/edit.*"
+    :handler admin-access}
+   {:pattern #"^/person/delete.*"
+    :handler admin-access}])

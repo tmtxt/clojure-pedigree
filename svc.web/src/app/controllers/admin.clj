@@ -23,8 +23,5 @@
    (POST "/treeDescManagement" [] tree-description/post-request)))
 
 (def admin-rules
-  (if (-> :profile env (= "dev"))
-    [{:pattern #"^/admin/sfkjdslkjfldjfs.*"
-      :handler admin-access}]
-    [{:pattern #"^/admin/.*"
-      :handler {:and [user-access admin-access]}}]))
+  [{:pattern #"^/admin/.*"
+    :handler admin-access}])

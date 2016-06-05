@@ -1,5 +1,6 @@
 (ns app.util.security
   (:require [buddy.auth :refer [authenticated?]]
+            [environ.core :refer [env]]
             [buddy.auth.accessrules :refer (error)]
             [slingshot.slingshot :refer [try+ throw+]]))
 
@@ -22,6 +23,8 @@
     true))
 
 (defn admin-access [request]
-  (if (= (get-in request [:session :user-info :role] nil) USER_ROLE_NAME_ADMIN)
+  (if (-> :profile env (= "dev"))
     true
-    (error "For admin only")))
+    (if (= (get-in request [:session :user-info :role] nil) USER_ROLE_NAME_ADMIN)
+      true
+      (error "For admin only"))))
