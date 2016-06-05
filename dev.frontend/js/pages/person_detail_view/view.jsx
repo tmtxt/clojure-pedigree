@@ -12,8 +12,6 @@ const PartnerView = require('./partner_view.jsx');
 module.exports = React.createClass({
   render: function() {
 
-    console.log(this.props.person);
-
     return (
       <div className="page-persondetail">
         <div className="persondetail-header">
@@ -22,7 +20,7 @@ module.exports = React.createClass({
           </div>
 
           <div className="persondetail-buttons">
-            <a href="/tree/view/person/15" className="btn btn-info">Xem cây gia phả</a>
+            <a href={"/tree/view/person/" + _.get(this.props.person, ['id'])} className="btn btn-info">Xem cây gia phả</a>
             {_.get(this.props.user, ['authenticated']) ?
              <a href={'/person/edit/' + _.get(this.props.person, ['id'])}
                 className="btn btn-success">Chỉnh sửa</a> : ""}

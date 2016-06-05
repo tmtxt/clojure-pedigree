@@ -34,6 +34,16 @@
         ]
     (util/response-success parents)))
 
+(defn- get-children [request]
+  (let [
+        ;; find person node
+        {node-id :id} (find-person-node request)
+
+
+        ]
+    (util/response-success {})))
+
 (def pedigree-api-routes
   (context "/api/pedigree" []
-           (GET "/getParents" [] get-parents)))
+           (GET "/getParents" [] get-parents)
+           (GET "/getChildren" [] get-children)))
