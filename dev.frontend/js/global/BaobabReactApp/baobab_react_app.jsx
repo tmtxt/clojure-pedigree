@@ -6,16 +6,24 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const baobabReact = require('baobab-react/higher-order');
 
-exports.renderMainLayout = function(MainView){
-  const tree = new Baobab({
-    user: 'def'
+function getBranchCursors(props) {
+  const keys = Object.keys(props);
+  const values = _.map(keys, (key) => {
+    return [key];
   });
+
+  return _.zipObject(keys, values);
+}
+
+
+exports.renderMainLayout = function(MainView, props){
+  const tree = new Baobab(_.assign({
+    user: 'def'
+  }, props));
 
   const MainLayout = require('MainLayout');
   const RootedMainLayout = baobabReact.root(tree, MainLayout);
-  const BranchedMainView = baobabReact.branch({
-    user: ['user']
-  }, MainView);
+  const BranchedMainView = baobabReact.branch(getBranchCursors(props), MainView);
 
   ReactDOM.render(
     <RootedMainLayout>
