@@ -35,31 +35,6 @@
     partners))
 
 (defn show-detail [request]
-  (let [
-        ;; find person
-        person-info (find-person request)
-        _ (when (not person-info) (throw+ "No person found"))
-
-        ;; extract person
-        {node   :node
-         entity :entity}  person-info
-        _ (log-trace/add :info "(show-detail)" "Person id" (:id entity))
-
-        ;; find parents
-        parents           (find-parent-entities node)
-        {father :father
-         mother :mother}  parents
-
-        ;; find partners
-        partners (find-partner-entities node)
-        ]
-    (view/render-template request "person/detail.html"
-                          {:person entity
-                           :father father
-                           :mother mother
-                           :partners partners})))
-
-(defn show-detail [request]
   (view/render-page "person_detail_view"))
 
 (defn get-info [request]

@@ -23,8 +23,7 @@
 
 (def person-api-routes
   (context "/api/person" []
-           (GET "/detail" [] person-detail/get-info)
-           (POST "/detail" [] person-detail/get-info)))
+           (GET "/detail" [] person-detail/get-info)))
 
 (def person-rules
   [{:pattern #"^/person/add.*"

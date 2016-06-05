@@ -7,6 +7,9 @@
         data (if readable (assoc data :readable true) data)]
     (call-json :svc-person "/find/byId" :get data)))
 
+(defn find-node-by-id [person-id]
+  (call-json :svc-person "/find/nodeById" :get {:person-id person-id}))
+
 (defn find-root []
   (call-json :svc-person "/find/root" :get {}))
 

@@ -10,6 +10,7 @@
 
             [app.controllers.home :refer [home-routes home-rules]]
             [app.controllers.person :refer [person-routes person-api-routes person-rules]]
+            [app.controllers.pedigree :refer [pedigree-api-routes]]
             [app.controllers.auth :refer [auth-api-routes]]
             [app.controllers.admin :refer [admin-routes admin-rules]]
             [app.controllers.tree :refer [tree-routes]]
@@ -49,6 +50,8 @@
               (-> person-routes
                   (wrap-routes log-trace/wrap-log-trace))
               (-> person-api-routes
+                  (wrap-routes log-trace/wrap-log-trace))
+              (-> pedigree-api-routes
                   (wrap-routes log-trace/wrap-log-trace))
               (-> admin-routes
                   (wrap-routes log-trace/wrap-log-trace))

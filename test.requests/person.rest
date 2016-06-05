@@ -73,3 +73,11 @@ Content-Type: application/json
   "fullName": "f2",
   "gender": "female"
 }
+
+#
+GET http://pd.dev:4000/find/nodeById
+Content-Type: application/json
+
+{
+  "personId": 9
+}

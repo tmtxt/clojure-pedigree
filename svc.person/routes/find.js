@@ -228,10 +228,33 @@ function* findByGendersHandler() {
 }
 
 
+/**
+ * Find person node by person id
+ */
+function* findNodeByIdHandler() {
+  const logTrace = this.logTrace;
+  var personId = this.request.body.personId;
+  personId = parseInt(personId);
+  const neoPerson = this.neo.person;
+
+  const node = yield neoPerson.find(personId);
+  if (!node) {
+    throw {message: `Cannot find node with person id ${personId}`};
+  }
+
+  logTrace.add('info', `Person node with person id ${personId} found`);
+  this.body = {
+    success: true,
+    data: node
+  };
+}
+
+
 router.get('/root', findRootHandler);
 router.get('/byId', util.requireIdMdw, findByIdHandler);
 router.get('/byIds', findByIdsHandler);
 router.get('/byName', findByNameHandler);
 router.get('/byGenders', findByGendersHandler);
+router.get('/nodeById', findNodeByIdHandler);
 
 module.exports = router;
