@@ -68,8 +68,20 @@
         person-info (find-person request)
         _ (when (not person-info) (throw+ "No person found"))
 
-        ;; extract data
-        {entity :entity} person-info
-        _ (log-trace/add :info "(get-info)" "Person id" (:id entity))
+        ;; extract person
+        {node   :node
+         entity :entity}  person-info
+        _ (log-trace/add :info "(show-detail)" "Person id" (:id entity))
+
+        ;; find parents
+        parents           (find-parent-entities node)
+        {father :father
+         mother :mother}  parents
+
+        ;; find partners
+        partners (find-partner-entities node)
         ]
-    (util/response-success entity)))
+    (util/response-success
+     {:person entity
+      :parents parents
+      :partners partners})))

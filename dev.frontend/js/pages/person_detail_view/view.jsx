@@ -8,7 +8,7 @@ module.exports = React.createClass({
       <div className="page-persondetail">
         <div className="persondetail-header">
           <div className="persondetail-title">
-            {this.props.person}
+
           </div>
 
           <div className="persondetail-buttons">
@@ -33,8 +33,8 @@ module.exports = React.createClass({
                     Họ và Tên
                   </div>
                   <div className="profile-body-right">
-                    {this.props.personInfo ?
-                     <span>{this.props.personInfo['full-name']}</span> :
+                    {this.props.person ?
+                     <span>{this.props.person.fullName}</span> :
                      <i className="fa fa-spinner fa-spin fa-fw"></i>
                     }
                   </div>

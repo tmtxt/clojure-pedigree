@@ -1,6 +1,8 @@
 (ns app.util.main
   (:require [slingshot.slingshot :refer [try+ throw+]]
-            [ring.util.response :refer [response]]))
+            [ring.util.response :refer [response]]
+            [camel-snake-kebab.extras :refer [transform-keys]]
+            [camel-snake-kebab.core :refer [->camelCaseString]]))
 
 (defn param "Get the param from the request"
   [request name & [default]]
@@ -36,5 +38,5 @@
 
 (defn response-success [data & [message]]
   (response {:success true
-             :data data
+             :data (transform-keys ->camelCaseString data)
              :message message}))

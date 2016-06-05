@@ -6,8 +6,10 @@ exports.getData = async function(tree) {
   const params = tree.get('params');
   const personId = params.personId;
 
-  const [personInfo] = await Promise.all([
-    util.getData('/api/person/detail', {personId})
-  ]);
-  tree.set('personInfo', personInfo);
+  const result = await util.getData('/api/person/detail', {personId});
+  const {person, parents, partners} = result;
+
+  tree.set('person', person);
+  tree.set('parents', parents);
+  tree.set('partners', partners);
 };
