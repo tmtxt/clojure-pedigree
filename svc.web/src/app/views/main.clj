@@ -9,6 +9,8 @@
 (parser/set-resource-path! (clojure.java.io/resource "templates"))
 (parser/cache-off!)
 
+(def version (str "?version=" (.toString (uuid/v4))))
+
 (def layout-text
   {:homepage "Trang chủ"
    :treepage "Cây gia phả"
@@ -25,7 +27,7 @@
   {:layout layout-text
    :params (if params params {})
    :user (get-user-from-request request)
-   :version (str "?version=" (.toString (uuid/v4)))
+   :version version
    :config config})
 
 (defn render-template [request template-name & [params]]
@@ -62,6 +64,6 @@
 
 (defn render-page "Render an empty page with script" [name]
   (-> (parser/render-file "main.html" {:name    name
-                                       :version (str "?version=" (.toString (uuid/v4)))})
+                                       :version version})
       (response)
       (content-type "text/html; charset=utf-8")))
