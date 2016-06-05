@@ -5,13 +5,11 @@ const React = require('react');
 const baobabReact = require('baobab-react/higher-order');
 
 const ParentView = require('./parent_view.jsx');
+const PartnerView = require('./partner_view.jsx');
 
 
 module.exports = React.createClass({
   render: function() {
-    const RootedParentView = baobabReact.branch({
-      person: ['person']
-    }, ParentView);
 
     return (
       <div className="page-persondetail">
@@ -117,7 +115,9 @@ module.exports = React.createClass({
           </div>
 
           <div className="persondetail-col-3">
-            <RootedParentView parents={this.props.parents} />
+            <ParentView parents={this.props.parents} />
+
+            <PartnerView partners={this.props.partners} />
           </div>
         </div>
       </div>

@@ -40,7 +40,7 @@ module.exports = React.createClass({
               }
             })()}
          </div> :
-         <i className="fa fa-spinner fa-spin fa-5x fa-fw"></i>}
+         <i className="fa fa-spinner fa-spin fa-4x fa-fw"></i>}
 
          {this.props.parents ?
           <div className="parent-body">

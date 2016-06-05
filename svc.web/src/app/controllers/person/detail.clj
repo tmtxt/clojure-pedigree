@@ -57,6 +57,4 @@
         partners (find-partner-entities node)
         ]
     (util/response-success
-     {:person entity
-      :parents parents
-      :partners partners})))
+     entity)))

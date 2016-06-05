@@ -14,6 +14,7 @@ exports.getData = async function(url, data) {
   if (!result.success) {
     throw new Error(result.message);
   }
+  await waitFor();
 
   return result.data;
 };

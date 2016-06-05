@@ -5,3 +5,7 @@ GET http://pd.dev:3000/api/person/detail?personId=:personId
 #
 :personId = 42
 GET http://pd.dev:3000/api/pedigree/getParents?personId=:personId
+
+#
+:personId = 42
+GET http://pd.dev:3000/api/marriage/getPartners?personId=:personId
