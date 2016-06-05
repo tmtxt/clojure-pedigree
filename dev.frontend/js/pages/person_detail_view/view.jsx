@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const React = require('react');
+const markdown = require('markdown');
 const baobabReact = require('baobab-react/higher-order');
 
 const ParentView = require('./parent_view.jsx');
@@ -10,6 +11,8 @@ const PartnerView = require('./partner_view.jsx');
 
 module.exports = React.createClass({
   render: function() {
+
+    console.log(this.props.person);
 
     return (
       <div className="page-persondetail">
@@ -110,6 +113,10 @@ module.exports = React.createClass({
                 Chú thích
               </div>
               <div className="js-persondetail-history history-body">
+                {this.props.person ?
+                 markdown.toHTML(this.props.person.summary || "") :
+                 <i className="fa fa-spinner fa-spin fa-fw"></i>
+                }
               </div>
             </div>
           </div>
