@@ -1,9 +1,14 @@
+'use strict';
+
 const $ = require('jquery');
+const uuid = require('node-uuid');
 
 exports.getData = async function(url, data) {
   const result = await $.get({
-    url: '/api/person/detail',
-    data
+    url, data,
+    headers: {
+      'correlation-id': uuid.v4()
+    }
   });
 
   if (!result.success) {

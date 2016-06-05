@@ -7,6 +7,8 @@ const ReactDOM = require('react-dom');
 const baobabReact = require('baobab-react/higher-order');
 const UrlPattern = require('url-pattern');
 
+const user = require('./user.js');
+
 function getBranchCursors(props) {
   const keys = Object.keys(props);
   const values = _.map(keys, (key) => {
@@ -25,7 +27,10 @@ exports.renderMainLayout = function(MainView, initProps, urlPattern) {
     user: 'def',
     params
   }, initProps));
-  const appCursors = _.assign(getBranchCursors(initProps), {params: ['params']});
+  const appCursors = _.assign(
+    getBranchCursors(initProps),
+    {params: ['params'], user: ['user']}
+  );
 
   const MainLayout = require('MainLayout');
   const RootedMainLayout = baobabReact.root(tree, MainLayout);
@@ -37,6 +42,9 @@ exports.renderMainLayout = function(MainView, initProps, urlPattern) {
     </RootedMainLayout>,
     document.getElementById('pd-site-content')
   );
+
+  // get data
+  user.getData(tree);
 
   return {
     tree

@@ -42,6 +42,7 @@
     "lodash": "global:_",
     "markdown": "global:markdown",
     "moment": "global:moment",
-    "url-pattern": "global:UrlPattern"
+    "url-pattern": "global:UrlPattern",
+    "node-uuid": "global:uuid"
   }
 }
