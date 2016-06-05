@@ -17,3 +17,9 @@ exports.getData = async function(url, data) {
 
   return result.data;
 };
+
+function waitFor() {
+  return new Promise(function(resolve){
+    setTimeout(function(){resolve();}, 2000);
+  });
+}

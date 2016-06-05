@@ -26,7 +26,9 @@ module.exports = React.createClass({
 
         <div className="persondetail-body">
           <div className="persondetail-col-1">
-            <img className="img-responsive img-thumbnail" alt="" src="" />
+            {this.props.person ?
+             <img className="img-responsive img-thumbnail" alt="" src={this.props.person.picture} /> :
+             <i className="fa fa-spinner fa-spin fa-5x fa-fw"></i>}
           </div>
 
           <div className="persondetail-col-2">
