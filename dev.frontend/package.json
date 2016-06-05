@@ -12,6 +12,8 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "babelify": "7.3.0",
+    "baobab": "^2.3.3",
+    "baobab-react": "^2.1.1",
     "bower": "1.7.9",
     "browserify": "13.0.1",
     "browserify-shim": "3.8.12",
