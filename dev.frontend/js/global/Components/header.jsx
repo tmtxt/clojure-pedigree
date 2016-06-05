@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const React = require('react');
 const {Component} = React;
 const baobabReact = require('baobab-react/higher-order');
@@ -30,9 +31,18 @@ class Header extends Component {
                 <li><a href="/tree/view/">Cây gia phả</a></li>
                 <li><a href="#">Lịch sử dòng họ</a></li>
                 <li><a href="#">Liên hệ</a></li>
+                {_.get(this.props.user, ['authenticated']) ?
+                 <li><a href="/admin/index">Quản trị</a></li> :
+                 ""}
               </ul>
               <ul className="header-content--right header-menu">
-                <li><a href="/login">Đăng nhập</a></li>
+                {_.get(this.props.user, ['authenticated']) ?
+                 <li className="header-user">Xin chào <span className="header-user-name">{this.props.user.username}</span>
+                   &nbsp;
+                   <a className="header-user-logout" href="/logout"><i className="fa fa-sign-out fa-lg"></i></a>
+                 </li>
+                 :
+                 <li><a href="/login">Đăng nhập</a></li>}
               </ul>
             </nav>
           </div>
