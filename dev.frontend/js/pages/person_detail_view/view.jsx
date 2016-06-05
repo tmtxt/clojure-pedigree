@@ -33,7 +33,10 @@ module.exports = React.createClass({
                     Họ và Tên
                   </div>
                   <div className="profile-body-right">
-                    Full name
+                    {this.props.personInfo ?
+                     <span>{this.props.personInfo['full-name']}</span> :
+                     <i className="fa fa-spinner fa-spin fa-fw"></i>
+                    }
                   </div>
                 </div>
 
