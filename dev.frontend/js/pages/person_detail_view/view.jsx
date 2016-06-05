@@ -2,10 +2,17 @@
 
 const _ = require('lodash');
 const React = require('react');
+const baobabReact = require('baobab-react/higher-order');
+
+const ParentView = require('./parent_view.jsx');
 
 
 module.exports = React.createClass({
   render: function() {
+    const RootedParentView = baobabReact.branch({
+      person: ['person']
+    }, ParentView);
+
     return (
       <div className="page-persondetail">
         <div className="persondetail-header">
@@ -110,6 +117,7 @@ module.exports = React.createClass({
           </div>
 
           <div className="persondetail-col-3">
+            <RootedParentView parents={this.props.parents} />
           </div>
         </div>
       </div>
