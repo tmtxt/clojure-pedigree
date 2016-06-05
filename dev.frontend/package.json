@@ -35,6 +35,7 @@
     "d3": "global:d3",
     "_": "global:_",
     "react": "global:React",
+    "react-dom": "global:ReactDOM",
     "flux": "global:Flux",
     "microevent": "global:MicroEvent",
     "EventEmitter": "global:EventEmitter",

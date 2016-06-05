@@ -1,15 +1,11 @@
-require('util.js');
+'use strict';
 
-console.log('helloaaa');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-var a = (hello) => {
-  console.log(hello);
-};
+const MainLayout = require('MainLayout');
 
-a('world');
-
-console.log(9);
-
-require('./test.jsx');
-
-console.log('abc');
+ReactDOM.render(
+  React.createElement(MainLayout, null),
+  document.getElementById('pd-site-content')
+);
