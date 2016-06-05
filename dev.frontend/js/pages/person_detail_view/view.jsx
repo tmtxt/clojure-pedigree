@@ -1,6 +1,8 @@
 'use strict';
 
+const _ = require('lodash');
 const React = require('react');
+
 
 module.exports = React.createClass({
   render: function() {
@@ -13,6 +15,12 @@ module.exports = React.createClass({
 
           <div className="persondetail-buttons">
             <a href="/tree/view/person/15" className="btn btn-info">Xem cây gia phả</a>
+            {_.get(this.props.user, ['authenticated']) ?
+             <a href={'/person/edit/' + _.get(this.props.person, ['id'])}
+                className="btn btn-success">Chỉnh sửa</a> : ""}
+             {_.get(this.props.user, ['authenticated']) ?
+              <a href={'/person/delete/' + _.get(this.props.person, ['id'])}
+                 className="btn btn-danger">Xóa</a> : ""}
           </div>
         </div>
 
