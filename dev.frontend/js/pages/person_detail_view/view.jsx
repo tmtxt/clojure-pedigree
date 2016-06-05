@@ -6,7 +6,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        {this.props.person}
+        {this.props.params.personId}
       </div>
     );
   }

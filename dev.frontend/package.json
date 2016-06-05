@@ -35,11 +35,10 @@
   },
   "browserify-shim": {
     "jquery": "global:$",
-    "q": "global:Q",
     "d3": "global:d3",
-    "_": "global:_",
     "lodash": "global:_",
     "markdown": "global:markdown",
-    "moment": "global:moment"
+    "moment": "global:moment",
+    "url-pattern": "global:UrlPattern"
   }
 }

@@ -5,6 +5,7 @@ const Baobab = require('baobab');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const baobabReact = require('baobab-react/higher-order');
+const UrlPattern = require('url-pattern');
 
 function getBranchCursors(props) {
   const keys = Object.keys(props);
@@ -16,14 +17,19 @@ function getBranchCursors(props) {
 }
 
 
-exports.renderMainLayout = function(MainView, props){
+exports.renderMainLayout = function(MainView, initProps, urlPattern) {
+  const pattern = new UrlPattern(urlPattern);
+  const params = pattern.match(window.location.pathname);
+
   const tree = new Baobab(_.assign({
-    user: 'def'
-  }, props));
+    user: 'def',
+    params
+  }, initProps));
+  const appCursors = _.assign(getBranchCursors(initProps), {params: ['params']});
 
   const MainLayout = require('MainLayout');
   const RootedMainLayout = baobabReact.root(tree, MainLayout);
-  const BranchedMainView = baobabReact.branch(getBranchCursors(props), MainView);
+  const BranchedMainView = baobabReact.branch(appCursors, MainView);
 
   ReactDOM.render(
     <RootedMainLayout>

@@ -39,6 +39,7 @@
     "eventEmitter": "4.2.11",
     "moment": "2.13.0",
     "lodash": "4.13.1",
-    "react": "15.1.0"
+    "react": "15.1.0",
+    "url-pattern": "~1.0.1"
   }
 }
