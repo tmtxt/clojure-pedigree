@@ -1,9 +1,13 @@
 'use strict';
 
 const React = require('react');
+const {Component} = React;
+const baobabReact = require('baobab-react/higher-order');
+const {branch} = baobabReact;
 
-module.exports = React.createClass({
-  render: function() {
+
+class Footer extends Component {
+  render() {
     return (
       <footer className="site-footer">
         <div className="container-fluid footer-nav">
@@ -35,4 +39,9 @@ module.exports = React.createClass({
       </footer>
     );
   }
-});
+}
+
+
+module.exports = branch({
+  user: ['user']
+}, Footer);
