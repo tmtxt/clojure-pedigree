@@ -28,6 +28,8 @@
     "gulp-uglify": "1.5.3",
     "gulp-util": "3.0.7",
     "lodash": "4.13.1",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
     "through": "2.0.1",
     "watchify": "3.7.0"
   },
@@ -36,11 +38,7 @@
     "q": "global:Q",
     "d3": "global:d3",
     "_": "global:_",
-    "react": "global:React",
-    "react-dom": "global:ReactDOM",
-    "flux": "global:Flux",
-    "microevent": "global:MicroEvent",
-    "EventEmitter": "global:EventEmitter",
+    "lodash": "global:_",
     "markdown": "global:markdown",
     "moment": "global:moment"
   }

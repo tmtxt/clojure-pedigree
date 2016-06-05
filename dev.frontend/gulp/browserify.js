@@ -27,6 +27,9 @@ const cached = {};
 function createBundler(mode) {
   const bundler = through2.obj(function(file, env, next){
     const bundleFunc = function(err, res){
+      if (err) {
+        console.log(err);
+      }
       file.contents = res;
       next(null, file);
     };
