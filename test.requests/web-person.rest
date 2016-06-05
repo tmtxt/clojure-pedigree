@@ -1,0 +1,4 @@
+#
+:personId = 15
+GET http://pd.dev:3000/api/person/detail?personId=:personId
+#

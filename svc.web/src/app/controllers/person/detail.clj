@@ -61,3 +61,7 @@
 
 (defn show-detail [request]
   (view/render-page "person_detail_view"))
+
+(defn get-info [request]
+  (clojure.pprint/pprint request)
+  "hello")

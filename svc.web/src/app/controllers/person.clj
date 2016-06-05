@@ -21,6 +21,11 @@
            (POST "/editProcess"              [] edit-person/handle-post-request)
            (GET "/delete/:personId"          [] delete-person/handle-get-request)))
 
+(def person-api-routes
+  (context "/api/person" []
+           (GET "/detail" [] person-detail/get-info)
+           (POST "/detail" [] person-detail/get-info)))
+
 (def person-rules
   [{:pattern #"^/person/add.*"
     :handler admin-access}

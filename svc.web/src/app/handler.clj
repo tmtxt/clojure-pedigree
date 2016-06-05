@@ -9,7 +9,7 @@
             [compojure.route :as route]
 
             [app.controllers.home :refer [home-routes home-rules]]
-            [app.controllers.person :refer [person-routes person-rules]]
+            [app.controllers.person :refer [person-routes person-api-routes person-rules]]
             [app.controllers.admin :refer [admin-routes admin-rules]]
             [app.controllers.tree :refer [tree-routes]]
 
@@ -44,6 +44,8 @@
   (-> (routes (-> home-routes
                   (wrap-routes log-trace/wrap-log-trace))
               (-> person-routes
+                  (wrap-routes log-trace/wrap-log-trace))
+              (-> person-api-routes
                   (wrap-routes log-trace/wrap-log-trace))
               (-> admin-routes
                   (wrap-routes log-trace/wrap-log-trace))
