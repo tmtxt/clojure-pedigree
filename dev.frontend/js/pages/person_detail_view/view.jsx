@@ -8,7 +8,7 @@ module.exports = React.createClass({
       <div className="page-persondetail">
         <div className="persondetail-header">
           <div className="persondetail-title">
-            Full Name
+            {this.props.person}
           </div>
 
           <div className="persondetail-buttons">

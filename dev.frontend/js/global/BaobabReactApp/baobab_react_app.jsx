@@ -37,4 +37,8 @@ exports.renderMainLayout = function(MainView, initProps, urlPattern) {
     </RootedMainLayout>,
     document.getElementById('pd-site-content')
   );
+
+  return {
+    tree
+  };
 };

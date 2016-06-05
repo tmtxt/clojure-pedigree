@@ -33,6 +33,7 @@
     "lodash": "4.13.1",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
+    "regenerator-runtime": "^0.9.5",
     "through": "2.0.1",
     "watchify": "3.7.0"
   },

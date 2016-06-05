@@ -4,8 +4,8 @@ const BaobabReactApp = require('BaobabReactApp');
 
 const MainView = require('./view.jsx');
 
-BaobabReactApp.renderMainLayout(MainView, {
-  person: null
+const {tree} = BaobabReactApp.renderMainLayout(MainView, {
+  person: 'abc'
 }, '/person/detail/:personId');
 
 const $ = window.$;
@@ -17,5 +17,6 @@ async function getData() {
     }
   });
   console.log(result);
+  tree.set('person', result);
 }
 getData();
