@@ -10,7 +10,7 @@ const Footer = components.Footer;
 module.exports = React.createClass({
   render: function() {
     return (
-      <div>
+      <div className="site">
         <Header />
 
         <main className="site-content">

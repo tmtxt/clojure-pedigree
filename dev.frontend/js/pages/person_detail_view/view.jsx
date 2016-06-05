@@ -55,7 +55,10 @@ module.exports = React.createClass({
                     Ngày sinh
                   </div>
                   <div className="profile-body-right">
-                    Birthdate
+                    {this.props.person ?
+                     <span>{this.props.person.birthDate}</span> :
+                     <i className="fa fa-spinner fa-spin fa-fw"></i>
+                    }
                   </div>
                 </div>
 
@@ -64,7 +67,34 @@ module.exports = React.createClass({
                     Tình trạng
                   </div>
                   <div className="profile-body-right">
-                    Alive
+                    {this.props.person ?
+                     <span>{this.props.person.aliveStatus}</span> :
+                     <i className="fa fa-spinner fa-spin fa-fw"></i>
+                    }
+                  </div>
+                </div>
+
+                <div className="profile-body-row">
+                  <div className="profile-body-left">
+                    Ngày mất
+                  </div>
+                  <div className="profile-body-right">
+                    {this.props.person ?
+                     <span>{this.props.person.deathDate}</span> :
+                     <i className="fa fa-spinner fa-spin fa-fw"></i>
+                    }
+                  </div>
+                </div>
+
+                <div className="profile-body-row">
+                  <div className="profile-body-left">
+                    Giới tính
+                  </div>
+                  <div className="profile-body-right">
+                    {this.props.person ?
+                     <span>{this.props.person.gender}</span> :
+                     <i className="fa fa-spinner fa-spin fa-fw"></i>
+                    }
                   </div>
                 </div>
               </div>
