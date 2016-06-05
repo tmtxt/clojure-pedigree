@@ -80,7 +80,8 @@
 (defn- handle-exception "Handle uncaught exception in request handler" [ex]
   (add :error "Uncaught exception" ex)
   (add :info  "Request ends")
-  (let [response (ring.util.response/response {:message "Có lỗi xảy ra"})
+  (let [response (ring.util.response/response {:success false
+                                               :message "Có lỗi xảy ra"})
         log-data (make-post-request-data response)]
     (set! *log-data* log-data)
     (end)

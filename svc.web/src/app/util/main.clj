@@ -1,5 +1,6 @@
 (ns app.util.main
-  (:require [slingshot.slingshot :refer [try+ throw+]]))
+  (:require [slingshot.slingshot :refer [try+ throw+]]
+            [ring.util.response :refer [response]]))
 
 (defn param "Get the param from the request"
   [request name & [default]]
@@ -32,3 +33,8 @@
    (Integer/parseInt input)
    (catch integer? i i)
    (catch Object _ default)))
+
+(defn response-success [data & [message]]
+  (response {:success true
+             :data data
+             :message message}))

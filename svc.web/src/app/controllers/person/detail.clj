@@ -2,7 +2,7 @@
   (:require [app.util.main :as util]
             [app.views.main :as view]
             [app.services.person :as svc-person]
-            [slingshot.slingshot :refer [throw+]]
+            [slingshot.slingshot :refer [try+ throw+]]
             [app.services.pedigree-relation :as svc-pr]
             [app.services.marriage-relation :as svc-mr]
             [app.logger.log-trace :as log-trace]))
@@ -63,5 +63,13 @@
   (view/render-page "person_detail_view"))
 
 (defn get-info [request]
-  (clojure.pprint/pprint request)
-  "hello")
+  (let [
+        ;; find the person info from the request
+        person-info (find-person request)
+        _ (when (not person-info) (throw+ "No person found"))
+
+        ;; extract data
+        {entity :entity} person-info
+        _ (log-trace/add :info "(get-info)" "Person id" (:id entity))
+        ]
+    (util/response-success entity)))

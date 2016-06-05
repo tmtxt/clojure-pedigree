@@ -1,4 +1,5 @@
 #
-:personId = 15
+:personId = 9
 GET http://pd.dev:3000/api/person/detail?personId=:personId
+
 #
