@@ -16,4 +16,6 @@ exports.getData = async function(tree) {
   tree.set('person', person);
   tree.set('parents', parents);
   tree.set('partners', partners);
+
+  document.title = person.fullName;
 };

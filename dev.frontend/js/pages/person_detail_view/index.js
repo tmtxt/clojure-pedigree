@@ -10,4 +10,6 @@ const {tree} = BaobabReactApp.renderMainLayout(MainView, {
   partners: null
 }, '/person/detail/:personId');
 
+document.title = 'Thông tin thành viên';
+
 require('./init.js').getData(tree);
