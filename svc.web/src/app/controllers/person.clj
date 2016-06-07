@@ -10,6 +10,7 @@
 
 (def person-routes
   (context "/person" []
+           (GET "/add/from/:from/:personId"  [] add-person/render)
            (GET  "/add/parentId/:parentId"   [] add-person/add-person-from-parent)
            (GET  "/add/partnerId/:partnerId" [] add-person/add-person-from-partner)
            (GET  "/add/childId/:childId"     [] add-person/add-person-from-child)

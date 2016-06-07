@@ -1,6 +1,7 @@
 (ns app.controllers.person.add
   (:require [app.controllers.person.util :as controller-util]
             [app.util.main :as util]
+            [app.views.main :as view]
             [app.controllers.person.add.from-none :as from-none]
             [app.controllers.person.add.from-parent :as from-parent]
             [app.controllers.person.add.from-partner :as from-partner]
@@ -21,3 +22,6 @@
       "parent" (from-parent/process-post-request request)
       "partner" (from-partner/process-post-request request)
       "child" (from-child/process-post-request request))))
+
+(defn render [request]
+  (view/render-page "person_add_view"))
