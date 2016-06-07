@@ -1,21 +1,24 @@
 'use strict';
 
-const util = require('util.js');
+const api = require('API');
+const apiPerson = api.person;
+const apiPedigree = api.pedigree;
+const apiMarriage = api.marriage;
 
 async function getPerson(personId, tree) {
-  const person = await util.getData('/api/person/detail', {personId});
+  const person = await apiPerson.getPerson(personId);
   tree.set('person', person);
   return person;
 }
 
 async function getParents(personId, tree) {
-  const parents = await util.getData('/api/pedigree/getParents', {personId});
+  const parents = await apiPedigree.getParents(personId);
   tree.set('parents', parents);
   return parents;
 }
 
 async function getPartners(personId, tree) {
-  const partners = await util.getData('/api/marriage/getPartners', {personId});
+  const partners = await apiMarriage.getPartners(personId);
   tree.set('partners', partners);
   return partners;
 }
