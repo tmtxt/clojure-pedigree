@@ -16,9 +16,11 @@ exports.createInitData = async function(tree) {
   if (fromRole == 'parent') {
     const parentRole = await apiPedigree.detectParentRole(fromPerson.gender);
     if (parentRole.role == 'mother') {
+      tree.set('parentRole', 'mother');
       tree.set('mother', fromPerson);
       tree.set('father', pageUtil.createEmptyPerson());
     } else {
+      tree.set('parentRole', 'father');
       tree.set('father', fromPerson);
       tree.set('mother', pageUtil.createEmptyPerson());
     }
