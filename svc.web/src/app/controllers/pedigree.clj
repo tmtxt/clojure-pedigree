@@ -2,7 +2,8 @@
   (:require [compojure.core :refer :all]
             [app.util.main :as util]
             [app.services.pedigree-relation :as svc-pr]
-            [app.services.person :as svc-person]))
+            [app.services.person :as svc-person]
+            [app.logger.log-trace :as log-trace]))
 
 (defn- find-person-node [request]
   (-> request
@@ -43,7 +44,18 @@
         ]
     (util/response-success {})))
 
+(defn- detect-parent-role
+  "Detect parent role."
+  [request]
+  (let [gender (-> request util/params :gender)
+        _ (log-trace/add :info "(detect-parent-role)" "Gender " gender)
+
+        role   (svc-pr/detect-parent-role-single {:gender gender})
+        _ (log-trace/add :info "(detect-parent-role)" "Role " role)]
+    (util/response-success {:role role})))
+
 (def pedigree-api-routes
   (context "/api/pedigree" []
            (GET "/getParents" [] get-parents)
-           (GET "/getChildren" [] get-children)))
+           (GET "/getChildren" [] get-children)
+           (GET "/detect/parentRole" [] detect-parent-role)))
