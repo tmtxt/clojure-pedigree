@@ -3,7 +3,6 @@
 const _ = require('lodash');
 const React = require('react');
 const markdown = require('markdown');
-const baobabReact = require('baobab-react/higher-order');
 
 const ParentView = require('./parent_view.jsx');
 const PartnerView = require('./partner_view.jsx');
