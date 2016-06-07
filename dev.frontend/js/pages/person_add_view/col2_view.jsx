@@ -102,6 +102,36 @@ module.exports = React.createClass({
               </div>
             </div>
 
+            <div className="profile-body-row">
+              <div className="profile-body-left">
+                Điện thoại
+              </div>
+              <div className="profile-body-right">
+                <input className="form-control" name="phone" type="text" defaultValue={this.props.person.phoneNo}/>
+              </div>
+            </div>
+
+            <div className="profile-body-row">
+              <div className="profile-body-left">
+                Địa chỉ
+              </div>
+              <div className="profile-body-right">
+                <textarea className="form-control" cols="30" id=""
+                          defaultValue={this.props.person.address}
+                          name="address" rows="3"></textarea>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div className="history-container">
+          <div className="history-header">
+            Tiểu sử
+          </div>
+          <div className="history-body">
+            <textarea name="history" defaultValue={this.props.person.summary}
+                      className="form-control js-history-editor"></textarea>
           </div>
         </div>
       </div>

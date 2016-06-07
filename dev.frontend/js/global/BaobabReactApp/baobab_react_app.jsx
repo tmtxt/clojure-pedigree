@@ -4,6 +4,7 @@ const _ = require('lodash');
 const Baobab = require('baobab');
 const React = require('react');
 const ReactDOM = require('react-dom');
+const PropTypes = require('baobab-react/prop-types');
 const baobabReact = require('baobab-react/higher-order');
 const UrlPattern = require('url-pattern');
 
@@ -35,6 +36,10 @@ exports.renderMainLayout = function(MainView, initProps, urlPattern) {
   const MainLayout = require('MainLayout');
   const RootedMainLayout = baobabReact.root(tree, MainLayout);
   const BranchedMainView = baobabReact.branch(appCursors, MainView);
+
+  MainView.contextTypes = {
+    tree: PropTypes.baobab
+  };
 
   ReactDOM.render(
     <RootedMainLayout>
