@@ -4,6 +4,7 @@ const React = require('react');
 
 const Col1View = require('./col1_view.jsx');
 const Col2View = require('./col2_view.jsx');
+const Col3View = require('./col3_view.jsx');
 
 
 module.exports = React.createClass({
@@ -26,6 +27,7 @@ module.exports = React.createClass({
           <div className="editperson-body">
             <Col1View tree={this.context.tree} person={this.props.person} />
             <Col2View tree={this.context.tree} person={this.props.person} />
+            <Col3View tree={this.context.tree} person={this.props.person} />
           </div>
         </form>
       </div>

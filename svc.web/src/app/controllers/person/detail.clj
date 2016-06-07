@@ -6,11 +6,11 @@
             [app.logger.log-trace :as log-trace]))
 
 (defn- find-person "Find the person entity and node" [request]
-  (-> request
-      util/params
-      :personId
-      util/parse-int
-      (svc-person/find-by-id :readable true)))
+  (let [{person-id :personId
+         readable  :readable} (util/params request)]
+    (-> person-id
+        util/parse-int
+        (svc-person/find-by-id :readable readable))))
 
 (defn show-detail [request]
   (view/render-page "person_detail_view"))

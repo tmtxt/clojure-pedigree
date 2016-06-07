@@ -1,15 +1,24 @@
 'use strict';
 
 const BaobabReactApp = require('BaobabReactApp');
-const personUtil = require('person_util.js');
+const pageUtil = require('./util.js');
 
 const MainView = require('./main_view.jsx');
 
-const initPerson = personUtil.createEmptyPerson();
-initPerson.picture = personUtil.getDefaultPictureLink();
+const initPerson = pageUtil.createEmptyPerson();
 
-BaobabReactApp.renderMainLayout(MainView, {
-  person: initPerson
+const {tree} = BaobabReactApp.renderMainLayout(MainView, {
+  person: initPerson,
+  fromRole: null,
+  fromPerson: initPerson,
+  initializing: true
 }, '/person/add/from/:from/:personId');
 
+// set page title
 document.title = 'Tạo thành viên mới';
+
+// set some data
+tree.set('fromRole', tree.get(['params', 'from']));
+
+// get init data
+require('./init_data.js').createInitData(tree);

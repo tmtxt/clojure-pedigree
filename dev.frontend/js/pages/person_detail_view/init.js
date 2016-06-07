@@ -6,7 +6,7 @@ const apiPedigree = api.pedigree;
 const apiMarriage = api.marriage;
 
 async function getPerson(personId, tree) {
-  const person = await apiPerson.getPerson(personId);
+  const person = await apiPerson.getPerson(personId, {readable: true});
   tree.set('person', person);
   return person;
 }
