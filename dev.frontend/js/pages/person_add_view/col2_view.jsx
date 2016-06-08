@@ -3,6 +3,7 @@
 const React = require('react');
 const {Component} = React;
 const _ = require('lodash');
+const $ = require('jquery');
 
 const personUtil = require('person_util.js');
 
@@ -42,6 +43,47 @@ module.exports = class Col2View extends Component {
   }
 
 
+  /**
+   * Init bootstrap date picker for the birth date and death date
+   */
+  initDatePicker() {
+    // Find components
+    const birthDateInput = $('.js-birthdate-input');
+    const deathDateInput = $('.js-deathdate-input');
+
+    birthDateInput.datepicker({
+      language: 'vi'
+    });
+    deathDateInput.datepicker({
+      language: 'vi'
+    });
+  }
+
+
+  /**
+   * Init bootstrap date picker for the birth date and death date
+   */
+  initSummaryEditor() {
+    // Find components
+    const historyEditor = $('.js-history-editor');
+
+    historyEditor.markdown({
+      iconlibrary: 'fa',
+      resize: 'vertical',
+      height: 300
+    });
+  }
+
+
+  componentDidMount() {
+    this.initDatePicker();
+    this.initSummaryEditor();
+  }
+
+
+  /**
+   * @return {object}
+   */
   render() {
     const statusesView = this.renderStatuses();
     const gendersView = this.renderGenders();
