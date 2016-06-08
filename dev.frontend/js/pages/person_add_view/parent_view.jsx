@@ -9,8 +9,6 @@ module.exports = React.createClass({
     const mother = tree.get('mother');
     const parentRole = tree.get('parentRole');
 
-    console.log(parentRole);
-
     return (
       <div>
         <div className="parent-title">

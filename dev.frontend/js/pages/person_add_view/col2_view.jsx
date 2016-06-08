@@ -11,6 +11,16 @@ const personUtil = require('person_util.js');
 module.exports = class Col2View extends Component {
 
   /**
+   * Handle status select change
+   */
+  handleStatusChange() {
+    const status = this.statusesSelect.value.trim();
+    const tree = this.props.tree;
+    tree.set(['person', 'aliveStatus'], status);
+  }
+
+
+  /**
      * Render <select> for statuses
      * @return {object}
    */
@@ -19,8 +29,9 @@ module.exports = class Col2View extends Component {
 
     return (
       <select name="status" className="form-control"
+              onChange={this.handleStatusChange.bind(this)}
               defaultValue={this.props.person.aliveStatus}
-              ref="statuses">
+              ref={(ref) => this.statusesSelect = ref}>
         {_.map(statuses, (v, k) => <option key={k} value={k}>{v}</option>)}
       </select>
     );
@@ -48,8 +59,8 @@ module.exports = class Col2View extends Component {
    */
   initDatePicker() {
     // Find components
-    const birthDateInput = $('.js-birthdate-input');
-    const deathDateInput = $('.js-deathdate-input');
+    const birthDateInput = $(this.birthDateInput);
+    const deathDateInput = $(this.deathDateInput);
 
     birthDateInput.datepicker({
       language: 'vi'
@@ -65,7 +76,7 @@ module.exports = class Col2View extends Component {
    */
   initSummaryEditor() {
     // Find components
-    const historyEditor = $('.js-history-editor');
+    const historyEditor = $(this.summaryInput);
 
     historyEditor.markdown({
       iconlibrary: 'fa',
@@ -113,7 +124,8 @@ module.exports = class Col2View extends Component {
                 Ngày sinh
               </div>
               <div className="profile-body-right">
-                <input className="form-control js-birthdate-input"
+                <input className="form-control"
+                       ref={(ref) => this.birthDateInput = ref}
                        defaultValue={this.props.person.birthDate}
                        name="birthdate" type="text"/>
               </div>
@@ -133,7 +145,8 @@ module.exports = class Col2View extends Component {
                 Ngày mất
               </div>
               <div className="profile-body-right">
-                <input className="form-control js-deathdate-input"
+                <input className="form-control"
+                       ref={(ref) => this.deathDateInput = ref}
                        defaultValue={this.props.person.deathDate}
                        name="deathdate" type="text" />
               </div>
@@ -177,7 +190,8 @@ module.exports = class Col2View extends Component {
           </div>
           <div className="history-body">
             <textarea name="history" defaultValue={this.props.person.summary}
-                      className="form-control js-history-editor"></textarea>
+                      ref={(ref) => this.summaryInput = ref}
+                      className="form-control"></textarea>
           </div>
         </div>
       </div>
