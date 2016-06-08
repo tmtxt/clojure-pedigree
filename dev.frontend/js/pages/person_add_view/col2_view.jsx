@@ -1,44 +1,48 @@
 'use strict';
 
 const React = require('react');
+const {Component} = React;
+const _ = require('lodash');
 
 const personUtil = require('person_util.js');
 
 
-module.exports = React.createClass({
-  renderStatuses: function() {
+module.exports = class Col2View extends Component {
+
+  /**
+     * Render <select> for statuses
+     * @return {object}
+   */
+  renderStatuses() {
     const statuses = personUtil.statusesList;
 
     return (
       <select name="status" className="form-control"
               defaultValue={this.props.person.aliveStatus}
               ref="statuses">
-        {_.map(statuses, function(v, k) {
-           return (
-             <option key={k} value={k}>{v}</option>
-           );
-         })}
+        {_.map(statuses, (v, k) => <option key={k} value={k}>{v}</option>)}
       </select>
     );
-  },
+  }
 
-  renderGenders: function() {
+  /**
+   * Render <select> for genders
+   * @return {object}
+   */
+  renderGenders() {
     const genders = personUtil.gendersList;
 
     return (
       <select className="form-control"
               defaultValue={this.props.person.gender}
               name="gender">
-        {_.map(genders, function(v, k){
-           return (
-             <option key={k} value={k}>{v}</option>
-           );
-         })}
+        {_.map(genders, (v, k) => <option key={k} value={k}>{v}</option>)}
       </select>
     );
-  },
+  }
 
-  render: function() {
+
+  render() {
     const statusesView = this.renderStatuses();
     const gendersView = this.renderGenders();
 
@@ -82,7 +86,7 @@ module.exports = React.createClass({
               </div>
             </div>
 
-            <div className={(this.props.person.aliveStatus === "dead" ? '' : 'hidden ') + "profile-body-row"}>
+            <div className={(this.props.person.aliveStatus === 'dead' ? '' : 'hidden ') + 'profile-body-row'}>
               <div className="profile-body-left">
                 Ngày mất
               </div>
@@ -137,4 +141,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+};
