@@ -29,8 +29,10 @@ function createBundler(mode) {
     const bundleFunc = function(err, res){
       if (err) {
         console.log(err);
+        file.contents = null;
+      } else {
+        file.contents = res;
       }
-      file.contents = res;
       next(null, file);
     };
     const filename = file.path;
