@@ -4,6 +4,9 @@ const $ = require('jquery');
 const React = require('react');
 const {Component} = React;
 
+const personUtil = require('person_util.js');
+
+
 module.exports = class Col1View extends Component {
 
   /**
@@ -12,6 +15,15 @@ module.exports = class Col1View extends Component {
   handleSelectPicture() {
     const pictureInput = $(this.pictureInput);
     pictureInput.trigger('click');
+  }
+
+
+  /**
+   * Handle delete picture button click
+   */
+  handleDeletePicture() {
+    const tree = this.props.tree;
+    tree.set(['person', 'picture'], personUtil.getDefaultPictureLink());
   }
 
 
@@ -44,7 +56,8 @@ module.exports = class Col1View extends Component {
         <div className="col-1-buttons">
           <a onClick={this.handleSelectPicture.bind(this)}
               className="btn btn-success">Select</a>
-          <a className="btn btn-danger">Delete</a>
+          <a onClick={this.handleDeletePicture.bind(this)}
+              className="btn btn-danger">Delete</a>
         </div>
       </div>
     );
