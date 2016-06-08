@@ -3,7 +3,7 @@
 const BaobabReactApp = require('BaobabReactApp');
 const pageUtil = require('./util.js');
 
-const MainView = require('./main_view.jsx');
+const MainView = require('./view/main_view.jsx');
 
 const initPerson = pageUtil.createEmptyPerson();
 
