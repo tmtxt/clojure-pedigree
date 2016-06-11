@@ -12,6 +12,7 @@ const uglify = require('gulp-uglify');
 const path = require('path');
 const rename = require('gulp-rename');
 const babelify = require('babelify');
+const vinyl = require('vinyl-source-stream');
 
 // error handler
 const browserifyError = require('./error.js').browserifyError;
@@ -67,6 +68,14 @@ function createBundler(mode) {
     b.transform(babelify);
     b.transform(shimify);
 
+    // external
+    b.external('baobab');
+    b.external('baobab-react');
+    b.external('react');
+    b.external('react-dom');
+    b.external('regenerator-runtime');
+
+    // bundle
     b.bundle(bundleFunc);
   });
 
@@ -102,4 +111,17 @@ gulp.task('js-prod', function(){
 
 gulp.task('js-watch', function(){
   return bundle('./js/pages/*/index.js', createBundler('watch'), 'watch');
+});
+
+gulp.task('js-require', function(){
+  const b = browserify();
+  b.require('baobab', {expose: 'baobab'});
+  b.require('baobab-react', {expose: 'baobab-react'});
+  b.require('react', {expose: 'react'});
+  b.require('react-dom', {expose: 'react-dom'});
+  b.require('regenerator-runtime', {expose: 'regenerator-runtime'});
+
+  return b.bundle()
+    .pipe(vinyl('requires.js'))
+    .pipe(gulp.dest('/dist/frontend/js'));
 });
