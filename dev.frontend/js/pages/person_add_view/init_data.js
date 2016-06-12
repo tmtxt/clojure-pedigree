@@ -4,6 +4,7 @@ const api = require('API');
 const apiPerson = api.person;
 const apiPedigree = api.pedigree;
 const apiMarriage = api.marriage;
+const ErrorModal = require('ErrorModal');
 
 const pageUtil = require('./util.js');
 
@@ -38,7 +39,11 @@ exports.createInitData = async function(tree) {
   }
 
   if (fromRole == 'child') {
-
+    const {count} = await apiPedigree.detectParentRole(fromPersonId);
+    ErrorModal.showErrorModal();
+    if (count == 2) {
+      console.log('enough parent');
+    }
   }
 
   // finish init

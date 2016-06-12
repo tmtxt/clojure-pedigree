@@ -23,3 +23,7 @@ function waitFor() {
     setTimeout(function(){resolve();}, 2000);
   });
 }
+
+exports.redirect = function(url) {
+  window.location = url;
+};
