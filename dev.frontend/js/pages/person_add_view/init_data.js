@@ -37,6 +37,10 @@ exports.createInitData = async function(tree) {
     tree.set('partner', fromPerson);
   }
 
+  if (fromRole == 'child') {
+
+  }
+
   // finish init
   tree.set('initializing', false);
 };

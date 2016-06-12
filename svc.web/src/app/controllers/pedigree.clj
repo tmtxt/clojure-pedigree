@@ -54,8 +54,20 @@
         _ (log-trace/add :info "(detect-parent-role)" "Role " role)]
     (util/response-success {:role role})))
 
+(defn- count-parents
+  "Count number of parents this person has"
+  [request]
+  (let [;; find person node
+        person-node (find-person-node request)
+
+        ;; count parent
+        count (svc-pr/count-parents person-node)
+        ]
+    (util/response-success {:count count})))
+
 (def pedigree-api-routes
   (context "/api/pedigree" []
            (GET "/getParents" [] get-parents)
            (GET "/getChildren" [] get-children)
-           (GET "/detect/parentRole" [] detect-parent-role)))
+           (GET "/detect/parentRole" [] detect-parent-role)
+           (GET "/count/parents" [] count-parents)))
