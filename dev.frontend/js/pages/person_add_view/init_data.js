@@ -32,8 +32,9 @@ exports.createInitData = async function(tree) {
   }
 
   if (fromRole == 'partner') {
-    const [partner] = await Promise.all([
-    ]);
+    const partnerRole = await apiMarriage.detectPartnerRole(fromPerson.gender);
+    tree.set('partnerRole', partnerRole.role);
+    tree.set('partner', fromPerson);
   }
 
   // finish init
