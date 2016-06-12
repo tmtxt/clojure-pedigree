@@ -31,6 +31,11 @@ exports.createInitData = async function(tree) {
     tree.set('parentPartners', parentPartners || []);
   }
 
+  if (fromRole == 'partner') {
+    const [partner] = await Promise.all([
+    ]);
+  }
+
   // finish init
   tree.set('initializing', false);
 };

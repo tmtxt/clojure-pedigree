@@ -1,0 +1,3 @@
+#
+:gender = male
+GET http://pd.dev:3000/api/marriage/detect/partnerRole?gender=:gender

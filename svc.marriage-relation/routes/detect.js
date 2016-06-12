@@ -19,9 +19,14 @@ function detectPartnerRole(gender) {
 
 // Koa handler function
 function* partnerRoleSingleHandler() {
+  const logTrace = this.logTrace;
   const person = this.request.body;
   const gender = person.gender;
+  logTrace.add('info', 'partnerRoleSingleHandler()', `Gender: ${person}`);
+
   const role = detectPartnerRole(gender);
+  logTrace.add('info', 'partnerRoleSingleHandler()', `Role: ${role}`);
+
   this.body = {
     success: true,
     data: role

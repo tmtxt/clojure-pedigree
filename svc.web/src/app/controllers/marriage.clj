@@ -2,7 +2,8 @@
   (:require [compojure.core :refer :all]
             [app.util.main :as util]
             [app.services.marriage-relation :as svc-mr]
-            [app.services.person :as svc-person]))
+            [app.services.person :as svc-person]
+            [app.logger.log-trace :as log-trace]))
 
 (defn- find-person-node [request]
   (-> request
@@ -28,6 +29,17 @@
         ]
     (util/response-success partners)))
 
+(defn- detect-partner-role
+  "Detect partner role"
+  [request]
+  (let [gender (-> request util/params :gender)
+        _ (log-trace/add :info "(detect-partner-role)" "Gender" gender)
+
+        role (svc-mr/detect-partner-role-single {:gender gender})
+        _ (log-trace/add :info "(detect-partner-role)" "Role" role)]
+    (util/response-success {:role role})))
+
 (def marriage-api-routes
   (context "/api/marriage" []
-           (GET "/getPartners" [] get-partners)))
+           (GET "/getPartners" [] get-partners)
+           (GET "/detect/partnerRole" [] detect-partner-role)))
