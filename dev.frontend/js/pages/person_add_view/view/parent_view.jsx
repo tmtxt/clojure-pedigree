@@ -1,10 +1,17 @@
 'use strict';
 
 const React = require('react');
+const {Component} = React;
 const _ = require('lodash');
 
-module.exports = React.createClass({
-  handleParentChange: function() {
+const pageUtil = require('../util.js');
+
+module.exports = class ParentView extends Component {
+
+  /**
+   * Handle parent <select> change
+   */
+  handleParentChange() {
     const tree = this.props.tree;
     const parentRole = tree.get('parentRole');
     const parentPartners = tree.get('parentPartners');
@@ -17,10 +24,16 @@ module.exports = React.createClass({
       } else {
         tree.set('father', parentPartner);
       }
+    } else {
+      if (parentRole == 'father') {
+        tree.set('mother', pageUtil.createEmptyPerson());
+      } else {
+        tree.set('father', pageUtil.createEmptyPerson());
+      }
     }
-  },
+  }
 
-  render: function() {
+  render() {
     const tree = this.props.tree;
     const father = tree.get('father');
     const mother = tree.get('mother');
@@ -38,7 +51,7 @@ module.exports = React.createClass({
         <div className="parent-body">
           <ul>
             <li>
-              <input name="fatherId" type="hidden" value={father.id} />
+              <input name="fatherId" type="hidden" value={father.id || ''} />
               <div className="parent-image people-image">
                 <img className="img-responsive img-rounded" alt="" src={father.picture} />
               </div>
@@ -47,7 +60,7 @@ module.exports = React.createClass({
                   <span>Cha: {father.fullName}</span>
                   {parentRole == 'mother' ?
                    <select className="form-control" ref={(ref) => this.parentSelect = ref}
-                           onChange={this.handleParentChange}
+                           onChange={this.handleParentChange.bind(this)}
                            name="parent-partner">
                      <option value="false">Chọn</option>
                      {_.map(parentPartners, (partner) => {
@@ -60,7 +73,7 @@ module.exports = React.createClass({
               </div>
             </li>
             <li>
-              <input name="motherId" type="hidden" value={mother.id}/>
+              <input name="motherId" type="hidden" value={mother.id || ''}/>
               <div className="parent-image people-image">
                 <img className="img-responsive img-rounded" alt="" src={mother.picture}/>
               </div>
@@ -69,7 +82,7 @@ module.exports = React.createClass({
                   <span>Mẹ: {mother.fullName}</span>
                   {parentRole == 'father' ?
                    <select className="form-control" ref={(ref) => this.parentSelect = ref}
-                           onChange={this.handleParentChange}
+                           onChange={this.handleParentChange.bind(this)}
                            name="parent-partner">
                      <option value="false">Chọn</option>
                      {_.map(parentPartners, (partner) => {
@@ -86,4 +99,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}
