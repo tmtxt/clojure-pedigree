@@ -1,13 +1,31 @@
 'use strict';
 
 const React = require('react');
+const _ = require('lodash');
 
 module.exports = React.createClass({
+  handleParentChange: function() {
+    const tree = this.props.tree;
+    const parentRole = tree.get('parentRole');
+    const parentPartners = tree.get('parentPartners');
+    const parentPartnerId = this.parentSelect.value;
+
+    if (parentPartnerId != 'false') {
+      const parentPartner = _.find(parentPartners, {id: parseInt(parentPartnerId)});
+      if (parentRole == 'father') {
+        tree.set('mother', parentPartner);
+      } else {
+        tree.set('father', parentPartner);
+      }
+    }
+  },
+
   render: function() {
     const tree = this.props.tree;
     const father = tree.get('father');
     const mother = tree.get('mother');
     const parentRole = tree.get('parentRole');
+    const parentPartners = tree.get('parentPartners');
 
     return (
       <div>
@@ -26,12 +44,18 @@ module.exports = React.createClass({
               </div>
               <div className="parent-info people-info">
                 <div className="parent-name people-name">
-                  <span>Father: </span>
-                  <span>{father.fullName}</span>
-                </div>
-                <div className={parentRole != 'father' ? "" : "hidden"}>
-                  <a href="#" onClick={this.handleSelectFather}>Select</a>&nbsp;
-                  <a href="#" onClick={this.handleRemoveFather}>Remove</a>
+                  <span>Cha: {father.fullName}</span>
+                  {parentRole == 'mother' ?
+                   <select className="form-control" ref={(ref) => this.parentSelect = ref}
+                           onChange={this.handleParentChange}
+                           name="parent-partner">
+                     <option value="false">Chọn</option>
+                     {_.map(parentPartners, (partner) => {
+                        return <option key={partner.id} value={partner.id}>{partner.fullName}</option>;
+                      })}
+                   </select>
+                   :
+                   ''}
                 </div>
               </div>
             </li>
@@ -42,12 +66,18 @@ module.exports = React.createClass({
               </div>
               <div className="parent-info people-info">
                 <div className="parent-name people-name">
-                  <span>Mother: </span>
-                  <span>{mother.fullName}</span>
-                </div>
-                <div className={parentRole != 'mother' ? "" : "hidden"}>
-                  <a href="#" onClick={this.handleSelectMother}>Select</a>&nbsp;
-                  <a href="#" onClick={this.handleRemoveMother}>Remove</a>
+                  <span>Mẹ: {mother.fullName}</span>
+                  {parentRole == 'father' ?
+                   <select className="form-control" ref={(ref) => this.parentSelect = ref}
+                           onChange={this.handleParentChange}
+                           name="parent-partner">
+                     <option value="false">Chọn</option>
+                     {_.map(parentPartners, (partner) => {
+                        return <option key={partner.id} value={partner.id}>{partner.fullName}</option>;
+                      })}
+                   </select>
+                   :
+                   ''}
                 </div>
               </div>
             </li>

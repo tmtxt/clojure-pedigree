@@ -3,6 +3,7 @@
 const api = require('API');
 const apiPerson = api.person;
 const apiPedigree = api.pedigree;
+const apiMarriage = api.marriage;
 
 const pageUtil = require('./util.js');
 
@@ -14,7 +15,10 @@ exports.createInitData = async function(tree) {
 
   // set the data for add from parent
   if (fromRole == 'parent') {
-    const parentRole = await apiPedigree.detectParentRole(fromPerson.gender);
+    const [parentRole, parentPartners] = await Promise.all([
+      apiPedigree.detectParentRole(fromPerson.gender),
+      apiMarriage.getPartners(fromPersonId)
+    ]);
     if (parentRole.role == 'mother') {
       tree.set('parentRole', 'mother');
       tree.set('mother', fromPerson);
@@ -24,6 +28,7 @@ exports.createInitData = async function(tree) {
       tree.set('father', fromPerson);
       tree.set('mother', pageUtil.createEmptyPerson());
     }
+    tree.set('parentPartners', parentPartners || []);
   }
 
   // finish init
