@@ -49,21 +49,21 @@
                   :danger "Lỗi"
                   :error "Lỗi"})
 
-(defn render-message [request message & {:keys [type redirect text]
-                                         :or {type :info
-                                              redirect nil
-                                              text nil}}]
-  (let [class (get alert-type type "warning")
-        title (get alert-title type "Thông tin")]
-    (render-template request "layouts/message.html" {:message message
-                                                     :message-page true
-                                                     :class class
-                                                     :title title
-                                                     :redirect redirect
-                                                     :text text})))
-
-(defn render-page "Render an empty page with script" [name]
+(defn render-page "Render an empty page with script" [name & [params]]
   (-> (parser/render-file "main.html" {:name    name
-                                       :version version})
+                                       :version version
+                                       :params params})
       (response)
       (content-type "text/html; charset=utf-8")))
+
+(defn render-message [message & {:keys [type redirect text]
+                                 :or {type :info
+                                      redirect nil
+                                      text nil}}]
+  (let [class (get alert-type type "warning")
+        title (get alert-title type "Thông tin")]
+    (render-page "message_page" {:message message
+                                 :class class
+                                 :title title
+                                 :redirect redirect
+                                 :text text})))

@@ -8,6 +8,9 @@
     <div id="pd-site-content" class="react-wrapper">
     </div>
     {% include "_scripts.html" %}
+    <script>
+     window.params = {{ params|json|safe }};
+    </script>
     <script src="/frontend/js/{{ name }}.js{{ version }}"></script>
   </body>
 </html>

@@ -23,5 +23,12 @@
       "partner" (from-partner/process-post-request request)
       "child" (from-child/process-post-request request))))
 
-(defn render [request]
+(defn render "Render empty page for GET request" [request]
   (view/render-page "person_add_view"))
+
+(defn process "Handle POST request" [request]
+  (let [from (-> request util/params :from)]
+    (case from
+      "parent"  (from-parent/process-post-request request)
+      "partner" (from-partner/process-post-request request)
+      "child"   (from-child/process-post-request request))))

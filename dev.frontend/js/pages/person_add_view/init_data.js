@@ -13,6 +13,7 @@ exports.createInitData = async function(tree) {
   const fromRole = tree.get('fromRole');
   const fromPersonId = tree.get(['params', 'personId']);
   const fromPerson = await apiPerson.getPerson(fromPersonId);
+  tree.set('fromPerson', fromPerson);
 
   // set the data for add from parent
   if (fromRole == 'parent') {

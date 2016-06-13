@@ -45,7 +45,7 @@
   (view/render-template request "home/welcome.html"))
 
 (defn message [request]
-  (view/render-message request "hello" :redirect "/tree/view/" :text "Cây gia phả"))
+  (view/render-message "hello" :redirect "/tree/view/" :text "Cây gia phả"))
 
 (defn health-check [request]
   (throw (Exception. "a"))

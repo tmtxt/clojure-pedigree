@@ -2,6 +2,7 @@
 
 const React = require('react');
 const {Component} = React;
+const _ = require('lodash');
 
 const Col1View = require('./col1_view.jsx');
 const Col2View = require('./col2_view.jsx');
@@ -31,10 +32,12 @@ module.exports = class MainView extends Component {
   render() {
     const action = this.getFormAction();
 
+    console.log(this.props.fromPerson);
+
     return (
       <div className="page-editperson">
         <form method="post" encType="multipart/form-data" action={action}>
-          <input name="fromPerson" type="hidden" value=""/>
+          <input name="fromPersonId" type="hidden" value={_.get(this, ['props', 'fromPerson', 'id'], '')}/>
 
           <div className="editperson-header">
             <div className="editperson-title">
