@@ -4,6 +4,7 @@ const React = require('react');
 
 const ParentView = require('./parent_view.jsx');
 const PartnerView = require('./partner_view.jsx');
+const ChildView = require('./child_view.jsx');
 
 
 module.exports = React.createClass({
@@ -27,6 +28,13 @@ module.exports = React.createClass({
           <i className="fa fa-spinner fa-spin fa-4x fa-fw"></i> :
           <PartnerView tree={this.props.tree} />
           : ''}
+
+          { /* Child view */ }
+          {fromRole == 'child' ?
+           initializing ?
+           <i className="fa fa-spinner fa-spin fa-4x fa-fw"></i> :
+           <ChildView tree={this.props.tree} />
+           : ''}
       </div>
     );
   }

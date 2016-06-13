@@ -32,18 +32,24 @@ exports.createInitData = async function(tree) {
     tree.set('parentPartners', parentPartners || []);
   }
 
+  // set data for add from partner
   if (fromRole == 'partner') {
     const partnerRole = await apiMarriage.detectPartnerRole(fromPerson.gender);
     tree.set('partnerRole', partnerRole.role);
     tree.set('partner', fromPerson);
   }
 
+  // set data for add from child
   if (fromRole == 'child') {
     const {count} = await apiPedigree.detectParentRole(fromPersonId);
-    ErrorModal.showErrorModal();
     if (count == 2) {
-      console.log('enough parent');
+      ErrorModal.showErrorModal({
+        message: 'Thành viên này đã có đầy đủ cha mẹ',
+        redirect: '/'
+      });
+      return;
     }
+    tree.set('child', fromPerson);
   }
 
   // finish init

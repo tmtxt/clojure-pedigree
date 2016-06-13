@@ -18,7 +18,10 @@ const {tree} = BaobabReactApp.renderMainLayout(MainView, {
   mother: null,
 
   // from partner
-  partner: null
+  partner: null,
+
+  // from child
+  child: null
 }, '/person/add/from/:from/:personId');
 
 // set page title
