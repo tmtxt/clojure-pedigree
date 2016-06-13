@@ -9,10 +9,31 @@ const Col3View = require('./col3_view.jsx');
 
 
 module.exports = class MainView extends Component {
+
+  /**
+   * Get the form destination url based on the fromRole
+   * @return {string}
+   */
+  getFormAction() {
+    const fromRole = this.props.fromRole;
+    return `/api/person/add/from/${fromRole}`;
+  }
+
+
+  /**
+   * Handle cancel add button
+   */
+  handleCancel() {
+    history.back();
+  }
+
+
   render() {
+    const action = this.getFormAction();
+
     return (
       <div className="page-editperson">
-        <form method="post" encType="multipart/form-data">
+        <form method="post" encType="multipart/form-data" action={action}>
           <input name="fromPerson" type="hidden" value=""/>
 
           <div className="editperson-header">
@@ -21,7 +42,7 @@ module.exports = class MainView extends Component {
             </div>
             <div className="editperson-buttons">
               <button className="btn btn-success">Submit</button>
-              <button className="btn btn-danger">Cancel</button>
+              <button className="btn btn-danger" onClick={this.handleCancel.bind(this)}>Cancel</button>
             </div>
           </div>
 
