@@ -1,26 +1,9 @@
 (ns app.controllers.person.add.from-parent
-  (:require [app.controllers.person.add.render :as render]
-            [app.controllers.person.util :refer [find-person create-person]]
+  (:require [app.controllers.person.util :refer [find-person create-person]]
             [slingshot.slingshot :refer [try+ throw+]]
             [ring.util.response :refer [redirect]]
             [app.services.pedigree-relation :as svc-pr]
             [app.logger.log-trace :as log-trace]))
-
-(defn process-get-request [request]
-  (try+
-   (let [
-         ;; find parent from request
-         {parent :entity} (find-person request "parentId")
-         _                (when-not parent (throw+ "parent empty"))
-
-         ;; detect the role of this parent
-         role (-> (svc-pr/detect-parent-role-single parent)
-                  (keyword))
-         ]
-     (render/add-page request {:action "add"
-                               :from "parent"
-                               :parent {role parent}}))
-   (catch Object _ (render/error-page request))))
 
 (defn- add-parent [request key person-node func]
   (try+

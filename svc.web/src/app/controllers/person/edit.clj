@@ -1,13 +1,11 @@
 (ns app.controllers.person.edit
   (:require [app.util.main :as util]
             [app.controllers.person.util :refer [find-person params-to-person-data]]
-            [app.controllers.person.add.render :as render]
             [slingshot.slingshot :refer [try+ throw+]]
             [ring.util.response :refer [redirect]]
             [app.logger.log-trace :as log-trace]
             [app.services.person :as svc-person]
             [app.definition.person :as person-def]
-            [app.controllers.person.add.render :as render]
             [app.helper.person :refer [update-person]]))
 
 (defn handle-get-request [request]
@@ -26,15 +24,17 @@
          (throw+ (str "Cannot find person with id " person-id))))
 
      ;; render edit page using same layout with add page
-     (render/add-page
-      request
-      {:from     "none"
-       :person    person-entity
-       :parent    {}
-       :partner   {}
-       :child     {}
-       :action    "edit"}))
-   (catch Object _ (render/error-page request))))
+     ;; (render/add-page
+     ;;  request
+     ;;  {:from     "none"
+     ;;   :person    person-entity
+     ;;   :parent    {}
+     ;;   :partner   {}
+     ;;   :child     {}
+     ;;   :action    "edit"})
+     )
+   (catch Object _ "" ;; (render/error-page request)
+          )))
 
 (defn handle-post-request [request]
   (try+
@@ -55,4 +55,5 @@
          _ (update-person old-person new-person)
          ]
      (->> person-id (str "/person/detail/") redirect))
-   (catch Object _ (render/error-page request))))
+   (catch Object _ "" ;; (render/error-page request)
+          )))
