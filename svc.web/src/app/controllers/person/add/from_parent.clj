@@ -36,27 +36,24 @@
    (catch Object _ nil)))
 
 (defn process-post-request [request]
-  (try+
-   (let [;; create the person
-         _ (log-trace/add :info "(process-post-request)" "Creating person")
-         {person-node   :node
-          person-entity :entity} (create-person request)
-         _ (log-trace/add :info "(process-post-request)"
-                          (str "Person created!"))
-         _ (log-trace/add :info "(process-post-request)"
-                          (str "Person node id " (:id person-node)))
-         _ (log-trace/add :info "(process-post-request)"
-                          (str "Person entity id " (:id person-entity)))
+  (let [;; create the person
+        _ (log-trace/add :info "(process-post-request)" "Creating person")
+        {person-node   :node
+         person-entity :entity} (create-person request)
+        _ (log-trace/add :info "(process-post-request)"
+                         (str "Person created!"))
+        _ (log-trace/add :info "(process-post-request)"
+                         (str "Person node id " (:id person-node)))
+        _ (log-trace/add :info "(process-post-request)"
+                         (str "Person entity id " (:id person-entity)))
 
-         ;; add relation for father if any
-         _ (log-trace/add :info "(process-post-request)" "Adding relation for father if any")
-         father-rel (add-parent request "fatherId" person-node svc-pr/add-from-father)
+        ;; add relation for father if any
+        _ (log-trace/add :info "(process-post-request)" "Adding relation for father if any")
+        father-rel (add-parent request "fatherId" person-node svc-pr/add-from-father)
 
-         ;; add relation for mother if any
-         _ (log-trace/add :info "(process-post-request)" "Adding relation for mother if any")
-         mother-rel (add-parent request "motherId" person-node svc-pr/add-from-mother)]
+        ;; add relation for mother if any
+        _ (log-trace/add :info "(process-post-request)" "Adding relation for mother if any")
+        mother-rel (add-parent request "motherId" person-node svc-pr/add-from-mother)]
 
-     (when (every? nil? [father-rel mother-rel]) (throw+ "nil all"))
-     (redirect (str "/person/detail/" (person-entity :id))))
-
-   (catch Object res (render/error-page request))))
+    (when (every? nil? [father-rel mother-rel]) (throw+ "nil all"))
+    (redirect (str "/person/detail/" (person-entity :id)))))
