@@ -1,14 +1,15 @@
 'use strict';
 
 const React = require('react');
+const {Component} = React;
 
 const Col1View = require('./col1_view.jsx');
 const Col2View = require('./col2_view.jsx');
 const Col3View = require('./col3_view.jsx');
 
 
-module.exports = React.createClass({
-  render: function() {
+module.exports = class MainView extends Component {
+  render() {
     return (
       <div className="page-editperson">
         <form method="post" encType="multipart/form-data">
@@ -33,4 +34,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+};
