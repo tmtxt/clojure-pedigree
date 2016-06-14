@@ -39,7 +39,7 @@ module.exports = class MainView extends Component {
 
           <div className="editperson-header">
             <div className="editperson-title">
-              Thêm thành viên mới
+              Chỉnh sửa thông tin thành viên
             </div>
             <div className="editperson-buttons">
               <button className="btn btn-success">Submit</button>
@@ -47,11 +47,16 @@ module.exports = class MainView extends Component {
             </div>
           </div>
 
-          <div className="editperson-body">
-            <Col1View tree={this.context.tree} person={this.props.person} />
-            <Col2View tree={this.context.tree} person={this.props.person} />
-            <Col3View tree={this.context.tree} />
-          </div>
+          { this.props.initializing ?
+            <div className="editperson-body">
+              <i className="fa fa-spinner fa-spin fa-5x fa-fw"></i> :
+            </div>
+            :
+            <div className="editperson-body">
+              <Col1View tree={this.context.tree} person={this.props.person} />
+              <Col2View tree={this.context.tree} person={this.props.person} />
+            </div>
+          }
         </form>
       </div>
     );
