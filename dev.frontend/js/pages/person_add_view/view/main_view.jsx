@@ -4,9 +4,9 @@ const React = require('react');
 const {Component} = React;
 const _ = require('lodash');
 
-const Col1View = require('./col1_view.jsx');
-const Col2View = require('./col2_view.jsx');
-const Col3View = require('./col3_view.jsx');
+const Col1View = require('PersonViews/col1_view.jsx');
+const Col2View = require('PersonViews/col2_view.jsx');
+const Col3View = require('PersonViews/col3_view.jsx');
 
 
 module.exports = class MainView extends Component {
@@ -31,8 +31,6 @@ module.exports = class MainView extends Component {
 
   render() {
     const action = this.getFormAction();
-
-    console.log(this.props.fromPerson);
 
     return (
       <div className="page-editperson">
