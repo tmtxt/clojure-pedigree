@@ -12,6 +12,7 @@
             [app.controllers.person :refer [person-routes person-api-routes person-rules]]
             [app.controllers.pedigree :refer [pedigree-api-routes]]
             [app.controllers.marriage :refer [marriage-api-routes]]
+            [app.controllers.minor-content :refer [minor-content-api-routes]]
             [app.controllers.auth :refer [auth-api-routes]]
             [app.controllers.admin :refer [admin-routes admin-rules]]
             [app.controllers.tree :refer [tree-routes tree-api-routes]]
@@ -61,6 +62,8 @@
               (-> tree-routes
                   (wrap-routes log-trace/wrap-log-trace))
               (-> tree-api-routes
+                  (wrap-routes log-trace/wrap-log-trace))
+              (-> minor-content-api-routes
                   (wrap-routes log-trace/wrap-log-trace))
               app-routes)
       (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})

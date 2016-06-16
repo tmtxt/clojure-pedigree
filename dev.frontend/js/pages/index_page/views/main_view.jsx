@@ -8,8 +8,10 @@ module.exports = class MainView extends Component {
   render() {
 
     return (
-      <div>
-        Hello
+      <div className="page-index">
+        <div className="site-container-row">
+
+        </div>
       </div>
     );
   }
