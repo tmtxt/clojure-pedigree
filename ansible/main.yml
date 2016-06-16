@@ -11,7 +11,7 @@
         chdir: "{{ project_dir }}"
 
     - name: run install node dependencies for services
-      command: docker-compose run {{ item }} npm install --no-bin-links
+      command: docker-compose run --rm {{ item }} npm install --no-bin-links
       with_items:
         - svc.person
         - svc.user
@@ -20,19 +20,20 @@
         - svc.minor-content
         - svc.image
         - svc.tree
+        - svc.api-tree
         - dev.frontend
       args:
         chdir: "{{ project_dir }}"
 
     - name: run install lein dependencies for services
-      command: docker-compose run {{ item }} lein deps
+      command: docker-compose run --rm {{ item }} lein deps
       args:
         chdir: "{{ project_dir }}"
       with_items:
         - svc.web
 
     - name: run schemup
-      command: docker-compose run schemup schemup commit
+      command: docker-compose run --rm schemup schemup commit
       register: schemup_result
       changed_when: schemup_result.stdout.find('Creating') != -1 or schemup_result.stderr.find('Upgrading') != -1
       ignore_errors: True
@@ -43,7 +44,7 @@
         chdir: "{{ project_dir }}"
 
     - name: run gulp build
-      command: docker-compose run dev.frontend {{ item }}
+      command: docker-compose run --rm dev.frontend {{ item }}
       with_items:
         - gulp setup
         - gulp prod
