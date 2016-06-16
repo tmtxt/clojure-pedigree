@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "koa-router": "^5.4.0",
-    "lodash": "^4.7.0",
-    "pg": "^4.5.5",
-    "sequelize": "^3.23.2",
-    "seraph": "^0.14.2"
+    "koa-router": "5.4.0",
+    "lodash": "4.7.0",
+    "pg": "4.5.5",
+    "sequelize": "3.23.2",
+    "seraph": "0.14.2"
   }
 }
