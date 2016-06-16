@@ -7,5 +7,14 @@ const util = require('util.js');
  * @returns {object}
  */
 exports.getPreface = async function () {
-  return await util.getData('/api/minor-content/preface', {});
+  return await util.getData('/api/minorContent/preface', {});
+};
+
+
+/**
+ * Get preface content
+ * @returns {object}
+ */
+exports.getTreeDesc = async function () {
+  return await util.getData('/api/minorContent/treeDesc', {});
 };

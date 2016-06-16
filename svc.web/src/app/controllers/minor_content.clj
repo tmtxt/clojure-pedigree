@@ -8,6 +8,11 @@
   (-> (minor-content/get-preface)
       (util/response-success)))
 
+(defn- get-tree-desc [request]
+  (-> (minor-content/get-tree-description)
+      (util/response-success)))
+
 (defroutes minor-content-api-routes
-  (context "/api/minor-content" []
-           (GET "/preface" [] get-preface)))
+  (context "/api/minorContent" []
+           (GET "/preface" [] get-preface)
+           (GET "/treeDesc" [] get-tree-desc)))
