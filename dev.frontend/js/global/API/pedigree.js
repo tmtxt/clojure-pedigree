@@ -27,6 +27,6 @@ exports.detectParentRole = async function(gender) {
  * @param {string} personId
  * @returns {string}
  */
-exports.detectParentRole = async function(personId) {
+exports.countParents = async function(personId) {
   return await util.getData('/api/pedigree/count/parents', {personId});
 }

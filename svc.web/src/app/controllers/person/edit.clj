@@ -10,53 +10,24 @@
             [app.views.main :as view]))
 
 (defn handle-get-request [request]
-  (view/render-page "person_edit_view")
-  ;; (try+
-  ;;  (let [;; get the person id from the request
-  ;;        person-id (-> request (util/param "personId") (util/parse-int))
-  ;;        _ (log-trace/add :info "(handle-get-request)" (str "Person id " person-id))
-
-  ;;        ;; find the person entity
-  ;;        person-entity (-> person-id svc-person/find-by-id :entity)]
-
-  ;;    ;; if cannot find person
-  ;;    (when (not person-entity)
-  ;;      (do
-  ;;        (log-trace/add :error "(handle-get-request)" (str "Cannot find person with id " person-id))
-  ;;        (throw+ (str "Cannot find person with id " person-id))))
-
-  ;;    ;; render edit page using same layout with add page
-  ;;    ;; (render/add-page
-  ;;    ;;  request
-  ;;    ;;  {:from     "none"
-  ;;    ;;   :person    person-entity
-  ;;    ;;   :parent    {}
-  ;;    ;;   :partner   {}
-  ;;    ;;   :child     {}
-  ;;    ;;   :action    "edit"})
-  ;;    )
-  ;;  (catch Object _ "" ;; (render/error-page request)
-  ;;         ))
-  )
+  (view/render-page "person_edit_view"))
 
 (defn handle-post-request [request]
-  (try+
-   (let [;; find person from request
-         person (find-person request "personid")
-         old-person (:entity person)
-         _ (log-trace/add :info "handle-post-request" (str "Found person with id " (:id old-person)))
+  (let [
+        ;; find person from request
+        person (find-person request "personid")
+        old-person (:entity person)
+        _ (log-trace/add :info "handle-post-request" (str "Found person with id " (:id old-person)))
 
-         ;; person data
-         params (util/params request)
-         new-person (params-to-person-data params)
+        ;; person data
+        params (util/params request)
+        new-person (params-to-person-data params)
 
-         ;; person id
-         person-id  (:personid params)
-         new-person (assoc new-person :id person-id)
+        ;; person id
+        person-id  (:personid params)
+        new-person (assoc new-person :id person-id)
 
-         ;; update
-         _ (update-person old-person new-person)
-         ]
-     (->> person-id (str "/person/detail/") redirect))
-   (catch Object _ "" ;; (render/error-page request)
-          )))
+        ;; update
+        _ (update-person old-person new-person)
+        ]
+    (->> person-id (str "/person/detail/") redirect)))

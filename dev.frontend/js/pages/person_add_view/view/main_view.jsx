@@ -17,7 +17,7 @@ module.exports = class MainView extends Component {
    */
   getFormAction() {
     const fromRole = this.props.fromRole;
-    return `/api/person/add/from/${fromRole}`;
+    return `/person/add/from/${fromRole}`;
   }
 
 

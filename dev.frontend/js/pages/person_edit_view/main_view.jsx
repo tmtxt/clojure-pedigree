@@ -17,7 +17,7 @@ module.exports = class MainView extends Component {
    */
   getFormAction() {
     const fromRole = this.props.fromRole;
-    return `/api/person/add/from/${fromRole}`;
+    return '/person/editProcess';
   }
 
 
@@ -35,8 +35,6 @@ module.exports = class MainView extends Component {
     return (
       <div className="page-editperson">
         <form method="post" encType="multipart/form-data" action={action}>
-          <input name="fromPersonId" type="hidden" value={_.get(this, ['props', 'fromPerson', 'id'], '')}/>
-
           <div className="editperson-header">
             <div className="editperson-title">
               Chỉnh sửa thông tin thành viên

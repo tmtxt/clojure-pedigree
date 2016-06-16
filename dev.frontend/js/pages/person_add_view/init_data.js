@@ -42,7 +42,7 @@ exports.createInitData = async function(tree) {
 
   // set data for add from child
   if (fromRole == 'child') {
-    const {count} = await apiPedigree.detectParentRole(fromPersonId);
+    const {count} = await apiPedigree.countParents(fromPersonId);
     if (count == 2) {
       ErrorModal.showErrorModal({
         message: 'Thành viên này đã có đầy đủ cha mẹ',
