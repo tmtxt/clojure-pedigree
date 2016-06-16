@@ -11,3 +11,6 @@ const {tree} = BaobabReactApp.renderMainLayout(MainView, {
 }, '/person/edit/:personId');
 
 document.title = 'Chỉnh sửa thông tin thành viên';
+
+// get init data
+require('./init_data.js').createInitData(tree);

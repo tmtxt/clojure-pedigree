@@ -49,7 +49,7 @@ module.exports = class MainView extends Component {
 
           { this.props.initializing ?
             <div className="editperson-body">
-              <i className="fa fa-spinner fa-spin fa-5x fa-fw"></i> :
+              <i className="fa fa-spinner fa-spin fa-5x fa-fw"></i>
             </div>
             :
             <div className="editperson-body">
