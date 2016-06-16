@@ -9,6 +9,9 @@
             [app.helper.user :as user]
             [app.logger.log-trace :as log-trace]))
 
+(defn index-page "Render index page" [request]
+  (view/render-page "index_page"))
+
 (defn home "Render index page" [request]
   (view/render-template request
                         "home/index.html"
@@ -52,7 +55,7 @@
   "ok")
 
 (defroutes home-routes
-  (GET "/" [] home)
+  (GET "/" [] index-page)
 
   (GET "/login" [] login-render)
   (POST "/login" [] login-authenticate)

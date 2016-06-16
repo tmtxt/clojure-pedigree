@@ -14,7 +14,7 @@
             [app.controllers.marriage :refer [marriage-api-routes]]
             [app.controllers.auth :refer [auth-api-routes]]
             [app.controllers.admin :refer [admin-routes admin-rules]]
-            [app.controllers.tree :refer [tree-routes]]
+            [app.controllers.tree :refer [tree-routes tree-api-routes]]
 
             [ring.middleware.session :refer [wrap-session]]
             [buddy.auth.backends.session :refer [session-backend]]
@@ -59,6 +59,8 @@
               (-> admin-routes
                   (wrap-routes log-trace/wrap-log-trace))
               (-> tree-routes
+                  (wrap-routes log-trace/wrap-log-trace))
+              (-> tree-api-routes
                   (wrap-routes log-trace/wrap-log-trace))
               app-routes)
       (wrap-access-rules {:rules authorization-rules :on-error security/unauthorized-handler})

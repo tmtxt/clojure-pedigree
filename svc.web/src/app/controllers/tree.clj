@@ -62,3 +62,12 @@
    (GET "/view/person/:personId" [] view-tree)
    (GET "/view/depth/:depth" [] view-tree)
    (GET "/view/person/:personId/depth/:depth" [] view-tree)))
+
+(def tree-api-routes
+  (context
+   "/api/tree" []
+   (GET "/data" [] get-tree-data)
+   (GET "/view/" [] view-tree)
+   (GET "/view/person/:personId" [] view-tree)
+   (GET "/view/depth/:depth" [] view-tree)
+   (GET "/view/person/:personId/depth/:depth" [] view-tree)))
