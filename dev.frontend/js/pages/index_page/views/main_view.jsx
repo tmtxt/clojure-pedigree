@@ -19,13 +19,13 @@ module.exports = class MainView extends Component {
       <div className="page-index">
         <div className="site-container-row">
           <PrefaceView preface={this.props.preface} />
-          <MembersView />
+          {/* <MembersView /> */}
         </div>
 
-        <div className="site-container-row">
-          <NewsView />
-          <ImagesView />
-        </div>
+        {/* <div className="site-container-row">
+        <NewsView />
+        <ImagesView />
+        </div> */}
 
         <div className="site-container-row">
           <TreeView />

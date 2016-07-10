@@ -2,7 +2,7 @@
   (:require [compojure.core :refer :all]
             [ring.util.response :refer [response]]
             [clojure.data.json :as json]
-            [app.views.main :refer [render-template]]
+            [app.views.main :refer [render-template render-page]]
             [app.util.main :as util]
             [app.services.api-tree :as api-tree]))
 
@@ -31,7 +31,7 @@
                      {:personId  person-id
                       :depth     depth})))
 
-(defn view-tree [request]
+(defn view-tree2 [request]
   (let [
         ;; extract the person id and depth
         params                              (util/params request)
@@ -54,9 +54,14 @@
       :else
       (tree-page request :depth depth))))
 
+(defn view-tree [request]
+  (render-page "tree_view"))
+
 (def tree-routes
   (context
    "/tree" []
+   (GET "/index" [] view-tree)
+
    (GET "/data" [] get-tree-data)
    (GET "/view/" [] view-tree)
    (GET "/view/person/:personId" [] view-tree)
