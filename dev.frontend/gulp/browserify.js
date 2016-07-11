@@ -75,6 +75,7 @@ function createBundler(mode) {
     b.external('react-dom');
     b.external('regenerator-runtime');
     b.external('react-motion');
+    b.external('react-dimensions');
 
     // bundle
     b.bundle(bundleFunc);
