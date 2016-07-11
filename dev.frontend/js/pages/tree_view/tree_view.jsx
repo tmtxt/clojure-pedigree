@@ -12,12 +12,13 @@ class TreeView extends Component {
     const { tree, containerWidth, containerHeight } = this.props;
     const root = tree.select('pedigreeTree').serialize();
     const treeLayout = d3.layout.tree().size([containerWidth, containerHeight]);
+    const diagonal = d3.svg.diagonal().projection((d) => [d.x, d.y]);
+
     const nodesList = treeLayout.nodes(root).reverse();
     nodesList.forEach((d) => {
       d.y = d.depth * 200;
       d.y += 80;
     });
-
     const nodes = nodesList.map((d) => {
       return (
         <g key={d.info.id} className="node" transform={`translate(${d.x}, ${d.y})`}>
@@ -28,10 +29,18 @@ class TreeView extends Component {
       );
     });
 
+    const linksList = treeLayout.links(nodesList);
+    const links = linksList.map((d) => {
+      return (
+        <path key={`${d.source.id}-${d.target.id}`} className="link" d={diagonal(d)} />
+      );
+    });
+
     return (
       <div className="tree-container">
         <svg height="1000" width={containerWidth}>
           <g>
+            {links}
             {nodes}
           </g>
         </svg>
