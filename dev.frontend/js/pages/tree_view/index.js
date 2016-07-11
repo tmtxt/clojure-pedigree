@@ -6,7 +6,9 @@ const MainView = require('./main_view.jsx');
 const {tree} = BaobabReactApp.renderMainLayout(MainView, {
   pedigreeTree: null,
   initializing: true
-}, '/tree/index');
+}, '/tree/index', {
+  layout: 'full-width'
+});
 
 document.title = 'Cây gia phả';
 
