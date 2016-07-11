@@ -9,14 +9,28 @@ const Dimensions = require('react-dimensions');
 class TreeView extends Component {
 
   render() {
-    const { tree } = this.props;
-    const root = tree.get('pedigreeTree');
+    const { tree, containerWidth, containerHeight } = this.props;
+    const root = tree.select('pedigreeTree').serialize();
+    const treeLayout = d3.layout.tree().size([containerWidth, containerHeight]);
+    const nodesList = treeLayout.nodes(root).reverse();
+    nodesList.forEach((d) => {
+      d.y = d.depth * 200;
+      d.y += 80;
+    });
+
+    const nodes = nodesList.map((d) => {
+      return (
+        <g key={d.info.id} className="node">
+          </circle>
+        </g>
+      );
+    });
 
     return (
       <div className="tree-container">
-        <svg width="100%">
-          <g transform="translate(0, 0)">
-
+        <svg height="1000" width={containerWidth}>
+          <g>
+            {nodes}
           </g>
         </svg>
       </div>
