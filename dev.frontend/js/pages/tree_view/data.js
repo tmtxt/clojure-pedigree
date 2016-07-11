@@ -2,6 +2,8 @@ const api = require('API');
 const apiTree = api.tree;
 
 exports.getData = async function(tree) {
-  const treeData = await apiTree.getTreeData();
-  console.log(treeData);
+  const pedigreeTree = await apiTree.getTreeData();
+
+  tree.set('pedigreeTree', pedigreeTree);
+  tree.set('initializing', false);
 };

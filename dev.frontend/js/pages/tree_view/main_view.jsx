@@ -3,6 +3,8 @@
 const React = require('react');
 const {Component} = React;
 
+const TreeView = require('./tree_view.jsx');
+
 
 module.exports = class MainView extends Component {
 
@@ -26,10 +28,16 @@ module.exports = class MainView extends Component {
           </div>
         </div>
 
-        <div className="tree-container">
-        </div>
+        { this.props.initializing ?
+          <div className="tree-container">
+            <i className="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+          </div>
+          :
+          <TreeView tree={this.context.tree} />
+        }
 
-        <div id="js-user-modal-container"></div>
+
+          <div id="js-user-modal-container"></div>
       </div>
     );
   }

@@ -4,7 +4,8 @@ const BaobabReactApp = require('BaobabReactApp');
 const MainView = require('./main_view.jsx');
 
 const {tree} = BaobabReactApp.renderMainLayout(MainView, {
-  tree: null
+  pedigreeTree: null,
+  initializing: true
 }, '/tree/index');
 
 document.title = 'Cây gia phả';
