@@ -122,6 +122,7 @@ gulp.task('js-require', function(){
   b.require('react-dom', {expose: 'react-dom'});
   b.require('regenerator-runtime', {expose: 'regenerator-runtime'});
   b.require('react-motion', {expose: 'react-motion'});
+  b.require('react-dimensions', {expose: 'react-dimensions'});
 
   return b.bundle()
     .pipe(vinyl('requires.js'))
