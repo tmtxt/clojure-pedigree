@@ -20,6 +20,20 @@
         ]
     (response tree)))
 
+(defn get-tree-data2 [request]
+  (let [
+        ;; extract person id and depth
+        params                       (util/params request)
+        {id :personId depth :depth}  params
+
+        ;; parse int
+        args  (map util/parse-int [id depth])
+
+        ;; get tree data from api-tree
+        tree  (apply api-tree/get-tree args)
+        ]
+    (util/response-success tree)))
+
 (defn tree-page
   "Render layout page for pedigree tree page"
   [request & {:keys [person-id depth]
@@ -71,7 +85,7 @@
 (def tree-api-routes
   (context
    "/api/tree" []
-   (GET "/data" [] get-tree-data)
+   (GET "/data" [] get-tree-data2)
    (GET "/view/" [] view-tree)
    (GET "/view/person/:personId" [] view-tree)
    (GET "/view/depth/:depth" [] view-tree)

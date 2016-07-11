@@ -26,7 +26,7 @@ module.exports = class MainView extends Component {
           </div>
         </div>
 
-        <div className="tree-container" id="js-tree-container">
+        <div className="tree-container">
         </div>
 
         <div id="js-user-modal-container"></div>

@@ -8,3 +8,6 @@ const {tree} = BaobabReactApp.renderMainLayout(MainView, {
 }, '/tree/index');
 
 document.title = 'Cây gia phả';
+
+// get data
+require('./data.js').getData(tree);
