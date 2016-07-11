@@ -63,7 +63,7 @@
    (GET "/index" [] view-tree)
 
    (GET "/data" [] get-tree-data)
-   (GET "/view/" [] view-tree)
+   (GET "/view/" [] view-tree2)
    (GET "/view/person/:personId" [] view-tree)
    (GET "/view/depth/:depth" [] view-tree)
    (GET "/view/person/:personId/depth/:depth" [] view-tree)))
