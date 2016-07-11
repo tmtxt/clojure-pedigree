@@ -20,8 +20,10 @@ class TreeView extends Component {
 
     const nodes = nodesList.map((d) => {
       return (
-        <g key={d.info.id} className="node">
-          </circle>
+        <g key={d.info.id} className="node" transform={`translate(${d.x}, ${d.y})`}>
+          <circle r="10" />
+          <text y="-19" dy=".35em" textAnchor="middle" style={{'fillOpacity': 1}}>{d.info.fullName}</text>
+          <image href={d.info.picture} x="-20" y="-68" width="40px" height="40px"></image>
         </g>
       );
     });
