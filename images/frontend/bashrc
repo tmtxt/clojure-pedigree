@@ -1,1 +1,4 @@
 alias ll='ls -alh'
+alias gd='gulp dev'
+alias gs='gulp setup'
+alias gw='gulp watch'

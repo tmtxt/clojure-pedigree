@@ -53,3 +53,7 @@ function backup {
 function restore {
     docker-compose -f docker-compose.yml -f docker-compose.backup.yml run backup /restore.sh
 }
+
+function dev.frontend {
+    docker-compose run --rm dev.frontend /bin/bash
+}
