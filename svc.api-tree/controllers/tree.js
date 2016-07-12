@@ -45,6 +45,8 @@ function* getTree(personId, depth, logTrace) {
   // find root person with marriage information
   const root = yield PersonController.findRoot(personId, logTrace);
   root.children = [];
+  root.id = root.info.id;
+  root.path = [root.id];
 
   // The tree structure that neo4j query returns
   const neoTree = yield svcTree.getTree(root.node.id, depth, logTrace);
