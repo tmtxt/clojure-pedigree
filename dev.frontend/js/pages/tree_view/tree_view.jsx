@@ -4,7 +4,7 @@ const React = require('react');
 const {Component} = React;
 const d3 = require('d3');
 const Dimensions = require('react-dimensions');
-const { Motion, spring } = require('react-motion');
+const { TransitionMotion, spring } = require('react-motion');
 const _ = require('lodash');
 
 
@@ -15,22 +15,58 @@ class TreeView extends Component {
     const root = tree.select('pedigreeTree').serialize();
     const treeLayout = d3.layout.tree().size([containerWidth, containerHeight]);
     const diagonal = d3.svg.diagonal().projection((d) => [d.x, d.y]);
-    const rootPos = {x: containerWidth / 2, y: 0};
 
     const nodesList = treeLayout.nodes(root).reverse();
     nodesList.forEach((d) => {
       d.y = d.depth * 200;
       d.y += 80;
     });
-    const nodes = nodesList.map((d) => {
-      return (
-        <g key={d.info.id} className="node" transform={`translate(${d.x}, ${d.y})`}>
-          <circle onClick={this.handleCircleClick.bind(this, d)} r="10" style={{'fill': d._children ? 'lightsteelblue' : '#fff'}} />
-          <text y="-19" dy=".35em" textAnchor="middle" style={{'fillOpacity': 1}}>{d.info.fullName}</text>
-          <image href={d.info.picture} x="-20" y="-68" width="40px" height="40px"></image>
-        </g>
-      );
-    });
+    const nodesConfig = nodesList.map(node => ({
+      key: node.info.id,
+      style: {x: spring(node.x), y: spring(node.y)},
+      data: node
+    }));
+    const nodes = (
+      <TransitionMotion
+          willEnter={this.nodeWillEnter.bind(this)}
+          willLeave={this.nodeWillLeave.bind(this)}
+          styles={nodesConfig}>
+        {
+          nodesConfig => {
+            return (
+              <g transform="translate(0,0)">
+                {
+                  nodesConfig.map(
+                    config => {
+                      return (
+                        <g key={config.key} className="node"
+                           transform={`translate(${config.style.x}, ${config.style.y})`}>
+                          <circle onClick={this.handleCircleClick.bind(this, config.data)}
+                                  r="10" style={{'fill': config.data._children ? 'lightsteelblue' : '#fff'}} />
+                          <text y="-19" dy=".35em" textAnchor="middle"
+                                style={{'fillOpacity': 1}}>{config.data.info.fullName}</text>
+                          <image href={config.data.info.picture} x="-20" y="-68"
+                                 width="40px" height="40px"></image>
+                        </g>
+                      );
+                    }
+                  )
+                }
+              </g>
+            );
+          }
+        }
+      </TransitionMotion>
+    );
+    /* const nodes = nodesList.map((d) => {
+       return (
+       <g key={d.info.id} className="node" transform={`translate(${d.x}, ${d.y})`}>
+       <circle onClick={this.handleCircleClick.bind(this, d)} r="10" style={{'fill': d._children ? 'lightsteelblue' : '#fff'}} />
+       <text y="-19" dy=".35em" textAnchor="middle" style={{'fillOpacity': 1}}>{d.info.fullName}</text>
+       <image href={d.info.picture} x="-20" y="-68" width="40px" height="40px"></image>
+       </g>
+       );
+       }); */
 
     const linksList = treeLayout.links(nodesList);
     const links = linksList.map((d) => {
@@ -93,6 +129,24 @@ class TreeView extends Component {
     path.unshift('pedigreeTree');
 
     return path;
+  }
+
+
+  nodeWillEnter() {
+    const { containerWidth } = this.props;
+    return {
+      x: containerWidth / 2,
+      y: 0
+    };
+  }
+
+
+  nodeWillLeave() {
+    const { containerWidth } = this.props;
+    return {
+      x: spring(containerWidth / 2),
+      y: spring(0)
+    };
   }
 
 }
