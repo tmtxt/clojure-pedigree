@@ -5,6 +5,7 @@ const {Component} = React;
 const d3 = require('d3');
 const Dimensions = require('react-dimensions');
 const { Motion, spring } = require('react-motion');
+const _ = require('lodash');
 
 
 class TreeView extends Component {
@@ -23,15 +24,11 @@ class TreeView extends Component {
     });
     const nodes = nodesList.map((d) => {
       return (
-        <Motion key={d.info.id} defaultStyle={rootPos} style={{x: spring(d.x), y: spring(d.y)}}>
-          { value =>
-            <g className="node" transform={`translate(${value.x}, ${value.y})`}>
-              <circle r="10" />
-              <text y="-19" dy=".35em" textAnchor="middle" style={{'fillOpacity': 1}}>{d.info.fullName}</text>
-              <image href={d.info.picture} x="-20" y="-68" width="40px" height="40px"></image>
-            </g>
-          }
-        </Motion>
+        <g key={d.info.id} className="node" transform={`translate(${d.x}, ${d.y})`}>
+          <circle onClick={this.handleCircleClick.bind(this, d)} r="10" style={{'fill': d._children ? 'lightsteelblue' : '#fff'}} />
+          <text y="-19" dy=".35em" textAnchor="middle" style={{'fillOpacity': 1}}>{d.info.fullName}</text>
+          <image href={d.info.picture} x="-20" y="-68" width="40px" height="40px"></image>
+        </g>
       );
     });
 
@@ -52,6 +49,40 @@ class TreeView extends Component {
         </svg>
       </div>
     );
+  }
+
+
+  handleCircleClick(d) {
+    /* has no children, do nothing */
+    if (!d.children && !d._children) {
+      return;
+    }
+
+    const path = this.findPathInTree(d);
+    console.log(path);
+  }
+
+  findPathInTree(d) {
+    let path;
+
+    /* root node */
+    if (d.path.length == 1) {
+      path = ['pedigreeTree'];
+      return path;
+    }
+
+    /* create the path to query in the baobab tree */
+    path = _.tail(d.path);
+    path = _.reduce(path, (result, id) => {
+      result.push((d) => d.id == id);
+      return result;
+    }, []);
+    path = _.zip(_.fill(Array(path.length), 'children'), path);
+    path = _.flatten(path);
+    path = _.compact(path);
+    path.unshift('pedigreeTree');
+
+    return path;
   }
 
 }
