@@ -88,7 +88,8 @@ function* getTree(personId, depth, logTrace) {
         const personData = {
           id: person.id,
           info: person,
-          marriage
+          marriage,
+          path: rows[i].path
         };
         // add to its parent's children array
         children.push(personData);
