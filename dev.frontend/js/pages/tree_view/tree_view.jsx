@@ -58,8 +58,18 @@ class TreeView extends Component {
       return;
     }
 
+    const { tree } = this.props;
     const path = this.findPathInTree(d);
-    console.log(path);
+    const cursor = tree.select(path);
+    const data = cursor.get();
+
+    if (data.children) {
+      cursor.set('_children', cursor.select('children').get());
+      cursor.unset('children');
+    } else {
+      cursor.set('children', cursor.select('_children').get());
+      cursor.unset('_children');
+    }
   }
 
   findPathInTree(d) {
