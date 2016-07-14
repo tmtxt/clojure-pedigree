@@ -8,6 +8,14 @@ const _ = require('lodash');
 
 module.exports = class NodesGroup extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      oldNodesList: null
+    };
+  }
+
+
   render() {
     const { nodesList } = this.props;
     const nodesConfig = nodesList.map(node => ({
@@ -61,16 +69,22 @@ module.exports = class NodesGroup extends Component {
   }
 
 
+  componentWillReceiveProps() {
+    const oldNodesList = this.props.nodesList;
+    this.setState({oldNodesList});
+  }
+
+
   nodeWillEnter(node) {
-    return {
-      x: node.data.parent.x,
-      y: node.data.parent.y
-    };
+    const nodesList = this.state.oldNodesList || this.props.nodesList;
+    const { x, y } = this.findParent(node.data, nodesList);
+    return { x, y };
   }
 
 
   nodeWillLeave(node) {
-    const { x, y } = this.findParent(node.data);
+    const { nodesList } = this.props;
+    const { x, y } = this.findParent(node.data, nodesList);
     return {
       x: spring(x),
       y: spring(y)
@@ -78,8 +92,7 @@ module.exports = class NodesGroup extends Component {
   }
 
 
-  findParent(node) {
-    const { nodesList } = this.props;
+  findParent(node, nodesList) {
     let parent = _.find(nodesList, {id: node.parent.id});
     parent = parent ? parent : this.findParent(node.parent);
     return parent;
