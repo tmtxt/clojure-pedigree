@@ -17,7 +17,6 @@ class TreeView extends Component {
 
     /* use d3.js to calculate the tree layout and position of nodes, links */
     const treeLayout = d3.layout.tree().size([containerWidth, containerHeight]);
-    const diagonal = d3.svg.diagonal().projection((d) => [d.x, d.y]);
     const nodesList = treeLayout.nodes(root).reverse();
     /* translate all the nodes 80px down (for the header) with 200px height for each link */
     nodesList.forEach((d) => {
@@ -25,15 +24,9 @@ class TreeView extends Component {
       d.y += 80;
     });
 
-    /* calculate and render nodes */
+    /* render nodes and links */
     const nodes = this.renderNodes(treeLayout, nodesList);
-
-    const linksList = treeLayout.links(nodesList);
-    const links = linksList.map((d) => {
-      return (
-        <path key={`${d.source.id}-${d.target.id}`} className="link" d={diagonal(d)} />
-      );
-    });
+    const links = this.renderLinks(treeLayout, nodesList);
 
     return (
       <div className="tree-container">
@@ -45,6 +38,70 @@ class TreeView extends Component {
         </svg>
       </div>
     );
+  }
+
+
+  renderLinks(treeLayout, nodesList) {
+    const diagonal = d3.svg.diagonal().projection((d) => [d.x, d.y]);
+    const linksList = treeLayout.links(nodesList);
+    const linksConfig = linksList.map(link => ({
+      key: `${link.source.id}-${link.target.id}`,
+      style: {
+        sourceX: link.source.x,
+        sourceY: link.source.y,
+        targetX: spring(link.target.x),
+        targetY: spring(link.target.y)
+      },
+      data: link
+    }));
+    const links = (
+      <TransitionMotion
+          willEnter={this.linkWillEnter.bind(this)}
+          willLeave={this.linkWillLeave.bind(this)}
+          styles={linksConfig}>
+        {
+          linksConfig => {
+            return (
+              <g transform="translate(0,0)">
+                {
+                  linksConfig.map(
+                    config => {
+                      return (
+                        <path key={config.key} className="link"
+                              d={diagonal({source: {x: config.style.sourceX, y: config.style.sourceY},
+                                           target: {x: config.style.targetX, y: config.style.targetY}})} />
+                      );
+                    }
+                  )
+                }
+              </g>
+            );
+          }
+        }
+      </TransitionMotion>
+    );
+
+    return links;
+  }
+
+
+  linkWillEnter(link) {
+    return {
+      sourceX: link.data.source.x,
+      sourceY: link.data.source.y,
+      targetX: link.data.source.x,
+      targetY: link.data.source.y
+    };
+  }
+
+
+  linkWillLeave(link) {
+    return {
+      sourceX: link.data.source.x,
+      sourceY: link.data.source.y,
+      targetX: spring(link.data.source.x),
+      targetY: spring(link.data.source.y)
+    };
   }
 
 
