@@ -11,14 +11,14 @@ module.exports = class NodesGroup extends Component {
   render() {
     const { nodesList } = this.props;
     const nodesConfig = nodesList.map(node => ({
-      key: node.info.id,
+      key: node.info.id.toString(),
       style: {x: spring(node.x), y: spring(node.y)},
       data: node
     }));
     const defaultNodesConfig = nodesList.map(node => {
       const style = node.parent ? {x: node.parent.x, y: node.parent.y} : {x: node.x, y: 0};
       return {
-        key: node.info.id,
+        key: node.info.id.toString(),
         style: style,
         data: node
       };
