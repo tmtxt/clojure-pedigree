@@ -70,7 +70,7 @@ module.exports = class NodesGroup extends Component {
 
 
   nodeWillLeave(node) {
-    const { x, y } = this.findParent(node);
+    const { x, y } = this.findParent(node.data);
     return {
       x: spring(x),
       y: spring(y)
@@ -80,7 +80,8 @@ module.exports = class NodesGroup extends Component {
 
   findParent(node) {
     const { nodesList } = this.props;
-    const parent = _.find(nodesList, {id: node.data.parent.id});
+    let parent = _.find(nodesList, {id: node.parent.id});
+    parent = parent ? parent : this.findParent(node.parent);
     return parent;
   }
 
