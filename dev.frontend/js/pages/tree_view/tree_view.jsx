@@ -31,7 +31,7 @@ class TreeView extends Component {
         <svg height="1000" width={containerWidth}>
           <g>
             <LinksGroup linksList={linksList} />
-            <NodesGroup nodesList={nodesList} containerWidth={containerWidth} tree={tree} />
+            <NodesGroup nodesList={nodesList} tree={tree} />
           </g>
         </svg>
       </div>

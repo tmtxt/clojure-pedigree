@@ -4,6 +4,7 @@ const React = require('react');
 const { Component } = React;
 const { TransitionMotion, spring } = require('react-motion');
 const d3 = require('d3');
+const _ = require('lodash');
 
 
 module.exports = class LinksGroup extends Component {
@@ -75,11 +76,19 @@ module.exports = class LinksGroup extends Component {
 
 
   linkWillLeave(link) {
+    const { x, y } = this.findSource(link.data.source, this.props.linksList);
     return {
-      sourceX: spring(link.data.source.x),
-      sourceY: spring(link.data.source.y),
-      targetX: spring(link.data.source.x),
-      targetY: spring(link.data.source.y)
+      sourceX: spring(x),
+      sourceY: spring(y),
+      targetX: spring(x),
+      targetY: spring(y)
     };
+  }
+
+
+  findSource(node, linksList) {
+    let source = _.find(linksList, item => item.target.id == node.id);
+    source = source ? source : this.findSource(node.parent, linksList);
+    return source.target;
   }
 };
