@@ -14,8 +14,8 @@ module.exports = class LinksGroup extends Component {
     const linksConfig = linksList.map(link => ({
       key: `${link.source.id}-${link.target.id}`,
       style: {
-        sourceX: link.source.x,
-        sourceY: link.source.y,
+        sourceX: spring(link.source.x),
+        sourceY: spring(link.source.y),
         targetX: spring(link.target.x),
         targetY: spring(link.target.y)
       },
@@ -65,8 +65,8 @@ module.exports = class LinksGroup extends Component {
 
   linkWillLeave(link) {
     return {
-      sourceX: link.data.source.x,
-      sourceY: link.data.source.y,
+      sourceX: spring(link.data.source.x),
+      sourceY: spring(link.data.source.y),
       targetX: spring(link.data.source.x),
       targetY: spring(link.data.source.y)
     };

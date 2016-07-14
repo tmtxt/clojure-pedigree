@@ -15,11 +15,19 @@ module.exports = class NodesGroup extends Component {
       style: {x: spring(node.x), y: spring(node.y)},
       data: node
     }));
-
+    const defaultNodesConfig = nodesList.map(node => {
+      const style = node.parent ? {x: node.parent.x, y: node.parent.y} : {x: node.x, y: 0};
+      return {
+        key: node.info.id,
+        style: style,
+        data: node
+      };
+    });
     const nodes = (
       <TransitionMotion
           willEnter={this.nodeWillEnter.bind(this)}
           willLeave={this.nodeWillLeave.bind(this)}
+          defaultStyles={defaultNodesConfig}
           styles={nodesConfig}>
         {
           nodesConfig => {
@@ -53,20 +61,18 @@ module.exports = class NodesGroup extends Component {
   }
 
 
-  nodeWillEnter() {
-    const { containerWidth } = this.props;
+  nodeWillEnter(node) {
     return {
-      x: containerWidth / 2,
-      y: 0
+      x: node.data.parent.x,
+      y: node.data.parent.y
     };
   }
 
 
-  nodeWillLeave() {
-    const { containerWidth } = this.props;
+  nodeWillLeave(node) {
     return {
-      x: spring(containerWidth / 2),
-      y: spring(0)
+      x: spring(node.data.parent.x),
+      y: spring(node.data.parent.y)
     };
   }
 
