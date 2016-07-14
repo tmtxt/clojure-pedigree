@@ -8,6 +8,7 @@ const { TransitionMotion, spring } = require('react-motion');
 const _ = require('lodash');
 
 const NodesGroup = require('./nodes_group.jsx');
+const LinksGroup = require('./links_group.jsx');
 
 
 class TreeView extends Component {
@@ -25,15 +26,13 @@ class TreeView extends Component {
       d.y = d.depth * 200;
       d.y += 80;
     });
-
-    /* render nodes and links */
-    const links = this.renderLinks(treeLayout, nodesList);
+    const linksList = treeLayout.links(nodesList);
 
     return (
       <div className="tree-container">
         <svg height="1000" width={containerWidth}>
           <g>
-            {links}
+            <LinksGroup linksList={linksList} />
             <NodesGroup nodesList={nodesList} containerWidth={containerWidth} tree={tree} />
           </g>
         </svg>
