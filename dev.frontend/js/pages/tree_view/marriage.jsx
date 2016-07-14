@@ -3,17 +3,16 @@
 const React = require('react');
 const { Component } = React;
 const { TransitionMotion, spring } = require('react-motion');
-const _ = require('lodash');
 
 
 module.exports = class Marriage extends Component {
 
   render() {
-    const { person, order, pos } = this.props;
+    const { person, order } = this.props;
 
     const styles = [{
       key: person.id.toString(),
-      style: { x: spring(45 * order + 45) },
+      style: { x: spring(45 * order + 45, {stiffness: 180, damping: 12}) },
       data: person
     }];
     const defaultStyles = [{

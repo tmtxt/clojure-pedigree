@@ -77,7 +77,7 @@ module.exports = class NodesGroup extends Component {
 
     return _.map(marriages, (marriage, i) => {
       return (
-        <Marriage key={marriage.id} person={marriage} order={i} pos={style} />
+        <Marriage key={marriage.id} person={marriage} order={i} />
       );
     });
   }
