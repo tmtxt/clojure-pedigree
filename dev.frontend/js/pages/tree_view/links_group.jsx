@@ -9,6 +9,14 @@ const _ = require('lodash');
 
 module.exports = class LinksGroup extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      oldLinksList: null
+    };
+  }
+
+
   render() {
     const { linksList } = this.props;
     const diagonal = d3.svg.diagonal().projection((d) => [d.x, d.y]);
@@ -65,12 +73,21 @@ module.exports = class LinksGroup extends Component {
   }
 
 
+  componentWillReceiveProps() {
+    const oldLinksList = this.props.linksList;
+    this.setState({oldLinksList});
+  }
+
+
   linkWillEnter(link) {
+    const linksList = this.state.oldLinksList || this.props.linksList;
+    const { x, y } = this.findSource(link.data.source, linksList);
+
     return {
-      sourceX: link.data.source.x,
-      sourceY: link.data.source.y,
-      targetX: link.data.source.x,
-      targetY: link.data.source.y
+      sourceX: x,
+      sourceY: y,
+      targetX: x,
+      targetY: y
     };
   }
 
@@ -88,7 +105,12 @@ module.exports = class LinksGroup extends Component {
 
   findSource(node, linksList) {
     let source = _.find(linksList, item => item.target.id == node.id);
-    source = source ? source : this.findSource(node.parent, linksList);
-    return source.target;
+    if (source) {
+      return source.target;
+    }
+    if (!node.parent) {
+      return node;
+    }
+    return this.findSource(node.parent, linksList);
   }
 };
