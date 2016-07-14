@@ -11,16 +11,44 @@ const _ = require('lodash');
 class TreeView extends Component {
 
   render() {
+    /* get the pedigree tree data from baobab tree */
     const { tree, containerWidth, containerHeight } = this.props;
     const root = tree.select('pedigreeTree').serialize();
+
+    /* use d3.js to calculate the tree layout and position of nodes, links */
     const treeLayout = d3.layout.tree().size([containerWidth, containerHeight]);
     const diagonal = d3.svg.diagonal().projection((d) => [d.x, d.y]);
-
     const nodesList = treeLayout.nodes(root).reverse();
+    /* translate all the nodes 80px down (for the header) with 200px height for each link */
     nodesList.forEach((d) => {
       d.y = d.depth * 200;
       d.y += 80;
     });
+
+    /* calculate and render nodes */
+    const nodes = this.renderNodes(treeLayout, nodesList);
+
+    const linksList = treeLayout.links(nodesList);
+    const links = linksList.map((d) => {
+      return (
+        <path key={`${d.source.id}-${d.target.id}`} className="link" d={diagonal(d)} />
+      );
+    });
+
+    return (
+      <div className="tree-container">
+        <svg height="1000" width={containerWidth}>
+          <g>
+            {links}
+            {nodes}
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+
+  renderNodes(treeLayout, nodesList) {
     const nodesConfig = nodesList.map(node => ({
       key: node.info.id,
       style: {x: spring(node.x), y: spring(node.y)},
@@ -58,33 +86,8 @@ class TreeView extends Component {
         }
       </TransitionMotion>
     );
-    /* const nodes = nodesList.map((d) => {
-       return (
-       <g key={d.info.id} className="node" transform={`translate(${d.x}, ${d.y})`}>
-       <circle onClick={this.handleCircleClick.bind(this, d)} r="10" style={{'fill': d._children ? 'lightsteelblue' : '#fff'}} />
-       <text y="-19" dy=".35em" textAnchor="middle" style={{'fillOpacity': 1}}>{d.info.fullName}</text>
-       <image href={d.info.picture} x="-20" y="-68" width="40px" height="40px"></image>
-       </g>
-       );
-       }); */
 
-    const linksList = treeLayout.links(nodesList);
-    const links = linksList.map((d) => {
-      return (
-        <path key={`${d.source.id}-${d.target.id}`} className="link" d={diagonal(d)} />
-      );
-    });
-
-    return (
-      <div className="tree-container">
-        <svg height="1000" width={containerWidth}>
-          <g>
-            {links}
-            {nodes}
-          </g>
-        </svg>
-      </div>
-    );
+    return nodes;
   }
 
 
