@@ -54,7 +54,7 @@ module.exports = class NodesGroup extends Component {
                                 style={{'fillOpacity': 1}}>{config.data.info.fullName}</text>
                           <image href={config.data.info.picture} x="-20" y="-68"
                                  width="40px" height="40px"></image>
-                          { config.data.marriage && this.renderMarriage(config.data.marriage) }
+                          { config.data.marriage && this.renderMarriage(config) }
                         </g>
                       );
                     }
@@ -71,10 +71,13 @@ module.exports = class NodesGroup extends Component {
   }
 
 
-  renderMarriage(marriages) {
+  renderMarriage(config) {
+    const marriages = config.data.marriage;
+    const style = config.style;
+
     return _.map(marriages, (marriage, i) => {
       return (
-        <Marriage key={marriage.id} person={marriage} order={i} />
+        <Marriage key={marriage.id} person={marriage} order={i} pos={style} />
       );
     });
   }
