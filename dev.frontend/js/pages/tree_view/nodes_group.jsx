@@ -94,7 +94,7 @@ module.exports = class NodesGroup extends Component {
 
   findParent(node, nodesList) {
     let parent = _.find(nodesList, {id: node.parent.id});
-    parent = parent ? parent : this.findParent(node.parent);
+    parent = parent ? parent : this.findParent(node.parent, nodesList);
     return parent;
   }
 
