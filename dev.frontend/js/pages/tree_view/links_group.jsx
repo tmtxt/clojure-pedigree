@@ -21,11 +21,22 @@ module.exports = class LinksGroup extends Component {
       },
       data: link
     }));
+    const defaultLinksConfig = linksList.map(link => ({
+      key: `${link.source.id}-${link.target.id}`,
+      style: {
+        sourceX: link.source.x,
+        sourceY: link.source.y,
+        targetX: link.source.x,
+        targetY: link.source.y
+      },
+      data: link
+    }));
 
     const links = (
       <TransitionMotion
           willEnter={this.linkWillEnter.bind(this)}
           willLeave={this.linkWillLeave.bind(this)}
+          defaultStyles={defaultLinksConfig}
           styles={linksConfig}>
         {
           linksConfig => {
