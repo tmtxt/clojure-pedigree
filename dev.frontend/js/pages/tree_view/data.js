@@ -21,11 +21,21 @@ function toggleAll(d) {
 }
 
 
+function disableAllMarriages(d) {
+  if (d.children) {
+    d.children.forEach(disableAllMarriages);
+  }
+  d._marriage = d.marriage;
+  d.marriage = null;
+}
+
+
 exports.getData = async function(tree) {
   const pedigreeTree = await apiTree.getTreeData();
   if (pedigreeTree.children) {
     pedigreeTree.children.forEach(toggleAll);
   }
+  disableAllMarriages(pedigreeTree);
 
   tree.set('pedigreeTree', pedigreeTree);
   tree.set('initializing', false);

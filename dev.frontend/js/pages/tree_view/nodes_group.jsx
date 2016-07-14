@@ -4,6 +4,7 @@ const React = require('react');
 const { Component } = React;
 const { TransitionMotion, spring } = require('react-motion');
 const _ = require('lodash');
+const Marriage = require('./marriage.jsx');
 
 
 module.exports = class NodesGroup extends Component {

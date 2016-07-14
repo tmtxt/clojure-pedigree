@@ -5,7 +5,8 @@ const MainView = require('./main_view.jsx');
 
 const {tree} = BaobabReactApp.renderMainLayout(MainView, {
   pedigreeTree: null,
-  initializing: true
+  initializing: true,
+  showMarriage: false
 }, '/tree/index', {
   layout: 'full-width'
 });

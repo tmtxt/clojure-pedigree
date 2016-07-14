@@ -9,21 +9,23 @@ const TreeView = require('./tree_view.jsx');
 module.exports = class MainView extends Component {
 
   render() {
+    const { showMarriage } = this.props;
 
     return (
       <div className="tree-page">
         <div className="container site-container">
           <div className="panel panel-default">
-            <div className="panel-body controls-container">
-              <div>
-                <input type="checkbox" name="checkboxG4" id="checkboxG4" className="controls-checkbox js-toggle-marriage" />
-                <label for="checkboxG4" className="controls-label">Hiện vợ/chồng</label>
+            <div className="panel-body form-inline">
+              <button onClick={this.toggleMarriages.bind(this)}
+                      className={showMarriage ? 'btn btn-danger' : 'btn btn-success'}>
+                { showMarriage ? 'Tắt vợ chồng' : 'Hiện vợ chồng' }
+              </button>
+              &nbsp;
+              <div className="form-group">
+                <input type="text" className="form-control" id="exampleInputName2" placeholder="Jane Doe" />
               </div>
-
-              <div className="controls-depth-container">
-                <input placeholder="Số đời con cháu" className="form-control js-tree-depth-input" name="" type="text" value=""/>
-                <button className="btn btn-default js-update-tree-depth">Cập nhật</button>
-              </div>
+              &nbsp;
+              <button className="btn btn-default">Send invitation</button>
             </div>
           </div>
         </div>
@@ -40,5 +42,33 @@ module.exports = class MainView extends Component {
           <div id="js-user-modal-container"></div>
       </div>
     );
+  }
+
+
+  toggleMarriages() {
+    const { showMarriage } = this.props;
+    const { tree } = this.context;
+
+    tree.set('showMarriage', !showMarriage);
+    this.toggleEachMarriage(tree.select('pedigreeTree'));
+  }
+
+
+  toggleEachMarriage(cursor) {
+    const person = cursor.get();
+
+    if (person.children) {
+      for(var i = 0; i < person.children.length; i++) {
+        this.toggleEachMarriage(cursor.select(['children', i]));
+      }
+    }
+
+    if (person.marriage) {
+      cursor.set('_marriage', cursor.select('marriage').get());
+      cursor.unset('marriage');
+    } else {
+      cursor.set('marriage', cursor.select('_marriage').get());
+      cursor.unset('_marriage');
+    }
   }
 };
