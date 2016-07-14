@@ -7,6 +7,8 @@ const Dimensions = require('react-dimensions');
 const { TransitionMotion, spring } = require('react-motion');
 const _ = require('lodash');
 
+const NodesGroup = require('./nodes_group.jsx');
+
 
 class TreeView extends Component {
 
@@ -25,7 +27,6 @@ class TreeView extends Component {
     });
 
     /* render nodes and links */
-    const nodes = this.renderNodes(treeLayout, nodesList);
     const links = this.renderLinks(treeLayout, nodesList);
 
     return (
@@ -33,7 +34,7 @@ class TreeView extends Component {
         <svg height="1000" width={containerWidth}>
           <g>
             {links}
-            {nodes}
+            <NodesGroup nodesList={nodesList} containerWidth={containerWidth} tree={tree} />
           </g>
         </svg>
       </div>
