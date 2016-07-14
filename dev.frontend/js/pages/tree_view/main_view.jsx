@@ -58,8 +58,14 @@ module.exports = class MainView extends Component {
     const person = cursor.get();
 
     if (person.children) {
-      for(var i = 0; i < person.children.length; i++) {
+      for(let i = 0; i < person.children.length; i++) {
         this.toggleEachMarriage(cursor.select(['children', i]));
+      }
+    }
+
+    if (person._children) {
+      for(let i = 0; i < person._children.length; i++) {
+        this.toggleEachMarriage(cursor.select(['_children', i]));
       }
     }
 
