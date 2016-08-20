@@ -1,14 +1,5 @@
 #!/usr/bin/env sh
 
-# remove the old ip in hosts file
-sudo sed -i "/\b\(pd.dev\)\b/d" /etc/hosts
-
-# insert the new ip
-echo "$(docker-machine ip pd) pd.dev" | sudo tee -a /etc/hosts
-
-# set env variables
-eval "$(docker-machine env pd)" OR $(docker-machine env pd)
-
 # aliases
 alias dcu="docker-compose up"
 alias dcud="docker-compose up -d"
