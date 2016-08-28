@@ -76,6 +76,7 @@ function createBundler(mode) {
     b.external('regenerator-runtime');
     b.external('react-motion');
     b.external('react-dimensions');
+    b.external('react-bootstrap');
 
     // bundle
     b.bundle(bundleFunc);
@@ -124,6 +125,7 @@ gulp.task('js-require', function(){
   b.require('regenerator-runtime', {expose: 'regenerator-runtime'});
   b.require('react-motion', {expose: 'react-motion'});
   b.require('react-dimensions', {expose: 'react-dimensions'});
+  b.require('react-bootstrap', {expose: 'react-bootstrap'});
 
   return b.bundle()
     .pipe(vinyl('requires.js'))

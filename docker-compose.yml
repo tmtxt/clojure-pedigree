@@ -29,7 +29,7 @@ svc.person:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4000:80"
   links:
@@ -44,7 +44,7 @@ svc.user:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4002:80"
   links:
@@ -58,7 +58,7 @@ svc.pedigree-relation:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4003:80"
   links:
@@ -72,7 +72,7 @@ svc.marriage-relation:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4004:80"
   links:
@@ -86,7 +86,7 @@ svc.minor-content:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4006:80"
   links:
@@ -101,7 +101,7 @@ svc.image:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4007:80"
   links:
@@ -115,7 +115,7 @@ svc.tree:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4010:80"
   links:
@@ -129,7 +129,7 @@ svc.api-tree:
     - koa.api.base
   env_file:
     - docker.env
-  command: nodemon --legacy-watch app.js
+  command: nodemon app.js
   ports:
     - "4011:80"
   links:
