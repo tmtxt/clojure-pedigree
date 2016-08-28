@@ -4,10 +4,12 @@ const React = require('react');
 const { Component } = React;
 const { TransitionMotion, spring } = require('react-motion');
 const _ = require('lodash');
+const PropTypes = require('baobab-react/prop-types');
+
 const Marriage = require('./marriage.jsx');
 
 
-module.exports = class NodesGroup extends Component {
+class NodesGroup extends Component {
 
   constructor(props) {
     super(props);
@@ -52,7 +54,8 @@ module.exports = class NodesGroup extends Component {
                                   r="10" style={{'fill': config.data._children ? 'lightsteelblue' : '#fff'}} />
                           <text y="-19" dy=".35em" textAnchor="middle"
                                 style={{'fillOpacity': 1}}>{config.data.info.fullName}</text>
-                          <image href={config.data.info.picture} x="-20" y="-68"
+                          <image onClick={this.handleImageClick.bind(this, config.data)}
+                                 href={config.data.info.picture} x="-20" y="-68"
                                  width="40px" height="40px"></image>
                           <Marriage marriages={config.data.marriage} />
                         </g>
@@ -71,9 +74,15 @@ module.exports = class NodesGroup extends Component {
   }
 
 
+  handleImageClick(person) {
+    const { tree } = this.context;
+    tree.set('selectedPerson', person);
+    tree.set('showDetail', true);
+  }
+
+
   renderMarriage(config) {
     const marriages = config.data.marriage;
-    const style = config.style;
 
     return _.map(marriages, (marriage, i) => {
       return (
@@ -119,7 +128,7 @@ module.exports = class NodesGroup extends Component {
       return;
     }
 
-    const { tree } = this.props;
+    const { tree } = this.context;
     const path = this.findPathInTree(d);
     const cursor = tree.select(path);
     const data = cursor.get();
@@ -155,4 +164,11 @@ module.exports = class NodesGroup extends Component {
 
     return path;
   }
+}
+
+
+NodesGroup.contextTypes = {
+  tree: PropTypes.baobab
 };
+
+module.exports = NodesGroup;

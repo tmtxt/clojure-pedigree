@@ -4,6 +4,7 @@ const React = require('react');
 const {Component} = React;
 const d3 = require('d3');
 const Dimensions = require('react-dimensions');
+const PropTypes = require('baobab-react/prop-types');
 
 const NodesGroup = require('./nodes_group.jsx');
 const LinksGroup = require('./links_group.jsx');
@@ -13,7 +14,8 @@ class TreeView extends Component {
 
   render() {
     /* get the pedigree tree data from baobab tree */
-    const { tree, containerWidth, containerHeight } = this.props;
+    const { tree } = this.context;
+    const { containerWidth, containerHeight } = this.props;
     const root = tree.select('pedigreeTree').serialize();
 
     /* use d3.js to calculate the tree layout and position of nodes, links */
@@ -39,6 +41,10 @@ class TreeView extends Component {
   }
 
 }
+
+TreeView.contextTypes = {
+  tree: PropTypes.baobab
+};
 
 
 /* higher order component to set container width and height props */

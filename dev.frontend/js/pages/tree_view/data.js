@@ -30,6 +30,10 @@ function disableAllMarriages(d) {
 }
 
 
+/**
+ * Get tree data for the page
+ * @param {object} tree
+ */
 exports.getData = async function(tree) {
   const pedigreeTree = await apiTree.getTreeData();
   if (pedigreeTree.children) {

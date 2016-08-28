@@ -4,9 +4,10 @@ const React = require('react');
 const {Component} = React;
 
 const TreeView = require('./tree_view.jsx');
+const DetailModal = require('./detail_modal.jsx');
 
 
-module.exports = class MainView extends Component {
+class MainView extends Component {
 
   render() {
     const { showMarriage } = this.props;
@@ -35,11 +36,10 @@ module.exports = class MainView extends Component {
             <i className="fa fa-spinner fa-spin fa-5x fa-fw"></i>
           </div>
           :
-          <TreeView tree={this.context.tree} />
+          <TreeView />
         }
 
-
-          <div id="js-user-modal-container"></div>
+          <DetailModal />
       </div>
     );
   }
@@ -77,4 +77,13 @@ module.exports = class MainView extends Component {
       cursor.unset('_marriage');
     }
   }
+}
+
+
+MainView.childContextTypes = {
+  tree: React.PropTypes.object
 };
+
+
+
+module.exports = MainView;

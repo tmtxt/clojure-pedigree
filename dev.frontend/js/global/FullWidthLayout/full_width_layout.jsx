@@ -1,7 +1,6 @@
 'use strict';
 
 const React = require('react');
-const baobabReact = require('baobab-react/higher-order');
 
 const components = require('Components');
 const Header = components.Header;
