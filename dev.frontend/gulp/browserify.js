@@ -29,7 +29,7 @@ function createBundler(mode) {
   const bundler = through2.obj(function(file, env, next){
     const bundleFunc = function(err, res){
       if (err) {
-        console.log(err);
+        console.log(err.message);
         file.contents = null;
       } else {
         file.contents = res;

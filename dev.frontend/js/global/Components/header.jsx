@@ -28,7 +28,7 @@ class Header extends Component {
               <ul className="header-content--left header-menu">
                 <li><a href="/">Trang chủ</a></li>
                 <li><a href="#">Thành viên</a></li>
-                <li><a href="/tree/view/">Cây gia phả</a></li>
+                <li><a href="/tree/index">Cây gia phả</a></li>
                 <li><a href="#">Lịch sử dòng họ</a></li>
                 <li><a href="#">Liên hệ</a></li>
                 {_.get(this.props.user, ['authenticated']) ?
@@ -50,7 +50,7 @@ class Header extends Component {
       </header>
     );
   }
-};
+}
 
 module.exports = branch({
   user: ['user']

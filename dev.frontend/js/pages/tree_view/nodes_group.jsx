@@ -20,12 +20,17 @@ class NodesGroup extends Component {
 
 
   render() {
+    // get nodesList from parent
     const { nodesList } = this.props;
+
+    // calculate position
     const nodesConfig = nodesList.map(node => ({
       key: node.info.id.toString(),
       style: {x: spring(node.x), y: spring(node.y)},
       data: node
     }));
+
+    // default starting position
     const defaultNodesConfig = nodesList.map(node => {
       const style = node.parent ? {x: node.parent.x, y: node.parent.y} : {x: node.x, y: 0};
       return {
@@ -34,6 +39,8 @@ class NodesGroup extends Component {
         data: node
       };
     });
+
+    // render the nodes using TransitionMotion
     const nodes = (
       <TransitionMotion
           willEnter={this.nodeWillEnter.bind(this)}
@@ -74,6 +81,10 @@ class NodesGroup extends Component {
   }
 
 
+  /**
+   * Handle image click to show modal
+   * @param {object} person
+   */
   handleImageClick(person) {
     const { tree } = this.context;
     tree.set('selectedPerson', person);
@@ -115,6 +126,10 @@ class NodesGroup extends Component {
   }
 
 
+  /**
+   * @param {object} node
+   * @param {array} nodesList
+   */
   findParent(node, nodesList) {
     let parent = _.find(nodesList, {id: node.parent.id});
     parent = parent ? parent : this.findParent(node.parent, nodesList);
@@ -122,6 +137,10 @@ class NodesGroup extends Component {
   }
 
 
+  /**
+   * Handle click on circle to expand or collapse the tree
+   * @param {object} d
+   */
   handleCircleClick(d) {
     /* has no children, do nothing */
     if (!d.children && !d._children) {
@@ -142,6 +161,12 @@ class NodesGroup extends Component {
     }
   }
 
+
+  /**
+   * Input the person, find its path in the baobab tree to query
+   * @param {object} d
+   * @return {array}
+   */
   findPathInTree(d) {
     let path;
 
